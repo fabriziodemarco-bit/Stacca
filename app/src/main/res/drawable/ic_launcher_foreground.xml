@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Hand Stop Icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 C54,28.9 54.9,28 56,28 C57.1,28 58,28.9 58,30 L58,52 C58,53.1 57.1,54 56,54 C54.9,54 54,53.1 54,52 Z"
+        android:strokeWidth="0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,34 C46,32.9 46.9,32 48,32 C49.1,32 50,32.9 50,34 L50,52 C50,53.1 49.1,54 48,54 C46.9,54 46,53.1 46,52 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,34 C62,32.9 62.9,32 64,32 C65.1,32 66,32.9 66,34 L66,52 C66,53.1 65.1,54 64,54 C62.9,54 62,53.1 62,52 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,40 C38,38.9 38.9,38 40,38 C41.1,38 42,38.9 42,40 L42,52 C42,53.1 41.1,54 40,54 C38.9,54 38,53.1 38,52 Z" />
+    <!-- Palm -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,52 C36,52 36,64 44,72 L68,72 C68,72 70,64 70,52 L36,52 Z" />
+    <!-- STOP text -->
+    <path
+        android:fillColor="#FF6B35"
+        android:pathData="M44,78 L68,78 C68,78 68,82 56,82 C44,82 44,78 44,78 Z" />
+</vector>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Brand Colors -->
+    <color name="primary">#FF6B35</color>
+    <color name="primary_dark">#E55A2B</color>
+    <color name="primary_light">#FF8A5C</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- Secondary Colors -->
+    <color name="secondary">#7B2FF7</color>
+    <color name="secondary_dark">#5A1FBD</color>
+    <color name="secondary_light">#9D5FFF</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <!-- Tertiary Colors -->
+    <color name="tertiary">#00C9A7</color>
+    <color name="tertiary_dark">#00A88B</color>
+    <color name="on_tertiary">#FFFFFF</color>
+
+    <!-- Background Colors -->
+    <color name="background_dark">#0D0D1A</color>
+    <color name="background_card">#1A1A2E</color>
+    <color name="background_card_elevated">#252542</color>
+    <color name="surface">#16213E</color>
+    <color name="surface_variant">#1E2A4A</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0CC</color>
+    <color name="text_hint">#6E6E8A</color>
+
+    <!-- Alert Level Colors -->
+    <color name="alert_gentle">#4CAF50</color>
+    <color name="alert_friendly">#FFC107</color>
+    <color name="alert_insistent">#FF9800</color>
+    <color name="alert_aggressive">#FF5722</color>
+    <color name="alert_nuclear">#F44336</color>
+    <color name="alert_apocalypse">#B71C1C</color>
+
+    <!-- Status Colors -->
+    <color name="status_active">#00E676</color>
+    <color name="status_inactive">#757575</color>
+    <color name="status_warning">#FFD600</color>
+    <color name="status_danger">#FF1744</color>
+
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#FF6B35</color>
+    <color name="gradient_center">#7B2FF7</color>
+    <color name="gradient_end">#00C9A7</color>
+
+    <!-- Misc -->
+    <color name="ripple_color">#33FFFFFF</color>
+    <color name="divider">#2A2A4A</color>
+    <color name="overlay_dark">#CC000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

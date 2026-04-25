@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- App Header -->
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvTagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_tagline"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Status Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <!-- Status Indicator -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <View
+                        android:id="@+id/statusDot"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/status_dot_inactive"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/alarm_inactive"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
+
+                <!-- Current Time -->
+                <TextView
+                    android:id="@+id/tvCurrentTimeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_time"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_hint"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.15" />
+
+                <TextView
+                    android:id="@+id/tvCurrentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--:--"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="sans-serif-black" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- End Time Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_time_label"
+                    android:textSize="12sp"
+                    android:textColor="@color/primary"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.15"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tvEndTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18:00"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:fontFamily="sans-serif-black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSetTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_end_time"
+                    style="@style/Widget.Stacca.Button.Secondary"
+                    android:layout_marginTop="12dp"
+                    app:icon="@android:drawable/ic_menu_recent_history"
+                    app:iconGravity="textStart" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Countdown Card (visible when alarm is active) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCountdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card_elevated"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="12dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvCountdownLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_remaining"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/tvCountdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textSize="44sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/tertiary"
+                    android:fontFamily="sans-serif-condensed" />
+
+                <!-- Escalation Level Indicator -->
+                <LinearLayout
+                    android:id="@+id/layoutEscalation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone">
+
+                    <View
+                        android:id="@+id/level1Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                    <View
+                        android:id="@+id/level2Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                    <View
+                        android:id="@+id/level3Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                    <View
+                        android:id="@+id/level4Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                    <View
+                        android:id="@+id/level5Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                    <View
+                        android:id="@+id/level6Dot"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/status_dot_inactive" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Action Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnActivate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activate_alarm"
+            style="@style/Widget.Stacca.Button.Primary"
+            android:backgroundTint="@color/primary"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeactivate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deactivate_alarm"
+            style="@style/Widget.Stacca.Button.Secondary"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Bottom Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/view_history"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="@color/text_secondary"
+                android:layout_marginEnd="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogProgress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btn_log_progress"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="@color/text_secondary"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/alert_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- Animated Warning Icon -->
+        <TextView
+            android:id="@+id/tvAlertEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🚨"
+            android:textSize="80sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Main Alert Title -->
+        <TextView
+            android:id="@+id/tvAlertTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fullscreen_title"
+            style="@style/TextAppearance.Stacca.Alert"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Alert Message -->
+        <TextView
+            android:id="@+id/tvAlertMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fullscreen_subtitle"
+            android:textSize="22sp"
+            android:textColor="#FFFFFFCC"
+            android:gravity="center"
+            android:layout_marginBottom="48dp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Overtime Counter -->
+        <TextView
+            android:id="@+id/tvOvertimeCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overtime"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF99"
+            android:layout_marginBottom="48dp" />
+
+        <!-- Action Buttons -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStopWork"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_ok_stacco"
+            style="@style/Widget.Stacca.Button.Primary"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/alert_nuclear"
+            android:textSize="20sp"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogAndStop"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_log_progress"
+            style="@style/Widget.Stacca.Button.Secondary"
+            android:strokeColor="@color/white"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+</FrameLayout>

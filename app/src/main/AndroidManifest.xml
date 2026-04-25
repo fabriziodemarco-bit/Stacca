@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".StaccaApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Stacca"
+        tools:targetApi="35">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Stacca">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Progress Log Activity -->
+        <activity
+            android:name=".ui.ProgressActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Full Screen Alert Activity -->
+        <activity
+            android:name=".ui.FullScreenAlertActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca.FullScreen"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" />
+
+        <!-- Work Log History Activity -->
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Alarm Receiver -->
+        <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- Boot Receiver -->
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Notification Action Receiver -->
+        <receiver
+            android:name=".receivers.NotificationActionReceiver"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

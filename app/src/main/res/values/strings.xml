@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stacca!</string>
+    <string name="app_tagline">Basta lavorare. Vivi.</string>
+
+    <!-- Main Screen -->
+    <string name="set_end_time">Imposta orario di fine lavoro</string>
+    <string name="current_time">Ora attuale</string>
+    <string name="end_time_label">Fine turno</string>
+    <string name="time_remaining">Tempo rimanente</string>
+    <string name="overtime">Straordinario non pagato!</string>
+    <string name="alarm_active">⚡ Allarme attivo</string>
+    <string name="alarm_inactive">Nessun allarme impostato</string>
+    <string name="activate_alarm">ATTIVA ALLARME</string>
+    <string name="deactivate_alarm">DISATTIVA</string>
+    <string name="view_history">📋 Storico</string>
+    <string name="settings">⚙️ Impostazioni</string>
+
+    <!-- Notification Levels -->
+    <string name="notif_channel_name">Notifiche Stacca!</string>
+    <string name="notif_channel_desc">Notifiche per ricordarti di smettere di lavorare</string>
+    <string name="notif_urgent_channel_name">Allarme Stacca!</string>
+    <string name="notif_urgent_channel_desc">Notifiche urgenti e invasive</string>
+
+    <!-- Action Buttons -->
+    <string name="btn_ok_stacco">OK, STACCO! ✋</string>
+    <string name="btn_5_more_minutes">Ancora 5 minuti… ⏰</string>
+    <string name="btn_log_progress">📝 Registra progressi</string>
+    <string name="btn_save">Salva</string>
+    <string name="btn_cancel">Annulla</string>
+
+    <!-- Progress Activity -->
+    <string name="progress_title">Che hai combinato oggi?</string>
+    <string name="progress_done_hint">Cosa hai completato oggi…</string>
+    <string name="progress_todo_hint">Cosa devi ancora fare domani…</string>
+    <string name="progress_done_label">✅ Completato</string>
+    <string name="progress_todo_label">📌 Da fare domani</string>
+    <string name="progress_saved">Progressi salvati! Ora STACCA! 🎉</string>
+    <string name="progress_mood_label">Come ti senti?</string>
+
+    <!-- Full Screen Alert -->
+    <string name="fullscreen_title">STACCAAAAAA!</string>
+    <string name="fullscreen_subtitle">È ora di VIVERE!</string>
+
+    <!-- History -->
+    <string name="history_title">📋 Storico Lavoro</string>
+    <string name="history_empty">Nessun registro ancora. Stacca e registra!</string>
+
+    <!-- Permissions -->
+    <string name="permission_notification_title">Permesso Notifiche</string>
+    <string name="permission_notification_message">Stacca! ha bisogno del permesso per inviarti notifiche (aggressive) per ricordarti di smettere di lavorare!</string>
+    <string name="permission_alarm_title">Permesso Allarmi</string>
+    <string name="permission_alarm_message">Stacca! ha bisogno del permesso per impostare allarmi precisi.</string>
+</resources>

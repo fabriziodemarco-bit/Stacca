@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base App Theme - Material 3 Dark -->
+    <style name="Theme.Stacca" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/on_tertiary</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
+        <item name="android:windowBackground">@color/background_dark</item>
+    </style>
+
+    <!-- Full Screen Alert Theme -->
+    <style name="Theme.Stacca.FullScreen" parent="Theme.Stacca">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/alert_nuclear</item>
+    </style>
+
+    <!-- Card Style -->
+    <style name="Widget.Stacca.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/background_card</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">8dp</item>
+        <item name="contentPadding">24dp</item>
+    </style>
+
+    <!-- Primary Button Style -->
+    <style name="Widget.Stacca.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <!-- Secondary Button Style -->
+    <style name="Widget.Stacca.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <!-- Danger Button Style -->
+    <style name="Widget.Stacca.Button.Danger" parent="Widget.Material3.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">@color/alert_nuclear</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+    </style>
+
+    <!-- Title Text -->
+    <style name="TextAppearance.Stacca.Title">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+    </style>
+
+    <!-- Subtitle Text -->
+    <style name="TextAppearance.Stacca.Subtitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Big Clock Text -->
+    <style name="TextAppearance.Stacca.Clock">
+        <item name="android:textSize">72sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+    </style>
+
+    <!-- Alert Text -->
+    <style name="TextAppearance.Stacca.Alert">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+    </style>
+
+</resources>

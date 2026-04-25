@@ -1,0 +1,303 @@
+package com.stacca.app.ui
+
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import com.stacca.app.R
+import com.stacca.app.data.NotificationMessages
+import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.NotificationHelper
+import com.stacca.app.receivers.AlarmReceiver
+import java.text.SimpleDateFormat
+import java.util.*
+
+/**
+ * Activity principale dell'app Stacca!
+ * Mostra l'orario corrente, l'orario di fine turno impostato,
+ * e permette di attivare/disattivare l'allarme.
+ */
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var prefs: PreferencesManager
+    private lateinit var notificationHelper: NotificationHelper
+    private val handler = Handler(Looper.getMainLooper())
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    private val timeFormatSeconds = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+
+    // Views
+    private lateinit var tvCurrentTime: TextView
+    private lateinit var tvEndTime: TextView
+    private lateinit var tvStatus: TextView
+    private lateinit var statusDot: View
+    private lateinit var tvCountdown: TextView
+    private lateinit var tvCountdownLabel: TextView
+    private lateinit var cardCountdown: MaterialCardView
+    private lateinit var btnActivate: MaterialButton
+    private lateinit var btnDeactivate: MaterialButton
+    private lateinit var layoutEscalation: View
+    private lateinit var levelDots: List<View>
+
+    // Permesso notifiche
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                activateAlarm()
+            } else {
+                Toast.makeText(this,
+                    "Senza permesso notifiche l'app non può funzionare! 😢",
+                    Toast.LENGTH_LONG).show()
+            }
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        prefs = PreferencesManager(this)
+        notificationHelper = NotificationHelper(this)
+
+        initViews()
+        setupListeners()
+        updateUI()
+        startClockUpdate()
+    }
+
+    private fun initViews() {
+        tvCurrentTime = findViewById(R.id.tvCurrentTime)
+        tvEndTime = findViewById(R.id.tvEndTime)
+        tvStatus = findViewById(R.id.tvStatus)
+        statusDot = findViewById(R.id.statusDot)
+        tvCountdown = findViewById(R.id.tvCountdown)
+        tvCountdownLabel = findViewById(R.id.tvCountdownLabel)
+        cardCountdown = findViewById(R.id.cardCountdown)
+        btnActivate = findViewById(R.id.btnActivate)
+        btnDeactivate = findViewById(R.id.btnDeactivate)
+        layoutEscalation = findViewById(R.id.layoutEscalation)
+        levelDots = listOf(
+            findViewById(R.id.level1Dot),
+            findViewById(R.id.level2Dot),
+            findViewById(R.id.level3Dot),
+            findViewById(R.id.level4Dot),
+            findViewById(R.id.level5Dot),
+            findViewById(R.id.level6Dot)
+        )
+    }
+
+    private fun setupListeners() {
+        // Imposta orario di fine
+        findViewById<MaterialButton>(R.id.btnSetTime).setOnClickListener {
+            showTimePicker()
+        }
+
+        // Click sulla card dell'orario per aprire il picker
+        findViewById<MaterialCardView>(R.id.cardEndTime).setOnClickListener {
+            showTimePicker()
+        }
+
+        // Attiva allarme
+        btnActivate.setOnClickListener {
+            checkPermissionsAndActivate()
+        }
+
+        // Disattiva allarme
+        btnDeactivate.setOnClickListener {
+            deactivateAlarm()
+        }
+
+        // Storico
+        findViewById<MaterialButton>(R.id.btnHistory).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
+
+        // Registra progressi
+        findViewById<MaterialButton>(R.id.btnLogProgress).setOnClickListener {
+            startActivity(Intent(this, ProgressActivity::class.java))
+        }
+    }
+
+    private fun showTimePicker() {
+        val picker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_24H)
+            .setHour(prefs.endHour)
+            .setMinute(prefs.endMinute)
+            .setTitleText(getString(R.string.set_end_time))
+            .build()
+
+        picker.addOnPositiveButtonClickListener {
+            prefs.endHour = picker.hour
+            prefs.endMinute = picker.minute
+            tvEndTime.text = String.format("%02d:%02d", picker.hour, picker.minute)
+
+            // Se l'allarme è attivo, riprogrammalo
+            if (prefs.isAlarmActive) {
+                AlarmReceiver.cancelAlarm(this)
+                AlarmReceiver.scheduleAlarm(this, picker.hour, picker.minute)
+                Toast.makeText(this, "⏰ Allarme aggiornato!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        picker.show(supportFragmentManager, "timePicker")
+    }
+
+    private fun checkPermissionsAndActivate() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(getString(R.string.permission_notification_title))
+                    .setMessage(getString(R.string.permission_notification_message))
+                    .setPositiveButton("OK") { _, _ ->
+                        notificationPermissionLauncher.launch(
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                    }
+                    .setNegativeButton(getString(R.string.btn_cancel), null)
+                    .show()
+                return
+            }
+        }
+        activateAlarm()
+    }
+
+    private fun activateAlarm() {
+        prefs.isAlarmActive = true
+        AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
+        updateUI()
+        Toast.makeText(this,
+            "⚡ Allarme attivato per le ${String.format("%02d:%02d", prefs.endHour, prefs.endMinute)}!",
+            Toast.LENGTH_SHORT).show()
+    }
+
+    private fun deactivateAlarm() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Disattivare l'allarme?")
+            .setMessage("Sei sicuro? Senza allarme potresti lavorare per sempre! 😱")
+            .setPositiveButton("Sì, disattiva") { _, _ ->
+                prefs.isAlarmActive = false
+                AlarmReceiver.cancelAlarm(this)
+                notificationHelper.cancelAll()
+                updateUI()
+                Toast.makeText(this, "Allarme disattivato 😴", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No, tienilo attivo", null)
+            .show()
+    }
+
+    private fun updateUI() {
+        val isActive = prefs.isAlarmActive
+        tvEndTime.text = String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
+
+        if (isActive) {
+            tvStatus.text = getString(R.string.alarm_active)
+            statusDot.setBackgroundResource(R.drawable.status_dot_active)
+            btnActivate.visibility = View.GONE
+            btnDeactivate.visibility = View.VISIBLE
+            cardCountdown.visibility = View.VISIBLE
+        } else {
+            tvStatus.text = getString(R.string.alarm_inactive)
+            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
+            btnActivate.visibility = View.VISIBLE
+            btnDeactivate.visibility = View.GONE
+            cardCountdown.visibility = View.GONE
+        }
+    }
+
+    private fun startClockUpdate() {
+        handler.post(object : Runnable {
+            override fun run() {
+                updateClock()
+                handler.postDelayed(this, 1000)
+            }
+        })
+    }
+
+    private fun updateClock() {
+        val now = Calendar.getInstance()
+        tvCurrentTime.text = timeFormatSeconds.format(now.time)
+
+        if (prefs.isAlarmActive) {
+            val endTime = Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, prefs.endHour)
+                set(Calendar.MINUTE, prefs.endMinute)
+                set(Calendar.SECOND, 0)
+            }
+
+            val diffMillis = endTime.timeInMillis - now.timeInMillis
+
+            if (diffMillis > 0) {
+                // Countdown
+                val hours = diffMillis / 3600000
+                val minutes = (diffMillis % 3600000) / 60000
+                val seconds = (diffMillis % 60000) / 1000
+                tvCountdown.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+                tvCountdownLabel.text = getString(R.string.time_remaining)
+                tvCountdown.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
+                layoutEscalation.visibility = View.GONE
+            } else {
+                // Straordinario!
+                val overtimeMillis = -diffMillis
+                val hours = overtimeMillis / 3600000
+                val minutes = (overtimeMillis % 3600000) / 60000
+                val seconds = (overtimeMillis % 60000) / 1000
+                tvCountdown.text = String.format("+%02d:%02d:%02d", hours, minutes, seconds)
+                tvCountdownLabel.text = getString(R.string.overtime)
+
+                val overtimeMinutes = (overtimeMillis / 60000).toInt()
+                val level = NotificationMessages.getLevelForMinutes(overtimeMinutes)
+
+                // Colore basato sul livello
+                val color = when (level) {
+                    NotificationMessages.Level.GENTLE -> R.color.alert_gentle
+                    NotificationMessages.Level.FRIENDLY -> R.color.alert_friendly
+                    NotificationMessages.Level.INSISTENT -> R.color.alert_insistent
+                    NotificationMessages.Level.AGGRESSIVE -> R.color.alert_aggressive
+                    NotificationMessages.Level.NUCLEAR -> R.color.alert_nuclear
+                    NotificationMessages.Level.APOCALYPSE -> R.color.alert_apocalypse
+                }
+                tvCountdown.setTextColor(ContextCompat.getColor(this, color))
+                tvCountdownLabel.setTextColor(ContextCompat.getColor(this, color))
+
+                // Mostra indicatori di escalation
+                layoutEscalation.visibility = View.VISIBLE
+                updateEscalationDots(level)
+            }
+        }
+    }
+
+    private fun updateEscalationDots(currentLevel: NotificationMessages.Level) {
+        val levels = NotificationMessages.Level.values()
+        for (i in levelDots.indices) {
+            if (i < levels.size && i <= currentLevel.ordinal) {
+                levelDots[i].setBackgroundResource(R.drawable.status_dot_active)
+            } else {
+                levelDots[i].setBackgroundResource(R.drawable.status_dot_inactive)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUI()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+}
