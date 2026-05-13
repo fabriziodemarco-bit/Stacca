@@ -9,8 +9,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
+
+        <!-- Toolbar -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background_dark"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/text_primary"
+            app:title="@string/progress_title"
+            app:titleTextColor="@color/text_primary" />
+
+        <!-- Content with padding -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
 
         <!-- Header -->
         <TextView
@@ -19,7 +38,8 @@
             android:text="@string/progress_title"
             style="@style/TextAppearance.Stacca.Title"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvDate"
@@ -229,5 +249,6 @@
             android:backgroundTint="@color/tertiary"
             android:layout_marginBottom="16dp" />
 
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

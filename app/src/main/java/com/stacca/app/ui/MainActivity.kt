@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -128,6 +127,11 @@ class MainActivity : AppCompatActivity() {
         // Registra progressi
         findViewById<MaterialButton>(R.id.btnLogProgress).setOnClickListener {
             startActivity(Intent(this, ProgressActivity::class.java))
+        }
+
+        // Impostazioni
+        findViewById<MaterialButton>(R.id.btnSettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -281,7 +285,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateEscalationDots(currentLevel: NotificationMessages.Level) {
-        val levels = NotificationMessages.Level.values()
+        val levels = NotificationMessages.Level.entries
         for (i in levelDots.indices) {
             if (i < levels.size && i <= currentLevel.ordinal) {
                 levelDots[i].setBackgroundResource(R.drawable.status_dot_active)

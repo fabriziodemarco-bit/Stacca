@@ -36,16 +36,17 @@ class AlarmReceiver : BroadcastReceiver() {
         val overtimeMillis = now.timeInMillis - endTime.timeInMillis
         val overtimeMinutes = (overtimeMillis / 60000).toInt().coerceAtLeast(0)
 
-        // Determina il livello di escalation
-        val level = NotificationMessages.getLevelForMinutes(overtimeMinutes)
+        // Determina il livello di escalation (rispetta velocità)
+        val adjustedMinutes = adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
+        val level = NotificationMessages.getLevelForMinutes(adjustedMinutes)
 
-        // Sveglia lo schermo per i livelli alti
+        // Mantieni la CPU attiva il tempo necessario per inviare la notifica.
+        // Lo schermo viene acceso dalla notification full-screen intent
+        // e dall'attributo turnScreenOn della FullScreenAlertActivity.
         if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
             val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
             val wakeLock = powerManager.newWakeLock(
-                PowerManager.FULL_WAKE_LOCK or
-                        PowerManager.ACQUIRE_CAUSES_WAKEUP or
-                        PowerManager.ON_AFTER_RELEASE,
+                PowerManager.PARTIAL_WAKE_LOCK,
                 "Stacca:WakeLock"
             )
             wakeLock.acquire(5000L)
@@ -53,10 +54,15 @@ class AlarmReceiver : BroadcastReceiver() {
 
         // Invia la notifica
         val notificationHelper = NotificationHelper(context)
-        notificationHelper.sendEscalatingNotification(level, overtimeMinutes)
+        notificationHelper.sendEscalatingNotification(
+            level, overtimeMinutes,
+            soundEnabled = prefs.soundEnabled,
+            vibrationEnabled = prefs.vibrationEnabled
+        )
 
         // Per livello NUCLEAR e APOCALYPSE, apri anche l'activity a schermo intero
-        if (level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
+        if (prefs.fullScreenEnabled &&
+            level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
             val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 putExtra("overtime_minutes", overtimeMinutes)
@@ -66,21 +72,46 @@ class AlarmReceiver : BroadcastReceiver() {
         }
 
         // Programma il prossimo allarme
-        scheduleNextAlarm(context, level)
+        scheduleNextAlarm(context, level, prefs.escalationSpeed)
+    }
+
+    /**
+     * Aggiusta i minuti in base alla velocità di escalation.
+     * 0 = Rilassato (x0.5 - escalation più lenta)
+     * 1 = Normale (x1)
+     * 2 = Aggressivo (x2 - escalation più veloce)
+     */
+    private fun adjustForSpeed(minutes: Int, speed: Int): Int {
+        return when (speed) {
+            0 -> minutes / 2       // Rilassato: dimezza i minuti -> escalation lenta
+            2 -> minutes * 2       // Aggressivo: raddoppia -> escalation veloce
+            else -> minutes        // Normale
+        }
     }
 
     /**
      * Programma il prossimo allarme in base al livello corrente.
      * Intervalli più ravvicinati per livelli più alti.
      */
-    private fun scheduleNextAlarm(context: Context, currentLevel: NotificationMessages.Level) {
-        val intervalMinutes = when (currentLevel) {
+    private fun scheduleNextAlarm(
+        context: Context,
+        currentLevel: NotificationMessages.Level,
+        escalationSpeed: Int
+    ) {
+        val baseInterval = when (currentLevel) {
             NotificationMessages.Level.GENTLE -> 5      // Ogni 5 min
             NotificationMessages.Level.FRIENDLY -> 5    // Ogni 5 min
             NotificationMessages.Level.INSISTENT -> 3   // Ogni 3 min
             NotificationMessages.Level.AGGRESSIVE -> 2  // Ogni 2 min
             NotificationMessages.Level.NUCLEAR -> 1     // Ogni minuto!
             NotificationMessages.Level.APOCALYPSE -> 1  // Ogni minuto!
+        }
+
+        // Adatta l'intervallo alla velocità
+        val intervalMinutes = when (escalationSpeed) {
+            0 -> (baseInterval * 1.5).toInt().coerceAtLeast(2)  // Rilassato: più lento
+            2 -> (baseInterval * 0.7).toInt().coerceAtLeast(1)  // Aggressivo: più veloce
+            else -> baseInterval
         }
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

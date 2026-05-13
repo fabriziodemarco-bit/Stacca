@@ -44,11 +44,94 @@
 
     <!-- History -->
     <string name="history_title">📋 Storico Lavoro</string>
-    <string name="history_empty">Nessun registro ancora. Stacca e registra!</string>
+    <string name="history_empty">Nessun registro ancora.\nStacca e registra i tuoi progressi!</string>
+    <string name="history_stats_title">📊 Le tue statistiche</string>
+    <string name="history_total_logs">Giorni registrati</string>
+    <string name="history_total_overtime">Straordinario totale</string>
+    <string name="history_avg_overtime">Media straordinario</string>
+    <string name="history_top_mood">Umore più frequente</string>
+    <string name="history_delete_title">Eliminare registro?</string>
+    <string name="history_delete_message">Sicuro di voler eliminare questo registro del %s?</string>
+    <string name="history_deleted">Registro eliminato 🗑️</string>
 
     <!-- Permissions -->
     <string name="permission_notification_title">Permesso Notifiche</string>
     <string name="permission_notification_message">Stacca! ha bisogno del permesso per inviarti notifiche (aggressive) per ricordarti di smettere di lavorare!</string>
     <string name="permission_alarm_title">Permesso Allarmi</string>
     <string name="permission_alarm_message">Stacca! ha bisogno del permesso per impostare allarmi precisi.</string>
+
+    <!-- Settings -->
+    <string name="settings_section_notifications">🔔 Notifiche</string>
+    <string name="settings_section_behavior">⚡ Comportamento</string>
+    <string name="settings_section_data">🗄️ Dati</string>
+    <string name="settings_section_account">👤 Account</string>
+    <string name="settings_sound">Suono allarme</string>
+    <string name="settings_sound_desc">Riproduce un suono quando scatta l\'allarme</string>
+    <string name="settings_vibration">Vibrazione</string>
+    <string name="settings_vibration_desc">Vibra il telefono con le notifiche</string>
+    <string name="settings_fullscreen">Allarme a schermo intero</string>
+    <string name="settings_fullscreen_desc">Mostra un allarme invasivo per i livelli alti</string>
+    <string name="settings_auto_restart">Riavvio automatico</string>
+    <string name="settings_auto_restart_desc">Riprogramma l\'allarme automaticamente ogni giorno</string>
+    <string name="settings_escalation_speed">Velocità escalation</string>
+    <string name="settings_escalation_speed_desc">Quanto velocemente le notifiche diventano aggressive</string>
+    <string name="settings_clear_data">🗑️ Cancella tutti i registri</string>
+    <string name="settings_clear_title">Cancellare tutto?</string>
+    <string name="settings_clear_message">Tutti i registri di lavoro saranno eliminati. Questa azione è irreversibile!</string>
+    <string name="settings_clear_confirm">Sì, cancella tutto</string>
+    <string name="settings_clear_done">Tutti i registri sono stati cancellati 🗑️</string>
+    <string name="settings_version">Stacca! v1.1 — Fatto con ❤️ e cattiveria</string>
+    <string name="settings_logout">Esci</string>
+    <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
+    <string name="settings_logged_as">Collegato come %s</string>
+    <string name="settings_not_logged">Non hai effettuato l\'accesso</string>
+    <string name="settings_login">Accedi</string>
+    <string name="settings_premium_badge">✨ Premium</string>
+    <string name="settings_upgrade">👑 Passa a Premium</string>
+
+    <!-- Escalation Speeds -->
+    <string-array name="escalation_speeds">
+        <item>🐢 Rilassato</item>
+        <item>⚡ Normale</item>
+        <item>🔥 Aggressivo</item>
+    </string-array>
+
+    <!-- Login -->
+    <string name="login_tab_login">Accedi</string>
+    <string name="login_tab_register">Registrati</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_forgot_password">Password dimenticata?</string>
+    <string name="login_btn_login">ACCEDI</string>
+    <string name="login_btn_register">REGISTRATI</string>
+    <string name="login_skip">Continua senza account →</string>
+    <string name="login_success">Accesso effettuato! 🎉</string>
+    <string name="login_register_success">Registrazione completata!\nControlla la tua email per verificare l\'account.</string>
+    <string name="login_reset_sent">Email di recupero inviata! 📧</string>
+    <string name="login_error_email_required">Inserisci la tua email</string>
+    <string name="login_error_email_invalid">Email non valida</string>
+    <string name="login_error_password_required">Inserisci la password</string>
+    <string name="login_error_password_short">La password deve avere almeno 6 caratteri</string>
+    <string name="login_error_generic">Errore: %s</string>
+
+    <!-- Premium -->
+    <string name="premium_title">Stacca! Premium</string>
+    <string name="premium_subtitle">Sblocca tutto il potere del relax forzato</string>
+    <string name="premium_features_title">✨ Cosa ottieni</string>
+    <string name="premium_feature_1">💀 Tutti i 6 livelli di escalation (incluso Nucleare e Apocalisse!)</string>
+    <string name="premium_feature_2">📊 Statistiche dettagliate e storico illimitato</string>
+    <string name="premium_feature_3">🎚️ Velocità di escalation personalizzabile</string>
+    <string name="premium_feature_4">📱 Allarme a schermo intero invasivo</string>
+    <string name="premium_feature_5">🚀 Aggiornamenti futuri inclusi</string>
+    <string name="premium_buy_button">👑 ACQUISTA PREMIUM</string>
+    <string name="premium_sub_button">Oppure abbonati mensilmente</string>
+    <string name="premium_restore">Ripristina acquisti</string>
+    <string name="premium_already">Sei già premium! 👑</string>
+    <string name="premium_success">Benvenuto nel club Premium! 👑🎉</string>
+    <string name="premium_error">Acquisto non completato</string>
+    <string name="premium_login_required">Devi effettuare l\'accesso per acquistare Premium</string>
+    <string name="premium_restoring">Ripristino acquisti in corso…</string>
+    <string name="premium_required">👑 Funzionalità Premium</string>
+    <string name="premium_required_message">Questa funzionalità è disponibile solo per gli utenti Premium.\nVuoi sbloccarla?</string>
+    <string name="premium_unlock">Sblocca Premium</string>
 </resources>

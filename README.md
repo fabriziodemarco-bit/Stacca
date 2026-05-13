@@ -36,6 +36,20 @@ Imposti un orario di fine turno e, quando arriva quel momento, l'app comincia a 
 - Seleziona il tuo umore con emoji
 - Storico completo consultabile
 
+### 📊 Statistiche
+- Giorni totali registrati
+- Straordinario totale e media giornaliera
+- Umore più frequente
+- Badge straordinario su ogni registro
+
+### ⚙️ Impostazioni
+- Attiva/disattiva suono allarme
+- Attiva/disattiva vibrazione
+- Attiva/disattiva allarme a schermo intero
+- Velocità escalation configurabile (Rilassato / Normale / Aggressivo)
+- Riavvio automatico giornaliero
+- Cancellazione dati
+
 ### 🎨 Design Premium
 - Tema scuro elegante con Material Design 3
 - Animazioni fluide e micro-interazioni
@@ -59,7 +73,8 @@ com.stacca.app/
 │   ├── MainActivity.kt            # Schermata principale
 │   ├── ProgressActivity.kt        # Registrazione progressi
 │   ├── FullScreenAlertActivity.kt  # Allarme a schermo intero
-│   ├── HistoryActivity.kt         # Storico lavoro
+│   ├── HistoryActivity.kt         # Storico lavoro + statistiche
+│   ├── SettingsActivity.kt        # Impostazioni
 │   └── adapter/
 │       └── WorkLogAdapter.kt
 └── StaccaApplication.kt

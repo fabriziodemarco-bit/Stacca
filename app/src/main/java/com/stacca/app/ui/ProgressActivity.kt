@@ -32,6 +32,10 @@ class ProgressActivity : AppCompatActivity() {
         prefs = PreferencesManager(this)
         overtimeMinutes = intent.getIntExtra("overtime_minutes", 0)
 
+        // Toolbar con navigazione
+        val toolbar = findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener { finish() }
+
         setupDate()
         setupMoodSelector()
         setupSaveButton()

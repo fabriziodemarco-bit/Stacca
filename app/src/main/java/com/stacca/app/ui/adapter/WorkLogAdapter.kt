@@ -12,9 +12,11 @@ import java.util.*
 
 /**
  * Adapter per la lista dei work log nello storico.
+ * Supporta long-press per eliminare un elemento.
  */
 class WorkLogAdapter(
-    private val logs: List<WorkLog>
+    private val logs: List<WorkLog>,
+    private val onDeleteClick: (Int) -> Unit
 ) : RecyclerView.Adapter<WorkLogAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -23,6 +25,7 @@ class WorkLogAdapter(
         val tvTime: TextView = view.findViewById(R.id.tvTime)
         val tvCompleted: TextView = view.findViewById(R.id.tvCompleted)
         val tvTodo: TextView = view.findViewById(R.id.tvTodo)
+        val tvOvertime: TextView = view.findViewById(R.id.tvOvertime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +42,14 @@ class WorkLogAdapter(
         holder.tvCompleted.text = log.completed.ifEmpty { "-" }
         holder.tvTodo.text = log.todo.ifEmpty { "-" }
 
+        // Mostra straordinario
+        if (log.overtimeMinutes > 0) {
+            holder.tvOvertime.visibility = View.VISIBLE
+            holder.tvOvertime.text = "+${log.overtimeMinutes}min"
+        } else {
+            holder.tvOvertime.visibility = View.GONE
+        }
+
         // Formatta la data in modo leggibile
         try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -51,6 +62,12 @@ class WorkLogAdapter(
             }
         } catch (e: Exception) {
             holder.tvDate.text = log.date
+        }
+
+        // Long press per eliminare
+        holder.itemView.setOnLongClickListener {
+            onDeleteClick(position)
+            true
         }
     }
 

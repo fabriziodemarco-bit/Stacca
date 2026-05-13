@@ -70,8 +70,14 @@ class NotificationHelper(private val context: Context) {
 
     /**
      * Invia una notifica basata sul livello di escalation.
+     * Rispetta le preferenze utente per suono e vibrazione.
      */
-    fun sendEscalatingNotification(level: NotificationMessages.Level, overtimeMinutes: Int) {
+    fun sendEscalatingNotification(
+        level: NotificationMessages.Level,
+        overtimeMinutes: Int,
+        soundEnabled: Boolean = true,
+        vibrationEnabled: Boolean = true
+    ) {
         val (title, message) = NotificationMessages.getRandomMessage(level)
 
         val channel = if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
@@ -118,7 +124,7 @@ class NotificationHelper(private val context: Context) {
             else -> longArrayOf(0, 500, 200, 500)
         }
 
-        val notification = NotificationCompat.Builder(context, channel)
+        val builder = NotificationCompat.Builder(context, channel)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle(title)
             .setContentText(message)
@@ -127,17 +133,28 @@ class NotificationHelper(private val context: Context) {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(false)
             .setOngoing(level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal)
-            .setVibrate(vibrationPattern)
             .setContentIntent(fullScreenPending)
             .setFullScreenIntent(fullScreenPending, true)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel,
                 context.getString(R.string.btn_ok_stacco), stopPending)
             .addAction(android.R.drawable.ic_menu_edit,
                 context.getString(R.string.btn_log_progress), logPending)
-            .build()
+
+        // Vibrazione condizionale
+        if (vibrationEnabled) {
+            builder.setVibrate(vibrationPattern)
+        }
+
+        // Suono condizionale
+        if (soundEnabled && level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
+            val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+            builder.setSound(alarmSound)
+        } else if (!soundEnabled) {
+            builder.setSilent(true)
+        }
 
         try {
-            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
         } catch (e: SecurityException) {
             // Permessi notifica non concessi
             e.printStackTrace()

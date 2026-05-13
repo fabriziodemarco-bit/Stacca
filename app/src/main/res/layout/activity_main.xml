@@ -264,7 +264,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnHistory"
@@ -274,7 +274,7 @@
                 android:text="@string/view_history"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:textColor="@color/text_secondary"
-                android:layout_marginEnd="8dp" />
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogProgress"
@@ -284,9 +284,19 @@
                 android:text="@string/btn_log_progress"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:textColor="@color/text_secondary"
-                android:layout_marginStart="8dp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
 </ScrollView>

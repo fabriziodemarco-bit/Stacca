@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.BounceInterpolator
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
@@ -42,6 +43,13 @@ class FullScreenAlertActivity : AppCompatActivity() {
         startAnimations()
         startOvertimeCounter()
         playAlarmSound()
+
+        // Blocca il tasto back — l'utente DEVE premere un bottone! 😈
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Non fare niente! Mwahaha!
+            }
+        })
     }
 
     private fun setupUI(levelName: String) {
@@ -169,12 +177,5 @@ class FullScreenAlertActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
-    }
-
-    // Rendi difficile chiudere l'activity con il tasto back
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        // Non fare niente! L'utente DEVE premere un bottone!
-        // (Sì, siamo cattivi 😈)
     }
 }

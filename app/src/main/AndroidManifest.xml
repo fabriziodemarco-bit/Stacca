@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name=".StaccaApplication"
@@ -23,16 +25,32 @@
         android:theme="@style/Theme.Stacca"
         tools:targetApi="35">
 
-        <!-- Main Activity -->
+        <!-- Login Activity (LAUNCHER) -->
+<activity
+    android:name=".ui.LoginActivity"
+    android:exported="true"
+    android:theme="@style/Theme.Stacca">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+
+    <!-- Deep link per conferma email Supabase -->
+    <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+            android:scheme="stacca"
+            android:host="login-callback" />
+    </intent-filter>
+</activity>
+          
+               <!-- Main Activity -->
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Stacca">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.Stacca" />
 
         <!-- Progress Log Activity -->
         <activity
@@ -54,6 +72,20 @@
         <!-- Work Log History Activity -->
         <activity
             android:name=".ui.HistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Settings Activity -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Premium Activity -->
+        <activity
+            android:name=".ui.PremiumActivity"
             android:exported="false"
             android:theme="@style/Theme.Stacca"
             android:parentActivityName=".ui.MainActivity" />

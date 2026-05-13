@@ -53,5 +53,8 @@
     <color name="divider">#2A2A4A</color>
     <color name="overlay_dark">#CC000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
+
+    <!-- Premium -->
+    <color name="premium_gold">#FFD700</color>
+    <color name="premium_gold_dark">#E6B800</color>
 </resources>
