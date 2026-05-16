@@ -300,29 +300,8 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Sezione Dati -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_section_data"
-                android:textSize="14sp"
-                android:textColor="@color/alert_aggressive"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
 
-            <!-- Cancella Dati -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnClearData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_clear_data"
-                style="@style/Widget.Stacca.Button.Secondary"
-                android:strokeColor="@color/alert_aggressive"
-                android:textColor="@color/alert_aggressive"
-                android:layout_marginBottom="16dp" />
+
 
             <!-- Sezione Account -->
             <TextView

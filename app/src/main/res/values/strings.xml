@@ -8,12 +8,12 @@
     <string name="current_time">Ora attuale</string>
     <string name="end_time_label">Fine turno</string>
     <string name="time_remaining">Tempo rimanente</string>
-    <string name="overtime">Straordinario non pagato!</string>
+    <string name="overtime">Tempo non vissuto!</string>
     <string name="alarm_active">⚡ Allarme attivo</string>
     <string name="alarm_inactive">Nessun allarme impostato</string>
     <string name="activate_alarm">ATTIVA ALLARME</string>
     <string name="deactivate_alarm">DISATTIVA</string>
-    <string name="view_history">📋 Storico</string>
+
     <string name="settings">⚙️ Impostazioni</string>
 
     <!-- Notification Levels -->
@@ -25,34 +25,17 @@
     <!-- Action Buttons -->
     <string name="btn_ok_stacco">OK, STACCO! ✋</string>
     <string name="btn_5_more_minutes">Ancora 5 minuti… ⏰</string>
-    <string name="btn_log_progress">📝 Registra progressi</string>
+
     <string name="btn_save">Salva</string>
     <string name="btn_cancel">Annulla</string>
 
-    <!-- Progress Activity -->
-    <string name="progress_title">Che hai combinato oggi?</string>
-    <string name="progress_done_hint">Cosa hai completato oggi…</string>
-    <string name="progress_todo_hint">Cosa devi ancora fare domani…</string>
-    <string name="progress_done_label">✅ Completato</string>
-    <string name="progress_todo_label">📌 Da fare domani</string>
-    <string name="progress_saved">Progressi salvati! Ora STACCA! 🎉</string>
-    <string name="progress_mood_label">Come ti senti?</string>
+
 
     <!-- Full Screen Alert -->
     <string name="fullscreen_title">STACCAAAAAA!</string>
     <string name="fullscreen_subtitle">È ora di VIVERE!</string>
 
-    <!-- History -->
-    <string name="history_title">📋 Storico Lavoro</string>
-    <string name="history_empty">Nessun registro ancora.\nStacca e registra i tuoi progressi!</string>
-    <string name="history_stats_title">📊 Le tue statistiche</string>
-    <string name="history_total_logs">Giorni registrati</string>
-    <string name="history_total_overtime">Straordinario totale</string>
-    <string name="history_avg_overtime">Media straordinario</string>
-    <string name="history_top_mood">Umore più frequente</string>
-    <string name="history_delete_title">Eliminare registro?</string>
-    <string name="history_delete_message">Sicuro di voler eliminare questo registro del %s?</string>
-    <string name="history_deleted">Registro eliminato 🗑️</string>
+
 
     <!-- Permissions -->
     <string name="permission_notification_title">Permesso Notifiche</string>
@@ -63,7 +46,6 @@
     <!-- Settings -->
     <string name="settings_section_notifications">🔔 Notifiche</string>
     <string name="settings_section_behavior">⚡ Comportamento</string>
-    <string name="settings_section_data">🗄️ Dati</string>
     <string name="settings_section_account">👤 Account</string>
     <string name="settings_sound">Suono allarme</string>
     <string name="settings_sound_desc">Riproduce un suono quando scatta l\'allarme</string>
@@ -75,11 +57,6 @@
     <string name="settings_auto_restart_desc">Riprogramma l\'allarme automaticamente ogni giorno</string>
     <string name="settings_escalation_speed">Velocità escalation</string>
     <string name="settings_escalation_speed_desc">Quanto velocemente le notifiche diventano aggressive</string>
-    <string name="settings_clear_data">🗑️ Cancella tutti i registri</string>
-    <string name="settings_clear_title">Cancellare tutto?</string>
-    <string name="settings_clear_message">Tutti i registri di lavoro saranno eliminati. Questa azione è irreversibile!</string>
-    <string name="settings_clear_confirm">Sì, cancella tutto</string>
-    <string name="settings_clear_done">Tutti i registri sono stati cancellati 🗑️</string>
     <string name="settings_version">Stacca! v1.1 — Fatto con ❤️ e cattiveria</string>
     <string name="settings_logout">Esci</string>
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
@@ -119,11 +96,10 @@
     <string name="premium_subtitle">Sblocca tutto il potere del relax forzato</string>
     <string name="premium_features_title">✨ Cosa ottieni</string>
     <string name="premium_feature_1">💀 Tutti i 6 livelli di escalation (incluso Nucleare e Apocalisse!)</string>
-    <string name="premium_feature_2">📊 Statistiche dettagliate e storico illimitato</string>
-    <string name="premium_feature_3">🎚️ Velocità di escalation personalizzabile</string>
-    <string name="premium_feature_4">📱 Allarme a schermo intero invasivo</string>
-    <string name="premium_feature_5">🚀 Aggiornamenti futuri inclusi</string>
-    <string name="premium_buy_button">👑 ACQUISTA PREMIUM</string>
+    <string name="premium_feature_2">🎚️ Velocità di escalation personalizzabile</string>
+    <string name="premium_feature_3">📱 Allarme a schermo intero invasivo</string>
+    <string name="premium_feature_4">🚀 Aggiornamenti futuri inclusi</string>
+    <string name="premium_buy_button">👑 ACQUISTA PREMIUM ORA</string>
     <string name="premium_sub_button">Oppure abbonati mensilmente</string>
     <string name="premium_restore">Ripristina acquisti</string>
     <string name="premium_already">Sei già premium! 👑</string>
@@ -134,4 +110,17 @@
     <string name="premium_required">👑 Funzionalità Premium</string>
     <string name="premium_required_message">Questa funzionalità è disponibile solo per gli utenti Premium.\nVuoi sbloccarla?</string>
     <string name="premium_unlock">Sblocca Premium</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">Le notifiche serie stanno per partire! 🔥</string>
+    <string name="paywall_subtitle">Hai ignorato 3 avvisi gentili.\nOra è il momento di fare sul serio.\nSblocca le notifiche a schermo intero che ti OBBLIGHERANNO a staccare!</string>
+    <string name="paywall_unlock_title">🚀 Cosa sblocchi</string>
+    <string name="paywall_feature_1">🤬 Livello AGGRESSIVO — notifiche a tutto schermo impossibili da ignorare</string>
+    <string name="paywall_feature_2">💀 Livello NUCLEARE — allarme sonoro + schermo bloccato</string>
+    <string name="paywall_feature_3">☠️ Livello APOCALISSE — il tuo telefono diventa il tuo peggior nemico</string>
+    <string name="paywall_price">€0,99</string>
+    <string name="paywall_price_desc">Un pagamento unico. Per sempre. Niente abbonamenti.</string>
+    <string name="paywall_buy_button">🔓 SBLOCCA ORA — €0,99</string>
+    <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
+    <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai più sfuggire! 😈🔥</string>
 </resources>

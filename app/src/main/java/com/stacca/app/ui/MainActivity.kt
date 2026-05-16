@@ -119,16 +119,6 @@ class MainActivity : AppCompatActivity() {
             deactivateAlarm()
         }
 
-        // Storico
-        findViewById<MaterialButton>(R.id.btnHistory).setOnClickListener {
-            startActivity(Intent(this, HistoryActivity::class.java))
-        }
-
-        // Registra progressi
-        findViewById<MaterialButton>(R.id.btnLogProgress).setOnClickListener {
-            startActivity(Intent(this, ProgressActivity::class.java))
-        }
-
         // Impostazioni
         findViewById<MaterialButton>(R.id.btnSettings).setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))

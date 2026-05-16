@@ -17,6 +17,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 // L'utente ha accettato di staccare
                 val prefs = PreferencesManager(context)
                 prefs.alarmTriggeredToday = true
+                prefs.paywallShownToday = false
 
                 // Cancella gli allarmi futuri per oggi
                 AlarmReceiver.cancelAlarm(context)

@@ -74,14 +74,5 @@
             android:textSize="20sp"
             android:layout_marginBottom="16dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogAndStop"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_log_progress"
-            style="@style/Widget.Stacca.Button.Secondary"
-            android:strokeColor="@color/white"
-            android:textColor="@color/white" />
-
     </LinearLayout>
 </FrameLayout>

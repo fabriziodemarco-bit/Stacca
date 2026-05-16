@@ -43,7 +43,6 @@ class SettingsActivity : AppCompatActivity() {
         setupAutoRestartSwitch()
         setupEscalationSpeed()
         setupAccountSection()
-        setupClearData()
     }
 
     private fun setupSoundSwitch() {
@@ -171,21 +170,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupClearData() {
-        findViewById<MaterialButton>(R.id.btnClearData)
-            .setOnClickListener {
-                MaterialAlertDialogBuilder(this)
-                    .setTitle(getString(R.string.settings_clear_title))
-                    .setMessage(getString(R.string.settings_clear_message))
-                    .setPositiveButton(getString(R.string.settings_clear_confirm)) { _, _ ->
-                        prefs.clearWorkLogs()
-                        Toast.makeText(this, getString(R.string.settings_clear_done),
-                            Toast.LENGTH_SHORT).show()
-                    }
-                    .setNegativeButton(getString(R.string.btn_cancel), null)
-                    .show()
-            }
-    }
+
 
     private fun showPremiumUpsell() {
         MaterialAlertDialogBuilder(this)

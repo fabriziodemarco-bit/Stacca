@@ -25,26 +25,33 @@
         android:theme="@style/Theme.Stacca"
         tools:targetApi="35">
 
-        <!-- Login Activity (LAUNCHER) -->
-<activity
-    android:name=".ui.LoginActivity"
-    android:exported="true"
-    android:theme="@style/Theme.Stacca">
-    <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-    </intent-filter>
+        <!-- Splash Screen (LAUNCHER) -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Stacca">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    <!-- Deep link per conferma email Supabase -->
-    <intent-filter android:autoVerify="true">
-        <action android:name="android.intent.action.VIEW" />
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data
-            android:scheme="stacca"
-            android:host="login-callback" />
-    </intent-filter>
-</activity>
+        <!-- Login Activity -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Stacca">
+
+            <!-- Deep link per conferma email Supabase -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="stacca"
+                    android:host="login-callback" />
+            </intent-filter>
+        </activity>
           
                <!-- Main Activity -->
         <activity
@@ -52,12 +59,7 @@
             android:exported="false"
             android:theme="@style/Theme.Stacca" />
 
-        <!-- Progress Log Activity -->
-        <activity
-            android:name=".ui.ProgressActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Stacca"
-            android:parentActivityName=".ui.MainActivity" />
+
 
         <!-- Full Screen Alert Activity -->
         <activity
@@ -69,12 +71,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
 
-        <!-- Work Log History Activity -->
-        <activity
-            android:name=".ui.HistoryActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Stacca"
-            android:parentActivityName=".ui.MainActivity" />
+
 
         <!-- Settings Activity -->
         <activity
@@ -89,6 +86,13 @@
             android:exported="false"
             android:theme="@style/Theme.Stacca"
             android:parentActivityName=".ui.MainActivity" />
+
+        <!-- Paywall Activity -->
+        <activity
+            android:name=".ui.PaywallActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:launchMode="singleTop" />
 
         <!-- Alarm Receiver -->
         <receiver

@@ -14,7 +14,7 @@ import com.stacca.app.R
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.receivers.NotificationActionReceiver
 import com.stacca.app.ui.FullScreenAlertActivity
-import com.stacca.app.ui.ProgressActivity
+
 
 /**
  * Helper per la creazione e l'invio di notifiche con escalation.
@@ -105,15 +105,7 @@ class NotificationHelper(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Azione: Registra progressi
-        val logIntent = Intent(context, ProgressActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra("overtime_minutes", overtimeMinutes)
-        }
-        val logPending = PendingIntent.getActivity(
-            context, 2, logIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+
 
         // Vibration pattern basato sul livello
         val vibrationPattern = when {
@@ -124,11 +116,20 @@ class NotificationHelper(private val context: Context) {
             else -> longArrayOf(0, 500, 200, 500)
         }
 
+        // Testo collassato: sempre "Basta lavorare. Vivi."
+        // Testo espanso: titolo grande "STACCA!" + titolo e messaggio originali sotto
+        val collapsedBody = "Basta lavorare. Vivi."
+        val expandedBody = "$title\n$message"
+
         val builder = NotificationCompat.Builder(context, channel)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle(title)
-            .setContentText(message)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+            .setContentText(collapsedBody)
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .setBigContentTitle("STACCA!")
+                    .bigText(expandedBody)
+            )
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(false)
@@ -137,8 +138,7 @@ class NotificationHelper(private val context: Context) {
             .setFullScreenIntent(fullScreenPending, true)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel,
                 context.getString(R.string.btn_ok_stacco), stopPending)
-            .addAction(android.R.drawable.ic_menu_edit,
-                context.getString(R.string.btn_log_progress), logPending)
+
 
         // Vibrazione condizionale
         if (vibrationEnabled) {

@@ -11,6 +11,7 @@ import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.FullScreenAlertActivity
+import com.stacca.app.ui.PaywallActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,7 +39,21 @@ class AlarmReceiver : BroadcastReceiver() {
 
         // Determina il livello di escalation (rispetta velocità)
         val adjustedMinutes = adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
-        val level = NotificationMessages.getLevelForMinutes(adjustedMinutes)
+        var level = NotificationMessages.getLevelForMinutes(adjustedMinutes)
+
+        // --- PAYWALL: blocco al livello 3 (INSISTENT) se non premium ---
+        if (level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal && !prefs.isPremium) {
+            // Se non abbiamo ancora mostrato il paywall in questa sessione, mostralo
+            if (!prefs.paywallShownToday) {
+                prefs.paywallShownToday = true
+                val paywallIntent = Intent(context, PaywallActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                context.startActivity(paywallIntent)
+            }
+            // Cap al livello INSISTENT per utenti non premium
+            level = NotificationMessages.Level.INSISTENT
+        }
 
         // Mantieni la CPU attiva il tempo necessario per inviare la notifica.
         // Lo schermo viene acceso dalla notification full-screen intent

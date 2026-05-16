@@ -79,14 +79,6 @@ class FullScreenAlertActivity : AppCompatActivity() {
             stopWork()
         }
 
-        // Bottone Registra e Stacca
-        findViewById<MaterialButton>(R.id.btnLogAndStop).setOnClickListener {
-            val intent = Intent(this, ProgressActivity::class.java).apply {
-                putExtra("overtime_minutes", overtimeMinutes)
-            }
-            startActivity(intent)
-            finish()
-        }
     }
 
     private fun startAnimations() {
@@ -163,6 +155,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
 
     private fun stopWork() {
         prefs.alarmTriggeredToday = true
+        prefs.paywallShownToday = false
         AlarmReceiver.cancelAlarm(this)
         NotificationHelper(this).cancelAll()
 

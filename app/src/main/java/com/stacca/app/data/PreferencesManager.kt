@@ -2,12 +2,10 @@ package com.stacca.app.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.stacca.app.data.WorkLog
-import org.json.JSONArray
-import org.json.JSONObject
+
 
 /**
- * Gestisce le preferenze dell'app e lo storage dei work log.
+ * Gestisce le preferenze dell'app.
  */
 class PreferencesManager(context: Context) {
 
@@ -18,7 +16,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_END_HOUR = "end_hour"
         private const val KEY_END_MINUTE = "end_minute"
         private const val KEY_ALARM_ACTIVE = "alarm_active"
-        private const val KEY_WORK_LOGS = "work_logs"
+
         private const val KEY_ALARM_TRIGGERED_TODAY = "alarm_triggered_today"
         private const val KEY_LAST_TRIGGER_DATE = "last_trigger_date"
         private const val KEY_SOUND_ENABLED = "sound_enabled"
@@ -29,6 +27,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_IS_PREMIUM = "is_premium"
+        private const val KEY_PAYWALL_SHOWN_TODAY = "paywall_shown_today"
     }
 
     var endHour: Int
@@ -88,77 +87,8 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_IS_PREMIUM, false)
         set(value) = prefs.edit().putBoolean(KEY_IS_PREMIUM, value).apply()
 
-    /**
-     * Salva un work log.
-     */
-    fun saveWorkLog(log: WorkLog) {
-        val logs = getWorkLogs().toMutableList()
-        logs.add(0, log) // Aggiunge in cima (più recente)
-        val jsonArray = JSONArray()
-        logs.forEach { entry ->
-            val obj = JSONObject().apply {
-                put("date", entry.date)
-                put("time", entry.time)
-                put("completed", entry.completed)
-                put("todo", entry.todo)
-                put("mood", entry.mood)
-                put("overtimeMinutes", entry.overtimeMinutes)
-            }
-            jsonArray.put(obj)
-        }
-        prefs.edit().putString(KEY_WORK_LOGS, jsonArray.toString()).apply()
-    }
-
-    /**
-     * Recupera tutti i work log.
-     */
-    fun getWorkLogs(): List<WorkLog> {
-        val json = prefs.getString(KEY_WORK_LOGS, "[]") ?: "[]"
-        val jsonArray = JSONArray(json)
-        val logs = mutableListOf<WorkLog>()
-        for (i in 0 until jsonArray.length()) {
-            val obj = jsonArray.getJSONObject(i)
-            logs.add(
-                WorkLog(
-                    date = obj.getString("date"),
-                    time = obj.getString("time"),
-                    completed = obj.getString("completed"),
-                    todo = obj.getString("todo"),
-                    mood = obj.getString("mood"),
-                    overtimeMinutes = obj.getInt("overtimeMinutes")
-                )
-            )
-        }
-        return logs
-    }
-
-    /**
-     * Cancella un work log dalla posizione specificata.
-     */
-    fun deleteWorkLog(position: Int) {
-        val logs = getWorkLogs().toMutableList()
-        if (position in logs.indices) {
-            logs.removeAt(position)
-            val jsonArray = JSONArray()
-            logs.forEach { entry ->
-                val obj = JSONObject().apply {
-                    put("date", entry.date)
-                    put("time", entry.time)
-                    put("completed", entry.completed)
-                    put("todo", entry.todo)
-                    put("mood", entry.mood)
-                    put("overtimeMinutes", entry.overtimeMinutes)
-                }
-                jsonArray.put(obj)
-            }
-            prefs.edit().putString(KEY_WORK_LOGS, jsonArray.toString()).apply()
-        }
-    }
-
-    /**
-     * Cancella tutti i work log.
-     */
-    fun clearWorkLogs() {
-        prefs.edit().putString(KEY_WORK_LOGS, "[]").apply()
-    }
+    /** Tiene traccia se il paywall è stato mostrato oggi */
+    var paywallShownToday: Boolean
+        get() = prefs.getBoolean(KEY_PAYWALL_SHOWN_TODAY, false)
+        set(value) = prefs.edit().putBoolean(KEY_PAYWALL_SHOWN_TODAY, value).apply()
 }

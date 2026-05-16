@@ -258,35 +258,7 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
-        <!-- Bottom Navigation -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnHistory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/view_history"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogProgress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/btn_log_progress"
-                style="@style/Widget.Material3.Button.TextButton"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
-
-        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSettings"
