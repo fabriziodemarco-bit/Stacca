@@ -2,14 +2,14 @@ package com.stacca.app.billing
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.android.billingclient.api.*
 import com.stacca.app.data.PreferencesManager
 import kotlinx.coroutines.*
 
 /**
  * Gestisce gli acquisti in-app tramite Google Play Billing.
- * Supporta sia subscription che one-time purchase per il premium.
- * Usa le KTX coroutine extensions per evitare problemi con i tipi Java.
+ * Supporta one-time purchase per il premium.
  */
 class BillingManager(
     private val context: Context,
@@ -17,8 +17,8 @@ class BillingManager(
 ) : PurchasesUpdatedListener {
 
     companion object {
+        private const val TAG = "BillingManager"
         const val PREMIUM_PRODUCT_ID = "stacca_premium"
-        const val PREMIUM_SUB_ID = "stacca_premium_monthly"
     }
 
     private val prefs = PreferencesManager(context)
@@ -29,44 +29,67 @@ class BillingManager(
         .enablePendingPurchases(
             PendingPurchasesParams.newBuilder()
                 .enableOneTimeProducts()
-                .enablePrepaidPlans()
                 .build()
         )
         .build()
 
     private var productDetails: ProductDetails? = null
-    private var subDetails: ProductDetails? = null
+    private var isConnected = false
+    private var connectionRetryCount = 0
+    private val maxRetries = 3
+
+    /** Callback per quando i prodotti sono stati caricati */
+    var onProductsReady: (() -> Unit)? = null
 
     /**
      * Connette al Google Play Billing service.
      */
     fun connect() {
+        if (billingClient.isReady) {
+            isConnected = true
+            scope.launch {
+                queryProducts()
+                checkExistingPurchases()
+            }
+            return
+        }
+
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(result: BillingResult) {
+                Log.d(TAG, "Billing setup finished: ${result.responseCode} - ${result.debugMessage}")
                 if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+                    isConnected = true
+                    connectionRetryCount = 0
                     scope.launch {
                         queryProducts()
                         checkExistingPurchases()
                     }
+                } else {
+                    isConnected = false
+                    Log.e(TAG, "Billing setup failed: ${result.debugMessage}")
                 }
             }
 
             override fun onBillingServiceDisconnected() {
-                scope.launch {
-                    delay(3000)
-                    connect()
+                isConnected = false
+                Log.w(TAG, "Billing service disconnected")
+                if (connectionRetryCount < maxRetries) {
+                    connectionRetryCount++
+                    scope.launch {
+                        delay(2000L * connectionRetryCount)
+                        connect()
+                    }
                 }
             }
         })
     }
 
     /**
-     * Interroga i prodotti disponibili usando le KTX coroutine extensions.
+     * Interroga i prodotti disponibili.
      */
     private suspend fun queryProducts() {
         withContext(Dispatchers.IO) {
             try {
-                // Query per in-app purchase (one-time)
                 val inAppParams = QueryProductDetailsParams.newBuilder()
                     .setProductList(
                         listOf(
@@ -79,89 +102,102 @@ class BillingManager(
                     .build()
 
                 val inAppResult = billingClient.queryProductDetails(inAppParams)
+                Log.d(TAG, "Query products result: ${inAppResult.billingResult.responseCode}")
+
                 if (inAppResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     val list = inAppResult.productDetailsList
                     if (list != null && list.isNotEmpty()) {
                         productDetails = list[0]
+                        Log.d(TAG, "Product found: ${productDetails?.name} - ${productDetails?.oneTimePurchaseOfferDetails?.formattedPrice}")
+                        withContext(Dispatchers.Main) {
+                            onProductsReady?.invoke()
+                        }
+                    } else {
+                        Log.w(TAG, "Product list is empty for ID: $PREMIUM_PRODUCT_ID")
                     }
-                }
-
-                // Query per subscription
-                val subParams = QueryProductDetailsParams.newBuilder()
-                    .setProductList(
-                        listOf(
-                            QueryProductDetailsParams.Product.newBuilder()
-                                .setProductId(PREMIUM_SUB_ID)
-                                .setProductType(BillingClient.ProductType.SUBS)
-                                .build()
-                        )
-                    )
-                    .build()
-
-                val subResult = billingClient.queryProductDetails(subParams)
-                if (subResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    val list = subResult.productDetailsList
-                    if (list != null && list.isNotEmpty()) {
-                        subDetails = list[0]
-                    }
+                } else {
+                    Log.e(TAG, "Query failed: ${inAppResult.billingResult.debugMessage}")
                 }
             } catch (e: Exception) {
-                // Errore di rete o billing, ignora silenziosamente
+                Log.e(TAG, "Error querying products", e)
             }
         }
     }
 
     /**
+     * Verifica se il billing client è pronto e il prodotto è disponibile.
+     */
+    fun isReady(): Boolean = isConnected && productDetails != null
+
+    /**
      * Avvia il flusso di acquisto per il prodotto premium.
+     * Se il prodotto non è ancora caricato, riprova a connettersi.
      */
     fun launchPurchaseFlow(activity: Activity, isSubscription: Boolean = false) {
-        val details = if (isSubscription) subDetails else productDetails
-        if (details == null) {
+        if (!isConnected) {
+            Log.w(TAG, "Billing not connected, reconnecting...")
+            connect()
             onPurchaseResult(false)
             return
         }
 
-        val productDetailsParamsList = if (isSubscription) {
-            val offerDetails = details.subscriptionOfferDetails
-            if (offerDetails == null || offerDetails.isEmpty()) {
-                onPurchaseResult(false)
-                return
+        val details = productDetails
+        if (details == null) {
+            Log.w(TAG, "Product details not available, retrying query...")
+            scope.launch {
+                queryProducts()
+                // Riprova dopo la query
+                val retryDetails = productDetails
+                if (retryDetails != null) {
+                    launchBillingFlow(activity, retryDetails)
+                } else {
+                    Log.e(TAG, "Product still not available after retry")
+                    onPurchaseResult(false)
+                }
             }
-            listOf(
-                BillingFlowParams.ProductDetailsParams.newBuilder()
-                    .setProductDetails(details)
-                    .setOfferToken(offerDetails[0].offerToken)
-                    .build()
-            )
-        } else {
-            listOf(
-                BillingFlowParams.ProductDetailsParams.newBuilder()
-                    .setProductDetails(details)
-                    .build()
-            )
+            return
         }
+
+        launchBillingFlow(activity, details)
+    }
+
+    private fun launchBillingFlow(activity: Activity, details: ProductDetails) {
+        val productDetailsParamsList = listOf(
+            BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(details)
+                .build()
+        )
 
         val flowParams = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(productDetailsParamsList)
             .build()
 
-        billingClient.launchBillingFlow(activity, flowParams)
+        val result = billingClient.launchBillingFlow(activity, flowParams)
+        Log.d(TAG, "Launch billing flow result: ${result.responseCode} - ${result.debugMessage}")
     }
 
     /**
      * Callback quando un acquisto viene completato o aggiornato.
      */
     override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+        Log.d(TAG, "Purchases updated: ${result.responseCode} - ${result.debugMessage}")
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                purchases?.forEach { purchase ->
-                    handlePurchase(purchase)
+                if (purchases != null && purchases.isNotEmpty()) {
+                    purchases.forEach { purchase ->
+                        handlePurchase(purchase)
+                    }
+                } else {
+                    // Nessun acquisto nella lista
+                    onPurchaseResult(false)
                 }
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
+                Log.d(TAG, "User canceled purchase")
                 onPurchaseResult(false)
             }
             else -> {
+                Log.e(TAG, "Purchase error: ${result.responseCode} - ${result.debugMessage}")
                 onPurchaseResult(false)
             }
         }
@@ -171,6 +207,8 @@ class BillingManager(
      * Gestisce un acquisto: acknowledge + attiva premium.
      */
     private fun handlePurchase(purchase: Purchase) {
+        Log.d(TAG, "Handling purchase: state=${purchase.purchaseState}, acknowledged=${purchase.isAcknowledged}")
+
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
             if (!purchase.isAcknowledged) {
                 val ackParams = AcknowledgePurchaseParams.newBuilder()
@@ -178,8 +216,22 @@ class BillingManager(
                     .build()
 
                 scope.launch {
-                    val ackResult = billingClient.acknowledgePurchase(ackParams)
-                    if (ackResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    try {
+                        val ackResult = billingClient.acknowledgePurchase(ackParams)
+                        Log.d(TAG, "Acknowledge result: ${ackResult.responseCode}")
+                        if (ackResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                            prefs.isPremium = true
+                            onPurchaseResult(true)
+                        } else {
+                            // Anche se l'acknowledge fallisce, l'acquisto è valido
+                            // Il Play Store riprovera l'acknowledge automaticamente
+                            prefs.isPremium = true
+                            onPurchaseResult(true)
+                            Log.w(TAG, "Acknowledge failed but purchase is valid: ${ackResult.debugMessage}")
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error acknowledging purchase", e)
+                        // L'acquisto è comunque valido
                         prefs.isPremium = true
                         onPurchaseResult(true)
                     }
@@ -188,6 +240,10 @@ class BillingManager(
                 prefs.isPremium = true
                 onPurchaseResult(true)
             }
+        } else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
+            Log.d(TAG, "Purchase is pending")
+            // Acquisto in attesa (es. pagamento in contanti)
+            // Non attivare il premium ancora
         }
     }
 
@@ -195,15 +251,18 @@ class BillingManager(
      * Verifica gli acquisti esistenti al lancio dell'app.
      */
     fun checkExistingPurchases() {
+        if (!isConnected) return
+
         scope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    // Check in-app purchases
                     val inAppParams = QueryPurchasesParams.newBuilder()
                         .setProductType(BillingClient.ProductType.INAPP)
                         .build()
 
                     val inAppResult = billingClient.queryPurchasesAsync(inAppParams)
+                    Log.d(TAG, "Check existing purchases: ${inAppResult.billingResult.responseCode}, count=${inAppResult.purchasesList.size}")
+
                     if (inAppResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                         val hasPremium = inAppResult.purchasesList.any { purchase ->
                             purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
@@ -211,25 +270,16 @@ class BillingManager(
                         }
                         if (hasPremium) {
                             prefs.isPremium = true
-                            return@withContext
+                            // Acknowledge acquisti non ancora confermati
+                            inAppResult.purchasesList.forEach { purchase ->
+                                if (!purchase.isAcknowledged && purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+                                    handlePurchase(purchase)
+                                }
+                            }
                         }
-                    }
-
-                    // Check subscriptions
-                    val subParams = QueryPurchasesParams.newBuilder()
-                        .setProductType(BillingClient.ProductType.SUBS)
-                        .build()
-
-                    val subResult = billingClient.queryPurchasesAsync(subParams)
-                    if (subResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        val hasActiveSub = subResult.purchasesList.any { purchase ->
-                            purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
-                                    purchase.products.contains(PREMIUM_SUB_ID)
-                        }
-                        prefs.isPremium = hasActiveSub || prefs.isPremium
                     }
                 } catch (e: Exception) {
-                    // Errore di verifica, mantieni lo stato corrente
+                    Log.e(TAG, "Error checking existing purchases", e)
                 }
             }
         }
@@ -243,20 +293,12 @@ class BillingManager(
     }
 
     /**
-     * Ritorna il prezzo formattato della subscription premium.
-     */
-    fun getSubscriptionPrice(): String? {
-        val offerDetails = subDetails?.subscriptionOfferDetails ?: return null
-        if (offerDetails.isEmpty()) return null
-        val phases = offerDetails[0].pricingPhases.pricingPhaseList
-        return if (phases.isNotEmpty()) phases[0].formattedPrice else null
-    }
-
-    /**
      * Rilascia le risorse.
      */
     fun destroy() {
         scope.cancel()
-        billingClient.endConnection()
+        if (billingClient.isReady) {
+            billingClient.endConnection()
+        }
     }
 }
