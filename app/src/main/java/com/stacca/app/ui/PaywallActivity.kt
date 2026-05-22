@@ -23,6 +23,7 @@ class PaywallActivity : AppCompatActivity() {
 
     private lateinit var prefs: PreferencesManager
     private lateinit var billingManager: BillingManager
+    private lateinit var btnUnlock: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +31,16 @@ class PaywallActivity : AppCompatActivity() {
 
         prefs = PreferencesManager(this)
 
-        // Se è già premium, chiudi subito (non dovrebbe mai succedere)
+        // Se è già premium, chiudi subito
         if (prefs.isPremium) {
             finish()
             return
         }
+
+        btnUnlock = findViewById(R.id.btnUnlock)
+        // Disabilita finché il billing non è pronto
+        btnUnlock.isEnabled = false
+        btnUnlock.text = "Connessione al Play Store..."
 
         billingManager = BillingManager(this) { success ->
             runOnUiThread {
@@ -50,6 +56,18 @@ class PaywallActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // Quando i prodotti sono pronti, abilita il bottone con il prezzo reale
+        billingManager.onProductsReady = {
+            btnUnlock.isEnabled = true
+            val price = billingManager.getPremiumPrice()
+            btnUnlock.text = if (price != null) {
+                "🔓 SBLOCCA ORA — $price"
+            } else {
+                getString(R.string.paywall_buy_button)
+            }
+        }
+
         billingManager.connect()
 
         setupUI()
@@ -58,8 +76,14 @@ class PaywallActivity : AppCompatActivity() {
 
     private fun setupUI() {
         // Bottone acquisto
-        findViewById<MaterialButton>(R.id.btnUnlock).setOnClickListener {
-            billingManager.launchPurchaseFlow(this, isSubscription = false)
+        btnUnlock.setOnClickListener {
+            if (!billingManager.isReady()) {
+                Toast.makeText(this, "Connessione al Play Store in corso, riprova...",
+                    Toast.LENGTH_SHORT).show()
+                billingManager.connect()
+                return@setOnClickListener
+            }
+            billingManager.launchPurchaseFlow(this)
         }
 
         // Bottone "No grazie" - chiude e resta al livello 3
@@ -88,7 +112,6 @@ class PaywallActivity : AppCompatActivity() {
         emojiAnim.start()
 
         // Animazione pulsante del bottone acquisto
-        val btnUnlock = findViewById<MaterialButton>(R.id.btnUnlock)
         val pulseX = ObjectAnimator.ofFloat(btnUnlock, View.SCALE_X, 1f, 1.05f, 1f)
         val pulseY = ObjectAnimator.ofFloat(btnUnlock, View.SCALE_Y, 1f, 1.05f, 1f)
         val pulseAnim = AnimatorSet().apply {

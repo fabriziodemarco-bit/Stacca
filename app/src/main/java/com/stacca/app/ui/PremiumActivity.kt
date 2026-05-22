@@ -18,6 +18,7 @@ class PremiumActivity : AppCompatActivity() {
 
     private lateinit var prefs: PreferencesManager
     private lateinit var billingManager: BillingManager
+    private lateinit var btnBuy: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,11 @@ class PremiumActivity : AppCompatActivity() {
             return
         }
 
+        btnBuy = findViewById(R.id.btnBuyPremium)
+        // Disabilita il bottone finché il billing non è pronto
+        btnBuy.isEnabled = false
+        btnBuy.text = "Caricamento..."
+
         billingManager = BillingManager(this) { success ->
             runOnUiThread {
                 if (success) {
@@ -48,20 +54,32 @@ class PremiumActivity : AppCompatActivity() {
                 }
             }
         }
-        billingManager.connect()
 
+        // Quando i prodotti sono pronti, abilita il bottone
+        billingManager.onProductsReady = {
+            btnBuy.isEnabled = true
+            val price = billingManager.getPremiumPrice()
+            btnBuy.text = if (price != null) {
+                "👑 ACQUISTA PREMIUM — $price"
+            } else {
+                getString(R.string.premium_buy_button)
+            }
+        }
+
+        billingManager.connect()
         setupButtons()
     }
 
     private fun setupButtons() {
-        // Acquisto one-time
-        findViewById<MaterialButton>(R.id.btnBuyPremium).setOnClickListener {
-            if (!prefs.isLoggedIn) {
-                Toast.makeText(this, getString(R.string.premium_login_required),
+        // Acquisto one-time — non richiede login Supabase
+        btnBuy.setOnClickListener {
+            if (!billingManager.isReady()) {
+                Toast.makeText(this, "Connessione al Play Store in corso, riprova...",
                     Toast.LENGTH_SHORT).show()
+                billingManager.connect()
                 return@setOnClickListener
             }
-            billingManager.launchPurchaseFlow(this, isSubscription = false)
+            billingManager.launchPurchaseFlow(this)
         }
 
         // Restore purchases
