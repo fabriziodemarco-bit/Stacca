@@ -64,16 +64,6 @@ class PremiumActivity : AppCompatActivity() {
             billingManager.launchPurchaseFlow(this, isSubscription = false)
         }
 
-        // Subscription
-        findViewById<MaterialButton>(R.id.btnSubscribe).setOnClickListener {
-            if (!prefs.isLoggedIn) {
-                Toast.makeText(this, getString(R.string.premium_login_required),
-                    Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            billingManager.launchPurchaseFlow(this, isSubscription = true)
-        }
-
         // Restore purchases
         findViewById<View>(R.id.tvRestore).setOnClickListener {
             billingManager.checkExistingPurchases()
