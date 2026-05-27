@@ -94,6 +94,19 @@
             android:theme="@style/Theme.Stacca"
             android:launchMode="singleTop" />
 
+        <!-- Trial Expired Activity — blocca accesso dopo 5 giorni senza account -->
+        <activity
+            android:name=".ui.TrialExpiredActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:launchMode="singleTop" />
+
+        <!-- Tempo Non Vissuto Activity — mostra lo straordinario dopo aver staccato -->
+        <activity
+            android:name=".ui.TempoNonVissutoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca" />
+
         <!-- Alarm Receiver -->
         <receiver
             android:name=".receivers.AlarmReceiver"

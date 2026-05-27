@@ -2,16 +2,26 @@ package com.stacca.app.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
+import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
@@ -19,9 +29,14 @@ import kotlinx.coroutines.launch
 
 /**
  * Activity di login/registrazione con Supabase Auth.
+ * Supporta login email/password e Google Sign-In.
  * L'utente può anche saltare il login e usare l'app in modalità free.
  */
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "LoginActivity"
+    }
 
     private lateinit var authManager: AuthManager
     private lateinit var prefs: PreferencesManager
@@ -32,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tilEmail: TextInputLayout
     private lateinit var tilPassword: TextInputLayout
     private lateinit var btnLogin: MaterialButton
+    private lateinit var btnGoogleSignIn: MaterialButton
     private lateinit var tvError: TextView
     private lateinit var tvForgotPassword: TextView
     private lateinit var progressLogin: CircularProgressIndicator
@@ -90,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
         tilEmail = findViewById(R.id.tilEmail)
         tilPassword = findViewById(R.id.tilPassword)
         btnLogin = findViewById(R.id.btnLogin)
+        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn)
         tvError = findViewById(R.id.tvError)
         tvForgotPassword = findViewById(R.id.tvForgotPassword)
         progressLogin = findViewById(R.id.progressLogin)
@@ -126,6 +143,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Google Sign-In button
+        btnGoogleSignIn.setOnClickListener {
+            performGoogleSignIn()
+        }
+
         // Forgot password
         tvForgotPassword.setOnClickListener {
             val email = etEmail.text.toString().trim()
@@ -139,6 +161,90 @@ class LoginActivity : AppCompatActivity() {
         // Skip login
         findViewById<MaterialButton>(R.id.btnSkip).setOnClickListener {
             goToMain()
+        }
+    }
+
+    /**
+     * Avvia il flusso Google Sign-In con Credential Manager.
+     */
+    private fun performGoogleSignIn() {
+        val googleClientId = BuildConfig.GOOGLE_WEB_CLIENT_ID
+        if (googleClientId.isEmpty()) {
+            showError("Google Sign-In non configurato. Usa email e password.")
+            Log.e(TAG, "GOOGLE_WEB_CLIENT_ID is empty in BuildConfig")
+            return
+        }
+
+        setLoading(true)
+
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(googleClientId)
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        val credentialManager = CredentialManager.create(this)
+
+        lifecycleScope.launch {
+            try {
+                val result = credentialManager.getCredential(
+                    request = request,
+                    context = this@LoginActivity
+                )
+                handleGoogleSignInResult(result)
+            } catch (e: GetCredentialException) {
+                setLoading(false)
+                Log.e(TAG, "Google Sign-In failed", e)
+                showError(getString(R.string.login_google_error, e.message ?: "Errore sconosciuto"))
+            }
+        }
+    }
+
+    /**
+     * Gestisce il risultato del Credential Manager.
+     */
+    private fun handleGoogleSignInResult(result: GetCredentialResponse) {
+        val credential = result.credential
+
+        when (credential) {
+            is CustomCredential -> {
+                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    try {
+                        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                        val idToken = googleIdTokenCredential.idToken
+
+                        // Invia il token a Supabase
+                        lifecycleScope.launch {
+                            val authResult = authManager.signInWithGoogle(idToken)
+                            setLoading(false)
+
+                            authResult.onSuccess {
+                                Toast.makeText(this@LoginActivity,
+                                    getString(R.string.login_google_success),
+                                    Toast.LENGTH_SHORT).show()
+                                goToMain()
+                            }.onFailure { error ->
+                                showError(getString(R.string.login_google_error,
+                                    error.localizedMessage ?: "Errore sconosciuto"))
+                            }
+                        }
+                    } catch (e: GoogleIdTokenParsingException) {
+                        setLoading(false)
+                        Log.e(TAG, "Invalid Google ID token", e)
+                        showError(getString(R.string.login_google_error, "Token non valido"))
+                    }
+                } else {
+                    setLoading(false)
+                    showError(getString(R.string.login_google_error, "Tipo credenziale non supportato"))
+                }
+            }
+            else -> {
+                setLoading(false)
+                showError(getString(R.string.login_google_error, "Credenziale non riconosciuta"))
+            }
         }
     }
 
@@ -225,6 +331,8 @@ class LoginActivity : AppCompatActivity() {
         progressLogin.visibility = if (loading) View.VISIBLE else View.GONE
         btnLogin.isEnabled = !loading
         btnLogin.alpha = if (loading) 0.5f else 1f
+        btnGoogleSignIn.isEnabled = !loading
+        btnGoogleSignIn.alpha = if (loading) 0.5f else 1f
     }
 
     private fun showError(message: String) {

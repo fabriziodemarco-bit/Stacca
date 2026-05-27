@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_dark"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <!-- Emoji -->
+    <TextView
+        android:id="@+id/tvTrialEmoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⏰"
+        android:textSize="80sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Titolo -->
+    <TextView
+        android:id="@+id/tvTrialTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trial_title"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Giorni usati badge -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/alert_nuclear"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:id="@+id/tvTrialDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Sottotitolo -->
+    <TextView
+        android:id="@+id/tvTrialSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trial_subtitle"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:layout_marginBottom="40dp" />
+
+    <!-- Bottone Registrati -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTrialRegister"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="@string/trial_register_btn"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        style="@style/Widget.Stacca.Button.Primary"
+        app:cornerRadius="16dp" />
+
+</LinearLayout>
