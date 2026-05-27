@@ -54,9 +54,10 @@
             android:text="@string/login_google"
             android:textSize="15sp"
             android:textColor="@color/text_primary"
-            app:icon="@android:drawable/ic_menu_agenda"
+            app:icon="@drawable/ic_google"
             app:iconGravity="textStart"
             app:iconTint="@null"
+            app:iconSize="20dp"
             app:cornerRadius="16dp"
             app:backgroundTint="@color/background_card"
             app:strokeColor="@color/text_hint"
@@ -230,22 +231,6 @@
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- Skip Login -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSkip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_skip"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:textColor="@color/text_hint"
-            android:layout_marginTop="16dp" />
-
-        <!-- Spacer bottom -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
     </LinearLayout>
 </ScrollView>

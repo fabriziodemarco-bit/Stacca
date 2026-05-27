@@ -53,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
             prefs.isLoggedIn -> Intent(this, MainActivity::class.java)
             // Trial scaduto e non loggato → muro di registrazione
             prefs.trialExpired -> Intent(this, TrialExpiredActivity::class.java)
-            // Tutto OK → login/registrazione (con skip disponibile)
+            // Non loggato → login obbligatoria (Google o email/password)
             else -> Intent(this, LoginActivity::class.java)
         }
 
