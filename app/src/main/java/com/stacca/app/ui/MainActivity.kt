@@ -306,7 +306,17 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateUI()
 
-        // Controlla trial: se scaduto e non loggato, blocca l'accesso
+        // Safety net: il login è obbligatorio — se per qualsiasi motivo l'utente
+        // non è loggato, rimandalo alla login
+        if (!prefs.isLoggedIn) {
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            finish()
+            return
+        }
+
+        // Controlla trial: safety net residuo (non raggiungibile normalmente con login obbligatorio)
         if (prefs.trialExpired && !prefs.isLoggedIn) {
             startActivity(Intent(this, TrialExpiredActivity::class.java))
             finish()

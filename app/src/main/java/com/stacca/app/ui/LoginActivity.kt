@@ -157,11 +157,6 @@ class LoginActivity : AppCompatActivity() {
             }
             performPasswordReset(email)
         }
-
-        // Skip login
-        findViewById<MaterialButton>(R.id.btnSkip).setOnClickListener {
-            goToMain()
-        }
     }
 
     /**
