@@ -4,13 +4,16 @@ import android.content.Context
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.data.SupabaseConfig
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.Google
 import io.github.jan.supabase.auth.providers.builtin.Email
+import io.github.jan.supabase.auth.providers.builtin.IDToken
 import io.github.jan.supabase.auth.user.UserInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
  * Gestisce autenticazione e stato premium dell'utente.
+ * Supporta login con email/password e Google Sign-In.
  */
 class AuthManager(private val context: Context) {
 
@@ -30,6 +33,7 @@ class AuthManager(private val context: Context) {
                 val user = supabase.auth.currentUserOrNull()
                 prefs.isLoggedIn = true
                 prefs.userEmail = email
+                prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -50,6 +54,29 @@ class AuthManager(private val context: Context) {
                 val user = supabase.auth.currentUserOrNull()
                 prefs.isLoggedIn = true
                 prefs.userEmail = email
+                prefs.trialExpired = false
+                Result.success(user)
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    /**
+     * Login con Google ID Token (da Credential Manager).
+     * Invia il token a Supabase che lo valida con il provider Google.
+     */
+    suspend fun signInWithGoogle(idToken: String): Result<UserInfo?> {
+        return withContext(Dispatchers.IO) {
+            try {
+                supabase.auth.signInWith(IDToken) {
+                    this.provider = Google
+                    this.idToken = idToken
+                }
+                val user = supabase.auth.currentUserOrNull()
+                prefs.isLoggedIn = true
+                prefs.userEmail = user?.email ?: ""
+                prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
                 Result.failure(e)
@@ -118,8 +145,8 @@ class AuthManager(private val context: Context) {
     fun isPremium(): Boolean = prefs.isPremium
 
     /**
- * Gestisce la conferma email dal deep link.
- */
+     * Gestisce la conferma email dal deep link.
+     */
     suspend fun handleEmailConfirmation(accessToken: String, refreshToken: String?): Result<UserInfo?> {
         return withContext(Dispatchers.IO) {
             try {
@@ -129,6 +156,7 @@ class AuthManager(private val context: Context) {
                 if (user != null) {
                     prefs.isLoggedIn = true
                     prefs.userEmail = user.email ?: ""
+                    prefs.trialExpired = false
                 }
                 Result.success(user)
             } catch (e: Exception) {
@@ -136,5 +164,4 @@ class AuthManager(private val context: Context) {
             }
         }
     }
-
 }

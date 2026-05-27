@@ -58,32 +58,36 @@ class AlarmReceiver : BroadcastReceiver() {
         // Mantieni la CPU attiva il tempo necessario per inviare la notifica.
         // Lo schermo viene acceso dalla notification full-screen intent
         // e dall'attributo turnScreenOn della FullScreenAlertActivity.
-        if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
+        val wakeLock = if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
             val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-            val wakeLock = powerManager.newWakeLock(
+            powerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK,
                 "Stacca:WakeLock"
+            ).also { it.acquire(10_000L) } // max 10s, rilasciato nel finally
+        } else null
+
+        try {
+            // Invia la notifica
+            val notificationHelper = NotificationHelper(context)
+            notificationHelper.sendEscalatingNotification(
+                level, overtimeMinutes,
+                soundEnabled = prefs.soundEnabled,
+                vibrationEnabled = prefs.vibrationEnabled
             )
-            wakeLock.acquire(5000L)
-        }
 
-        // Invia la notifica
-        val notificationHelper = NotificationHelper(context)
-        notificationHelper.sendEscalatingNotification(
-            level, overtimeMinutes,
-            soundEnabled = prefs.soundEnabled,
-            vibrationEnabled = prefs.vibrationEnabled
-        )
-
-        // Per livello NUCLEAR e APOCALYPSE, apri anche l'activity a schermo intero
-        if (prefs.fullScreenEnabled &&
-            level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
-            val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                putExtra("overtime_minutes", overtimeMinutes)
-                putExtra("level", level.name)
+            // Per livello NUCLEAR e APOCALYPSE, apri anche l'activity a schermo intero
+            if (prefs.fullScreenEnabled &&
+                level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
+                val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    putExtra("overtime_minutes", overtimeMinutes)
+                    putExtra("level", level.name)
+                }
+                context.startActivity(fullScreenIntent)
             }
-            context.startActivity(fullScreenIntent)
+        } finally {
+            // Rilascia il wake lock anche in caso di eccezione
+            if (wakeLock?.isHeld == true) wakeLock.release()
         }
 
         // Programma il prossimo allarme

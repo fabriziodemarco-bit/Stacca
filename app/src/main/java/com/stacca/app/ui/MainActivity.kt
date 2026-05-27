@@ -188,6 +188,23 @@ class MainActivity : AppCompatActivity() {
                 notificationHelper.cancelAll()
                 updateUI()
                 Toast.makeText(this, "Allarme disattivato 😴", Toast.LENGTH_SHORT).show()
+
+                // Se c'è straordinario, mostra il "Tempo Non Vissuto"
+                val now = java.util.Calendar.getInstance()
+                val endTime = java.util.Calendar.getInstance().apply {
+                    set(java.util.Calendar.HOUR_OF_DAY, prefs.endHour)
+                    set(java.util.Calendar.MINUTE, prefs.endMinute)
+                    set(java.util.Calendar.SECOND, 0)
+                }
+                val overtimeMillis = now.timeInMillis - endTime.timeInMillis
+                if (overtimeMillis > 60_000) { // almeno 1 minuto di straordinario
+                    val overtimeMinutes = (overtimeMillis / 60_000).toInt()
+                    startActivity(
+                        Intent(this, TempoNonVissutoActivity::class.java).apply {
+                            putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, overtimeMinutes)
+                        }
+                    )
+                }
             }
             .setNegativeButton("No, tienilo attivo", null)
             .show()
@@ -288,6 +305,19 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateUI()
+
+        // Controlla trial: se scaduto e non loggato, blocca l'accesso
+        if (prefs.trialExpired && !prefs.isLoggedIn) {
+            startActivity(Intent(this, TrialExpiredActivity::class.java))
+            finish()
+            return
+        }
+
+        // Mostra TempoNonVissuto se c'era un pending (es. da notifica)
+        if (prefs.hasPendingTempoNonVissuto && prefs.pendingTempoNonVissutoMinutes > 0) {
+            startActivity(Intent(this, TempoNonVissutoActivity::class.java))
+            // La activity stessa resetta il pending
+        }
     }
 
     override fun onDestroy() {

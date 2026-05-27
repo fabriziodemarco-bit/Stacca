@@ -9,11 +9,15 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import com.stacca.app.R
+import com.stacca.app.data.PreferencesManager
 
 /**
  * Splash screen dell'app Stacca!
  * Mostra il logo e il tagline con un'animazione fade-in,
- * poi passa automaticamente a LoginActivity dopo 2.5 secondi.
+ * poi smista l'utente in base allo stato del trial:
+ *  - Loggato → MainActivity
+ *  - Trial scaduto → TrialExpiredActivity
+ *  - Tutto OK → LoginActivity
  */
 class SplashActivity : AppCompatActivity() {
 
@@ -32,13 +36,30 @@ class SplashActivity : AppCompatActivity() {
         }
         fadeIn.start()
 
-        // Dopo 2.5 secondi totali, vai a LoginActivity
+        // Dopo 2.5 secondi totali, smista l'utente
         handler.postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-            // Transizione fade-out / fade-in
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
+            navigateNext()
         }, 2500)
+    }
+
+    private fun navigateNext() {
+        val prefs = PreferencesManager(this)
+
+        // Traccia l'utilizzo giornaliero (incrementa contatore trial)
+        prefs.trackDailyUsage()
+
+        val destination = when {
+            // Già loggato → vai diretto alla main
+            prefs.isLoggedIn -> Intent(this, MainActivity::class.java)
+            // Trial scaduto e non loggato → muro di registrazione
+            prefs.trialExpired -> Intent(this, TrialExpiredActivity::class.java)
+            // Tutto OK → login/registrazione (con skip disponibile)
+            else -> Intent(this, LoginActivity::class.java)
+        }
+
+        startActivity(destination)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finish()
     }
 
     override fun onDestroy() {

@@ -159,6 +159,12 @@ class FullScreenAlertActivity : AppCompatActivity() {
         AlarmReceiver.cancelAlarm(this)
         NotificationHelper(this).cancelAll()
 
+        // Salva i minuti di straordinario come pending — la MainActivity lo mostrerà in onResume
+        if (overtimeMinutes > 0) {
+            prefs.hasPendingTempoNonVissuto = true
+            prefs.pendingTempoNonVissutoMinutes = overtimeMinutes
+        }
+
         // Riprogramma per domani
         if (prefs.isAlarmActive) {
             AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)

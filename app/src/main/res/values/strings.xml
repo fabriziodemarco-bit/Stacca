@@ -123,4 +123,22 @@
     <string name="paywall_buy_button">🔓 SBLOCCA ORA — €0,99</string>
     <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
     <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai più sfuggire! 😈🔥</string>
+
+    <!-- Google Sign-In -->
+    <string name="login_google">Accedi con Google</string>
+    <string name="login_google_success">Accesso con Google effettuato! 🎉</string>
+    <string name="login_google_error">Errore nell\'accesso con Google: %s</string>
+    <string name="login_divider">oppure</string>
+
+    <!-- Trial Expired -->
+    <string name="trial_title">Il tuo periodo di prova è terminato!</string>
+    <string name="trial_subtitle">Hai usato Stacca! per 5 giorni consecutivi.\nPer continuare a proteggerti dal lavoro eccessivo, registrati e diventa Premium.</string>
+    <string name="trial_register_btn">REGISTRATI E DIVENTA PREMIUM</string>
+    <string name="trial_days_used">%d giorni consecutivi di utilizzo</string>
+
+    <!-- Tempo Non Vissuto -->
+    <string name="tempo_non_vissuto_title">TEMPO NON VISSUTO</string>
+    <string name="tempo_non_vissuto_subtitle">Questo è il tempo che hai regalato al lavoro invece che alla tua vita</string>
+    <string name="tempo_non_vissuto_btn">Ho capito. Farò meglio.</string>
 </resources>
+

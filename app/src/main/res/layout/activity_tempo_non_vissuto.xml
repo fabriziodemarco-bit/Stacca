@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp">
+
+        <!-- Spacer top -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+
+        <!-- Emoji -->
+        <TextView
+            android:id="@+id/tvTempoEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⏱️"
+            android:textSize="80sp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Titolo -->
+        <TextView
+            android:id="@+id/tvTempoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tempo_non_vissuto_title"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/alert_aggressive"
+            android:gravity="center"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Ore e minuti di straordinario -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/alert_nuclear"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvTempoTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:gravity="center"
+                android:fontFamily="monospace" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Label ore:minuti -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ore : minuti"
+            android:textSize="13sp"
+            android:textColor="@color/text_hint"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Sottotitolo -->
+        <TextView
+            android:id="@+id/tvTempoSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tempo_non_vissuto_subtitle"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.5"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Messaggio ironico -->
+        <TextView
+            android:id="@+id/tvTempoMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/text_hint"
+            android:gravity="center"
+            android:fontStyle="italic"
+            android:lineSpacingMultiplier="1.4"
+            android:layout_marginBottom="40dp" />
+
+        <!-- Bottone chiudi -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTempoClose"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="@string/tempo_non_vissuto_btn"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            style="@style/Widget.Stacca.Button.Primary"
+            app:cornerRadius="16dp" />
+
+        <!-- Spacer bottom -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+</ScrollView>
