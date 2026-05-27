@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy – Stacca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1a1a2e;
+      --accent:    #2a52be;
+      --accent-lt: #e8edf9;
+      --muted:     #5a5a72;
+      --rule:      #e2e2ec;
+      --bg:        #fafafa;
+      --card:      #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--rule);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 12px rgba(0,0,0,.06);
+    }
+
+    header .app-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      color: var(--accent);
+      letter-spacing: -.02em;
+    }
+
+    header .doc-title {
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: .25rem;
+    }
+
+    header .date-badge {
+      display: inline-block;
+      margin-top: .75rem;
+      background: var(--accent-lt);
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 500;
+      padding: .25rem .85rem;
+      border-radius: 99px;
+      letter-spacing: .04em;
+    }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 2rem 2.2rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .45s ease both;
+    }
+
+    section:nth-child(1)  { animation-delay: .05s }
+    section:nth-child(2)  { animation-delay: .10s }
+    section:nth-child(3)  { animation-delay: .15s }
+    section:nth-child(4)  { animation-delay: .20s }
+    section:nth-child(5)  { animation-delay: .25s }
+    section:nth-child(6)  { animation-delay: .30s }
+    section:nth-child(7)  { animation-delay: .35s }
+    section:nth-child(8)  { animation-delay: .40s }
+    section:nth-child(9)  { animation-delay: .45s }
+    section:nth-child(10) { animation-delay: .50s }
+    section:nth-child(11) { animation-delay: .55s }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HEADINGS ── */
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+    }
+
+    h1 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.9rem;
+      height: 1.9rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .78rem;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 1.4rem 0 .5rem;
+      padding-bottom: .35rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ── BODY TEXT ── */
+    p {
+      color: var(--muted);
+      margin-bottom: .85rem;
+      font-size: .95rem;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* ── LISTS ── */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0 .85rem;
+    }
+
+    ul li {
+      color: var(--muted);
+      font-size: .95rem;
+      padding: .35rem 0 .35rem 1.4rem;
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    ul li:last-child { border-bottom: none; }
+
+    ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75rem;
+      width: .5rem;
+      height: .5rem;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: .7;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight {
+      background: var(--accent-lt);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: .85rem 1.1rem;
+      margin: .75rem 0;
+      font-size: .92rem;
+      color: var(--ink);
+    }
+
+    /* ── EMAIL LINK ── */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+    }
+    a:hover { border-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: .8rem;
+      color: #aaa;
+      border-top: 1px solid var(--rule);
+      margin-top: 1rem;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 540px) {
+      section { padding: 1.4rem 1.2rem; }
+      header  { padding: 1.6rem 1rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="app-name">Stacca</div>
+  <div class="doc-title">Informativa sulla Privacy</div>
+  <div class="date-badge">In vigore dal 27 maggio 2025</div>
+</header>
+
+<main>
+
+  <section>
+    <h1><span class="num">1</span>Titolare del Trattamento</h1>
+    <p>Il Titolare del trattamento dei dati personali raccolti tramite l'applicazione <strong>Stacca</strong> è lo sviluppatore indipendente raggiungibile al seguente indirizzo:</p>
+    <div class="highlight">
+      📧 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+    </div>
+    <p>Per qualsiasi richiesta relativa al trattamento dei tuoi dati personali, incluse le richieste di esercizio dei diritti di cui al punto 8, puoi contattarci esclusivamente tramite l'indirizzo email sopra indicato.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">2</span>Dati Personali Raccolti</h1>
+
+    <h2>2.1 Dati forniti direttamente dall'utente</h2>
+    <p>In fase di registrazione all'applicazione, raccogliamo il seguente dato personale:</p>
+    <ul>
+      <li><strong>Indirizzo email</strong> — utilizzato come identificativo univoco dell'account e per le comunicazioni di servizio.</li>
+    </ul>
+    <p>La registrazione è necessaria per accedere alla funzione di acquisto della versione premium e per visualizzare il relativo tasto di acquisto. È possibile utilizzare l'applicazione in modalità di prova gratuita per un periodo di <strong>5 (cinque) giorni</strong> senza registrazione, al termine del quale la registrazione diventa obbligatoria per continuare a utilizzare il servizio.</p>
+
+    <h2>2.2 Dati tecnici e di utilizzo</h2>
+    <p>Attraverso i servizi tecnici di terze parti descritti al punto 5, possono essere raccolti automaticamente dati tecnici anonimi o pseudonimizzati, tra cui:</p>
+    <ul>
+      <li>Informazioni sul dispositivo (sistema operativo, versione dell'app)</li>
+      <li>Dati di utilizzo dell'applicazione in forma aggregata</li>
+      <li>Log di errori e crash, per garantire la stabilità del servizio</li>
+    </ul>
+
+    <h2>2.3 Dati di pagamento</h2>
+    <p>I pagamenti per l'acquisto della versione premium (<strong>€ 1,19 IVA inclusa</strong>) sono gestiti esclusivamente da Google Play Store. Non raccogliamo né conserviamo alcun dato relativo a carte di credito, dati bancari o altri strumenti di pagamento. Il trattamento dei dati di pagamento è interamente disciplinato dalla Privacy Policy di Google LLC.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">3</span>Finalità e Basi Giuridiche del Trattamento</h1>
+    <p>Trattiamo i tuoi dati personali per le seguenti finalità:</p>
+    <ul>
+      <li>Creazione e gestione dell'account utente — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
+      <li>Erogazione del servizio premium a seguito dell'acquisto — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
+      <li>Comunicazioni strettamente legate al servizio (aggiornamenti, scadenze, modifiche ai termini) — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
+      <li>Adempimento di obblighi di legge fiscali e contabili — <em>obbligo legale (art. 6, par. 1, lett. c GDPR)</em></li>
+      <li>Miglioramento tecnico dell'applicazione tramite analisi anonime degli errori — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
+    </ul>
+  </section>
+
+  <section>
+    <h1><span class="num">4</span>Periodo di Conservazione dei Dati</h1>
+    <ul>
+      <li>I dati dell'account (email) sono conservati per tutta la durata del rapporto contrattuale e per un massimo di <strong>24 mesi</strong> dalla cancellazione dell'account o dall'ultima interazione con il servizio.</li>
+      <li>I dati relativi alle transazioni di acquisto sono conservati per <strong>10 anni</strong> ai sensi degli obblighi fiscali e contabili previsti dalla normativa italiana (D.P.R. 633/1972 e D.P.R. 600/1973).</li>
+      <li>I log tecnici anonimi sono conservati per un massimo di <strong>12 mesi</strong>.</li>
+    </ul>
+    <p>Trascorso il periodo di conservazione, i dati sono cancellati in modo sicuro o resi definitivamente anonimi.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">5</span>Servizi di Terze Parti</h1>
+
+    <h2>5.1 Supabase</h2>
+    <p>Supabase Inc. è utilizzato come piattaforma backend per la gestione dell'autenticazione e l'archiviazione sicura dei dati. Agisce in qualità di Responsabile del trattamento ai sensi dell'art. 28 GDPR. I dati possono essere conservati in server nello Spazio Economico Europeo (SEE) o in paesi terzi con adeguate garanzie (Clausole Contrattuali Standard).</p>
+    <p><a href="https://supabase.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Supabase</a></p>
+
+    <h2>5.2 Google Play Services</h2>
+    <p>La distribuzione dell'applicazione e la gestione degli acquisti in-app avvengono tramite Google Play Store, gestito da Google LLC.</p>
+    <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Google</a></p>
+
+    <h2>5.3 GitHub</h2>
+    <p>Il codice sorgente dell'applicazione è ospitato su GitHub (GitHub Inc., società di Microsoft). GitHub non tratta dati personali degli utenti finali dell'applicazione.</p>
+    <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">→ Privacy Statement di GitHub</a></p>
+  </section>
+
+  <section>
+    <h1><span class="num">6</span>Trasferimento dei Dati Fuori dall'UE</h1>
+    <p>Alcuni fornitori di servizi indicati al punto 5 potrebbero trasferire i tuoi dati personali al di fuori dello Spazio Economico Europeo. In tal caso, ci assicuriamo che il trasferimento avvenga nel rispetto del GDPR, in particolare mediante:</p>
+    <ul>
+      <li>Clausole Contrattuali Standard (SCC) approvate dalla Commissione Europea</li>
+      <li>Decisioni di adeguatezza della Commissione Europea per i paesi destinatari</li>
+    </ul>
+    <p>Puoi richiedere maggiori informazioni sui trasferimenti internazionali scrivendo all'indirizzo indicato al punto 1.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">7</span>Sicurezza dei Dati</h1>
+    <p>Adottiamo misure tecniche e organizzative adeguate per proteggere i tuoi dati personali da accessi non autorizzati, perdita o divulgazione accidentale:</p>
+    <ul>
+      <li>Cifratura dei dati in transito tramite protocollo TLS/HTTPS</li>
+      <li>Accesso ai dati riservato alle sole parti necessarie per l'erogazione del servizio</li>
+      <li>Utilizzo di Supabase, certificato SOC 2 Type II</li>
+    </ul>
+    <p>In caso di violazione dei dati personali che comporti un rischio elevato per i tuoi diritti, sarai notificato tempestivamente ai sensi dell'art. 34 GDPR.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">8</span>I Tuoi Diritti</h1>
+    <p>Ai sensi degli artt. 15–22 GDPR, hai il diritto di:</p>
+    <ul>
+      <li><strong>Accesso</strong> — ottenere copia dei tuoi dati personali (art. 15)</li>
+      <li><strong>Rettifica</strong> — correggere dati inesatti o incompleti (art. 16)</li>
+      <li><strong>Cancellazione</strong> — richiedere la rimozione dei tuoi dati, salvo obblighi di legge (art. 17)</li>
+      <li><strong>Limitazione</strong> — limitare il trattamento in determinati casi (art. 18)</li>
+      <li><strong>Portabilità</strong> — ricevere i tuoi dati in formato leggibile da macchina (art. 20)</li>
+      <li><strong>Opposizione</strong> — opporti ai trattamenti basati su legittimo interesse (art. 21)</li>
+      <li><strong>Revoca del consenso</strong> — in qualsiasi momento, senza effetto retroattivo</li>
+    </ul>
+    <div class="highlight">
+      Per esercitare i tuoi diritti scrivi a <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>. Risponderemo entro <strong>30 giorni</strong>.
+    </div>
+    <p>Hai inoltre il diritto di proporre reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la Protezione dei Dati Personali</a> o all'Autorità di controllo del tuo paese di residenza UE.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">9</span>Minori</h1>
+    <p>L'applicazione Stacca non è destinata a persone di età inferiore ai <strong>16 anni</strong>. Non raccogliamo consapevolmente dati personali di minori di 16 anni. Qualora venissimo a conoscenza di aver raccolto inavvertitamente tali dati, provvederemo alla loro immediata cancellazione. Genitori o tutori legali sono invitati a contattarci all'indirizzo indicato al punto 1.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">10</span>Modifiche alla Presente Informativa</h1>
+    <p>Ci riserviamo il diritto di modificare la presente informativa per adeguarla a cambiamenti normativi, tecnologici o alle funzionalità dell'applicazione. Le modifiche sostanziali saranno comunicate agli utenti registrati tramite email con un preavviso di almeno <strong>15 giorni</strong> prima dell'entrata in vigore.</p>
+    <p>L'utilizzo continuato dell'applicazione dopo la notifica costituisce accettazione della nuova informativa.</p>
+  </section>
+
+  <section>
+    <h1><span class="num">11</span>Legge Applicabile</h1>
+    <p>La presente informativa è redatta in conformità al <strong>Regolamento (UE) 2016/679 (GDPR)</strong>, al D.Lgs. 196/2003 (Codice della Privacy) come modificato dal D.Lgs. 101/2018, e alle linee guida del Garante per la Protezione dei Dati Personali. Per qualsiasi controversia si applica la legge italiana.</p>
+  </section>
+
+</main>
+
+<footer>
+  Informativa Privacy – App Stacca &nbsp;·&nbsp; Aggiornata il 27 maggio 2025 &nbsp;·&nbsp; <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+</footer>
+
+</body>
+</html>

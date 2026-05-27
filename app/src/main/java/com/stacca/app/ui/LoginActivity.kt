@@ -57,31 +57,31 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent?) {
-    super.onNewIntent(intent)
-    handleDeepLink(intent)
-}
+        super.onNewIntent(intent)
+        handleDeepLink(intent)
+    }
 
-private fun handleDeepLink(intent: Intent?) {
-    val data = intent?.data ?: return
-    if (data.scheme == "stacca" && data.host == "login-callback") {
-        val accessToken = data.getQueryParameter("access_token")
-        val refreshToken = data.getQueryParameter("refresh_token")
-        
-        if (accessToken != null) {
-            lifecycleScope.launch {
-                val result = authManager.handleEmailConfirmation(accessToken, refreshToken)
-                result.onSuccess {
-                    Toast.makeText(this@LoginActivity,
-                        "Email confermata! Benvenuto in Stacca! 🎉",
-                        Toast.LENGTH_LONG).show()
-                    goToMain()
-                }.onFailure {
-                    showError("Errore nella conferma email. Riprova.")
+    private fun handleDeepLink(intent: Intent?) {
+        val data = intent?.data ?: return
+        if (data.scheme == "stacca" && data.host == "login-callback") {
+            val accessToken = data.getQueryParameter("access_token")
+            val refreshToken = data.getQueryParameter("refresh_token")
+
+            if (accessToken != null) {
+                lifecycleScope.launch {
+                    val result = authManager.handleEmailConfirmation(accessToken, refreshToken)
+                    result.onSuccess {
+                        Toast.makeText(this@LoginActivity,
+                            "Email confermata! Benvenuto in Stacca! 🎉",
+                            Toast.LENGTH_LONG).show()
+                        goToMain()
+                    }.onFailure {
+                        showError("Errore nella conferma email. Riprova.")
+                    }
                 }
             }
         }
     }
-}
 
     private fun initViews() {
         tabLayout = findViewById(R.id.tabLayout)

@@ -68,6 +68,15 @@ class PaywallActivity : AppCompatActivity() {
             }
         }
 
+        // Errore billing (es. app non configurata per fatturazione)
+        billingManager.onBillingError = { errorMessage ->
+            runOnUiThread {
+                btnUnlock.isEnabled = false
+                btnUnlock.text = getString(R.string.paywall_buy_button)
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            }
+        }
+
         billingManager.connect()
 
         setupUI()
