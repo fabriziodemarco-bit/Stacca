@@ -66,6 +66,15 @@ class PremiumActivity : AppCompatActivity() {
             }
         }
 
+        // Errore billing (es. app non configurata per fatturazione)
+        billingManager.onBillingError = { errorMessage ->
+            runOnUiThread {
+                btnBuy.isEnabled = false
+                btnBuy.text = getString(R.string.premium_buy_button)
+                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+            }
+        }
+
         billingManager.connect()
         setupButtons()
     }

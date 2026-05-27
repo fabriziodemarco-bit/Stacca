@@ -16,6 +16,9 @@ class BillingManager(
     private val onPurchaseResult: (Boolean) -> Unit
 ) : PurchasesUpdatedListener {
 
+    /** Callback per errori specifici del billing (es. BILLING_UNAVAILABLE) */
+    var onBillingError: ((String) -> Unit)? = null
+
     companion object {
         private const val TAG = "BillingManager"
         const val PREMIUM_PRODUCT_ID = "stacca_premium"
@@ -67,6 +70,13 @@ class BillingManager(
                 } else {
                     isConnected = false
                     Log.e(TAG, "Billing setup failed: ${result.debugMessage}")
+                    if (result.responseCode == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE) {
+                        onBillingError?.invoke(
+                            "Fatturazione Google Play non disponibile. " +
+                            "Assicurati di aver installato l'app dal Play Store " +
+                            "o di usare un account tester autorizzato."
+                        )
+                    }
                 }
             }
 
