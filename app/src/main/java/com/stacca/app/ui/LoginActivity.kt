@@ -17,6 +17,7 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
@@ -25,12 +26,18 @@ import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
+import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
 /**
  * Activity di login/registrazione con Supabase Auth.
  * Supporta login email/password e Google Sign-In.
- * L'utente può anche saltare il login e usare l'app in modalità free.
+ *
+ * Flusso registrazione email:
+ * 1. Utente inserisce email + password e preme "Registrati"
+ * 2. Supabase crea l'account e invia una mail di conferma
+ * 3. L'utente clicca il link nella mail → deep link stacca://login-callback
+ * 4. handleDeepLink() scambia il codice per una sessione → login automatico
  */
 class LoginActivity : AppCompatActivity() {
 
@@ -70,31 +77,124 @@ class LoginActivity : AppCompatActivity() {
 
         initViews()
         setupListeners()
+
+        // Gestisci il deep link se l'activity è stata aperta da un link
+        // (es. conferma email quando l'app non era in memoria)
+        handleDeepLink(intent)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        // Gestisci il deep link quando l'activity è già aperta
+        // (es. conferma email mentre l'utente è sulla schermata di login)
         handleDeepLink(intent)
     }
 
+    /**
+     * Gestisce il deep link di conferma email da Supabase.
+     * Parsa manualmente l'URL per supportare sia PKCE (code) sia Implicit (fragment tokens).
+     */
     private fun handleDeepLink(intent: Intent?) {
-        val data = intent?.data ?: return
-        if (data.scheme == "stacca" && data.host == "login-callback") {
-            val accessToken = data.getQueryParameter("access_token")
-            val refreshToken = data.getQueryParameter("refresh_token")
+        if (intent?.data == null) return
+        val data = intent.data!!
+        if (data.scheme != "stacca" || data.host != "login-callback") return
 
-            if (accessToken != null) {
-                lifecycleScope.launch {
-                    val result = authManager.handleEmailConfirmation(accessToken, refreshToken)
-                    result.onSuccess {
-                        Toast.makeText(this@LoginActivity,
-                            "Email confermata! Benvenuto in Stacca! 🎉",
-                            Toast.LENGTH_LONG).show()
-                        goToMain()
-                    }.onFailure {
-                        showError("Errore nella conferma email. Riprova.")
+        println("STACCA_DEBUG: Deep link ricevuto: $data")
+        println("STACCA_DEBUG: Fragment: ${data.fragment}")
+        println("STACCA_DEBUG: Query: ${data.query}")
+
+        // Controlla se Supabase ha restituito un errore nel fragment
+        val fragment = data.fragment
+        if (fragment != null && fragment.contains("error=")) {
+            val params = fragment.split("&").associate {
+                val parts = it.split("=", limit = 2)
+                parts[0] to (if (parts.size > 1) java.net.URLDecoder.decode(parts[1], "UTF-8") else "")
+            }
+            val errorDesc = params["error_description"] ?: params["error"] ?: "Errore sconosciuto"
+            println("STACCA_DEBUG: Errore da Supabase: $errorDesc")
+
+            if (params["error_code"] == "otp_expired") {
+                showError("Il link è scaduto. Registrati di nuovo per ricevere un nuovo link. ⏰")
+            } else {
+                showError("Errore: $errorDesc")
+            }
+            return
+        }
+
+        setLoading(true)
+
+        lifecycleScope.launch {
+            try {
+                val supabase = authManager.getSupabaseClient()
+
+                // Tentativo 1: PKCE flow — 'code' come query parameter
+                val code = data.getQueryParameter("code")
+                if (code != null) {
+                    println("STACCA_DEBUG: PKCE flow — code trovato, scambio per sessione...")
+                    supabase.auth.exchangeCodeForSession(code)
+                } else {
+                    // Tentativo 2: Implicit flow — tokens nel fragment (#access_token=...&refresh_token=...)
+                    val fragment = data.fragment
+                    if (fragment != null && fragment.contains("access_token")) {
+                        println("STACCA_DEBUG: Implicit flow — parsing fragment...")
+                        val params = fragment.split("&").associate {
+                            val parts = it.split("=", limit = 2)
+                            parts[0] to (if (parts.size > 1) parts[1] else "")
+                        }
+                        val accessToken = params["access_token"]
+                        val refreshToken = params["refresh_token"]
+
+                        if (accessToken != null && refreshToken != null) {
+                            println("STACCA_DEBUG: Tokens trovati, importo sessione...")
+                            supabase.auth.importSession(
+                                io.github.jan.supabase.auth.user.UserSession(
+                                    accessToken = accessToken,
+                                    refreshToken = refreshToken,
+                                    expiresIn = 3600,
+                                    tokenType = "bearer"
+                                )
+                            )
+                        } else {
+                            throw Exception("access_token o refresh_token mancanti nel fragment")
+                        }
+                    } else {
+                        // Tentativo 3: tokens come query parameters (alcune configurazioni Supabase)
+                        val accessToken = data.getQueryParameter("access_token")
+                        val refreshToken = data.getQueryParameter("refresh_token")
+                        if (accessToken != null && refreshToken != null) {
+                            println("STACCA_DEBUG: Tokens in query params, importo sessione...")
+                            supabase.auth.importSession(
+                                io.github.jan.supabase.auth.user.UserSession(
+                                    accessToken = accessToken,
+                                    refreshToken = refreshToken,
+                                    expiresIn = 3600,
+                                    tokenType = "bearer"
+                                )
+                            )
+                        } else {
+                            throw Exception("Nessun code o token trovato nel deep link: $data")
+                        }
                     }
                 }
+
+                // Sessione stabilita — aggiorna preferenze
+                authManager.onDeepLinkSessionSuccess()
+                val user = supabase.auth.currentUserOrNull()
+                println("STACCA_DEBUG: Sessione stabilita per: ${user?.email}")
+
+                setLoading(false)
+                Toast.makeText(
+                    this@LoginActivity,
+                    getString(R.string.login_email_confirmed),
+                    Toast.LENGTH_LONG
+                ).show()
+                goToMain()
+
+            } catch (e: Exception) {
+                println("STACCA_DEBUG: ERRORE deep link: ${e.message}")
+                e.printStackTrace()
+                setLoading(false)
+                showError(getString(R.string.login_email_confirm_error))
             }
         }
     }
@@ -165,7 +265,7 @@ class LoginActivity : AppCompatActivity() {
     private fun performGoogleSignIn() {
         val googleClientId = BuildConfig.GOOGLE_WEB_CLIENT_ID
         if (googleClientId.isEmpty()) {
-            showError("Google Sign-In non configurato. Usa email e password.")
+            showError(getString(R.string.login_google_not_configured))
             Log.e(TAG, "GOOGLE_WEB_CLIENT_ID is empty in BuildConfig")
             return
         }
@@ -288,6 +388,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Registra un nuovo utente.
+     * Dopo la registrazione, mostra un dialogo che invita a controllare la mail.
+     * L'utente NON viene loggato — deve prima confermare l'email.
+     */
     private fun performSignUp(email: String, password: String) {
         setLoading(true)
 
@@ -296,14 +401,29 @@ class LoginActivity : AppCompatActivity() {
             setLoading(false)
 
             result.onSuccess {
-                Toast.makeText(this@LoginActivity,
-                    getString(R.string.login_register_success), Toast.LENGTH_LONG).show()
-                // Torna alla modalità login
-                tabLayout.getTabAt(0)?.select()
+                // Mostra un dialogo chiaro che spiega di controllare la mail
+                showEmailConfirmationDialog(email)
             }.onFailure { error ->
                 showError(getString(R.string.login_error_generic, error.localizedMessage ?: ""))
             }
         }
+    }
+
+    /**
+     * Mostra un dialogo che invita l'utente a controllare la propria email
+     * per confermare la registrazione.
+     */
+    private fun showEmailConfirmationDialog(email: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.login_confirm_dialog_title))
+            .setMessage(getString(R.string.login_confirm_dialog_message, email))
+            .setPositiveButton(getString(R.string.login_confirm_dialog_ok)) { dialog, _ ->
+                dialog.dismiss()
+                // Torna alla modalità login
+                tabLayout.getTabAt(0)?.select()
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun performPasswordReset(email: String) {

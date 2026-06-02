@@ -128,7 +128,15 @@
     <string name="login_google">Accedi con Google</string>
     <string name="login_google_success">Accesso con Google effettuato! 🎉</string>
     <string name="login_google_error">Errore nell\'accesso con Google: %s</string>
+    <string name="login_google_not_configured">Google Sign-In non è configurato. Usa email e password.</string>
     <string name="login_divider">oppure</string>
+
+    <!-- Conferma Email -->
+    <string name="login_email_confirmed">Email confermata! Benvenuto in Stacca! 🎉</string>
+    <string name="login_email_confirm_error">Errore nella conferma email. Riprova ad accedere.</string>
+    <string name="login_confirm_dialog_title">📧 Controlla la tua email!</string>
+    <string name="login_confirm_dialog_message">Ti abbiamo inviato un\'email a %s.\n\nClicca il link nella mail per confermare il tuo account e iniziare a usare Stacca!\n\n⚠️ Controlla anche la cartella spam!</string>
+    <string name="login_confirm_dialog_ok">Ho capito!</string>
 
     <!-- Trial Expired -->
     <string name="trial_title">Il tuo periodo di prova è terminato!</string>
