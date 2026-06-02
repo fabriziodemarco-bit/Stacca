@@ -1,6 +1,7 @@
 package com.stacca.app.auth
 
 import android.content.Context
+import android.util.Log
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.data.SupabaseConfig
 import io.github.jan.supabase.auth.auth
@@ -17,11 +18,17 @@ import kotlinx.coroutines.withContext
  */
 class AuthManager(private val context: Context) {
 
+    companion object {
+        private const val TAG = "AuthManager"
+    }
+
     private val supabase = SupabaseConfig.client
     private val prefs = PreferencesManager(context)
 
     /**
      * Registra un nuovo utente con email e password.
+     * ⚠️ NON imposta isLoggedIn — l'utente deve prima confermare l'email
+     * cliccando il link nella mail di conferma.
      */
     suspend fun signUp(email: String, password: String): Result<UserInfo?> {
         return withContext(Dispatchers.IO) {
@@ -30,12 +37,12 @@ class AuthManager(private val context: Context) {
                     this.email = email
                     this.password = password
                 }
-                val user = supabase.auth.currentUserOrNull()
-                prefs.isLoggedIn = true
-                prefs.userEmail = email
-                prefs.trialExpired = false
-                Result.success(user)
+                // NON impostare isLoggedIn = true qui!
+                // L'utente deve confermare l'email prima di poter accedere.
+                Log.d(TAG, "Registrazione avviata per $email — in attesa conferma email")
+                Result.success(null)
             } catch (e: Exception) {
+                Log.e(TAG, "Errore registrazione", e)
                 Result.failure(e)
             }
         }
@@ -43,6 +50,7 @@ class AuthManager(private val context: Context) {
 
     /**
      * Login con email e password.
+     * Funziona solo se l'utente ha già confermato la propria email.
      */
     suspend fun signIn(email: String, password: String): Result<UserInfo?> {
         return withContext(Dispatchers.IO) {
@@ -57,6 +65,7 @@ class AuthManager(private val context: Context) {
                 prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
+                Log.e(TAG, "Errore login", e)
                 Result.failure(e)
             }
         }
@@ -79,10 +88,30 @@ class AuthManager(private val context: Context) {
                 prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
+                Log.e(TAG, "Errore Google Sign-In", e)
                 Result.failure(e)
             }
         }
     }
+
+    /**
+     * Chiamato dopo che il SDK ha gestito il deep link con successo.
+     * Aggiorna le preferenze locali con i dati della sessione appena creata.
+     */
+    fun onDeepLinkSessionSuccess() {
+        val user = supabase.auth.currentUserOrNull()
+        if (user != null) {
+            prefs.isLoggedIn = true
+            prefs.userEmail = user.email ?: ""
+            prefs.trialExpired = false
+            Log.d(TAG, "Email confermata per ${user.email}")
+        }
+    }
+
+    /**
+     * Restituisce il client Supabase per operazioni dirette come handleDeeplinks.
+     */
+    fun getSupabaseClient() = supabase
 
     /**
      * Logout dell'utente.
@@ -96,7 +125,46 @@ class AuthManager(private val context: Context) {
                 prefs.isPremium = false
                 Result.success(Unit)
             } catch (e: Exception) {
+                Log.e(TAG, "Errore logout", e)
                 Result.failure(e)
+            }
+        }
+    }
+
+    /**
+     * Verifica e ripristina la sessione Supabase all'avvio dell'app.
+     * Se la sessione locale (SharedPreferences) dice "loggato" ma Supabase
+     * non ha una sessione valida, resetta lo stato.
+     *
+     * @return true se la sessione è valida, false altrimenti
+     */
+    suspend fun restoreSession(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val session = supabase.auth.currentSessionOrNull()
+                if (session != null) {
+                    // Sessione trovata, prova a refresharla
+                    supabase.auth.refreshCurrentSession()
+                    val user = supabase.auth.currentUserOrNull()
+                    if (user != null) {
+                        prefs.userEmail = user.email ?: prefs.userEmail
+                        Log.d(TAG, "Sessione ripristinata per ${user.email}")
+                        true
+                    } else {
+                        Log.w(TAG, "Sessione presente ma utente null — resetto")
+                        prefs.isLoggedIn = false
+                        false
+                    }
+                } else {
+                    Log.d(TAG, "Nessuna sessione Supabase trovata — resetto stato locale")
+                    prefs.isLoggedIn = false
+                    false
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Errore ripristino sessione", e)
+                // In caso di errore di rete, mantieni lo stato locale
+                // per non bloccare l'utente offline
+                prefs.isLoggedIn
             }
         }
     }
@@ -134,6 +202,7 @@ class AuthManager(private val context: Context) {
                 supabase.auth.resetPasswordForEmail(email)
                 Result.success(Unit)
             } catch (e: Exception) {
+                Log.e(TAG, "Errore reset password", e)
                 Result.failure(e)
             }
         }
@@ -143,25 +212,4 @@ class AuthManager(private val context: Context) {
      * Controlla se l'utente è premium (locale + server).
      */
     fun isPremium(): Boolean = prefs.isPremium
-
-    /**
-     * Gestisce la conferma email dal deep link.
-     */
-    suspend fun handleEmailConfirmation(accessToken: String, refreshToken: String?): Result<UserInfo?> {
-        return withContext(Dispatchers.IO) {
-            try {
-                supabase.auth.retrieveUser(accessToken)
-                supabase.auth.refreshCurrentSession()
-                val user = supabase.auth.currentUserOrNull()
-                if (user != null) {
-                    prefs.isLoggedIn = true
-                    prefs.userEmail = user.email ?: ""
-                    prefs.trialExpired = false
-                }
-                Result.success(user)
-            } catch (e: Exception) {
-                Result.failure(e)
-            }
-        }
-    }
 }

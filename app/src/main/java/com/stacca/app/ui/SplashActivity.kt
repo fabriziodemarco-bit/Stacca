@@ -5,21 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.stacca.app.R
+import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
+import kotlinx.coroutines.launch
 
-/**
- * Splash screen dell'app Stacca!
- * Mostra il logo e il tagline con un'animazione fade-in,
- * poi smista l'utente in base allo stato del trial:
- *  - Loggato → MainActivity
- *  - Trial scaduto → TrialExpiredActivity
- *  - Tutto OK → LoginActivity
- */
 class SplashActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "SplashActivity"
+    }
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -48,15 +48,40 @@ class SplashActivity : AppCompatActivity() {
         // Traccia l'utilizzo giornaliero (incrementa contatore trial)
         prefs.trackDailyUsage()
 
-        val destination = when {
-            // Già loggato → vai diretto alla main
-            prefs.isLoggedIn -> Intent(this, MainActivity::class.java)
-            // Trial scaduto e non loggato → muro di registrazione
-            prefs.trialExpired -> Intent(this, TrialExpiredActivity::class.java)
-            // Non loggato → login obbligatoria (Google o email/password)
-            else -> Intent(this, LoginActivity::class.java)
-        }
+        if (prefs.isLoggedIn) {
+            // Se l'utente risulta loggato, verifica che la sessione Supabase
+            // sia ancora valida prima di mandarlo alla main
+            lifecycleScope.launch {
+                val authManager = AuthManager(this@SplashActivity)
+                val sessionValid = authManager.restoreSession()
 
+                if (sessionValid) {
+                    Log.d(TAG, "Sessione Supabase valida → MainActivity")
+                    navigateToDestination(Intent(this@SplashActivity, MainActivity::class.java))
+                } else {
+                    Log.w(TAG, "Sessione Supabase non valida → LoginActivity")
+                    // restoreSession() ha già resettato isLoggedIn = false
+                    navigateToDestination(
+                        if (prefs.trialExpired) {
+                            Intent(this@SplashActivity, TrialExpiredActivity::class.java)
+                        } else {
+                            Intent(this@SplashActivity, LoginActivity::class.java)
+                        }
+                    )
+                }
+            }
+        } else {
+            // Non loggato — decidi in base al trial
+            val destination = if (prefs.trialExpired) {
+                Intent(this, TrialExpiredActivity::class.java)
+            } else {
+                Intent(this, LoginActivity::class.java)
+            }
+            navigateToDestination(destination)
+        }
+    }
+
+    private fun navigateToDestination(destination: Intent) {
         startActivity(destination)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()

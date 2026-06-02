@@ -26,7 +26,10 @@ object SupabaseConfig {
         supabaseUrl = SUPABASE_URL,
         supabaseKey = SUPABASE_ANON_KEY
     ) {
-        install(Auth)
+        install(Auth) {
+            scheme = "stacca"
+            host = "login-callback"
+        }
         install(Postgrest)
     }
 }
