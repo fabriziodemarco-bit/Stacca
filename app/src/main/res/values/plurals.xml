@@ -9,4 +9,13 @@
         <item quantity="one">⏳ Ti resta 1 giorno di prova gratuita</item>
         <item quantity="other">⏳ Ti restano %d giorni di prova gratuita</item>
     </plurals>
+
+    <!--
+        Plurale per i giorni di streak in CelebrationActivity.
+        %d = numero di giorni di streak.
+    -->
+    <plurals name="streak_days">
+        <item quantity="one">1 giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
 </resources>

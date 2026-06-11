@@ -236,6 +236,38 @@
                         android:background="@drawable/status_dot_inactive" />
                 </LinearLayout>
 
+                <!-- Badge streak 🔥 (visibile solo se streakCount > 0 e allarme attivo) -->
+                <TextView
+                    android:id="@+id/tvStreakBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🔥 0"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/alert_friendly"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:background="@drawable/status_dot_inactive"
+                    android:visibility="gone" />
+
+                <!-- Bottone "Ho staccato!" (visibile solo in overtime, cioè dopo fine turno) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnHoStaccato"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_ho_staccato"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    style="@style/Widget.Stacca.Button.Primary"
+                    android:backgroundTint="@color/tertiary"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    app:cornerRadius="16dp" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
