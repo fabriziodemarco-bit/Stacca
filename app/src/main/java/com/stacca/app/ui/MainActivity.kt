@@ -1,7 +1,11 @@
 package com.stacca.app.ui
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -23,8 +27,10 @@ import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
+import com.stacca.app.util.PermissionHelper
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Activity principale dell'app Stacca!
@@ -51,6 +57,31 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnDeactivate: MaterialButton
     private lateinit var layoutEscalation: View
     private lateinit var levelDots: List<View>
+
+    // Card protezione permessi
+    private lateinit var cardPermissions: MaterialCardView
+    private lateinit var tvPermNotification: TextView
+    private lateinit var tvPermExactAlarm: TextView
+    private lateinit var tvPermBattery: TextView
+
+    // Receiver per il cambio di stato del permesso allarmi esatti (API 31+)
+    private val exactAlarmPermissionReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
+                // Aggiorna la card e, se l'allarme era attivo, riprogramma ora che abbiamo il permesso
+                updatePermissionsCard()
+                if (prefs.isAlarmActive && PermissionHelper.canScheduleExactAlarms(this@MainActivity)) {
+                    AlarmReceiver.scheduleAlarm(this@MainActivity, prefs.endHour, prefs.endMinute)
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.alarm_rescheduled),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
 
     // Permesso notifiche
     private val notificationPermissionLauncher =
@@ -96,7 +127,13 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.level5Dot),
             findViewById(R.id.level6Dot)
         )
+        // Card protezione permessi
+        cardPermissions = findViewById(R.id.cardPermissions)
+        tvPermNotification = findViewById(R.id.tvPermNotification)
+        tvPermExactAlarm = findViewById(R.id.tvPermExactAlarm)
+        tvPermBattery = findViewById(R.id.tvPermBattery)
     }
+
 
     private fun setupListeners() {
         // Imposta orario di fine
@@ -166,8 +203,23 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
+        // Controlla il permesso allarmi esatti (API 31+)
+        // Se mancante, mostra un dialogo esplicativo in tono coerente con l'app
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            !PermissionHelper.canScheduleExactAlarms(this)) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(getString(R.string.permission_exact_alarm_title))
+                .setMessage(getString(R.string.permission_exact_alarm_message))
+                .setPositiveButton(getString(R.string.permission_exact_alarm_btn)) { _, _ ->
+                    PermissionHelper.exactAlarmSettingsIntent(this)?.let { startActivity(it) }
+                }
+                .setNegativeButton(getString(R.string.btn_cancel), null)
+                .show()
+            return
+        }
         activateAlarm()
     }
+
 
     private fun activateAlarm() {
         prefs.isAlarmActive = true
@@ -316,12 +368,95 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        // Aggiorna la card dei permessi: l'utente potrebbe tornare dalle impostazioni di sistema
+        updatePermissionsCard()
+
+        // Registra il receiver per i cambiamenti del permesso allarmi esatti (API 31+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            registerReceiver(
+                exactAlarmPermissionReceiver,
+                IntentFilter(AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED)
+            )
+        }
+
         // Mostra TempoNonVissuto se c'era un pending (es. da notifica)
         if (prefs.hasPendingTempoNonVissuto && prefs.pendingTempoNonVissutoMinutes > 0) {
             startActivity(Intent(this, TempoNonVissutoActivity::class.java))
             // La activity stessa resetta il pending
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        // Deregistra il receiver degli allarmi esatti per evitare memory leak
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                unregisterReceiver(exactAlarmPermissionReceiver)
+            } catch (e: IllegalArgumentException) {
+                // Già deregistrato, nessun problema
+            }
+        }
+    }
+
+    /**
+     * Aggiorna la card "Protezione allarmi" in base allo stato corrente dei permessi.
+     * La card è visibile solo se almeno uno dei tre check fallisce.
+     * Le righe con ⚠️ sono cliccabili per aprire la schermata di sistema corrispondente.
+     */
+    private fun updatePermissionsCard() {
+        val hasNotif = PermissionHelper.hasNotificationPermission(this)
+        val hasExact = PermissionHelper.canScheduleExactAlarms(this)
+        val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this)
+
+        // Nascondi la card se tutto è a posto
+        if (hasNotif && hasExact && hasBattery) {
+            cardPermissions.visibility = View.GONE
+            return
+        }
+        cardPermissions.visibility = View.VISIBLE
+
+        // Riga notifiche
+        if (hasNotif) {
+            tvPermNotification.text = getString(R.string.perm_status_ok_notification)
+            tvPermNotification.setOnClickListener(null)
+            tvPermNotification.isClickable = false
+        } else {
+            tvPermNotification.text = getString(R.string.perm_status_warn_notification)
+            tvPermNotification.isClickable = true
+            tvPermNotification.setOnClickListener {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+
+        // Riga allarmi esatti
+        if (hasExact) {
+            tvPermExactAlarm.text = getString(R.string.perm_status_ok_exact_alarm)
+            tvPermExactAlarm.setOnClickListener(null)
+            tvPermExactAlarm.isClickable = false
+        } else {
+            tvPermExactAlarm.text = getString(R.string.perm_status_warn_exact_alarm)
+            tvPermExactAlarm.isClickable = true
+            tvPermExactAlarm.setOnClickListener {
+                PermissionHelper.exactAlarmSettingsIntent(this)?.let { startActivity(it) }
+            }
+        }
+
+        // Riga ottimizzazione batteria
+        if (hasBattery) {
+            tvPermBattery.text = getString(R.string.perm_status_ok_battery)
+            tvPermBattery.setOnClickListener(null)
+            tvPermBattery.isClickable = false
+        } else {
+            tvPermBattery.text = getString(R.string.perm_status_warn_battery)
+            tvPermBattery.isClickable = true
+            tvPermBattery.setOnClickListener {
+                startActivity(PermissionHelper.batteryOptimizationIntent(this))
+            }
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
