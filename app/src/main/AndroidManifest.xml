@@ -111,6 +111,12 @@
             android:exported="false"
             android:theme="@style/Theme.Stacca" />
 
+        <!-- Celebration Activity — mostrata quando l'utente stacca in orario 🎉 -->
+        <activity
+            android:name=".ui.CelebrationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca" />
+
         <!-- Alarm Receiver -->
         <receiver
             android:name=".receivers.AlarmReceiver"

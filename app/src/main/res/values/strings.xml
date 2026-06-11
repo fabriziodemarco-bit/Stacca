@@ -24,6 +24,7 @@
 
     <!-- Action Buttons -->
     <string name="btn_ok_stacco">OK, STACCO! ✋</string>
+    <string name="btn_ho_staccato">✋ HO STACCATO!</string>
     <string name="btn_5_more_minutes">Ancora 5 minuti… ⏰</string>
 
     <string name="btn_save">Salva</string>
@@ -166,5 +167,29 @@
     <string name="permission_exact_alarm_btn">Vai alle impostazioni</string>
     <!-- Toast quando l'allarme viene riprogrammato dopo la concessione del permesso -->
     <string name="alarm_rescheduled">⚡ Permesso ottenuto — allarme riprogrammato!</string>
+
+    <!-- Streak Badge in MainActivity -->
+    <string name="streak_badge_label">🔥 %d</string>
+    <string name="streak_dialog_title">🔥 La tua streak</string>
+    <string name="streak_dialog_message">🔥 Streak attuale: %1$d giorni\n🏆 Record personale: %2$d giorni\n⭐ Giorni in orario totali: %3$d</string>
+
+    <!-- Celebration Activity -->
+    <string name="celebration_title">SEI LIBERO! 🎉</string>
+    <string name="celebration_streak_label">🔥 Streak</string>
+    <string name="celebration_new_record">NUOVO RECORD! 🏆</string>
+    <string name="celebration_btn_close">Vado a vivere 😎</string>
+
+    <!-- Messaggi ironici di celebrazione (scelti a random in CelebrationActivity) -->
+    <string-array name="celebration_messages">
+        <item>Il divano ti accoglie da eroe. 🛋️</item>
+        <item>Hai battuto il sistema. Il sistema è il tuo capo. 😎</item>
+        <item>La pizza è ancora calda. Miracolo. 🍕</item>
+        <item>Il tramonto è ancora lì ad aspettarti. 🌅</item>
+        <item>Il tuo gatto finalmente ti riconosce. 🐱</item>
+        <item>Hai guadagnato il diritto di non fare assolutamente nulla. 🏆</item>
+        <item>Serata libera. Il cervello ha già spento il PC mentalmente. 🧠💤</item>
+        <item>Qualcuno da qualche parte sta ancora lavorando. Non sei tu. 😇</item>
+    </string-array>
 </resources>
+
 

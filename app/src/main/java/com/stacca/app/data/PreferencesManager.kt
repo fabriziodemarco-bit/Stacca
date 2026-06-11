@@ -2,6 +2,9 @@ package com.stacca.app.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -41,6 +44,13 @@ class PreferencesManager(context: Context) {
         private const val KEY_PENDING_TEMPO_NON_VISSUTO = "pending_tempo_non_vissuto"
         private const val KEY_HAS_PENDING_TEMPO = "has_pending_tempo"
 
+        // --- Streak & Statistiche ---
+        private const val KEY_STREAK_COUNT = "streak_count"
+        private const val KEY_BEST_STREAK = "best_streak"
+        private const val KEY_LAST_STACCATO_DATE = "last_staccato_date"   // formato yyyy-MM-dd
+        private const val KEY_TOTAL_ON_TIME_DAYS = "total_on_time_days"
+        private const val KEY_TOTAL_OVERTIME_MINUTES = "total_overtime_minutes"
+
         // --- Chiavi preferenze di licenza (in stacca_license) ---
         private const val KEY_IS_PREMIUM = "is_premium"
         private const val KEY_FIRST_USE_DATE = "first_use_date"
@@ -50,6 +60,12 @@ class PreferencesManager(context: Context) {
 
         // Durata del trial in giorni
         private const val TRIAL_DURATION_DAYS = 7L
+
+        // Soglia "in orario": se lo straordinario è <= 5 minuti, conta come staccato in orario
+        const val ON_TIME_THRESHOLD_MINUTES = 5
+
+        // Formato data per lastStaccatoDate
+        private val DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     }
 
     // =========================================================================
@@ -168,6 +184,131 @@ class PreferencesManager(context: Context) {
     var hasPendingTempoNonVissuto: Boolean
         get() = prefs.getBoolean(KEY_HAS_PENDING_TEMPO, false)
         set(value) = prefs.edit().putBoolean(KEY_HAS_PENDING_TEMPO, value).apply()
+
+    // =========================================================================
+    // STREAK & STATISTICHE (in stacca_prefs, azzerate da "Cancella dati")
+    // =========================================================================
+
+    /** Numero di giorni consecutivi in cui l'utente ha staccato in orario (<=5 min). */
+    var streakCount: Int
+        get() = prefs.getInt(KEY_STREAK_COUNT, 0)
+        set(value) = prefs.edit().putInt(KEY_STREAK_COUNT, value).apply()
+
+    /** Miglior streak di sempre. */
+    var bestStreak: Int
+        get() = prefs.getInt(KEY_BEST_STREAK, 0)
+        set(value) = prefs.edit().putInt(KEY_BEST_STREAK, value).apply()
+
+    /**
+     * Data dell'ultimo staccato registrato (formato yyyy-MM-dd).
+     * Usata per l'idempotenza di registraStaccato().
+     */
+    var lastStaccatoDate: String
+        get() = prefs.getString(KEY_LAST_STACCATO_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_LAST_STACCATO_DATE, value).apply()
+
+    /** Numero totale di giorni in cui l'utente ha staccato in orario (cumulativo lifetime). */
+    var totalOnTimeDays: Int
+        get() = prefs.getInt(KEY_TOTAL_ON_TIME_DAYS, 0)
+        set(value) = prefs.edit().putInt(KEY_TOTAL_ON_TIME_DAYS, value).apply()
+
+    /** Minuti cumulativi di straordinario accumulati nei giorni di ritardo. */
+    var totalOvertimeMinutes: Int
+        get() = prefs.getInt(KEY_TOTAL_OVERTIME_MINUTES, 0)
+        set(value) = prefs.edit().putInt(KEY_TOTAL_OVERTIME_MINUTES, value).apply()
+
+    /**
+     * Data odierna nel formato yyyy-MM-dd (usata internamente per i confronti).
+     */
+    private fun today(): String = DATE_FORMAT.format(Calendar.getInstance().time)
+
+    /**
+     * Registra l'azione "Ho staccato!" per oggi.
+     *
+     * Logica:
+     * - IDEMPOTENTE: se [lastStaccatoDate] == oggi, non fa nulla e restituisce lo stato corrente.
+     * - "In orario" = [overtimeMinutes] <= ON_TIME_THRESHOLD_MINUTES (5 minuti di tolleranza).
+     * - In orario → incrementa streakCount (o 1 se ieri non era staccato in orario),
+     *   aggiorna bestStreak, incrementa totalOnTimeDays.
+     * - In ritardo → azzera streakCount a 0, aggiunge [overtimeMinutes] a totalOvertimeMinutes.
+     *
+     * NOTA: lo streak NON si azzera automaticamente per i giorni saltati (weekend/ferie).
+     * Si azzera SOLO quando si stacca in ritardo. Questo semplifica la logica ed evita
+     * di dover tracciare l'ultimo allarme schedulato. Se in futuro si vuole la logica
+     * "azzera anche per i giorni lavorativi saltati", bisognerà salvare la data dell'ultimo
+     * allarme attivo e confrontarla qui.
+     *
+     * @param overtimeMinutes  Minuti di straordinario (mai negativo — usare coerceAtLeast(0)).
+     * @return [StaccatoResult] con lo stato aggiornato.
+     */
+    fun registraStaccato(overtimeMinutes: Int): StaccatoResult {
+        val todayStr = today()
+
+        // Idempotenza: già registrato oggi
+        if (lastStaccatoDate == todayStr) {
+            return StaccatoResult(
+                isOnTime     = overtimeMinutes <= ON_TIME_THRESHOLD_MINUTES,
+                streakCount  = streakCount,
+                bestStreak   = bestStreak,
+                isNewRecord  = false
+            )
+        }
+
+        val isOnTime = overtimeMinutes <= ON_TIME_THRESHOLD_MINUTES
+        val prevBest = bestStreak
+        val newStreak: Int
+
+        if (isOnTime) {
+            // Incrementa streak (non si azzera per i giorni saltati — vedi NOTA)
+            newStreak = streakCount + 1
+            val newBest = maxOf(prevBest, newStreak)
+
+            prefs.edit()
+                .putInt(KEY_STREAK_COUNT, newStreak)
+                .putInt(KEY_BEST_STREAK, newBest)
+                .putInt(KEY_TOTAL_ON_TIME_DAYS, totalOnTimeDays + 1)
+                .putString(KEY_LAST_STACCATO_DATE, todayStr)
+                .apply()
+
+            return StaccatoResult(
+                isOnTime    = true,
+                streakCount = newStreak,
+                bestStreak  = newBest,
+                isNewRecord = newStreak > prevBest
+            )
+        } else {
+            // Ritardo: azzera streak e accumula overtime
+            newStreak = 0
+
+            prefs.edit()
+                .putInt(KEY_STREAK_COUNT, 0)
+                .putInt(KEY_TOTAL_OVERTIME_MINUTES, totalOvertimeMinutes + overtimeMinutes)
+                .putString(KEY_LAST_STACCATO_DATE, todayStr)
+                .apply()
+
+            return StaccatoResult(
+                isOnTime    = false,
+                streakCount = 0,
+                bestStreak  = prevBest,
+                isNewRecord = false
+            )
+        }
+    }
+
+    /**
+     * Risultato della chiamata a [registraStaccato].
+     *
+     * @property isOnTime    true se l'utente ha staccato entro 5 minuti dall'orario previsto.
+     * @property streakCount Streak corrente dopo la registrazione.
+     * @property bestStreak  Miglior streak di sempre (aggiornato se [isNewRecord]).
+     * @property isNewRecord true se [streakCount] ha superato il precedente [bestStreak].
+     */
+    data class StaccatoResult(
+        val isOnTime: Boolean,
+        val streakCount: Int,
+        val bestStreak: Int,
+        val isNewRecord: Boolean
+    )
 
     // =========================================================================
     // PREFERENZE DI LICENZA (in stacca_license — protette)
