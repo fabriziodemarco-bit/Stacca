@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Plurale per il banner del trial in MainActivity.
+        Gestisce correttamente "1 giorno" vs "X giorni".
+        %d = numero di giorni rimasti.
+    -->
+    <plurals name="trial_days_left_banner">
+        <item quantity="one">⏳ Ti resta 1 giorno di prova gratuita</item>
+        <item quantity="other">⏳ Ti restano %d giorni di prova gratuita</item>
+    </plurals>
+</resources>

@@ -64,6 +64,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPermExactAlarm: TextView
     private lateinit var tvPermBattery: TextView
 
+    // Card banner trial (visibile solo ai non-premium)
+    private lateinit var cardTrialBanner: MaterialCardView
+    private lateinit var tvTrialBanner: TextView
+
     // Receiver per il cambio di stato del permesso allarmi esatti (API 31+)
     private val exactAlarmPermissionReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -132,6 +136,9 @@ class MainActivity : AppCompatActivity() {
         tvPermNotification = findViewById(R.id.tvPermNotification)
         tvPermExactAlarm = findViewById(R.id.tvPermExactAlarm)
         tvPermBattery = findViewById(R.id.tvPermBattery)
+        // Card banner trial
+        cardTrialBanner = findViewById(R.id.cardTrialBanner)
+        tvTrialBanner = findViewById(R.id.tvTrialBanner)
     }
 
 
@@ -279,6 +286,7 @@ class MainActivity : AppCompatActivity() {
             btnDeactivate.visibility = View.GONE
             cardCountdown.visibility = View.GONE
         }
+        updateTrialBanner()
     }
 
     private fun startClockUpdate() {
@@ -370,6 +378,7 @@ class MainActivity : AppCompatActivity() {
 
         // Aggiorna la card dei permessi: l'utente potrebbe tornare dalle impostazioni di sistema
         updatePermissionsCard()
+        updateTrialBanner()
 
         // Registra il receiver per i cambiamenti del permesso allarmi esatti (API 31+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -457,6 +466,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Aggiorna il banner del trial nella schermata principale.
+     * Visibile solo se l'utente non è premium; mostra i giorni rimasti.
+     */
+    private fun updateTrialBanner() {
+        if (prefs.isPremium) {
+            cardTrialBanner.visibility = View.GONE
+            return
+        }
+        cardTrialBanner.visibility = View.VISIBLE
+        val giorni = prefs.trialDaysLeft
+        tvTrialBanner.text = resources.getQuantityString(
+            R.plurals.trial_days_left_banner, giorni, giorni
+        )
+    }
 
     override fun onDestroy() {
         super.onDestroy()
