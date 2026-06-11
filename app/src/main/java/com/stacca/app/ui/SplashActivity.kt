@@ -49,6 +49,11 @@ class SplashActivity : AppCompatActivity() {
         // Assicura che la data del primo avvio sia registrata (per il trial a calendario)
         prefs.ensureFirstUseDateSet()
 
+        // Controlla se il trial è appena scaduto e la schermata soft NON è ancora stata mostrata.
+        // In quel caso mostriamo TrialExpiredActivity UNA SOLA VOLTA come primo step,
+        // poi l'utente arriva sempre alla MainActivity (piano gratuito o premium).
+        val trialAppenaScaduto = !prefs.isTrialActive && !prefs.isPremium && !prefs.trialEndShown
+
         if (prefs.isLoggedIn) {
             // Se l'utente risulta loggato, verifica che la sessione Supabase
             // sia ancora valida prima di mandarlo alla main
@@ -57,23 +62,25 @@ class SplashActivity : AppCompatActivity() {
                 val sessionValid = authManager.restoreSession()
 
                 if (sessionValid) {
-                    Log.d(TAG, "Sessione Supabase valida → MainActivity")
-                    navigateToDestination(Intent(this@SplashActivity, MainActivity::class.java))
+                    Log.d(TAG, "Sessione Supabase valida → ${if (trialAppenaScaduto) "TrialExpired (soft)" else "MainActivity"}")
+                    if (trialAppenaScaduto) {
+                        navigateToDestination(Intent(this@SplashActivity, TrialExpiredActivity::class.java))
+                    } else {
+                        navigateToDestination(Intent(this@SplashActivity, MainActivity::class.java))
+                    }
                 } else {
                     Log.w(TAG, "Sessione Supabase non valida → LoginActivity")
                     // restoreSession() ha già resettato isLoggedIn = false
-                    navigateToDestination(
-                        if (!prefs.isTrialActive) {
-                            Intent(this@SplashActivity, TrialExpiredActivity::class.java)
-                        } else {
-                            Intent(this@SplashActivity, LoginActivity::class.java)
-                        }
-                    )
+                    // L'app non si blocca mai: va alla Login (l'utente può usarla da guest)
+                    navigateToDestination(Intent(this@SplashActivity, LoginActivity::class.java))
                 }
             }
         } else {
-            // Non loggato — decidi in base al trial
-            val destination = if (!prefs.isTrialActive) {
+            // Non loggato — va sempre alla Login (da cui si può "Continua senza account")
+            // Se il trial è appena scaduto, TrialExpired sarà mostrata al ritorno dalla Login
+            // oppure subito se l'utente è già in grado di accedere alla Main (es. skip login)
+            // Semplicità: mostriamo TrialExpired prima di Login se il flag è attivo
+            val destination = if (trialAppenaScaduto) {
                 Intent(this, TrialExpiredActivity::class.java)
             } else {
                 Intent(this, LoginActivity::class.java)

@@ -39,6 +39,10 @@ class PreferencesManager(context: Context) {
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_PAYWALL_SHOWN_TODAY = "paywall_shown_today"
+        // Flag: la schermata soft "fine trial" è già stata mostrata una volta
+        private const val KEY_TRIAL_END_SHOWN = "trial_end_shown"
+        // Flag: data dell'ultimo blocco premium durante l'escalation (per il messaggio una-tantum)
+        private const val KEY_PREMIUM_GATE_SHOWN_DATE = "premium_gate_shown_date"
 
         // Tempo Non Vissuto
         private const val KEY_PENDING_TEMPO_NON_VISSUTO = "pending_tempo_non_vissuto"
@@ -354,6 +358,31 @@ class PreferencesManager(context: Context) {
      */
     val isTrialActive: Boolean
         get() = isPremium || trialDaysLeft > 0
+
+    /**
+     * Accesso completo = premium acquistato OPPURE trial ancora attivo.
+     * Usato per il gating freemium: se false, l'app degrada al piano gratuito
+     * (livelli 1-3) senza bloccarsi.
+     */
+    val hasFullAccess: Boolean
+        get() = isPremium || isTrialActive
+
+    /**
+     * True se la schermata informativa "fine trial" è già stata mostrata.
+     * Salvato in stacca_prefs (azzerabile con "Cancella dati", ma non critico).
+     */
+    var trialEndShown: Boolean
+        get() = prefs.getBoolean(KEY_TRIAL_END_SHOWN, false)
+        set(value) = prefs.edit().putBoolean(KEY_TRIAL_END_SHOWN, value).apply()
+
+    /**
+     * Data (yyyy-MM-dd) dell'ultimo giorno in cui abbiamo mostrato il messaggio
+     * "sei al livello X ma potresti avere il Nucleare" nella notifica.
+     * Una sola notifica al giorno — nessun bombardamento psicologico gratis.
+     */
+    var premiumGateShownDate: String
+        get() = prefs.getString(KEY_PREMIUM_GATE_SHOWN_DATE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_PREMIUM_GATE_SHOWN_DATE, value).apply()
 
     /**
      * Garantisce che firstUseDateMillis sia inizializzato.

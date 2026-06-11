@@ -15,9 +15,10 @@ import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.PreferencesManager
 
 /**
- * Activity paywall che si mostra tra la notifica 3 (INSISTENT) e la 4 (AGGRESSIVE).
- * Richiede un acquisto one-time di €0.99 per sbloccare i livelli 4-6 (fullscreen).
- * Se l'utente non acquista, le notifiche si fermano al livello 3.
+ * Paywall freemium: mostrata quando l'utente (senza accesso completo) vuole sbloccare
+ * i livelli 4-6 (AGGRESSIVE, NUCLEAR, APOCALYPSE) e l'allarme a schermo intero.
+ *
+ * L'acquisto è one-time (stacca_premium). BillingManager e restore acquisti invariati.
  */
 class PaywallActivity : AppCompatActivity() {
 
