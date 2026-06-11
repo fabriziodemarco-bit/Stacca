@@ -391,6 +391,9 @@ class MainActivity : AppCompatActivity() {
         val overtimeMillis = (now.timeInMillis - endTime.timeInMillis).coerceAtLeast(0L)
         val overtimeMinutes = (overtimeMillis / 60_000).toInt()
 
+        // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
+        val streakBeforeReset = prefs.streakCount
+
         // Registra (idempotente)
         val result = prefs.registraStaccato(overtimeMinutes)
 
@@ -422,6 +425,7 @@ class MainActivity : AppCompatActivity() {
             }
             startActivity(Intent(this, TempoNonVissutoActivity::class.java).apply {
                 putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, overtimeMinutes)
+                putExtra(TempoNonVissutoActivity.EXTRA_LOST_STREAK, streakBeforeReset)
             })
         }
     }

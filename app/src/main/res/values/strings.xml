@@ -152,6 +152,8 @@
     <string name="tempo_non_vissuto_title">TEMPO NON VISSUTO</string>
     <string name="tempo_non_vissuto_subtitle">Questo è il tempo che hai regalato al lavoro invece che alla tua vita</string>
     <string name="tempo_non_vissuto_btn">Ho capito. Farò meglio.</string>
+    <!-- Mostrato solo se l'utente aveva una streak attiva prima di staccare in ritardo -->
+    <string name="streak_lost_message">Hai perso uno streak di %d giorni 💔</string>
 
     <!-- Protezione Allarmi - Card permessi in MainActivity -->
     <string name="perm_card_title">🛡️ Protezione allarmi</string>
