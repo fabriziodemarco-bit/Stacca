@@ -1,78 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background_dark"
-    android:gravity="center"
-    android:padding="32dp">
+    android:fillViewport="true">
 
-    <!-- Emoji -->
-    <TextView
-        android:id="@+id/tvTrialEmoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="⏰"
-        android:textSize="80sp"
-        android:layout_marginBottom="24dp" />
-
-    <!-- Titolo -->
-    <TextView
-        android:id="@+id/tvTrialTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/trial_title"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:padding="32dp">
 
-    <!-- Giorni usati badge -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/alert_nuclear"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
-        android:layout_marginBottom="24dp">
-
+        <!-- Emoji -->
         <TextView
-            android:id="@+id/tvTrialDays"
+            android:id="@+id/tvTrialEmoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:text="🎓"
+            android:textSize="80sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Titolo -->
+        <TextView
+            android:id="@+id/tvTrialTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/trial_soft_title"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
+            android:textColor="@color/primary"
+            android:gravity="center"
+            android:layout_marginBottom="12dp" />
 
-    </com.google.android.material.card.MaterialCardView>
+        <!-- Sottotitolo -->
+        <TextView
+            android:id="@+id/tvTrialSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/trial_soft_subtitle"
+            android:textSize="15sp"
+            android:textColor="@color/text_secondary"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.4"
+            android:layout_marginBottom="24dp" />
 
-    <!-- Sottotitolo -->
-    <TextView
-        android:id="@+id/tvTrialSubtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/trial_subtitle"
-        android:textSize="16sp"
-        android:textColor="@color/text_secondary"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.4"
-        android:layout_marginBottom="40dp" />
+        <!-- Card: cosa hai gratis -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="16dp">
 
-    <!-- Bottone Registrati -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnTrialRegister"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:text="@string/trial_register_btn"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        style="@style/Widget.Stacca.Button.Primary"
-        app:cornerRadius="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trial_soft_free_title"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/tertiary"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trial_soft_free_items"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Card: cosa sblocca Premium -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/premium_gold"
+            app:strokeWidth="1dp"
+            android:layout_marginBottom="28dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trial_soft_premium_title"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/premium_gold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trial_soft_premium_items"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"
+                    android:lineSpacingMultiplier="1.5" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottone principale: Premium -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTrialRegister"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="@string/trial_soft_btn_premium"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            style="@style/Widget.Stacca.Button.Primary"
+            app:cornerRadius="16dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Bottone secondario: Continua gratis -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTrialContinueFree"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/trial_soft_btn_free"
+            android:textSize="14sp"
+            style="@style/Widget.Stacca.Button.Secondary"
+            android:textColor="@color/text_secondary"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</ScrollView>

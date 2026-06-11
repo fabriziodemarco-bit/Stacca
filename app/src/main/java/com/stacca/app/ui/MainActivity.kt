@@ -576,19 +576,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Aggiorna il banner del trial nella schermata principale.
-     * Visibile solo se l'utente non è premium; mostra i giorni rimasti.
+     * Aggiorna il banner del trial/escalation nella schermata principale.
+     *
+     * - Accesso completo (premium o trial attivo): "Escalation completa: 6 livelli 💀" — non cliccabile.
+     * - Piano gratuito: "Escalation attiva: 3 di 6 livelli 🔒" — cliccabile → PaywallActivity.
      */
     private fun updateTrialBanner() {
-        if (prefs.isPremium) {
-            cardTrialBanner.visibility = View.GONE
-            return
+        if (prefs.hasFullAccess) {
+            // Accesso completo: mostra badge non cliccabile
+            cardTrialBanner.visibility = View.VISIBLE
+            tvTrialBanner.text = getString(R.string.escalation_full_badge)
+            cardTrialBanner.isClickable = false
+            cardTrialBanner.setOnClickListener(null)
+        } else {
+            // Piano gratuito: mostra badge cliccabile verso il paywall
+            cardTrialBanner.visibility = View.VISIBLE
+            tvTrialBanner.text = getString(R.string.escalation_limited_badge)
+            cardTrialBanner.isClickable = true
+            cardTrialBanner.setOnClickListener {
+                startActivity(Intent(this, PaywallActivity::class.java))
+            }
         }
-        cardTrialBanner.visibility = View.VISIBLE
-        val giorni = prefs.trialDaysLeft
-        tvTrialBanner.text = resources.getQuantityString(
-            R.plurals.trial_days_left_banner, giorni, giorni
-        )
     }
 
     override fun onDestroy() {

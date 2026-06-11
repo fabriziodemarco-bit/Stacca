@@ -113,17 +113,21 @@
     <string name="premium_unlock">Sblocca Premium</string>
 
     <!-- Paywall -->
-    <string name="paywall_title">Le notifiche serie stanno per partire! 🔥</string>
-    <string name="paywall_subtitle">Hai ignorato 3 avvisi gentili.\nOra è il momento di fare sul serio.\nSblocca le notifiche a schermo intero che ti OBBLIGHERANNO a staccare!</string>
-    <string name="paywall_unlock_title">🚀 Cosa sblocchi</string>
-    <string name="paywall_feature_1">🤬 Livello AGGRESSIVO — notifiche a tutto schermo impossibili da ignorare</string>
-    <string name="paywall_feature_2">💀 Livello NUCLEARE — allarme sonoro + schermo bloccato</string>
-    <string name="paywall_feature_3">☠️ Livello APOCALISSE — il tuo telefono diventa il tuo peggior nemico</string>
-    <string name="paywall_price">€0,99</string>
+    <string name="paywall_title">Vuoi che smetta di fare il carino? &#x1F525;</string>
+    <string name="paywall_subtitle">Hai ignorato 3 avvisi gentili.\nCon Premium sarei gi&#xE0; al livello NUCLEARE.\nUn solo acquisto per rendermi davvero fastidioso.</string>
+    <string name="paywall_unlock_title">&#x1F680; Cosa sblocchi</string>
+    <string name="paywall_feature_1">&#x1F480; Livelli Nucleare e Apocalisse &#x2014; il tuo telefono urla letteralmente</string>
+    <string name="paywall_feature_2">&#x1F4E2; Allarme a schermo intero &#x2014; impossibile da ignorare anche da Dio</string>
+    <string name="paywall_feature_3">&#x2764;&#xFE0F; Sostieni uno sviluppatore che vorrebbe staccare anche lui</string>
+    <string name="paywall_price">&#x20AC;0,99</string>
     <string name="paywall_price_desc">Un pagamento unico. Per sempre. Niente abbonamenti.</string>
-    <string name="paywall_buy_button">🔓 SBLOCCA ORA — €0,99</string>
+    <string name="paywall_buy_button">&#x1F513; SBLOCCA ORA &#x2014; &#x20AC;0,99</string>
     <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
-    <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai più sfuggire! 😈🔥</string>
+    <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai pi&#xF9; sfuggire! &#x1F608;&#x1F525;</string>
+
+    <!-- Badge escalation in MainActivity -->
+    <string name="escalation_limited_badge">Escalation attiva: 3 di 6 livelli &#x1F512;  Tocca per sbloccare</string>
+    <string name="escalation_full_badge">Escalation completa: 6 livelli &#x1F480;</string>
 
     <!-- Google Sign-In -->
     <string name="login_google">Accedi con Google</string>
@@ -139,14 +143,23 @@
     <string name="login_confirm_dialog_message">Ti abbiamo inviato un\'email a %s.\n\nClicca il link nella mail per confermare il tuo account e iniziare a usare Stacca!\n\n⚠️ Controlla anche la cartella spam!</string>
     <string name="login_confirm_dialog_ok">Ho capito!</string>
 
-    <!-- Trial Expired -->
-    <string name="trial_title">Il tuo periodo di prova è terminato!</string>
-    <string name="trial_subtitle">I 7 giorni di prova gratuita sono finiti.\nPer continuare a proteggerti dal lavoro eccessivo, registrati e diventa Premium.</string>
-    <string name="trial_register_btn">REGISTRATI E DIVENTA PREMIUM</string>
-    <!-- Usata in TrialExpiredActivity: mostra i giorni rimasti (0 quando scade) -->
+    <!-- Trial Expired → trasformata in schermata soft freemium -->
+    <!-- Stringhe legacy mantenute per sicurezza -->
+    <string name="trial_title">Il tuo periodo di prova &#xE8; terminato!</string>
+    <string name="trial_subtitle">I 7 giorni di prova gratuita sono finiti.\nPuoi continuare a usare l\'app gratuitamente.</string>
+    <string name="trial_register_btn">Passa a Premium &#x1F451;</string>
     <string name="trial_days_left">%d giorni di prova rimanenti</string>
-    <!-- Mantenuta per compatibilità -->
     <string name="trial_days_used">%d giorni di utilizzo</string>
+
+    <!-- Schermata soft fine trial (TrialExpiredActivity freemium) -->
+    <string name="trial_soft_title">Prova finita. L\'app no. &#x1F393;</string>
+    <string name="trial_soft_subtitle">Il tuo periodo di prova &#xE8; scaduto.\nPuoi continuare gratis con i livelli base &#x2014; o passare a Premium per la versione che fa davvero paura.</string>
+    <string name="trial_soft_free_title">&#x2705; Gratis per sempre</string>
+    <string name="trial_soft_free_items">&#x1F4E9; Livelli 1-3 (Gentile, Amichevole, Insistente)\n&#x1F525; Streak e registro staccate\n&#x23F0; Allarme base funzionante</string>
+    <string name="trial_soft_premium_title">&#x1F451; Sblocca con Premium</string>
+    <string name="trial_soft_premium_items">&#x1F480; Livelli 4-6 (Aggressivo, Nucleare, Apocalisse)\n&#x1F4E2; Allarme a schermo intero impossibile da ignorare\n&#x2764;&#xFE0F; Sostieni uno sviluppatore che vorrebbe staccare anche lui</string>
+    <string name="trial_soft_btn_premium">&#x1F451; Passa a Premium</string>
+    <string name="trial_soft_btn_free">Continua gratis (livelli 1-3)</string>
 
     <!-- Tempo Non Vissuto -->
     <string name="tempo_non_vissuto_title">TEMPO NON VISSUTO</string>

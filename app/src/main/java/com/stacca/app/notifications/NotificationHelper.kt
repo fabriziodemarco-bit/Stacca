@@ -71,12 +71,16 @@ class NotificationHelper(private val context: Context) {
     /**
      * Invia una notifica basata sul livello di escalation.
      * Rispetta le preferenze utente per suono e vibrazione.
+     *
+     * @param premiumTeaser se true (e solo UNA volta al giorno, deciso da AlarmReceiver),
+     *                      aggiunge al BigText una riga ironica su cosa si perde senza Premium.
      */
     fun sendEscalatingNotification(
         level: NotificationMessages.Level,
         overtimeMinutes: Int,
         soundEnabled: Boolean = true,
-        vibrationEnabled: Boolean = true
+        vibrationEnabled: Boolean = true,
+        premiumTeaser: Boolean = false
     ) {
         val (title, message) = NotificationMessages.getRandomMessage(level)
 
@@ -118,8 +122,13 @@ class NotificationHelper(private val context: Context) {
 
         // Testo collassato: sempre "Basta lavorare. Vivi."
         // Testo espanso: titolo grande "STACCA!" + titolo e messaggio originali sotto
+        // Se premiumTeaser=true, aggiunge riga upsell ironica (una volta al giorno)
         val collapsedBody = "Basta lavorare. Vivi."
-        val expandedBody = "$title\n$message"
+        val expandedBody = if (premiumTeaser) {
+            "$title\n$message\n\n🔒 Con Premium a quest'ora ti starei già urlando contro (livello NUCLEARE)"
+        } else {
+            "$title\n$message"
+        }
 
         val builder = NotificationCompat.Builder(context, channel)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
@@ -160,6 +169,7 @@ class NotificationHelper(private val context: Context) {
             e.printStackTrace()
         }
     }
+
 
     /**
      * Cancella tutte le notifiche.

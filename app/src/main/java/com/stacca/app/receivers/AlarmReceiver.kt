@@ -12,7 +12,6 @@ import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.FullScreenAlertActivity
-import com.stacca.app.ui.PaywallActivity
 import com.stacca.app.util.PermissionHelper
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,17 +43,25 @@ class AlarmReceiver : BroadcastReceiver() {
         val adjustedMinutes = adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
         var level = NotificationMessages.getLevelForMinutes(adjustedMinutes)
 
-        // --- PAYWALL: blocco al livello 3 (INSISTENT) se non premium ---
-        if (level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal && !prefs.isPremium) {
-            // Se non abbiamo ancora mostrato il paywall in questa sessione, mostralo
-            if (!prefs.paywallShownToday) {
+        // --- FREEMIUM: cap al livello 3 (INSISTENT) senza accesso completo ---
+        if (level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal && !prefs.hasFullAccess) {
+
+            // Prima volta oggi che un livello premium viene bloccato?
+            // Aggiungi alla notifica INSISTENT un teaser upsell (una volta al giorno, non ogni allarme)
+            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+                .format(java.util.Calendar.getInstance().time)
+            if (prefs.premiumGateShownDate != today) {
+                prefs.premiumGateShownDate = today
+                // Salviamo il livello "reale" che avremmo raggiunto per il messaggio ironico
+                prefs.paywallShownToday = true   // ricicliamo il flag per evitare il vecchio popup
+                // Passiamo il livello bloccato via intent extra — NotificationHelper lo usa per il BigText
+                // Nota: sendEscalatingNotification viene chiamata più giù; usiamo un flag in prefs
+            } else {
+                // Già mostrato oggi: metti solo la notifica normale senza teaser
                 prefs.paywallShownToday = true
-                val paywallIntent = Intent(context, PaywallActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                }
-                context.startActivity(paywallIntent)
             }
-            // Cap al livello INSISTENT per utenti non premium
+
+            // Cap al livello INSISTENT
             level = NotificationMessages.Level.INSISTENT
         }
 
@@ -70,16 +77,30 @@ class AlarmReceiver : BroadcastReceiver() {
         } else null
 
         try {
-            // Invia la notifica
+            // Calcola se dobbiamo aggiungere il teaser premium alla notifica INSISTENT
+            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+                .format(java.util.Calendar.getInstance().time)
+            // Il flag premiumGateShownDate viene impostato SOLO la prima volta oggi nel blocco sopra;
+            // se coincide con oggi E siamo al livello INSISTENT per effetto del cap, aggiungiamo il teaser
+            val mostraTeaserPremium = !prefs.hasFullAccess &&
+                level == NotificationMessages.Level.INSISTENT &&
+                prefs.premiumGateShownDate == today &&
+                adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
+                    .let { NotificationMessages.getLevelForMinutes(it).ordinal } >= NotificationMessages.Level.AGGRESSIVE.ordinal
+
+            // Invia la notifica (con eventuale teaser)
             val notificationHelper = NotificationHelper(context)
             notificationHelper.sendEscalatingNotification(
                 level, overtimeMinutes,
                 soundEnabled = prefs.soundEnabled,
-                vibrationEnabled = prefs.vibrationEnabled
+                vibrationEnabled = prefs.vibrationEnabled,
+                premiumTeaser = mostraTeaserPremium
             )
 
-            // Per livello NUCLEAR e APOCALYPSE, apri anche l'activity a schermo intero
+            // Per livello NUCLEAR e APOCALYPSE, apri l'activity a schermo intero
+            // MA solo se l'utente ha accesso completo (premium o trial attivo)
             if (prefs.fullScreenEnabled &&
+                prefs.hasFullAccess &&
                 level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
                 val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
