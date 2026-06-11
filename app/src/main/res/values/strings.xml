@@ -140,9 +140,12 @@
 
     <!-- Trial Expired -->
     <string name="trial_title">Il tuo periodo di prova è terminato!</string>
-    <string name="trial_subtitle">Hai usato Stacca! per 5 giorni consecutivi.\nPer continuare a proteggerti dal lavoro eccessivo, registrati e diventa Premium.</string>
+    <string name="trial_subtitle">I 7 giorni di prova gratuita sono finiti.\nPer continuare a proteggerti dal lavoro eccessivo, registrati e diventa Premium.</string>
     <string name="trial_register_btn">REGISTRATI E DIVENTA PREMIUM</string>
-    <string name="trial_days_used">%d giorni consecutivi di utilizzo</string>
+    <!-- Usata in TrialExpiredActivity: mostra i giorni rimasti (0 quando scade) -->
+    <string name="trial_days_left">%d giorni di prova rimanenti</string>
+    <!-- Mantenuta per compatibilità -->
+    <string name="trial_days_used">%d giorni di utilizzo</string>
 
     <!-- Tempo Non Vissuto -->
     <string name="tempo_non_vissuto_title">TEMPO NON VISSUTO</string>

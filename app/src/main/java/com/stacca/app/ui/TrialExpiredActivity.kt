@@ -20,9 +20,9 @@ class TrialExpiredActivity : AppCompatActivity() {
 
         val prefs = PreferencesManager(this)
 
-        // Mostra i giorni usati
+        // Mostra i giorni di prova rimasti (o 0 se scaduto)
         val tvDays = findViewById<TextView>(R.id.tvTrialDays)
-        tvDays.text = getString(R.string.trial_days_used, prefs.consecutiveUseDays)
+        tvDays.text = getString(R.string.trial_days_left, prefs.trialDaysLeft)
 
         // Bottone vai al login/registrazione
         findViewById<MaterialButton>(R.id.btnTrialRegister).setOnClickListener {
@@ -46,7 +46,6 @@ class TrialExpiredActivity : AppCompatActivity() {
         // Se nel frattempo l'utente si è loggato, vai alla Main
         val prefs = PreferencesManager(this)
         if (prefs.isLoggedIn) {
-            prefs.trialExpired = false
             startActivity(Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             })

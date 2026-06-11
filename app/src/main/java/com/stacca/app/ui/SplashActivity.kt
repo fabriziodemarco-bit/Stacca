@@ -46,8 +46,8 @@ class SplashActivity : AppCompatActivity() {
     private fun navigateNext() {
         val prefs = PreferencesManager(this)
 
-        // Traccia l'utilizzo giornaliero (incrementa contatore trial)
-        prefs.trackDailyUsage()
+        // Assicura che la data del primo avvio sia registrata (per il trial a calendario)
+        prefs.ensureFirstUseDateSet()
 
         if (prefs.isLoggedIn) {
             // Se l'utente risulta loggato, verifica che la sessione Supabase
@@ -63,7 +63,7 @@ class SplashActivity : AppCompatActivity() {
                     Log.w(TAG, "Sessione Supabase non valida → LoginActivity")
                     // restoreSession() ha già resettato isLoggedIn = false
                     navigateToDestination(
-                        if (prefs.trialExpired) {
+                        if (!prefs.isTrialActive) {
                             Intent(this@SplashActivity, TrialExpiredActivity::class.java)
                         } else {
                             Intent(this@SplashActivity, LoginActivity::class.java)
@@ -73,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
             }
         } else {
             // Non loggato — decidi in base al trial
-            val destination = if (prefs.trialExpired) {
+            val destination = if (!prefs.isTrialActive) {
                 Intent(this, TrialExpiredActivity::class.java)
             } else {
                 Intent(this, LoginActivity::class.java)

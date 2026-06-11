@@ -62,7 +62,6 @@ class AuthManager(private val context: Context) {
                 val user = supabase.auth.currentUserOrNull()
                 prefs.isLoggedIn = true
                 prefs.userEmail = email
-                prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
                 Log.e(TAG, "Errore login", e)
@@ -85,7 +84,6 @@ class AuthManager(private val context: Context) {
                 val user = supabase.auth.currentUserOrNull()
                 prefs.isLoggedIn = true
                 prefs.userEmail = user?.email ?: ""
-                prefs.trialExpired = false
                 Result.success(user)
             } catch (e: Exception) {
                 Log.e(TAG, "Errore Google Sign-In", e)
@@ -103,7 +101,6 @@ class AuthManager(private val context: Context) {
         if (user != null) {
             prefs.isLoggedIn = true
             prefs.userEmail = user.email ?: ""
-            prefs.trialExpired = false
             Log.d(TAG, "Email confermata per ${user.email}")
         }
     }
