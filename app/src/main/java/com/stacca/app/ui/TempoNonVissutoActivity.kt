@@ -20,6 +20,8 @@ class TempoNonVissutoActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_OVERTIME_MINUTES = "overtime_minutes"
+        /** Streak che l'utente aveva PRIMA di staccare in ritardo (0 se non ne aveva). */
+        const val EXTRA_LOST_STREAK = "lost_streak"
 
         private val MESSAGGI_IRONICI = listOf(
             "Il tuo gatto si è chiesto dove fossi. 🐱",
@@ -27,7 +29,7 @@ class TempoNonVissutoActivity : AppCompatActivity() {
             "Il tramonto è già finito. Che peccato. 🌅",
             "Quante serie TV avresti potuto guardare? Molte. 📺",
             "Potresti aver letto un intero capitolo di un libro. Ma no. 📚",
-            "Il divano ti aspettava. Il divano è triste. 🛋️",
+            "Il divano ti aspettava. Il divano è triste. 🛏️",
             "La pizza si è raffreddata. Ma almeno il bug è fixato. 🍕",
             "Il tuo alter ego rilassato ti invidia. 😎",
             "Anche le piante hanno più vita sociale di te oggi. 🌿",
@@ -48,15 +50,18 @@ class TempoNonVissutoActivity : AppCompatActivity() {
             prefs.pendingTempoNonVissutoMinutes
         }
 
+        // Streak che l'utente aveva prima di staccare in ritardo (0 = nessuna streak attiva)
+        val lostStreak = intent.getIntExtra(EXTRA_LOST_STREAK, 0)
+
         // Resetta il pending
         prefs.hasPendingTempoNonVissuto = false
         prefs.pendingTempoNonVissutoMinutes = 0
 
-        setupUI(overtimeMinutes)
+        setupUI(overtimeMinutes, lostStreak)
         startAnimations()
     }
 
-    private fun setupUI(overtimeMinutes: Int) {
+    private fun setupUI(overtimeMinutes: Int, lostStreak: Int = 0) {
         // Mostra ore:minuti
         val hours = overtimeMinutes / 60
         val minutes = overtimeMinutes % 60
@@ -66,6 +71,15 @@ class TempoNonVissutoActivity : AppCompatActivity() {
         // Messaggio ironico casuale
         val tvMessage = findViewById<TextView>(R.id.tvTempoMessage)
         tvMessage.text = "\"${MESSAGGI_IRONICI.random()}\""
+
+        // Streak perso: visibile solo se l'utente aveva una streak attiva
+        val tvStreakLost = findViewById<TextView>(R.id.tvStreakLost)
+        if (lostStreak > 0) {
+            tvStreakLost.text = getString(R.string.streak_lost_message, lostStreak)
+            tvStreakLost.visibility = android.view.View.VISIBLE
+        } else {
+            tvStreakLost.visibility = android.view.View.GONE
+        }
 
         // Bottone chiudi
         findViewById<MaterialButton>(R.id.btnTempoClose).setOnClickListener {
@@ -117,5 +131,19 @@ class TempoNonVissutoActivity : AppCompatActivity() {
             .setDuration(600)
             .setStartDelay(700)
             .start()
+
+        // Fade-in streak perso (se visibile): arriva con un leggero shake orizzontale
+        val tvStreakLost = findViewById<TextView>(R.id.tvStreakLost)
+        if (tvStreakLost.visibility == android.view.View.VISIBLE) {
+            tvStreakLost.alpha = 0f
+            tvStreakLost.translationX = -20f
+            tvStreakLost.animate()
+                .alpha(1f)
+                .translationX(0f)
+                .setDuration(500)
+                .setStartDelay(950)
+                .setInterpolator(android.view.animation.AccelerateDecelerateInterpolator())
+                .start()
+        }
     }
 }

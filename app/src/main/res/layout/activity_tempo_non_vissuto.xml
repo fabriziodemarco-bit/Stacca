@@ -100,7 +100,20 @@
             android:gravity="center"
             android:fontStyle="italic"
             android:lineSpacingMultiplier="1.4"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginBottom="16dp" />
+
+        <!-- Streak perso (visibile solo se streakCount era > 0 prima del ritardo) -->
+        <TextView
+            android:id="@+id/tvStreakLost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/alert_nuclear"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:visibility="gone" />
 
         <!-- Bottone chiudi -->
         <com.google.android.material.button.MaterialButton

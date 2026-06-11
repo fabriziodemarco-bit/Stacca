@@ -161,6 +161,9 @@ class FullScreenAlertActivity : AppCompatActivity() {
         // Ricalcola l'overtime live (overtimeMinutes viene aggiornato dal counter in tempo reale)
         val finalOvertimeMinutes = overtimeMinutes.coerceAtLeast(0)
 
+        // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
+        val streakBeforeReset = prefs.streakCount
+
         // Registra lo staccato (idempotente)
         val result = prefs.registraStaccato(finalOvertimeMinutes)
 
@@ -188,6 +191,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
             startActivity(Intent(this, TempoNonVissutoActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, finalOvertimeMinutes)
+                putExtra(TempoNonVissutoActivity.EXTRA_LOST_STREAK, streakBeforeReset)
             })
         }
     }

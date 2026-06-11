@@ -30,6 +30,9 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 val overtimeMillis = (now.timeInMillis - endTime.timeInMillis).coerceAtLeast(0L)
                 val overtimeMinutes = (overtimeMillis / 60_000).toInt()
 
+                // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
+                val streakBeforeReset = prefs.streakCount
+
                 // Registra lo staccato e ottieni il risultato (idempotente)
                 val result = prefs.registraStaccato(overtimeMinutes)
 
@@ -61,6 +64,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                     val tempoIntent = Intent(context, TempoNonVissutoActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                         putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, overtimeMinutes)
+                        putExtra(TempoNonVissutoActivity.EXTRA_LOST_STREAK, streakBeforeReset)
                     }
                     context.startActivity(tempoIntent)
                 }
