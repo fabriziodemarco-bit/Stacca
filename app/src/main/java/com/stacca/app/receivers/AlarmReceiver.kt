@@ -7,13 +7,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.PowerManager
+import android.util.Log
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.FullScreenAlertActivity
 import com.stacca.app.ui.PaywallActivity
+import com.stacca.app.util.PermissionHelper
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Receiver che viene triggerato quando scatta l'allarme.
@@ -142,19 +145,40 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val triggerTime = System.currentTimeMillis() + (intervalMinutes * 60 * 1000L)
 
-        try {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                triggerTime,
-                pendingIntent
+        // Verifica il permesso prima di usare setExactAndAllowWhileIdle (richiesto API 31+)
+        if (PermissionHelper.canScheduleExactAlarms(context)) {
+            try {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+                )
+            } catch (e: SecurityException) {
+                Log.e("AlarmReceiver", "SecurityException nel riprogrammare il prossimo allarme: ${e.message}")
+                // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
+                val fallbackPrefs = PreferencesManager(context)
+                NotificationHelper(context).sendEscalatingNotification(
+                    NotificationMessages.Level.GENTLE, 0,
+                    soundEnabled = fallbackPrefs.soundEnabled,
+                    vibrationEnabled = fallbackPrefs.vibrationEnabled
+                )
+            }
+        } else {
+            Log.w("AlarmReceiver", "Permesso allarmi esatti non disponibile: impossibile riprogrammare. Invio notifica immediata.")
+            // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
+            val fallbackPrefs = PreferencesManager(context)
+            NotificationHelper(context).sendEscalatingNotification(
+                NotificationMessages.Level.GENTLE, 0,
+                soundEnabled = fallbackPrefs.soundEnabled,
+                vibrationEnabled = fallbackPrefs.vibrationEnabled
             )
-        } catch (e: SecurityException) {
-            // Fallback ad allarme non esatto
-            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
         }
+
+
     }
 
     companion object {
+
         /**
          * Programma l'allarme iniziale per l'orario di fine turno.
          */
@@ -177,17 +201,32 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
             }
 
-            try {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
-                )
-            } catch (e: SecurityException) {
-                alarmManager.set(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
+            // Verifica il permesso prima di usare setExactAndAllowWhileIdle (richiesto API 31+)
+            if (PermissionHelper.canScheduleExactAlarms(context)) {
+                try {
+                    alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        calendar.timeInMillis,
+                        pendingIntent
+                    )
+                } catch (e: SecurityException) {
+                    Log.e("AlarmReceiver", "SecurityException nel programmare l'allarme iniziale: ${e.message}")
+                    // Fallback: invia subito una notifica affinché l'utente sappia che qualcosa è andato storto
+                    val fallbackPrefs = PreferencesManager(context)
+                    NotificationHelper(context).sendEscalatingNotification(
+                        NotificationMessages.Level.GENTLE, 0,
+                        soundEnabled = fallbackPrefs.soundEnabled,
+                        vibrationEnabled = fallbackPrefs.vibrationEnabled
+                    )
+                }
+            } else {
+                Log.w("AlarmReceiver", "Permesso allarmi esatti non disponibile: impossibile programmare l'allarme iniziale. Invio notifica immediata.")
+                // Fallback: invia subito una notifica affinché l'utente sappia che qualcosa è andato storto
+                val fallbackPrefs = PreferencesManager(context)
+                NotificationHelper(context).sendEscalatingNotification(
+                    NotificationMessages.Level.GENTLE, 0,
+                    soundEnabled = fallbackPrefs.soundEnabled,
+                    vibrationEnabled = fallbackPrefs.vibrationEnabled
                 )
             }
         }

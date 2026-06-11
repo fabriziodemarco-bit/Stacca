@@ -148,5 +148,20 @@
     <string name="tempo_non_vissuto_title">TEMPO NON VISSUTO</string>
     <string name="tempo_non_vissuto_subtitle">Questo è il tempo che hai regalato al lavoro invece che alla tua vita</string>
     <string name="tempo_non_vissuto_btn">Ho capito. Farò meglio.</string>
+
+    <!-- Protezione Allarmi - Card permessi in MainActivity -->
+    <string name="perm_card_title">🛡️ Protezione allarmi</string>
+    <string name="perm_status_ok_notification">✅ Notifiche: attive</string>
+    <string name="perm_status_ok_exact_alarm">✅ Allarmi esatti: autorizzati</string>
+    <string name="perm_status_ok_battery">✅ Ottimizzazione batteria: disattivata</string>
+    <string name="perm_status_warn_notification">⚠️ Notifiche disattivate — tocca per abilitare</string>
+    <string name="perm_status_warn_exact_alarm">⚠️ Allarmi esatti non autorizzati — tocca per abilitare</string>
+    <string name="perm_status_warn_battery">⚠️ Ottimizzazione batteria attiva — tocca per disattivare</string>
+    <!-- Dialogo quando l'utente prova ad attivare l'allarme senza il permesso allarmi esatti -->
+    <string name="permission_exact_alarm_title">Permesso allarmi esatti 🔔</string>
+    <string name="permission_exact_alarm_message">Senza questo permesso non posso urlarti di staccare 😤\n\nVai nelle impostazioni e autorizza Stacca! a programmare allarmi esatti. È la cosa più importante che farai oggi.</string>
+    <string name="permission_exact_alarm_btn">Vai alle impostazioni</string>
+    <!-- Toast quando l'allarme viene riprogrammato dopo la concessione del permesso -->
+    <string name="alarm_rescheduled">⚡ Permesso ottenuto — allarme riprogrammato!</string>
 </resources>
 
