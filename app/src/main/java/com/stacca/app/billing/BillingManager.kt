@@ -143,7 +143,7 @@ class BillingManager(
      * Avvia il flusso di acquisto per il prodotto premium.
      * Se il prodotto non è ancora caricato, riprova a connettersi.
      */
-    fun launchPurchaseFlow(activity: Activity, isSubscription: Boolean = false) {
+    fun launchPurchaseFlow(activity: Activity) {
         if (!isConnected) {
             Log.w(TAG, "Billing not connected, reconnecting...")
             connect()

@@ -17,7 +17,6 @@ class NotificationActionReceiver : BroadcastReceiver() {
             "ACTION_STOP_WORK" -> {
                 // L'utente ha accettato di staccare
                 val prefs = PreferencesManager(context)
-                prefs.alarmTriggeredToday = true
                 prefs.paywallShownToday = false
 
                 // Calcola i minuti di straordinario e salva come pending
