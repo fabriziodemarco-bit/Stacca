@@ -19,7 +19,6 @@ class PreferencesManager(context: Context) {
         private const val KEY_END_MINUTE = "end_minute"
         private const val KEY_ALARM_ACTIVE = "alarm_active"
 
-        private const val KEY_ALARM_TRIGGERED_TODAY = "alarm_triggered_today"
         private const val KEY_LAST_TRIGGER_DATE = "last_trigger_date"
         private const val KEY_SOUND_ENABLED = "sound_enabled"
         private const val KEY_VIBRATION_ENABLED = "vibration_enabled"
@@ -53,10 +52,6 @@ class PreferencesManager(context: Context) {
     var isAlarmActive: Boolean
         get() = prefs.getBoolean(KEY_ALARM_ACTIVE, false)
         set(value) = prefs.edit().putBoolean(KEY_ALARM_ACTIVE, value).apply()
-
-    var alarmTriggeredToday: Boolean
-        get() = prefs.getBoolean(KEY_ALARM_TRIGGERED_TODAY, false)
-        set(value) = prefs.edit().putBoolean(KEY_ALARM_TRIGGERED_TODAY, value).apply()
 
     var lastTriggerDate: String
         get() = prefs.getString(KEY_LAST_TRIGGER_DATE, "") ?: ""

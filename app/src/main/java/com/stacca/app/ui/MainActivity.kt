@@ -316,13 +316,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // Controlla trial: safety net residuo (non raggiungibile normalmente con login obbligatorio)
-        if (prefs.trialExpired && !prefs.isLoggedIn) {
-            startActivity(Intent(this, TrialExpiredActivity::class.java))
-            finish()
-            return
-        }
-
         // Mostra TempoNonVissuto se c'era un pending (es. da notifica)
         if (prefs.hasPendingTempoNonVissuto && prefs.pendingTempoNonVissutoMinutes > 0) {
             startActivity(Intent(this, TempoNonVissutoActivity::class.java))

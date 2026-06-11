@@ -99,9 +99,9 @@ class LoginActivity : AppCompatActivity() {
         val data = intent.data!!
         if (data.scheme != "stacca" || data.host != "login-callback") return
 
-        println("STACCA_DEBUG: Deep link ricevuto: $data")
-        println("STACCA_DEBUG: Fragment: ${data.fragment}")
-        println("STACCA_DEBUG: Query: ${data.query}")
+        Log.d(TAG, "Deep link ricevuto: $data")
+        Log.d(TAG, "Fragment: ${data.fragment}")
+        Log.d(TAG, "Query: ${data.query}")
 
         // Controlla se Supabase ha restituito un errore nel fragment
         val fragment = data.fragment
@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                 parts[0] to (if (parts.size > 1) java.net.URLDecoder.decode(parts[1], "UTF-8") else "")
             }
             val errorDesc = params["error_description"] ?: params["error"] ?: "Errore sconosciuto"
-            println("STACCA_DEBUG: Errore da Supabase: $errorDesc")
+            Log.d(TAG, "Errore da Supabase: $errorDesc")
 
             if (params["error_code"] == "otp_expired") {
                 showError("Il link è scaduto. Registrati di nuovo per ricevere un nuovo link. ⏰")
@@ -130,13 +130,13 @@ class LoginActivity : AppCompatActivity() {
                 // Tentativo 1: PKCE flow — 'code' come query parameter
                 val code = data.getQueryParameter("code")
                 if (code != null) {
-                    println("STACCA_DEBUG: PKCE flow — code trovato, scambio per sessione...")
+                    Log.d(TAG, "PKCE flow — code trovato, scambio per sessione...")
                     supabase.auth.exchangeCodeForSession(code)
                 } else {
                     // Tentativo 2: Implicit flow — tokens nel fragment (#access_token=...&refresh_token=...)
                     val fragment = data.fragment
                     if (fragment != null && fragment.contains("access_token")) {
-                        println("STACCA_DEBUG: Implicit flow — parsing fragment...")
+                        Log.d(TAG, "Implicit flow — parsing fragment...")
                         val params = fragment.split("&").associate {
                             val parts = it.split("=", limit = 2)
                             parts[0] to (if (parts.size > 1) parts[1] else "")
@@ -145,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
                         val refreshToken = params["refresh_token"]
 
                         if (accessToken != null && refreshToken != null) {
-                            println("STACCA_DEBUG: Tokens trovati, importo sessione...")
+                            Log.d(TAG, "Tokens trovati, importo sessione...")
                             supabase.auth.importSession(
                                 io.github.jan.supabase.auth.user.UserSession(
                                     accessToken = accessToken,
@@ -162,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                         val accessToken = data.getQueryParameter("access_token")
                         val refreshToken = data.getQueryParameter("refresh_token")
                         if (accessToken != null && refreshToken != null) {
-                            println("STACCA_DEBUG: Tokens in query params, importo sessione...")
+                            Log.d(TAG, "Tokens in query params, importo sessione...")
                             supabase.auth.importSession(
                                 io.github.jan.supabase.auth.user.UserSession(
                                     accessToken = accessToken,
@@ -180,7 +180,7 @@ class LoginActivity : AppCompatActivity() {
                 // Sessione stabilita — aggiorna preferenze
                 authManager.onDeepLinkSessionSuccess()
                 val user = supabase.auth.currentUserOrNull()
-                println("STACCA_DEBUG: Sessione stabilita per: ${user?.email}")
+                Log.d(TAG, "Sessione stabilita per: ${user?.email}")
 
                 setLoading(false)
                 Toast.makeText(
@@ -191,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
                 goToMain()
 
             } catch (e: Exception) {
-                println("STACCA_DEBUG: ERRORE deep link: ${e.message}")
+                Log.e(TAG, "Errore deep link: ${e.message}")
                 e.printStackTrace()
                 setLoading(false)
                 showError(getString(R.string.login_email_confirm_error))

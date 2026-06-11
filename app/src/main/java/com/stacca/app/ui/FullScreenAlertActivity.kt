@@ -154,7 +154,6 @@ class FullScreenAlertActivity : AppCompatActivity() {
     }
 
     private fun stopWork() {
-        prefs.alarmTriggeredToday = true
         prefs.paywallShownToday = false
         AlarmReceiver.cancelAlarm(this)
         NotificationHelper(this).cancelAll()
