@@ -58,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvError: TextView
     private lateinit var tvForgotPassword: TextView
     private lateinit var progressLogin: CircularProgressIndicator
+    private lateinit var btnSkip: MaterialButton
 
     private var isLoginMode = true
 
@@ -210,6 +211,7 @@ class LoginActivity : AppCompatActivity() {
         tvError = findViewById(R.id.tvError)
         tvForgotPassword = findViewById(R.id.tvForgotPassword)
         progressLogin = findViewById(R.id.progressLogin)
+        btnSkip = findViewById(R.id.btnSkip)
     }
 
     private fun setupListeners() {
@@ -228,6 +230,11 @@ class LoginActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
+
+        // Skip button
+        btnSkip.setOnClickListener {
+            finish()
+        }
 
         // Login/Register button
         btnLogin.setOnClickListener {

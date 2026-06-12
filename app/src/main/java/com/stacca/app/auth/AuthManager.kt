@@ -119,7 +119,6 @@ class AuthManager(private val context: Context) {
                 supabase.auth.signOut()
                 prefs.isLoggedIn = false
                 prefs.userEmail = ""
-                prefs.isPremium = false
                 Result.success(Unit)
             } catch (e: Exception) {
                 Log.e(TAG, "Errore logout", e)

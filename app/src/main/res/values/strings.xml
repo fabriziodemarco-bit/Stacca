@@ -63,7 +63,7 @@
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
     <string name="settings_logged_as">Collegato come %s</string>
     <string name="settings_not_logged">Non hai effettuato l\'accesso</string>
-    <string name="settings_login">Accedi</string>
+    <string name="settings_login">Accedi (facoltativo)</string>
     <string name="settings_premium_badge">✨ Premium</string>
     <string name="settings_upgrade">👑 Passa a Premium</string>
 

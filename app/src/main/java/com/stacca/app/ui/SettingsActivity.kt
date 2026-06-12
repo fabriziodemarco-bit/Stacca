@@ -153,7 +153,6 @@ class SettingsActivity : AppCompatActivity() {
             btnAccountAction.text = getString(R.string.settings_login)
             btnAccountAction.setOnClickListener {
                 startActivity(Intent(this, LoginActivity::class.java))
-                finish()
             }
         }
     }
