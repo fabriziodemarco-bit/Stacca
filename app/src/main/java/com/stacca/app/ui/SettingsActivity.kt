@@ -42,6 +42,7 @@ class SettingsActivity : AppCompatActivity() {
         setupFullScreenSwitch()
         setupAutoRestartSwitch()
         setupEscalationSpeed()
+        setupPremiumButton()
         setupAccountSection()
     }
 
@@ -63,18 +64,18 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setupFullScreenSwitch() {
         val switch = findViewById<MaterialSwitch>(R.id.switchFullScreen)
-        switch.isChecked = prefs.fullScreenEnabled
-
-        // Feature premium: se non è premium, mostra upsell
         if (!prefs.isPremium) {
-            switch.isEnabled = false
             switch.isChecked = false
+        } else {
+            switch.isChecked = prefs.fullScreenEnabled
         }
 
-        switch.setOnCheckedChangeListener { _, checked ->
+        switch.setOnCheckedChangeListener { view, checked ->
             if (!prefs.isPremium) {
-                switch.isChecked = false
-                showPremiumUpsell()
+                if (checked) {
+                    view.isChecked = false
+                    showPremiumUpsell()
+                }
                 return@setOnCheckedChangeListener
             }
             prefs.fullScreenEnabled = checked
@@ -94,9 +95,7 @@ class SettingsActivity : AppCompatActivity() {
         val speedLabels = resources.getStringArray(R.array.escalation_speeds)
         val tvSpeedLabel = findViewById<TextView>(R.id.tvSpeedLabel)
 
-        // Feature premium: se non è premium, blocca
         if (!prefs.isPremium) {
-            slider.isEnabled = false
             slider.value = 1f // Normale
             tvSpeedLabel.text = speedLabels[1]
         } else {
@@ -104,10 +103,12 @@ class SettingsActivity : AppCompatActivity() {
             tvSpeedLabel.text = speedLabels[prefs.escalationSpeed]
         }
 
-        slider.addOnChangeListener { _, value, _ ->
+        slider.addOnChangeListener { _, value, fromUser ->
             if (!prefs.isPremium) {
-                slider.value = 1f
-                showPremiumUpsell()
+                if (fromUser) {
+                    slider.value = 1f
+                    showPremiumUpsell()
+                }
                 return@addOnChangeListener
             }
             val index = value.toInt()
@@ -119,21 +120,9 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupAccountSection() {
         val tvAccountStatus = findViewById<TextView>(R.id.tvAccountStatus)
         val btnAccountAction = findViewById<MaterialButton>(R.id.btnAccountAction)
-        val btnPremium = findViewById<MaterialButton>(R.id.btnPremium)
 
         if (prefs.isLoggedIn) {
             tvAccountStatus.text = getString(R.string.settings_logged_as, prefs.userEmail)
-
-            if (prefs.isPremium) {
-                btnPremium.text = getString(R.string.settings_premium_badge)
-                btnPremium.isEnabled = false
-            } else {
-                btnPremium.text = getString(R.string.settings_upgrade)
-                btnPremium.setOnClickListener {
-                    startActivity(Intent(this, PremiumActivity::class.java))
-                }
-            }
-            btnPremium.visibility = View.VISIBLE
 
             btnAccountAction.text = getString(R.string.settings_logout)
             btnAccountAction.setOnClickListener {
@@ -148,11 +137,23 @@ class SettingsActivity : AppCompatActivity() {
             }
         } else {
             tvAccountStatus.text = getString(R.string.settings_not_logged)
-            btnPremium.visibility = View.GONE
 
             btnAccountAction.text = getString(R.string.settings_login)
             btnAccountAction.setOnClickListener {
                 startActivity(Intent(this, LoginActivity::class.java))
+            }
+        }
+    }
+
+    private fun setupPremiumButton() {
+        val btnPremium = findViewById<MaterialButton>(R.id.btnPremium)
+        if (prefs.isPremium) {
+            btnPremium.visibility = View.GONE
+        } else {
+            btnPremium.visibility = View.VISIBLE
+            btnPremium.text = getString(R.string.settings_upgrade)
+            btnPremium.setOnClickListener {
+                startActivity(Intent(this, PremiumActivity::class.java))
             }
         }
     }

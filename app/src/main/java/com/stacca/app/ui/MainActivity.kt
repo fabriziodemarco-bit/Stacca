@@ -578,19 +578,24 @@ class MainActivity : AppCompatActivity() {
      */
     private fun updateTrialBanner() {
         if (prefs.hasFullAccess) {
-            // Accesso completo: mostra badge non cliccabile
+            // Accesso completo (premium o trial attivo): mostra badge
             cardTrialBanner.visibility = View.VISIBLE
             tvTrialBanner.text = getString(R.string.escalation_full_badge)
-            cardTrialBanner.isClickable = false
-            cardTrialBanner.setOnClickListener(null)
         } else {
-            // Piano gratuito: mostra badge cliccabile verso il paywall
+            // Piano gratuito: mostra badge
             cardTrialBanner.visibility = View.VISIBLE
             tvTrialBanner.text = getString(R.string.escalation_limited_badge)
+        }
+
+        // Cliccabilità e navigazione dipendono SEMPRE e SOLO da !isPremium
+        if (!prefs.isPremium) {
             cardTrialBanner.isClickable = true
             cardTrialBanner.setOnClickListener {
                 startActivity(Intent(this, PaywallActivity::class.java))
             }
+        } else {
+            cardTrialBanner.isClickable = false
+            cardTrialBanner.setOnClickListener(null)
         }
     }
 
