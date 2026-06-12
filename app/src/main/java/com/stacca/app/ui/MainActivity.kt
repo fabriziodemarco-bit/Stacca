@@ -477,15 +477,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         updateUI()
 
-        // Safety net: il login è obbligatorio — se per qualsiasi motivo l'utente
-        // non è loggato, rimandalo alla login
-        if (!prefs.isLoggedIn) {
-            startActivity(Intent(this, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            })
-            finish()
-            return
-        }
+        // (Rimosso: safety net del login obbligatorio - ora il login è opzionale)
 
         // Aggiorna la card dei permessi: l'utente potrebbe tornare dalle impostazioni di sistema
         updatePermissionsCard()

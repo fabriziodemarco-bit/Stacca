@@ -54,39 +54,22 @@ class SplashActivity : AppCompatActivity() {
         // poi l'utente arriva sempre alla MainActivity (piano gratuito o premium).
         val trialAppenaScaduto = !prefs.isTrialActive && !prefs.isPremium && !prefs.trialEndShown
 
+        // Se l'utente risulta loggato, verifica che la sessione Supabase
+        // sia ancora valida in background. Se fallisce, resetta lo stato silenziosamente.
         if (prefs.isLoggedIn) {
-            // Se l'utente risulta loggato, verifica che la sessione Supabase
-            // sia ancora valida prima di mandarlo alla main
             lifecycleScope.launch {
                 val authManager = AuthManager(this@SplashActivity)
-                val sessionValid = authManager.restoreSession()
-
-                if (sessionValid) {
-                    Log.d(TAG, "Sessione Supabase valida → ${if (trialAppenaScaduto) "TrialExpired (soft)" else "MainActivity"}")
-                    if (trialAppenaScaduto) {
-                        navigateToDestination(Intent(this@SplashActivity, TrialExpiredActivity::class.java))
-                    } else {
-                        navigateToDestination(Intent(this@SplashActivity, MainActivity::class.java))
-                    }
-                } else {
-                    Log.w(TAG, "Sessione Supabase non valida → LoginActivity")
-                    // restoreSession() ha già resettato isLoggedIn = false
-                    // L'app non si blocca mai: va alla Login (l'utente può usarla da guest)
-                    navigateToDestination(Intent(this@SplashActivity, LoginActivity::class.java))
-                }
+                authManager.restoreSession() 
             }
-        } else {
-            // Non loggato — va sempre alla Login (da cui si può "Continua senza account")
-            // Se il trial è appena scaduto, TrialExpired sarà mostrata al ritorno dalla Login
-            // oppure subito se l'utente è già in grado di accedere alla Main (es. skip login)
-            // Semplicità: mostriamo TrialExpired prima di Login se il flag è attivo
-            val destination = if (trialAppenaScaduto) {
-                Intent(this, TrialExpiredActivity::class.java)
-            } else {
-                Intent(this, LoginActivity::class.java)
-            }
-            navigateToDestination(destination)
         }
+
+        // Routing senza login obbligatorio
+        val destination = if (trialAppenaScaduto) {
+            Intent(this, TrialExpiredActivity::class.java)
+        } else {
+            Intent(this, MainActivity::class.java)
+        }
+        navigateToDestination(destination)
     }
 
     private fun navigateToDestination(destination: Intent) {

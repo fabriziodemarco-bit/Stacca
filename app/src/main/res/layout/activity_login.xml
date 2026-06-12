@@ -232,5 +232,15 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Continua senza account (Skip) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_skip"
+            android:textColor="@color/text_hint"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_marginTop="16dp" />
+
     </LinearLayout>
 </ScrollView>
