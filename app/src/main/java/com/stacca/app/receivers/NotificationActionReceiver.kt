@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.CelebrationActivity
 import com.stacca.app.ui.TempoNonVissutoActivity
@@ -37,6 +38,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 val result = prefs.registraStaccato(overtimeMinutes)
 
                 // Cancella gli allarmi futuri per oggi e le notifiche attive
+                AlarmSoundManager.stop()
                 AlarmReceiver.cancelAlarm(context)
                 val notificationHelper = NotificationHelper(context)
                 notificationHelper.cancelAll()

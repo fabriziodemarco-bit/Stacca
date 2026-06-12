@@ -10,6 +10,7 @@ import android.os.PowerManager
 import android.util.Log
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.FullScreenAlertActivity
 import com.stacca.app.util.PermissionHelper
@@ -263,6 +264,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             alarmManager.cancel(pendingIntent)
+            com.stacca.app.notifications.AlarmSoundManager.stop()
         }
     }
 }

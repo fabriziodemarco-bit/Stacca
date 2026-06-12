@@ -25,6 +25,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.stacca.app.R
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
 import com.stacca.app.util.PermissionHelper
@@ -261,6 +262,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage("Sei sicuro? Senza allarme potresti lavorare per sempre! 😱")
             .setPositiveButton("Sì, disattiva") { _, _ ->
                 prefs.isAlarmActive = false
+                AlarmSoundManager.stop()
                 AlarmReceiver.cancelAlarm(this)
                 notificationHelper.cancelAll()
                 updateUI()
@@ -399,6 +401,7 @@ class MainActivity : AppCompatActivity() {
 
         // Cancella allarmi e notifiche
         prefs.paywallShownToday = false
+        AlarmSoundManager.stop()
         AlarmReceiver.cancelAlarm(this)
         notificationHelper.cancelAll()
 

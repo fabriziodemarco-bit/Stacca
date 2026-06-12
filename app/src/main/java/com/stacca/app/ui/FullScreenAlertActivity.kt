@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
 import java.util.*
@@ -140,21 +141,15 @@ class FullScreenAlertActivity : AppCompatActivity() {
     }
 
     private fun playAlarmSound() {
-        try {
-            val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val ringtone = RingtoneManager.getRingtone(this, alarmUri)
-            ringtone?.play()
-
-            // Ferma dopo 5 secondi
-            handler.postDelayed({ ringtone?.stop() }, 5000)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        AlarmSoundManager.start(this)
+        
+        // Ferma dopo 5 secondi come fallback
+        handler.postDelayed({ AlarmSoundManager.stop() }, 5000)
     }
 
     private fun stopWork() {
         prefs.paywallShownToday = false
+        AlarmSoundManager.stop()
         AlarmReceiver.cancelAlarm(this)
         NotificationHelper(this).cancelAll()
 
@@ -198,6 +193,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        AlarmSoundManager.stop()
         handler.removeCallbacksAndMessages(null)
     }
 }
