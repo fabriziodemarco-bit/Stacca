@@ -277,10 +277,15 @@ class BillingManager(
                     Log.d(TAG, "Check existing purchases: ${inAppResult.billingResult.responseCode}, count=${inAppResult.purchasesList.size}")
 
                     if (inAppResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        // Log diagnostico temporaneo — dettagli di ogni acquisto
+                        inAppResult.purchasesList.forEach { p ->
+                            Log.d(TAG, "  Purchase: products=${p.products}, state=${p.purchaseState}, acknowledged=${p.isAcknowledged}")
+                        }
                         val hasPremium = inAppResult.purchasesList.any { purchase ->
                             purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
                                     purchase.products.contains(PREMIUM_PRODUCT_ID)
                         }
+                        Log.d(TAG, "  hasPremium=$hasPremium (looking for '$PREMIUM_PRODUCT_ID')")
                         if (hasPremium) {
                             prefs.isPremium = true
                             withContext(Dispatchers.Main) {

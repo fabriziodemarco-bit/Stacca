@@ -28,17 +28,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Pulsante Sblocca Premium autonomo -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnPremium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_upgrade"
-                style="@style/Widget.Stacca.Button.Primary"
-                android:backgroundTint="@color/premium_gold"
-                android:textColor="@color/background_dark"
-                android:layout_marginBottom="24dp"
-                android:visibility="gone" />
 
             <!-- Sezione Notifiche -->
             <TextView

@@ -42,7 +42,6 @@ class SettingsActivity : AppCompatActivity() {
         setupFullScreenSwitch()
         setupAutoRestartSwitch()
         setupEscalationSpeed()
-        setupPremiumButton()
         setupAccountSection()
     }
 
@@ -145,18 +144,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupPremiumButton() {
-        val btnPremium = findViewById<MaterialButton>(R.id.btnPremium)
-        if (prefs.isPremium) {
-            btnPremium.visibility = View.GONE
-        } else {
-            btnPremium.visibility = View.VISIBLE
-            btnPremium.text = getString(R.string.settings_upgrade)
-            btnPremium.setOnClickListener {
-                startActivity(Intent(this, PremiumActivity::class.java))
-            }
-        }
-    }
 
     private fun performLogout() {
         lifecycleScope.launch {

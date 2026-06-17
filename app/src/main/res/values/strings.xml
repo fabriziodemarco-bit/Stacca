@@ -126,8 +126,8 @@
     <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai pi&#xF9; sfuggire! &#x1F608;&#x1F525;</string>
 
     <!-- Badge escalation in MainActivity -->
-    <string name="escalation_limited_badge">Escalation attiva: 3 di 6 livelli &#x1F512;  Tocca per sbloccare</string>
-    <string name="escalation_full_badge">Escalation completa: 6 livelli &#x1F480;</string>
+    <string name="escalation_limited_badge">Piano Base (3 livelli) 🔒 Tocca per sbloccare</string>
+    <string name="escalation_full_badge">👑 Premium attivo (Tutti i 6 livelli)</string>
 
     <!-- Google Sign-In -->
     <string name="login_google">Accedi con Google</string>

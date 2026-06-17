@@ -583,21 +583,18 @@ class MainActivity : AppCompatActivity() {
      * - Piano gratuito: "Escalation attiva: 3 di 6 livelli 🔒" — cliccabile → PaywallActivity.
      */
     private fun updateTrialBanner() {
-        if (prefs.hasFullAccess) {
-            // Accesso completo (premium o trial attivo): mostra badge
+        if (prefs.isPremium) {
             cardTrialBanner.visibility = View.VISIBLE
-            tvTrialBanner.text = getString(R.string.escalation_full_badge)
+            tvTrialBanner.text = "👑 Premium attivo"
         } else {
-            // Piano gratuito: mostra badge
             cardTrialBanner.visibility = View.VISIBLE
-            tvTrialBanner.text = getString(R.string.escalation_limited_badge)
+            tvTrialBanner.text = getString(R.string.settings_upgrade)
         }
 
-        // Cliccabilità e navigazione dipendono SEMPRE e SOLO da !isPremium
         if (!prefs.isPremium) {
             cardTrialBanner.isClickable = true
             cardTrialBanner.setOnClickListener {
-                startActivity(Intent(this, PaywallActivity::class.java))
+                startActivity(Intent(this, PremiumActivity::class.java))
             }
         } else {
             cardTrialBanner.isClickable = false

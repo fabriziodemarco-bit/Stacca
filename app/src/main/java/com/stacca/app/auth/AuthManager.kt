@@ -137,6 +137,9 @@ class AuthManager(private val context: Context) {
     suspend fun restoreSession(): Boolean {
         return withContext(Dispatchers.IO) {
             try {
+                // Attendiamo che Supabase abbia finito di caricare la sessione salvata
+                supabase.auth.awaitInitialization()
+                
                 val session = supabase.auth.currentSessionOrNull()
                 if (session != null) {
                     // Sessione trovata, prova a refresharla
