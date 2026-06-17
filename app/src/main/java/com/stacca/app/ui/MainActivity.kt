@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.stacca.app.R
+import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.notifications.AlarmSoundManager
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var prefs: PreferencesManager
     private lateinit var notificationHelper: NotificationHelper
+    private lateinit var billingManager: BillingManager
     private val handler = Handler(Looper.getMainLooper())
     private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val timeFormatSeconds = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
@@ -110,6 +112,10 @@ class MainActivity : AppCompatActivity() {
 
         prefs = PreferencesManager(this)
         notificationHelper = NotificationHelper(this)
+
+        billingManager = BillingManager(this) { _ -> }
+        billingManager.onPremiumRestored = { updateTrialBanner() }
+        billingManager.connect()
 
         initViews()
         setupListeners()
@@ -602,5 +608,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+        billingManager.destroy()
     }
 }

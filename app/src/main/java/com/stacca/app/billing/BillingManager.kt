@@ -44,6 +44,9 @@ class BillingManager(
     /** Callback per quando i prodotti sono stati caricati */
     var onProductsReady: (() -> Unit)? = null
 
+    /** Callback opzionale quando il premium viene ripristinato automaticamente */
+    var onPremiumRestored: (() -> Unit)? = null
+
     /**
      * Connette al Google Play Billing service.
      */
@@ -280,6 +283,9 @@ class BillingManager(
                         }
                         if (hasPremium) {
                             prefs.isPremium = true
+                            withContext(Dispatchers.Main) {
+                                onPremiumRestored?.invoke()
+                            }
                             // Acknowledge acquisti non ancora confermati
                             inAppResult.purchasesList.forEach { purchase ->
                                 if (!purchase.isAcknowledged && purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
