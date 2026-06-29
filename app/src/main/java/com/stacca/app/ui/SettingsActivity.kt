@@ -150,7 +150,7 @@ class SettingsActivity : AppCompatActivity() {
             authManager.signOut()
             Toast.makeText(this@SettingsActivity, "Logout effettuato",
                 Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this@SettingsActivity, LoginActivity::class.java).apply {
+            startActivity(Intent(this@SettingsActivity, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             })
             finish()
