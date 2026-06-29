@@ -26,6 +26,7 @@ import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
+import androidx.core.widget.NestedScrollView
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
@@ -58,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvError: TextView
     private lateinit var tvForgotPassword: TextView
     private lateinit var progressLogin: CircularProgressIndicator
-    private lateinit var btnSkip: MaterialButton
+    private lateinit var nestedScrollView: NestedScrollView
 
     private var isLoginMode = true
 
@@ -211,7 +212,7 @@ class LoginActivity : AppCompatActivity() {
         tvError = findViewById(R.id.tvError)
         tvForgotPassword = findViewById(R.id.tvForgotPassword)
         progressLogin = findViewById(R.id.progressLogin)
-        btnSkip = findViewById(R.id.btnSkip)
+        nestedScrollView = findViewById(R.id.nestedScrollView)
     }
 
     private fun setupListeners() {
@@ -230,11 +231,6 @@ class LoginActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-
-        // Skip button
-        btnSkip.setOnClickListener {
-            finish()
-        }
 
         // Login/Register button
         btnLogin.setOnClickListener {
@@ -465,5 +461,20 @@ class LoginActivity : AppCompatActivity() {
     private fun goToMain() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    /**
+     * Scrolla il NestedScrollView per rendere visibile il [target] sopra la tastiera.
+     * Usa offsetDescendantRectToMyCoords per calcolare la posizione esatta
+     * indipendentemente dal livello di annidamento nel layout.
+     */
+    private fun scrollToView(target: View) {
+        nestedScrollView.post {
+            val rect = android.graphics.Rect()
+            target.getDrawingRect(rect)
+            nestedScrollView.offsetDescendantRectToMyCoords(target, rect)
+            // Scrolla in modo che il campo sia visibile con 80px di margine sopra
+            nestedScrollView.smoothScrollTo(0, (rect.top - 80).coerceAtLeast(0))
+        }
     }
 }

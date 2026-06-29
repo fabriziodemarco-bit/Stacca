@@ -54,6 +54,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_LAST_STACCATO_DATE = "last_staccato_date"   // formato yyyy-MM-dd
         private const val KEY_TOTAL_ON_TIME_DAYS = "total_on_time_days"
         private const val KEY_TOTAL_OVERTIME_MINUTES = "total_overtime_minutes"
+        private const val KEY_TODAY_OVERTIME_MINUTES = "today_overtime_minutes"
 
         // --- Chiavi preferenze di licenza (in stacca_license) ---
         private const val KEY_IS_PREMIUM = "is_premium"
@@ -139,6 +140,16 @@ class PreferencesManager(context: Context) {
         get() = prefs.getString(KEY_LAST_TRIGGER_DATE, "") ?: ""
         set(value) = prefs.edit().putString(KEY_LAST_TRIGGER_DATE, value).apply()
 
+    var isWaitingForNextAlarm: Boolean
+        get() {
+            if (lastStaccatoDate != today()) {
+                prefs.edit().putBoolean("is_waiting_for_next_alarm", false).apply()
+                return false
+            }
+            return prefs.getBoolean("is_waiting_for_next_alarm", false)
+        }
+        set(value) = prefs.edit().putBoolean("is_waiting_for_next_alarm", value).apply()
+
     // --- Impostazioni ---
 
     var soundEnabled: Boolean
@@ -221,10 +232,37 @@ class PreferencesManager(context: Context) {
         get() = prefs.getInt(KEY_TOTAL_OVERTIME_MINUTES, 0)
         set(value) = prefs.edit().putInt(KEY_TOTAL_OVERTIME_MINUTES, value).apply()
 
+    /** Minuti di straordinario di oggi. */
+    var todayOvertimeMinutes: Int
+        get() {
+            if (lastStaccatoDate != today()) {
+                prefs.edit().putInt(KEY_TODAY_OVERTIME_MINUTES, 0).apply()
+                return 0
+            }
+            return prefs.getInt(KEY_TODAY_OVERTIME_MINUTES, 0)
+        }
+        set(value) = prefs.edit().putInt(KEY_TODAY_OVERTIME_MINUTES, value).apply()
+
+    /** Minuti di ritardo dell'ultimo turno effettuato. */
+    var lastShiftOvertimeMinutes: Int
+        get() = prefs.getInt("last_shift_overtime_minutes", 0)
+        set(value) = prefs.edit().putInt("last_shift_overtime_minutes", value).apply()
+
     /**
      * Data odierna nel formato yyyy-MM-dd (usata internamente per i confronti).
      */
     private fun today(): String = DATE_FORMAT.format(Calendar.getInstance().time)
+
+    /** Quanti turni ha completato oggi l'utente */
+    var shiftsCompletedToday: Int
+        get() {
+            if (lastStaccatoDate != today()) {
+                prefs.edit().putInt("shifts_completed_today", 0).apply()
+                return 0
+            }
+            return prefs.getInt("shifts_completed_today", 0)
+        }
+        set(value) = prefs.edit().putInt("shifts_completed_today", value).apply()
 
     /**
      * Registra l'azione "Ho staccato!" per oggi.
@@ -248,22 +286,21 @@ class PreferencesManager(context: Context) {
     fun registraStaccato(overtimeMinutes: Int): StaccatoResult {
         val todayStr = today()
 
-        // Idempotenza: già registrato oggi
-        if (lastStaccatoDate == todayStr) {
-            return StaccatoResult(
-                isOnTime     = overtimeMinutes <= ON_TIME_THRESHOLD_MINUTES,
-                streakCount  = streakCount,
-                bestStreak   = bestStreak,
-                isNewRecord  = false
-            )
+        // Se è un nuovo giorno, resettiamo i contatori giornalieri
+        if (lastStaccatoDate != todayStr) {
+            shiftsCompletedToday = 0
+            todayOvertimeMinutes = 0
         }
 
         val isOnTime = overtimeMinutes <= ON_TIME_THRESHOLD_MINUTES
         val prevBest = bestStreak
         val newStreak: Int
 
+        // Incrementiamo i turni giornalieri
+        val currentShifts = shiftsCompletedToday + 1
+        val newTodayOvertime = todayOvertimeMinutes + overtimeMinutes
+
         if (isOnTime) {
-            // Incrementa streak (non si azzera per i giorni saltati — vedi NOTA)
             newStreak = streakCount + 1
             val newBest = maxOf(prevBest, newStreak)
 
@@ -271,7 +308,11 @@ class PreferencesManager(context: Context) {
                 .putInt(KEY_STREAK_COUNT, newStreak)
                 .putInt(KEY_BEST_STREAK, newBest)
                 .putInt(KEY_TOTAL_ON_TIME_DAYS, totalOnTimeDays + 1)
+                .putInt(KEY_TODAY_OVERTIME_MINUTES, newTodayOvertime)
+                .putInt("shifts_completed_today", currentShifts)
                 .putString(KEY_LAST_STACCATO_DATE, todayStr)
+                .putBoolean("is_waiting_for_next_alarm", true)
+                .putInt("last_shift_overtime_minutes", overtimeMinutes)
                 .apply()
 
             return StaccatoResult(
@@ -287,7 +328,11 @@ class PreferencesManager(context: Context) {
             prefs.edit()
                 .putInt(KEY_STREAK_COUNT, 0)
                 .putInt(KEY_TOTAL_OVERTIME_MINUTES, totalOvertimeMinutes + overtimeMinutes)
+                .putInt(KEY_TODAY_OVERTIME_MINUTES, newTodayOvertime)
+                .putInt("shifts_completed_today", currentShifts)
                 .putString(KEY_LAST_STACCATO_DATE, todayStr)
+                .putBoolean("is_waiting_for_next_alarm", true)
+                .putInt("last_shift_overtime_minutes", overtimeMinutes)
                 .apply()
 
             return StaccatoResult(

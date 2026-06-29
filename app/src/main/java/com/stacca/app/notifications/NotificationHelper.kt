@@ -100,9 +100,9 @@ class NotificationHelper(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Azione: OK Stacco
+        // Azione: Chiudi
         val stopIntent = Intent(context, NotificationActionReceiver::class.java).apply {
-            action = "ACTION_STOP_WORK"
+            action = "ACTION_DISMISS_NOTIFICATION"
         }
         val stopPending = PendingIntent.getBroadcast(
             context, 1, stopIntent,
@@ -146,7 +146,7 @@ class NotificationHelper(private val context: Context) {
             .setContentIntent(fullScreenPending)
             .setFullScreenIntent(fullScreenPending, true)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel,
-                context.getString(R.string.btn_ok_stacco), stopPending)
+                "Chiudi", stopPending)
 
 
         // Vibrazione condizionale

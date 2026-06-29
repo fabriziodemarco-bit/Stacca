@@ -56,10 +56,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCountdown: TextView
     private lateinit var tvCountdownLabel: TextView
     private lateinit var cardCountdown: MaterialCardView
+    private lateinit var cardEndTime: MaterialCardView
+    private lateinit var cardTempoNonVissuto: MaterialCardView
+    private lateinit var tvTempoNonVissuto: TextView
     private lateinit var btnActivate: MaterialButton
     private lateinit var btnDeactivate: MaterialButton
-    private lateinit var layoutEscalation: View
-    private lateinit var levelDots: List<View>
+    private lateinit var btnSettings: MaterialButton
+    private lateinit var btnAncoraUnaSveglia: MaterialButton
 
     // Card protezione permessi
     private lateinit var cardPermissions: MaterialCardView
@@ -72,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTrialBanner: TextView
 
     // Streak badge e bottone "Ho staccato!" (in cardCountdown)
-    private lateinit var tvStreakBadge: TextView
     private lateinit var btnHoStaccato: com.google.android.material.button.MaterialButton
 
     // Receiver per il cambio di stato del permesso allarmi esatti (API 31+)
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // Permesso notifiche
+    // Permesso notifiche (flusso attivazione allarme → dopo OK attiva l'allarme)
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
@@ -104,6 +106,17 @@ class MainActivity : AppCompatActivity() {
                     "Senza permesso notifiche l'app non può funzionare! 😢",
                     Toast.LENGTH_LONG).show()
             }
+        }
+
+    // Permesso notifiche (dalla card "Protezione allarmi" → aggiorna solo la UI, NON attiva l'allarme)
+    private val notificationPermissionFromCardLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) {
+                Toast.makeText(this,
+                    "Senza permesso notifiche l'app non può funzionare! 😢",
+                    Toast.LENGTH_LONG).show()
+            }
+            updatePermissionsCard()
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,17 +144,13 @@ class MainActivity : AppCompatActivity() {
         tvCountdown = findViewById(R.id.tvCountdown)
         tvCountdownLabel = findViewById(R.id.tvCountdownLabel)
         cardCountdown = findViewById(R.id.cardCountdown)
+        cardEndTime = findViewById(R.id.cardEndTime)
+        cardTempoNonVissuto = findViewById(R.id.cardTempoNonVissuto)
+        tvTempoNonVissuto = findViewById(R.id.tvTempoNonVissuto)
         btnActivate = findViewById(R.id.btnActivate)
         btnDeactivate = findViewById(R.id.btnDeactivate)
-        layoutEscalation = findViewById(R.id.layoutEscalation)
-        levelDots = listOf(
-            findViewById(R.id.level1Dot),
-            findViewById(R.id.level2Dot),
-            findViewById(R.id.level3Dot),
-            findViewById(R.id.level4Dot),
-            findViewById(R.id.level5Dot),
-            findViewById(R.id.level6Dot)
-        )
+        btnSettings = findViewById(R.id.btnSettings)
+        btnAncoraUnaSveglia = findViewById(R.id.btnAncoraUnaSveglia)
         // Card protezione permessi
         cardPermissions = findViewById(R.id.cardPermissions)
         tvPermNotification = findViewById(R.id.tvPermNotification)
@@ -151,8 +160,7 @@ class MainActivity : AppCompatActivity() {
         cardTrialBanner = findViewById(R.id.cardTrialBanner)
         tvTrialBanner = findViewById(R.id.tvTrialBanner)
 
-        // Streak badge e bottone "Ho staccato!"
-        tvStreakBadge = findViewById(R.id.tvStreakBadge)
+        // Bottone "Ho staccato!"
         btnHoStaccato = findViewById(R.id.btnHoStaccato)
     }
 
@@ -164,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Click sulla card dell'orario per aprire il picker
-        findViewById<MaterialCardView>(R.id.cardEndTime).setOnClickListener {
+        cardEndTime.setOnClickListener {
             showTimePicker()
         }
 
@@ -179,7 +187,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Impostazioni
-        findViewById<MaterialButton>(R.id.btnSettings).setOnClickListener {
+        btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
@@ -188,9 +196,9 @@ class MainActivity : AppCompatActivity() {
             handleHoStaccato()
         }
 
-        // Tap sul badge streak → mostra dialog con stats
-        tvStreakBadge.setOnClickListener {
-            showStreakDialog()
+        btnAncoraUnaSveglia.setOnClickListener {
+            prefs.isWaitingForNextAlarm = false
+            updateUI()
         }
     }
 
@@ -271,10 +279,7 @@ class MainActivity : AppCompatActivity() {
                 AlarmSoundManager.stop()
                 AlarmReceiver.cancelAlarm(this)
                 notificationHelper.cancelAll()
-                updateUI()
-                Toast.makeText(this, "Allarme disattivato 😴", Toast.LENGTH_SHORT).show()
-
-                // Se c'è straordinario, mostra il "Tempo Non Vissuto"
+                // Se c'è straordinario, lo registriamo come staccato
                 val now = java.util.Calendar.getInstance()
                 val endTime = java.util.Calendar.getInstance().apply {
                     set(java.util.Calendar.HOUR_OF_DAY, prefs.endHour)
@@ -282,21 +287,58 @@ class MainActivity : AppCompatActivity() {
                     set(java.util.Calendar.SECOND, 0)
                 }
                 val overtimeMillis = now.timeInMillis - endTime.timeInMillis
-                if (overtimeMillis > 60_000) { // almeno 1 minuto di straordinario
+                if (overtimeMillis > 0) {
                     val overtimeMinutes = (overtimeMillis / 60_000).toInt()
-                    startActivity(
-                        Intent(this, TempoNonVissutoActivity::class.java).apply {
-                            putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, overtimeMinutes)
-                        }
-                    )
+                    prefs.registraStaccato(overtimeMinutes)
                 }
+
+                updateUI()
+                Toast.makeText(this, "Allarme disattivato 😴", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("No, tienilo attivo", null)
             .show()
     }
 
     private fun updateUI() {
+        if (prefs.isWaitingForNextAlarm) {
+            val overtime = prefs.lastShiftOvertimeMinutes
+            cardTempoNonVissuto.visibility = View.VISIBLE
+            tvTempoNonVissuto.text = "$overtime min"
+            val colorRes = if (overtime > 0) R.color.alert_apocalypse else R.color.alert_friendly
+            cardTempoNonVissuto.strokeColor = ContextCompat.getColor(this, colorRes)
+            tvTempoNonVissuto.setTextColor(ContextCompat.getColor(this, colorRes))
+
+            cardEndTime.visibility = View.GONE
+            cardCountdown.visibility = View.GONE
+            btnActivate.visibility = View.GONE
+            btnDeactivate.visibility = View.GONE
+            btnSettings.visibility = View.VISIBLE
+            btnAncoraUnaSveglia.visibility = View.VISIBLE
+            
+            tvStatus.text = "Stacco registrato!"
+            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
+            btnHoStaccato.visibility = View.GONE
+            updateTrialBanner()
+            return
+        }
+
         val isActive = prefs.isAlarmActive
+
+        if (!isActive && prefs.shiftsCompletedToday > 0) {
+            val overtime = prefs.lastShiftOvertimeMinutes
+            cardTempoNonVissuto.visibility = View.VISIBLE
+            tvTempoNonVissuto.text = "$overtime min"
+            val colorRes = if (overtime > 0) R.color.alert_apocalypse else R.color.alert_friendly
+            cardTempoNonVissuto.strokeColor = ContextCompat.getColor(this, colorRes)
+            tvTempoNonVissuto.setTextColor(ContextCompat.getColor(this, colorRes))
+        } else {
+            cardTempoNonVissuto.visibility = View.GONE
+        }
+
+        cardEndTime.visibility = View.VISIBLE
+        btnSettings.visibility = View.VISIBLE
+        btnAncoraUnaSveglia.visibility = View.GONE
+
         tvEndTime.text = String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
 
         if (isActive) {
@@ -339,13 +381,14 @@ class MainActivity : AppCompatActivity() {
 
             if (diffMillis > 0) {
                 // Countdown — nasconde bottone e badge quando non siamo in overtime
+                cardEndTime.visibility = View.VISIBLE
                 val hours = diffMillis / 3600000
                 val minutes = (diffMillis % 3600000) / 60000
                 val seconds = (diffMillis % 60000) / 1000
                 tvCountdown.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
                 tvCountdownLabel.text = getString(R.string.time_remaining)
                 tvCountdown.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
-                layoutEscalation.visibility = View.GONE
+                cardCountdown.strokeColor = ContextCompat.getColor(this, android.R.color.transparent)
                 btnHoStaccato.visibility = View.GONE
             } else {
                 // Straordinario!
@@ -354,32 +397,19 @@ class MainActivity : AppCompatActivity() {
                 val minutes = (overtimeMillis % 3600000) / 60000
                 val seconds = (overtimeMillis % 60000) / 1000
                 tvCountdown.text = String.format("+%02d:%02d:%02d", hours, minutes, seconds)
-                tvCountdownLabel.text = getString(R.string.overtime)
+                tvCountdownLabel.text = "TEMPO NON VISSUTO"
+                cardEndTime.visibility = View.GONE
 
                 val overtimeMinutes = (overtimeMillis / 60000).toInt()
                 val level = NotificationMessages.getLevelForMinutes(overtimeMinutes)
 
-                // Colore basato sul livello
-                val color = when (level) {
-                    NotificationMessages.Level.GENTLE -> R.color.alert_gentle
-                    NotificationMessages.Level.FRIENDLY -> R.color.alert_friendly
-                    NotificationMessages.Level.INSISTENT -> R.color.alert_insistent
-                    NotificationMessages.Level.AGGRESSIVE -> R.color.alert_aggressive
-                    NotificationMessages.Level.NUCLEAR -> R.color.alert_nuclear
-                    NotificationMessages.Level.APOCALYPSE -> R.color.alert_apocalypse
-                }
+                // Colore basato sul livello (rimosso fiamme, usiamo alert_apocalypse se overtime > 0)
+                val color = R.color.alert_apocalypse
                 tvCountdown.setTextColor(ContextCompat.getColor(this, color))
                 tvCountdownLabel.setTextColor(ContextCompat.getColor(this, color))
+                cardCountdown.strokeColor = ContextCompat.getColor(this, R.color.alert_apocalypse)
 
-                // Mostra indicatori di escalation
-                layoutEscalation.visibility = View.VISIBLE
-                updateEscalationDots(level)
-
-                // Mostra il bottone "Ho staccato!" solo se non ancora staccato oggi
-                val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                    .format(java.util.Calendar.getInstance().time)
-                val alreadyStaccato = prefs.lastStaccatoDate == today
-                btnHoStaccato.visibility = if (alreadyStaccato) View.GONE else View.VISIBLE
+                btnHoStaccato.visibility = View.VISIBLE
             }
         }
     }
@@ -411,73 +441,20 @@ class MainActivity : AppCompatActivity() {
         AlarmReceiver.cancelAlarm(this)
         notificationHelper.cancelAll()
 
-        // Riprogramma per domani se l'allarme era attivo
-        if (prefs.isAlarmActive) {
-            AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
-        }
+        // Disattiva definitivamente l'allarme
+        prefs.isAlarmActive = false
 
-        // Aggiorna badge streak immediatamente
-        updateStreakBadge()
-        // Nascondi il bottone (già staccato oggi)
-        btnHoStaccato.visibility = View.GONE
-
-        if (result.isOnTime) {
-            startActivity(Intent(this, CelebrationActivity::class.java).apply {
-                putExtra(CelebrationActivity.EXTRA_STREAK_COUNT, result.streakCount)
-                putExtra(CelebrationActivity.EXTRA_BEST_STREAK, result.bestStreak)
-                putExtra(CelebrationActivity.EXTRA_IS_NEW_RECORD, result.isNewRecord)
-            })
-        } else {
-            if (overtimeMinutes > 0) {
-                prefs.hasPendingTempoNonVissuto = true
-                prefs.pendingTempoNonVissutoMinutes = overtimeMinutes
-            }
-            startActivity(Intent(this, TempoNonVissutoActivity::class.java).apply {
-                putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, overtimeMinutes)
-                putExtra(TempoNonVissutoActivity.EXTRA_LOST_STREAK, streakBeforeReset)
-            })
-        }
-    }
-
-    /**
-     * Aggiorna il badge 🔥 con lo streak corrente.
-     * Il badge è visibile solo se streak > 0 e l'allarme è attivo.
-     */
-    private fun updateStreakBadge() {
-        val streak = prefs.streakCount
-        if (streak > 0 && prefs.isAlarmActive) {
-            tvStreakBadge.text = getString(R.string.streak_badge_label, streak)
-            tvStreakBadge.visibility = View.VISIBLE
-        } else {
-            tvStreakBadge.visibility = View.GONE
-        }
+        // Aggiorna UI
+        updateUI()
+        updateClock()
     }
 
     /**
      * Mostra un dialog con le statistiche streak dell'utente.
      */
-    private fun showStreakDialog() {
-        val streak = prefs.streakCount
-        val best = prefs.bestStreak
-        val total = prefs.totalOnTimeDays
-        val message = getString(R.string.streak_dialog_message, streak, best, total)
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.streak_dialog_title))
-            .setMessage(message)
-            .setPositiveButton("Top! 💪", null)
-            .show()
-    }
 
-    private fun updateEscalationDots(currentLevel: NotificationMessages.Level) {
-        val levels = NotificationMessages.Level.entries
-        for (i in levelDots.indices) {
-            if (i < levels.size && i <= currentLevel.ordinal) {
-                levelDots[i].setBackgroundResource(R.drawable.status_dot_active)
-            } else {
-                levelDots[i].setBackgroundResource(R.drawable.status_dot_inactive)
-            }
-        }
-    }
+
+
 
     override fun onResume() {
         super.onResume()
@@ -488,7 +465,6 @@ class MainActivity : AppCompatActivity() {
         // Aggiorna la card dei permessi: l'utente potrebbe tornare dalle impostazioni di sistema
         updatePermissionsCard()
         updateTrialBanner()
-        updateStreakBadge()
 
         // Registra il receiver per i cambiamenti del permesso allarmi esatti (API 31+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -496,12 +472,6 @@ class MainActivity : AppCompatActivity() {
                 exactAlarmPermissionReceiver,
                 IntentFilter(AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED)
             )
-        }
-
-        // Mostra TempoNonVissuto se c'era un pending (es. da notifica senza activity in foreground)
-        if (prefs.hasPendingTempoNonVissuto && prefs.pendingTempoNonVissutoMinutes > 0) {
-            startActivity(Intent(this, TempoNonVissutoActivity::class.java))
-            // La activity stessa resetta il pending
         }
     }
 
@@ -544,7 +514,7 @@ class MainActivity : AppCompatActivity() {
             tvPermNotification.isClickable = true
             tvPermNotification.setOnClickListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    notificationPermissionFromCardLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }

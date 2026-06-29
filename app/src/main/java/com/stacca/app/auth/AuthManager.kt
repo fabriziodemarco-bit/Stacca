@@ -33,7 +33,10 @@ class AuthManager(private val context: Context) {
     suspend fun signUp(email: String, password: String): Result<UserInfo?> {
         return withContext(Dispatchers.IO) {
             try {
-                supabase.auth.signUpWith(Email) {
+                // redirectUrl è il parametro della funzione (non una proprietà del blocco config)
+                // ⚠️ Questo valore deve essere nella lista "Redirect URLs" nella
+                //    Supabase Dashboard → Authentication → URL Configuration.
+                supabase.auth.signUpWith(Email, redirectUrl = "stacca://login-callback") {
                     this.email = email
                     this.password = password
                 }
@@ -198,7 +201,8 @@ class AuthManager(private val context: Context) {
     suspend fun resetPassword(email: String): Result<Unit> {
         return withContext(Dispatchers.IO) {
             try {
-                supabase.auth.resetPasswordForEmail(email)
+                // Redirect verso il deep link dell'app anche per il reset password
+                supabase.auth.resetPasswordForEmail(email, "stacca://login-callback")
                 Result.success(Unit)
             } catch (e: Exception) {
                 Log.e(TAG, "Errore reset password", e)

@@ -44,6 +44,7 @@
             android:name=".ui.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.Stacca">
 
             <!-- Deep link per conferma email Supabase -->
@@ -105,17 +106,7 @@
             android:theme="@style/Theme.Stacca"
             android:launchMode="singleTop" />
 
-        <!-- Tempo Non Vissuto Activity — mostra lo straordinario dopo aver staccato -->
-        <activity
-            android:name=".ui.TempoNonVissutoActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Stacca" />
 
-        <!-- Celebration Activity — mostrata quando l'utente stacca in orario 🎉 -->
-        <activity
-            android:name=".ui.CelebrationActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Stacca" />
 
         <!-- Alarm Receiver -->
         <receiver

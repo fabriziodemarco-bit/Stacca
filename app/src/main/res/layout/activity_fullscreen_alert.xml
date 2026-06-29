@@ -67,7 +67,7 @@
             android:id="@+id/btnStopWork"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:text="@string/btn_ok_stacco"
+            android:text="Chiudi"
             style="@style/Widget.Stacca.Button.Primary"
             android:backgroundTint="@color/white"
             android:textColor="@color/alert_nuclear"

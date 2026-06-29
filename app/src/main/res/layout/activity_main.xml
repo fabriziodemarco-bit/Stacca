@@ -92,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--:--"
-                    android:textSize="56sp"
+                    android:textSize="44sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
                     android:fontFamily="sans-serif-black" />
@@ -152,6 +152,50 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Tempo Non Vissuto Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTempoNonVissuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/background_card"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:strokeColor="@color/alert_apocalypse"
+            app:strokeWidth="2dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TEMPO NON VISSUTO"
+                    android:textSize="14sp"
+                    android:textColor="@color/alert_apocalypse"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.15"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvTempoNonVissuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 min"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/alert_apocalypse"
+                    android:fontFamily="sans-serif-black" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Countdown Card (visible when alarm is active) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardCountdown"
@@ -183,76 +227,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00:00:00"
-                    android:textSize="44sp"
+                    android:textSize="56sp"
                     android:textStyle="bold"
                     android:textColor="@color/tertiary"
                     android:fontFamily="sans-serif-condensed" />
 
-                <!-- Escalation Level Indicator -->
-                <LinearLayout
-                    android:id="@+id/layoutEscalation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:visibility="gone">
-
-                    <View
-                        android:id="@+id/level1Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                    <View
-                        android:id="@+id/level2Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                    <View
-                        android:id="@+id/level3Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                    <View
-                        android:id="@+id/level4Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                    <View
-                        android:id="@+id/level5Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                    <View
-                        android:id="@+id/level6Dot"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/status_dot_inactive" />
-                </LinearLayout>
-
-                <!-- Badge streak 🔥 (visibile solo se streakCount > 0 e allarme attivo) -->
-                <TextView
-                    android:id="@+id/tvStreakBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🔥 0"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/alert_friendly"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:background="@drawable/status_dot_inactive"
-                    android:visibility="gone" />
 
                 <!-- Bottone "Ho staccato!" (visibile solo in overtime, cioè dopo fine turno) -->
                 <com.google.android.material.button.MaterialButton
@@ -367,6 +346,16 @@
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Action Buttons -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAncoraUnaSveglia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ancora una sveglia"
+            style="@style/Widget.Stacca.Button.Primary"
+            android:backgroundTint="@color/tertiary"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnActivate"

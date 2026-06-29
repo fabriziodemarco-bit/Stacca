@@ -148,47 +148,14 @@ class FullScreenAlertActivity : AppCompatActivity() {
     }
 
     private fun stopWork() {
-        prefs.paywallShownToday = false
         AlarmSoundManager.stop()
-        AlarmReceiver.cancelAlarm(this)
         NotificationHelper(this).cancelAll()
-
-        // Ricalcola l'overtime live (overtimeMinutes viene aggiornato dal counter in tempo reale)
-        val finalOvertimeMinutes = overtimeMinutes.coerceAtLeast(0)
-
-        // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
-        val streakBeforeReset = prefs.streakCount
-
-        // Registra lo staccato (idempotente)
-        val result = prefs.registraStaccato(finalOvertimeMinutes)
-
-        // Riprogramma per domani (se l'allarme era attivo)
-        if (prefs.isAlarmActive) {
-            AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
-        }
 
         finish()
 
-        if (result.isOnTime) {
-            // Staccato in orario → CelebrationActivity 🎉
-            startActivity(Intent(this, CelebrationActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                putExtra(CelebrationActivity.EXTRA_STREAK_COUNT, result.streakCount)
-                putExtra(CelebrationActivity.EXTRA_BEST_STREAK, result.bestStreak)
-                putExtra(CelebrationActivity.EXTRA_IS_NEW_RECORD, result.isNewRecord)
-            })
-        } else {
-            // Staccato in ritardo → TempoNonVissutoActivity
-            if (finalOvertimeMinutes > 0) {
-                prefs.hasPendingTempoNonVissuto = true
-                prefs.pendingTempoNonVissutoMinutes = finalOvertimeMinutes
-            }
-            startActivity(Intent(this, TempoNonVissutoActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                putExtra(TempoNonVissutoActivity.EXTRA_OVERTIME_MINUTES, finalOvertimeMinutes)
-                putExtra(TempoNonVissutoActivity.EXTRA_LOST_STREAK, streakBeforeReset)
-            })
-        }
+        startActivity(Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        })
     }
 
     override fun onDestroy() {

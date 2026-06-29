@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="32dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="32dp"
         android:gravity="center_horizontal">
-
-        <!-- Spacer top -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <!-- Logo/Emoji -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🚨"
-            android:textSize="72sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="52sp"
+            android:layout_marginBottom="6dp" />
 
         <!-- App Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textSize="36sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:layout_marginBottom="4dp" />
@@ -42,15 +41,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_tagline"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/text_hint"
-            android:layout_marginBottom="32dp" />
+            android:layout_marginBottom="24dp" />
 
         <!-- Google Sign-In Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGoogleSignIn"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="52dp"
             android:text="@string/login_google"
             android:textSize="15sp"
             android:textColor="@color/text_primary"
@@ -117,7 +116,7 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="20dp"
                     app:tabTextColor="@color/text_hint"
                     app:tabSelectedTextColor="@color/primary"
                     app:tabIndicatorColor="@color/primary"
@@ -141,7 +140,7 @@
                     android:id="@+id/tilEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="12dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
@@ -165,7 +164,7 @@
                     android:id="@+id/tilPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="6dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
@@ -196,13 +195,13 @@
                     android:textColor="@color/primary"
                     android:layout_gravity="end"
                     android:padding="8dp"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <!-- Login Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="52dp"
                     android:text="@string/login_btn_login"
                     android:textSize="16sp"
                     style="@style/Widget.Stacca.Button.Primary"
@@ -232,15 +231,5 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Continua senza account (Skip) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSkip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_skip"
-            android:textColor="@color/text_hint"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_marginTop="16dp" />
-
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
