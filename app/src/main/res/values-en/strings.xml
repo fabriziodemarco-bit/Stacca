@@ -55,7 +55,7 @@
     <string name="settings_auto_restart_desc">Automatically reschedules the alarm every day</string>
     <string name="settings_escalation_speed">Notification frequency</string>
     <string name="settings_escalation_speed_desc">How often we annoy you</string>
-    <string name="settings_version">Unplug! v1.7 — Made with ❤️ and malice</string>
+    <string name="settings_version">Unplug! v2.1.3 — Made with ❤️ and spite</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_logout_confirm">Are you sure you want to logout?</string>
     <string name="settings_logged_as">Logged in as %s</string>

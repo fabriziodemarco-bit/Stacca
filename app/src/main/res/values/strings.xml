@@ -59,7 +59,7 @@
     <string name="settings_auto_restart_desc">Riprogramma l\'allarme automaticamente ogni giorno</string>
     <string name="settings_escalation_speed">Frequenza notifiche</string>
     <string name="settings_escalation_speed_desc">Ogni quanti minuti ti rompiamo le scatole</string>
-    <string name="settings_version">Stacca! v1.7 — Fatto con ❤️ e cattiveria</string>
+    <string name="settings_version">Stacca! v2.1.3 — Fatto con ❤️ e cattiveria</string>
     <string name="settings_logout">Esci</string>
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
     <string name="settings_logged_as">Collegato come %s</string>
