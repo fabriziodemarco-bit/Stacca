@@ -82,7 +82,12 @@ class NotificationHelper(private val context: Context) {
         vibrationEnabled: Boolean = true,
         premiumTeaser: Boolean = false
     ) {
-        val (title, message) = NotificationMessages.getRandomMessage(level)
+        // Selezione sequenziale: ogni notifica mostra un messaggio diverso
+        val prefs = com.stacca.app.data.PreferencesManager(context)
+        val (title, message, nextIndex) = NotificationMessages(context).getSequentialMessage(
+            level, prefs.currentMessageIndex
+        )
+        prefs.currentMessageIndex = nextIndex
 
         val channel = if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
             CHANNEL_URGENT
@@ -123,9 +128,9 @@ class NotificationHelper(private val context: Context) {
         // Testo collassato: sempre "Basta lavorare. Vivi."
         // Testo espanso: titolo grande "STACCA!" + titolo e messaggio originali sotto
         // Se premiumTeaser=true, aggiunge riga upsell ironica (una volta al giorno)
-        val collapsedBody = "Basta lavorare. Vivi."
+        val collapsedBody = context.getString(R.string.app_tagline)
         val expandedBody = if (premiumTeaser) {
-            "$title\n$message\n\n🔒 Con Premium a quest'ora ti starei già urlando contro (livello NUCLEARE)"
+            "$title\n$message\n\n${context.getString(R.string.notif_premium_teaser)}"
         } else {
             "$title\n$message"
         }
@@ -136,7 +141,7 @@ class NotificationHelper(private val context: Context) {
             .setContentText(collapsedBody)
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .setBigContentTitle("STACCA!")
+                    .setBigContentTitle(context.getString(R.string.fullscreen_title))
                     .bigText(expandedBody)
             )
             .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -146,7 +151,7 @@ class NotificationHelper(private val context: Context) {
             .setContentIntent(fullScreenPending)
             .setFullScreenIntent(fullScreenPending, true)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel,
-                "Chiudi", stopPending)
+                context.getString(R.string.btn_dismiss), stopPending)
 
 
         // Vibrazione condizionale

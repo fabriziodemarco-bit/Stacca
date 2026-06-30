@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Plurale per il banner del trial in MainActivity.
+        Il cinese non ha plurali (tranne other).
+    -->
+    <plurals name="trial_days_left_banner">
+        <item quantity="other">⏳ 您还有 %d 天的免费试用期</item>
+    </plurals>
+
+    <!--
+        Plurale per i giorni di streak in CelebrationActivity.
+        %d = numero di giorni di streak.
+    -->
+    <plurals name="streak_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+</resources>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 1 — Gentle (0 min dopo fine turno)                      -->
+    <!-- ================================================================ -->
+    <string-array name="notif_gentle_titles">
+        <item>Shift\'s over! 🕐</item>
+        <item>It\'s time! ⏰</item>
+        <item>Time\'s up! ⌛</item>
+        <item>That\'s enough! 👋</item>
+        <item>Time to unplug! 🎉</item>
+        <item>Shift done! 🔔</item>
+        <item>Clock\'s out! ⏱️</item>
+    </string-array>
+
+    <string-array name="notif_gentle_messages">
+        <item>Hey! Time to unplug! Save your work and close everything 🕐</item>
+        <item>Your shift is over! Time to enjoy the evening ✨</item>
+        <item>Psst… working hours are over. Close that laptop! 💻</item>
+        <item>Gentle reminder: the workday is done! 🌅</item>
+        <item>Hey colleague, it\'s time! The sofa is waiting for you! 🛋️</item>
+        <item>Tick tock! The clock says it\'s over. What do you say? ⏰</item>
+        <item>Day\'s wrapped! You\'ve done enough, trust me 👏</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 2 — Friendly (+5 min)           -->
+    <!-- ================================================================ -->
+    <string-array name="notif_friendly_titles">
+        <item>Hey, still here?! 🍷</item>
+        <item>There is life outside the PC! 🌍</item>
+        <item>INDECENT PROPOSALS 😏</item>
+        <item>You have better alternatives! 🎭</item>
+        <item>The world is calling! 📱</item>
+        <item>5 extra minutes… 🤨</item>
+        <item>Still working?! 🫠</item>
+        <item>You\'re missing out! 🎪</item>
+        <item>Wake up! There\'s more! 🌈</item>
+    </string-array>
+
+    <string-array name="notif_friendly_messages">
+        <item>Come on, close it all! A cold drink is waiting outside! 🍹</item>
+        <item>Netflix just added that show you wanted to watch… but you\'re still working?! 📺</item>
+        <item>Your king-size bed is crying because you\'re not there. Go comfort it! 🛏️</item>
+        <item>There\'s a beautiful sunset outside. You\'re missing it for an email. REALLY?! 🌅</item>
+        <item>Pizza doesn\'t order itself! Unplug and think about dinner! 🍕</item>
+        <item>Your partner/friend/cat is waiting for you. Don\'t make them wait any longer! ❤️</item>
+        <item>An artisanal ice cream, a walk… or another line of code? THE CHOICE IS OBVIOUS! 🍦</item>
+        <item>The sofa just sent an abandonment report. Get back to it! 🛋️</item>
+        <item>You know what goes well with finished work? THE REST OF YOUR LIFE! 🎊</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 3 — Insistent (+10 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_insistent_titles">
+        <item>STILL?! 😤</item>
+        <item>COME ON!! 🙄</item>
+        <item>UNPLUG!!! ⚡</item>
+        <item>STOP!! 🛑</item>
+        <item>I DON\'T BELIEVE IT! 😱</item>
+        <item>SERIOUSLY?! 😳</item>
+        <item>ENOUGH ALREADY! 💢</item>
+        <item>YOU\'RE EXAGGERATING! 🫨</item>
+        <item>CUT IT OUT! 🚫</item>
+    </string-array>
+
+    <string-array name="notif_insistent_messages">
+        <item>SERIOUSLY?! It\'s been 10 MINUTES! Your boss isn\'t paying you overtime! 💸</item>
+        <item>Your body needs to move! Your vertebrae look like a pretzel! 🥨</item>
+        <item>ALERT: Workaholic level dangerously high! Unplug NOW! ⚠️</item>
+        <item>Your eyes are about to unionize. Give yourself a break! 👀</item>
+        <item>10 minutes of FREE overtime. Are you a company benefactor or what?! 🤡</item>
+        <item>Your screen has more light than the sun. Go out. Now. IMMEDIATELY. ☀️</item>
+        <item>You are giving away your free time. YOUR. FREE. TIME. 🕐💢</item>
+        <item>Your fingers on the keyboard are crying. They have calluses. LET THEM REST! ⌨️😢</item>
+        <item>Even robots shut down. You are not even a robot. UNPLUG! 🤖</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 4 — Aggressive (+15 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_aggressive_titles">
+        <item>ARE YOU STILL HERE?! 🤬</item>
+        <item>ENOUGH IS ENOUGH! 💢</item>
+        <item>LAST WARNING! ⚠️</item>
+        <item>EMERGENCY! 🚨</item>
+        <item>NOT JOKING! 😡</item>
+        <item>YOU\'RE MAKING ME MAD! 🔥</item>
+        <item>YOU ARE INCORRIGIBLE! 💀</item>
+        <item>SHAME ON YOU! 🫵</item>
+        <item>I MEAN COME ON! 🤯</item>
+        <item>YOU\'RE IMPOSSIBLE! 😤</item>
+    </string-array>
+
+    <string-array name="notif_aggressive_messages">
+        <item>WHAT ARE YOU DOING?! 15 free minutes for your boss! Are you crazy?! 🤬</item>
+        <item>Your work-life balance is more unbalanced than the Leaning Tower of Pisa! UNPLUG! 🏗️</item>
+        <item>Your colleagues are already at the bar. You are still staring at Excel. You are sad. 🍺</item>
+        <item>BREAKING NEWS: Stubborn employee refuses to stop working. Family members are worried! 📰</item>
+        <item>Burnout is not a goal to reach! CLOSE EVERYTHING! 🔥</item>
+        <item>Even machines need to stop. You are not even a machine! 🤖</item>
+        <item>ATTENTION: Every extra minute is a minute stolen from your life! UNPLUG NOW! ⏳💀</item>
+        <item>You know you\'re being exploited, right? And you LET THEM! Congratulations, genius! 👏🤡</item>
+        <item>Your boss is at home, on the sofa, watching you work for free. Does it make you laugh? IT DOES TO HIM! 😂</item>
+        <item>You are literally giving money to the company. You are the most generous (and STUBBORN) person I know! 💸🤦</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 5 — Nuclear (+20 min)                                   -->
+    <!-- ================================================================ -->
+    <string-array name="notif_nuclear_titles">
+        <item>💀 STOP!!! 💀</item>
+        <item>CODE RED! 🚨</item>
+        <item>TOTAL ALARM! 🔴</item>
+        <item>GAME OVER! 💣</item>
+        <item>SOS WORKAHOLIC! 🆘</item>
+        <item>YOU ARE A LOST CAUSE! 💀</item>
+        <item>HELLOOO! 😱</item>
+        <item>UNACCEPTABLE! ☢️</item>
+        <item>I HATE YOU! (kidding) 💔</item>
+        <item>THIS IS DISGUSTING! UNPLUG! 🤮</item>
+    </string-array>
+
+    <string-array name="notif_nuclear_messages">
+        <item>UNPLUGGGGG! 20 MINUTES! Do you want me to come there and close your laptop?! 💀</item>
+        <item>Your computer is about to self-destruct in 3… 2… 1… (I WISH!) 💣</item>
+        <item>FLASH NEWS: No one has ever died from closing their laptop on time! 📢</item>
+        <item>You\'re becoming a clinical case! Doctors call it \'TERMINAL WORKAHOLIC\'! 🏥</item>
+        <item>Your cat ate your dinner because you didn\'t come back. Congratulations! 🐱</item>
+        <item>DO YOU KNOW THAT CONCEPT CALLED \'PRIVATE LIFE\'?! HERE IT IS, WAITING FOR YOU OUTSIDE! 🚪</item>
+        <item>MISSION: Close everything, get up from the chair, and GO LIVE! I repeat: GO LIVE! 🎯</item>
+        <item>You are so burnt out that if they put you in front of a sunset you\'d think of the open ticket! 🌅🤮</item>
+        <item>Do you know that the chair has your PERMANENT imprint? You created a living fossil! 🪑💀</item>
+        <item>20 minutes. TWENTY. I would have already thrown the laptop out the window by now! 🪟💻</item>
+        <item>I\'ve never seen anyone so STUBBORN and OBTUSE. Unplug or I UNINSTALL you! 📱🗑️</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 6 — Apocalypse (+30 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_apocalypse_titles">
+        <item>☠️ YOU ARE IRRECOVERABLE ☠️</item>
+        <item>DESPERATE CASE! 😱</item>
+        <item>HELP!!! 🆘</item>
+        <item>INTERVENTION NEEDED! 🏥</item>
+        <item>GOODBYE SANITY! 🧠💥</item>
+        <item>YOU ARE A LOSER! 🤡</item>
+        <item>YOU SUCK! 🤮</item>
+        <item>CLOWN! 🎪</item>
+        <item>HUMAN SHAME! 😤</item>
+        <item>LAST NEURON! 🧠💀</item>
+        <item>IDIOT! UNPLUG! 🫵💢</item>
+        <item>CLINICAL CASE! 🏥☠️</item>
+        <item>TOTAL DESPAIR! 😭</item>
+        <item>YOU DESERVE BURNOUT! 🔥</item>
+    </string-array>
+
+    <string-array name="notif_apocalypse_messages">
+        <item>30 MINUTES. THIRTY. Did you move into the office?! Do you want me to send you the sheets?! ☠️</item>
+        <item>At this point just sleep there! You don\'t have a social life anyway! 🏢🛏️</item>
+        <item>CONGRATULATIONS: You won the \'Most Exploited Employee of the Year\' award! 🏆</item>
+        <item>Your boss is laughing at you. LAUGHING. While you work for free! 😂💸</item>
+        <item>Your chair has more footprint than your sofa. That says it all! 🪑</item>
+        <item>LAST MESSAGE: If you don\'t unplug NOW, tomorrow you\'ll find the app insulting you in 47 languages! 🌍🤬</item>
+        <item>You are a lost cause. But we love you. Unplug please. UNPLUG! 💔</item>
+        <item>You know what you are? A CLOWN 🤡 working for free while the boss is in the pool! 🏊</item>
+        <item>I\'VE HAD IT. You are the most STUBBORN, HARDHEADED and MASOCHISTIC person I\'ve ever met! 🤦💢</item>
+        <item>I DETEST you. I detest you with all my heart. Unplug or I swear I DELETE you from the phone! ☠️📱</item>
+        <item>Your mother would be DISAPPOINTED. Your father EMBARRASSED. Your dog has already REPLACED you. Unplug! 🐕💀</item>
+        <item>You know what you do? NOTHING USEFUL. Because after 6 PM the brain is OFF. Like you! 🧠❌</item>
+        <item>If your boss saw you working at this hour he would think: what a LOSER, has nothing else to do! 😂🫵</item>
+        <item>THIRTY MINUTES of life THROWN IN THE TOILET for an email that no one will read! 🚽📧</item>
+    </string-array>
+
+</resources>

@@ -188,6 +188,26 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_PAYWALL_SHOWN_TODAY, false)
         set(value) = prefs.edit().putBoolean(KEY_PAYWALL_SHOWN_TODAY, value).apply()
 
+    // --- Escalation step-based ---
+
+    /** Step corrente dell'escalation (0 = prima notifica, 1 = seconda, ecc.) */
+    var currentEscalationStep: Int
+        get() = prefs.getInt("current_escalation_step", 0)
+        set(value) = prefs.edit().putInt("current_escalation_step", value).apply()
+
+    /** Indice del messaggio corrente per selezione sequenziale (evita ripetizioni) */
+    var currentMessageIndex: Int
+        get() = prefs.getInt("current_message_index", 0)
+        set(value) = prefs.edit().putInt("current_message_index", value).apply()
+
+    /** Azzera i contatori di escalation (da chiamare quando l'utente stacca o disattiva). */
+    fun resetEscalation() {
+        prefs.edit()
+            .putInt("current_escalation_step", 0)
+            .putInt("current_message_index", 0)
+            .apply()
+    }
+
     // --- Tempo Non Vissuto ---
 
     /** Minuti di straordinario da mostrare nella schermata "Tempo Non Vissuto" */

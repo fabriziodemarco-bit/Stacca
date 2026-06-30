@@ -60,7 +60,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
             NotificationMessages.Level.NUCLEAR
         }
 
-        val (title, message) = NotificationMessages.getRandomMessage(level)
+        val (title, message) = NotificationMessages(this).getRandomMessage(level)
 
         findViewById<TextView>(R.id.tvAlertTitle).text = title
         findViewById<TextView>(R.id.tvAlertMessage).text = message
@@ -150,6 +150,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
     private fun stopWork() {
         AlarmSoundManager.stop()
         NotificationHelper(this).cancelAll()
+        prefs.resetEscalation()
 
         finish()
 

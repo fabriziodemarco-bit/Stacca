@@ -20,186 +20,29 @@ import java.util.*
 
 /**
  * Receiver che viene triggerato quando scatta l'allarme.
- * Gestisce l'escalation delle notifiche.
+ * Gestisce l'escalation delle notifiche con logica step-based:
+ * - Ogni notifica avanza di 1 step
+ * - Il livello è determinato dallo step, non dal tempo reale
+ * - Intervallo fisso di 5 minuti tra le notifiche
  */
 class AlarmReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
-        val prefs = PreferencesManager(context)
-
-        if (!prefs.isAlarmActive) return
-
-        // Calcola i minuti di straordinario
-        val now = Calendar.getInstance()
-        val endTime = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, prefs.endHour)
-            set(Calendar.MINUTE, prefs.endMinute)
-            set(Calendar.SECOND, 0)
-        }
-
-        val overtimeMillis = now.timeInMillis - endTime.timeInMillis
-        val overtimeMinutes = (overtimeMillis / 60000).toInt().coerceAtLeast(0)
-
-        // Determina il livello di escalation (rispetta velocità)
-        val adjustedMinutes = adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
-        var level = NotificationMessages.getLevelForMinutes(adjustedMinutes)
-
-        // --- FREEMIUM: cap al livello 3 (INSISTENT) senza accesso completo ---
-        if (level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal && !prefs.hasFullAccess) {
-
-            // Prima volta oggi che un livello premium viene bloccato?
-            // Aggiungi alla notifica INSISTENT un teaser upsell (una volta al giorno, non ogni allarme)
-            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                .format(java.util.Calendar.getInstance().time)
-            if (prefs.premiumGateShownDate != today) {
-                prefs.premiumGateShownDate = today
-                // Salviamo il livello "reale" che avremmo raggiunto per il messaggio ironico
-                prefs.paywallShownToday = true   // ricicliamo il flag per evitare il vecchio popup
-                // Passiamo il livello bloccato via intent extra — NotificationHelper lo usa per il BigText
-                // Nota: sendEscalatingNotification viene chiamata più giù; usiamo un flag in prefs
-            } else {
-                // Già mostrato oggi: metti solo la notifica normale senza teaser
-                prefs.paywallShownToday = true
-            }
-
-            // Cap al livello INSISTENT
-            level = NotificationMessages.Level.INSISTENT
-        }
-
-        // Mantieni la CPU attiva il tempo necessario per inviare la notifica.
-        // Lo schermo viene acceso dalla notification full-screen intent
-        // e dall'attributo turnScreenOn della FullScreenAlertActivity.
-        val wakeLock = if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
-            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-            powerManager.newWakeLock(
-                PowerManager.PARTIAL_WAKE_LOCK,
-                "Stacca:WakeLock"
-            ).also { it.acquire(10_000L) } // max 10s, rilasciato nel finally
-        } else null
-
-        try {
-            // Calcola se dobbiamo aggiungere il teaser premium alla notifica INSISTENT
-            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
-                .format(java.util.Calendar.getInstance().time)
-            // Il flag premiumGateShownDate viene impostato SOLO la prima volta oggi nel blocco sopra;
-            // se coincide con oggi E siamo al livello INSISTENT per effetto del cap, aggiungiamo il teaser
-            val mostraTeaserPremium = !prefs.hasFullAccess &&
-                level == NotificationMessages.Level.INSISTENT &&
-                prefs.premiumGateShownDate == today &&
-                adjustForSpeed(overtimeMinutes, prefs.escalationSpeed)
-                    .let { NotificationMessages.getLevelForMinutes(it).ordinal } >= NotificationMessages.Level.AGGRESSIVE.ordinal
-
-            // Invia la notifica (con eventuale teaser)
-            val notificationHelper = NotificationHelper(context)
-            notificationHelper.sendEscalatingNotification(
-                level, overtimeMinutes,
-                soundEnabled = prefs.soundEnabled,
-                vibrationEnabled = prefs.vibrationEnabled,
-                premiumTeaser = mostraTeaserPremium
-            )
-
-            // Per livello NUCLEAR e APOCALYPSE, apri l'activity a schermo intero
-            // MA solo se l'utente ha accesso completo (premium o trial attivo)
-            if (prefs.fullScreenEnabled &&
-                prefs.hasFullAccess &&
-                level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
-                val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    putExtra("overtime_minutes", overtimeMinutes)
-                    putExtra("level", level.name)
-                }
-                context.startActivity(fullScreenIntent)
-            }
-        } finally {
-            // Rilascia il wake lock anche in caso di eccezione
-            if (wakeLock?.isHeld == true) wakeLock.release()
-        }
-
-        // Programma il prossimo allarme
-        scheduleNextAlarm(context, level, prefs.escalationSpeed)
-    }
-
-    /**
-     * Aggiusta i minuti in base alla velocità di escalation.
-     * 0 = Rilassato (x0.5 - escalation più lenta)
-     * 1 = Normale (x1)
-     * 2 = Aggressivo (x2 - escalation più veloce)
-     */
-    private fun adjustForSpeed(minutes: Int, speed: Int): Int {
-        return when (speed) {
-            0 -> minutes / 2       // Rilassato: dimezza i minuti -> escalation lenta
-            2 -> minutes * 2       // Aggressivo: raddoppia -> escalation veloce
-            else -> minutes        // Normale
-        }
-    }
-
-    /**
-     * Programma il prossimo allarme in base al livello corrente.
-     * Intervalli più ravvicinati per livelli più alti.
-     */
-    private fun scheduleNextAlarm(
-        context: Context,
-        currentLevel: NotificationMessages.Level,
-        escalationSpeed: Int
-    ) {
-        val baseInterval = when (currentLevel) {
-            NotificationMessages.Level.GENTLE -> 5      // Ogni 5 min
-            NotificationMessages.Level.FRIENDLY -> 5    // Ogni 5 min
-            NotificationMessages.Level.INSISTENT -> 3   // Ogni 3 min
-            NotificationMessages.Level.AGGRESSIVE -> 2  // Ogni 2 min
-            NotificationMessages.Level.NUCLEAR -> 1     // Ogni minuto!
-            NotificationMessages.Level.APOCALYPSE -> 1  // Ogni minuto!
-        }
-
-        // Adatta l'intervallo alla velocità
-        val intervalMinutes = when (escalationSpeed) {
-            0 -> (baseInterval * 1.5).toInt().coerceAtLeast(2)  // Rilassato: più lento
-            2 -> (baseInterval * 0.7).toInt().coerceAtLeast(1)  // Aggressivo: più veloce
-            else -> baseInterval
-        }
-
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val triggerTime = System.currentTimeMillis() + (intervalMinutes * 60 * 1000L)
-
-        // Verifica il permesso prima di usare setExactAndAllowWhileIdle (richiesto API 31+)
-        if (PermissionHelper.canScheduleExactAlarms(context)) {
-            try {
-                alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    triggerTime,
-                    pendingIntent
-                )
-            } catch (e: SecurityException) {
-                Log.e("AlarmReceiver", "SecurityException nel riprogrammare il prossimo allarme: ${e.message}")
-                // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
-                val fallbackPrefs = PreferencesManager(context)
-                NotificationHelper(context).sendEscalatingNotification(
-                    NotificationMessages.Level.GENTLE, 0,
-                    soundEnabled = fallbackPrefs.soundEnabled,
-                    vibrationEnabled = fallbackPrefs.vibrationEnabled
-                )
-            }
-        } else {
-            Log.w("AlarmReceiver", "Permesso allarmi esatti non disponibile: impossibile riprogrammare. Invio notifica immediata.")
-            // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
-            val fallbackPrefs = PreferencesManager(context)
-            NotificationHelper(context).sendEscalatingNotification(
-                NotificationMessages.Level.GENTLE, 0,
-                soundEnabled = fallbackPrefs.soundEnabled,
-                vibrationEnabled = fallbackPrefs.vibrationEnabled
-            )
-        }
-
-
-    }
-
     companion object {
+        /**
+         * Restituisce l'intervallo tra le notifiche in millisecondi,
+         * in base all'impostazione "Frequenza notifiche" dell'utente.
+         *
+         * 0 = Rilassato (ogni 8 min)
+         * 1 = Normale   (ogni 5 min)
+         * 2 = Aggressivo (ogni 3 min)
+         */
+        private fun getIntervalMs(escalationSpeed: Int): Long {
+            return when (escalationSpeed) {
+                0 -> 8 * 60 * 1000L    // 🐌 Rilassato
+                2 -> 3 * 60 * 1000L    // 🔥 Aggressivo
+                else -> 5 * 60 * 1000L // ⚡ Normale
+            }
+        }
 
         /**
          * Programma l'allarme iniziale per l'orario di fine turno.
@@ -265,6 +108,138 @@ class AlarmReceiver : BroadcastReceiver() {
             )
             alarmManager.cancel(pendingIntent)
             com.stacca.app.notifications.AlarmSoundManager.stop()
+        }
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        val prefs = PreferencesManager(context)
+
+        if (!prefs.isAlarmActive) return
+
+        // Calcola i minuti di straordinario (per visualizzazione, NON per determinare il livello)
+        val now = Calendar.getInstance()
+        val endTime = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, prefs.endHour)
+            set(Calendar.MINUTE, prefs.endMinute)
+            set(Calendar.SECOND, 0)
+        }
+
+        val overtimeMillis = now.timeInMillis - endTime.timeInMillis
+        val overtimeMinutes = (overtimeMillis / 60000).toInt().coerceAtLeast(0)
+
+        // Determina il livello dallo step corrente (NON dal tempo reale)
+        val currentStep = prefs.currentEscalationStep
+        var level = NotificationMessages.getLevelForStep(currentStep)
+
+        // --- FREEMIUM: cap al livello 3 (INSISTENT) senza accesso completo ---
+        if (level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal && !prefs.hasFullAccess) {
+
+            // Prima volta oggi che un livello premium viene bloccato?
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                .format(Calendar.getInstance().time)
+            if (prefs.premiumGateShownDate != today) {
+                prefs.premiumGateShownDate = today
+                prefs.paywallShownToday = true
+            } else {
+                prefs.paywallShownToday = true
+            }
+
+            // Cap al livello INSISTENT
+            level = NotificationMessages.Level.INSISTENT
+        }
+
+        // Mantieni la CPU attiva il tempo necessario per inviare la notifica.
+        val wakeLock = if (level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
+            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+            powerManager.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK,
+                "Stacca:WakeLock"
+            ).also { it.acquire(10_000L) } // max 10s, rilasciato nel finally
+        } else null
+
+        try {
+            // Calcola se dobbiamo aggiungere il teaser premium alla notifica INSISTENT
+            val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                .format(Calendar.getInstance().time)
+            val realLevel = NotificationMessages.getLevelForStep(currentStep)
+            val mostraTeaserPremium = !prefs.hasFullAccess &&
+                level == NotificationMessages.Level.INSISTENT &&
+                prefs.premiumGateShownDate == today &&
+                realLevel.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal
+
+            // Invia la notifica (con eventuale teaser) — selezione sequenziale
+            val notificationHelper = NotificationHelper(context)
+            notificationHelper.sendEscalatingNotification(
+                level, overtimeMinutes,
+                soundEnabled = prefs.soundEnabled,
+                vibrationEnabled = prefs.vibrationEnabled,
+                premiumTeaser = mostraTeaserPremium
+            )
+
+            // Per livello NUCLEAR e APOCALYPSE, apri l'activity a schermo intero
+            if (prefs.fullScreenEnabled &&
+                prefs.hasFullAccess &&
+                level.ordinal >= NotificationMessages.Level.NUCLEAR.ordinal) {
+                val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    putExtra("overtime_minutes", overtimeMinutes)
+                    putExtra("level", level.name)
+                }
+                context.startActivity(fullScreenIntent)
+            }
+        } finally {
+            // Rilascia il wake lock anche in caso di eccezione
+            if (wakeLock?.isHeld == true) wakeLock.release()
+        }
+
+        // Avanza lo step per la prossima notifica
+        prefs.currentEscalationStep = currentStep + 1
+
+        // Programma il prossimo allarme (intervallo basato su impostazione Frequenza)
+        scheduleNextAlarm(context, prefs.escalationSpeed)
+    }
+
+    /**
+     * Programma il prossimo allarme con intervallo basato sull'impostazione
+     * "Frequenza notifiche": 🐌 8 min / ⚡ 5 min / 🔥 3 min.
+     */
+    private fun scheduleNextAlarm(context: Context, escalationSpeed: Int) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val triggerTime = System.currentTimeMillis() + getIntervalMs(escalationSpeed)
+
+        // Verifica il permesso prima di usare setExactAndAllowWhileIdle (richiesto API 31+)
+        if (PermissionHelper.canScheduleExactAlarms(context)) {
+            try {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    triggerTime,
+                    pendingIntent
+                )
+            } catch (e: SecurityException) {
+                Log.e("AlarmReceiver", "SecurityException nel riprogrammare il prossimo allarme: ${e.message}")
+                // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
+                val fallbackPrefs = PreferencesManager(context)
+                NotificationHelper(context).sendEscalatingNotification(
+                    NotificationMessages.Level.GENTLE, 0,
+                    soundEnabled = fallbackPrefs.soundEnabled,
+                    vibrationEnabled = fallbackPrefs.vibrationEnabled
+                )
+            }
+        } else {
+            Log.w("AlarmReceiver", "Permesso allarmi esatti non disponibile: impossibile riprogrammare. Invio notifica immediata.")
+            // Fallback: invia subito una notifica affinché l'utente riceva almeno qualcosa
+            val fallbackPrefs = PreferencesManager(context)
+            NotificationHelper(context).sendEscalatingNotification(
+                NotificationMessages.Level.GENTLE, 0,
+                soundEnabled = fallbackPrefs.soundEnabled,
+                vibrationEnabled = fallbackPrefs.vibrationEnabled
+            )
         }
     }
 }

@@ -29,6 +29,7 @@
 
     <string name="btn_save">Salva</string>
     <string name="btn_cancel">Annulla</string>
+    <string name="btn_dismiss">Chiudi</string>
 
 
 
@@ -56,8 +57,8 @@
     <string name="settings_fullscreen_desc">Mostra un allarme invasivo per i livelli alti</string>
     <string name="settings_auto_restart">Riavvio automatico</string>
     <string name="settings_auto_restart_desc">Riprogramma l\'allarme automaticamente ogni giorno</string>
-    <string name="settings_escalation_speed">Velocità escalation</string>
-    <string name="settings_escalation_speed_desc">Quanto velocemente le notifiche diventano aggressive</string>
+    <string name="settings_escalation_speed">Frequenza notifiche</string>
+    <string name="settings_escalation_speed_desc">Ogni quanti minuti ti rompiamo le scatole</string>
     <string name="settings_version">Stacca! v1.7 — Fatto con ❤️ e cattiveria</string>
     <string name="settings_logout">Esci</string>
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
@@ -69,9 +70,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>🐢 Rilassato</item>
-        <item>⚡ Normale</item>
-        <item>🔥 Aggressivo</item>
+        <item>🐌 Ogni 8 min</item>
+        <item>⚡ Ogni 5 min</item>
+        <item>🔥 Ogni 3 min</item>
     </string-array>
 
     <!-- Login -->
@@ -97,7 +98,7 @@
     <string name="premium_subtitle">Sblocca tutto il potere del relax forzato</string>
     <string name="premium_features_title">✨ Cosa ottieni</string>
     <string name="premium_feature_1">💀 Tutti i 6 livelli di escalation (incluso Nucleare e Apocalisse!)</string>
-    <string name="premium_feature_2">🎚️ Velocità di escalation personalizzabile</string>
+    <string name="premium_feature_2">🎚️ Frequenza notifiche personalizzabile</string>
     <string name="premium_feature_3">📱 Allarme a schermo intero invasivo</string>
     <string name="premium_feature_4">🚀 Aggiornamenti futuri inclusi</string>
     <string name="premium_buy_button">👑 ACQUISTA PREMIUM ORA</string>
@@ -111,6 +112,7 @@
     <string name="premium_required">👑 Funzionalità Premium</string>
     <string name="premium_required_message">Questa funzionalità è disponibile solo per gli utenti Premium.\nVuoi sbloccarla?</string>
     <string name="premium_unlock">Sblocca Premium</string>
+    <string name="premium_buy_price">👑 ACQUISTA PREMIUM — %s</string>
 
     <!-- Paywall -->
     <string name="paywall_title">Vuoi che smetta di fare il carino? &#x1F525;</string>
@@ -124,8 +126,11 @@
     <string name="paywall_buy_button">&#x1F513; SBLOCCA ORA &#x2014; &#x20AC;0,99</string>
     <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
     <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai pi&#xF9; sfuggire! &#x1F608;&#x1F525;</string>
+    <string name="notif_premium_teaser">&#x1F512; Con Premium a quest\'ora ti starei gi&#xE0; urlando contro (livello NUCLEARE)</string>
+    <string name="paywall_unlock_price">🔓 SBLOCCA ORA — %s</string>
 
     <!-- Badge escalation in MainActivity -->
+    <string name="premium_active">👑 Premium attivo</string>
     <string name="escalation_limited_badge">Piano Base (3 livelli) 🔒 Tocca per sbloccare</string>
     <string name="escalation_full_badge">👑 Premium attivo (Tutti i 6 livelli)</string>
 
@@ -205,6 +210,8 @@
         <item>Serata libera. Il cervello ha già spento il PC mentalmente. 🧠💤</item>
         <item>Qualcuno da qualche parte sta ancora lavorando. Non sei tu. 😇</item>
     </string-array>
+    <string name="store_connecting">Connessione al Play Store…</string>
+    <string name="store_connecting_toast">Connessione al Play Store in corso, riprova…</string>
 </resources>
 
 

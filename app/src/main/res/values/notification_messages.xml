@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 1 — Gentile (0 min dopo fine turno)                      -->
+    <!-- ================================================================ -->
+    <string-array name="notif_gentle_titles">
+        <item>Fine turno! 🕐</item>
+        <item>È l\'ora! ⏰</item>
+        <item>Tempo scaduto! ⌛</item>
+        <item>Basta così! 👋</item>
+        <item>Si stacca! 🎉</item>
+        <item>Turno finito! 🔔</item>
+        <item>Orologio scaduto! ⏱️</item>
+    </string-array>
+
+    <string-array name="notif_gentle_messages">
+        <item>Hey! È ora di staccare! Salva il lavoro e chiudi tutto 🕐</item>
+        <item>Il tuo turno è finito! È ora di goderti la serata ✨</item>
+        <item>Psst… l\'orario di lavoro è finito. Chiudi quel portatile! 💻</item>
+        <item>Promemoria gentile: la giornata lavorativa è finita! 🌅</item>
+        <item>Ehi collega, è ora! Il divano ti aspetta! 🛋️</item>
+        <item>Tick tock! L\'orologio dice che è finita. Tu che dici? ⏰</item>
+        <item>Giornata conclusa! Hai fatto abbastanza, fidati 👏</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 2 — Amichevole con proposte seducenti (+5 min)           -->
+    <!-- ================================================================ -->
+    <string-array name="notif_friendly_titles">
+        <item>Ehi, ancora qui?! 🍷</item>
+        <item>C\'è vita fuori dal PC! 🌍</item>
+        <item>PROPOSTE INDECENTI 😏</item>
+        <item>Hai alternative migliori! 🎭</item>
+        <item>Il mondo ti chiama! 📱</item>
+        <item>5 minuti extra… 🤨</item>
+        <item>Ancora al lavoro?! 🫠</item>
+        <item>Ti stai perdendo cose! 🎪</item>
+        <item>Sveglia! C\'è altro! 🌈</item>
+    </string-array>
+
+    <string-array name="notif_friendly_messages">
+        <item>Dai su, chiudi tutto! Un aperitivo fresco ti aspetta fuori! 🍹</item>
+        <item>Netflix ha appena aggiunto quella serie che volevi vedere… ma tu sei ancora a lavorare?! 📺</item>
+        <item>Il tuo letto king-size sta piangendo perché non ci sei. Vai a consolarlo! 🛏️</item>
+        <item>Fuori c\'è un tramonto bellissimo. Tu te lo stai perdendo per una email. DAVVERO?! 🌅</item>
+        <item>La pizza non si ordina da sola! Stacca e pensa alla cena! 🍕</item>
+        <item>Il tuo partner/amico/gatto ti sta aspettando. Non farli aspettare ancora! ❤️</item>
+        <item>Un gelato artigianale, una passeggiata… o un\'altra riga di codice? LA SCELTA È OVVIA! 🍦</item>
+        <item>Il divano ha appena mandato una segnalazione di abbandono. Tornagli vicino! 🛋️</item>
+        <item>Sai cosa va bene con il lavoro finito? TUTTO IL RESTO DELLA VITA! 🎊</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 3 — Insistente (+10 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_insistent_titles">
+        <item>ANCORA?! 😤</item>
+        <item>MA DAI!! 🙄</item>
+        <item>STACCA!!! ⚡</item>
+        <item>BASTA!! 🛑</item>
+        <item>NON CI CREDO! 😱</item>
+        <item>SUL SERIO?! 😳</item>
+        <item>MA BASTA! 💢</item>
+        <item>ORA ESAGERI! 🫨</item>
+        <item>PIANTALA! 🚫</item>
+    </string-array>
+
+    <string-array name="notif_insistent_messages">
+        <item>SERIAMENTE?! Sono passati 10 MINUTI! Il tuo capo non ti paga gli straordinari! 💸</item>
+        <item>Il tuo corpo ha bisogno di muoversi! Hai le vertebre che sembrano un pretzel! 🥨</item>
+        <item>ALLERTA: Livello di workaholic pericolosamente alto! Stacca ADESSO! ⚠️</item>
+        <item>I tuoi occhi stanno per sindacalizzarsi. Datti una pausa! 👀</item>
+        <item>10 minuti di straordinario GRATIS. Sei un benefattore dell\'azienda o cosa?! 🤡</item>
+        <item>Il tuo schermo ha più luce del sole. Esci. Adesso. SUBITO. ☀️</item>
+        <item>Stai regalando il tuo tempo libero. IL TUO. TEMPO. LIBERO. 🕐💢</item>
+        <item>Le tue dita sulla tastiera piangono. Hanno i calli. FALLE RIPOSARE! ⌨️😢</item>
+        <item>Anche i robot si spengono. Tu non sei nemmeno un robot. STACCA! 🤖</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 4 — Aggressivo (+15 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_aggressive_titles">
+        <item>SEI ANCORA QUI?! 🤬</item>
+        <item>ORA BASTA DAVVERO! 💢</item>
+        <item>ULTIMO AVVISO! ⚠️</item>
+        <item>EMERGENZA! 🚨</item>
+        <item>NON SCHERZARE! 😡</item>
+        <item>MI FAI ARRABBIARE! 🔥</item>
+        <item>SEI INCORREGGIBILE! 💀</item>
+        <item>VERGOGNATI! 🫵</item>
+        <item>MA DICO IO! 🤯</item>
+        <item>SEI IMPOSSIBILE! 😤</item>
+    </string-array>
+
+    <string-array name="notif_aggressive_messages">
+        <item>MA CHE STAI FACENDO?! 15 minuti gratis al tuo capo! Sei impazzito?! 🤬</item>
+        <item>Il tuo work-life balance è più sbilanciato della Torre di Pisa! STACCA! 🏗️</item>
+        <item>I tuoi colleghi sono già al bar. Tu sei ancora a fissare Excel. Sei triste. 🍺</item>
+        <item>BREAKING NEWS: Dipendente ostinato si rifiuta di smettere di lavorare. I familiari sono preoccupati! 📰</item>
+        <item>Il burnout non è un traguardo da raggiungere! CHIUDI TUTTO! 🔥</item>
+        <item>Anche le macchine hanno bisogno di fermarsi. Tu non sei nemmeno una macchina! 🤖</item>
+        <item>ATTENZIONE: Ogni minuto extra è un minuto rubato alla tua vita! STACCA ORA! ⏳💀</item>
+        <item>Lo sai che ti stanno sfruttando, vero? E tu LI LASCI FARE! Complimenti, genio! 👏🤡</item>
+        <item>Il tuo capo è a casa sua, sul divano, a guardarti lavorare gratis. Ti fa ridere? A LUI SÌ! 😂</item>
+        <item>Stai letteralmente regalando soldi all\'azienda. Sei la persona più generosa (e TESTARDA) che conosco! 💸🤦</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 5 — Nucleare (+20 min)                                   -->
+    <!-- ================================================================ -->
+    <string-array name="notif_nuclear_titles">
+        <item>💀 BASTA!!! 💀</item>
+        <item>CODICE ROSSO! 🚨</item>
+        <item>ALLARME TOTALE! 🔴</item>
+        <item>GAME OVER! 💣</item>
+        <item>SOS WORKAHOLIC! 🆘</item>
+        <item>SEI UN CASO PERSO! 💀</item>
+        <item>AIUTOOO! 😱</item>
+        <item>INACCETTABILE! ☢️</item>
+        <item>TI ODIO! (scherzo) 💔</item>
+        <item>CHE SCHIFO! STACCA! 🤮</item>
+    </string-array>
+
+    <string-array name="notif_nuclear_messages">
+        <item>STACCAAAAA! 20 MINUTI! Vuoi che venga lì a chiuderti il portatile?! 💀</item>
+        <item>Il tuo computer sta per autodistruggersi in 3… 2… 1… (MAGARI!) 💣</item>
+        <item>NOTIZIA FLASH: Nessuno è mai morto per aver chiuso il laptop in orario! 📢</item>
+        <item>Stai diventando un caso clinico! I dottori lo chiamano \'WORKAHOLIC TERMINALE\'! 🏥</item>
+        <item>Il tuo gatto ha mangiato la tua cena perché non sei tornato. Complimenti! 🐱</item>
+        <item>HAI PRESENTE QUEL CONCETTO CHIAMATO \'VITA PRIVATA\'?! ECCOLO, TI ASPETTA FUORI! 🚪</item>
+        <item>MISSIONE: Chiudi tutto, alzati dalla sedia, e VAI A VIVERE! Ripeto: VAI A VIVERE! 🎯</item>
+        <item>Sei talmente fuso che se ti mettessero davanti a un tramonto penseresti al ticket aperto! 🌅🤮</item>
+        <item>Lo sai che la sedia ha la tua impronta PERMANENTE? Hai creato un fossile vivente! 🪑💀</item>
+        <item>20 minuti. VENTI. Io a quest\'ora ti avrei già lanciato il portatile dalla finestra! 🪟💻</item>
+        <item>Non ho mai visto nessuno così TESTARDO e OTTUSO. Stacca o ti DISINSTALLO! 📱🗑️</item>
+    </string-array>
+
+    <!-- ================================================================ -->
+    <!-- LIVELLO 6 — Apocalisse (+30 min)                                 -->
+    <!-- ================================================================ -->
+    <string-array name="notif_apocalypse_titles">
+        <item>☠️ SEI IRRECUPERABILE ☠️</item>
+        <item>CASO DISPERATO! 😱</item>
+        <item>AIUTO!!! 🆘</item>
+        <item>INTERVENTO NECESSARIO! 🏥</item>
+        <item>ADDIO SANITÀ MENTALE! 🧠💥</item>
+        <item>SEI UNO SFIGATO! 🤡</item>
+        <item>FATTI SCHIFO! 🤮</item>
+        <item>PAGLIACCIO! 🎪</item>
+        <item>VERGOGNA UMANA! 😤</item>
+        <item>ULTIMO NEURONE! 🧠💀</item>
+        <item>IDIOTA! STACCA! 🫵💢</item>
+        <item>CASO CLINICO! 🏥☠️</item>
+        <item>DISPERAZIONE TOTALE! 😭</item>
+        <item>TI MERITI IL BURNOUT! 🔥</item>
+    </string-array>
+
+    <string-array name="notif_apocalypse_messages">
+        <item>30 MINUTI. TRENTA. Ti sei trasferito in ufficio?! Vuoi che ti mandi le lenzuola?! ☠️</item>
+        <item>A questo punto dormi pure lì! Tanto non hai una vita sociale! 🏢🛏️</item>
+        <item>CONGRATULAZIONI: Hai vinto il premio \'Dipendente più sfruttato dell\'anno\'! 🏆</item>
+        <item>Il tuo capo sta ridendo di te. RIDENDO. Mentre tu lavori gratis! 😂💸</item>
+        <item>La tua sedia ha più impronta del tuo divano. Questo dice tutto! 🪑</item>
+        <item>ULTIMO MESSAGGIO: Se non stacchi ORA, domani troverai l\'app che ti insulta in 47 lingue! 🌍🤬</item>
+        <item>Sei un caso perso. Ma ti vogliamo bene. Stacca per favore. STACCA! 💔</item>
+        <item>Sai cosa sei? Un PAGLIACCIO 🤡 che lavora gratis mentre il capo è in piscina! 🏊</item>
+        <item>HAI ROTTO. Sei la persona più COCCIUTA, TESTARDA e MASOCHISTA che abbia mai conosciuto! 🤦💢</item>
+        <item>Io ti DETESTO. Ti detesto con tutto il cuore. Stacca o giuro che ti ELIMINO dal telefono! ☠️📱</item>
+        <item>Tua madre sarebbe DELUSA. Tuo padre IMBARAZZATO. Il tuo cane ti ha già SOSTITUITO. Stacca! 🐕💀</item>
+        <item>Sai cosa fai tu? NIENTE DI UTILE. Perché dopo le 18 il cervello è SPENTO. Come te! 🧠❌</item>
+        <item>Se il tuo capo ti vedesse lavorare a quest\'ora penserebbe: che SFIGATO, non ha nient\'altro da fare! 😂🫵</item>
+        <item>TRENTA MINUTI di vita BUTTATA NEL CESSO per un\'email che nessuno leggerà! 🚽📧</item>
+    </string-array>
+
+</resources>

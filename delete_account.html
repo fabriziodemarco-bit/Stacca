@@ -4,48 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminazione account – Stacca</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, Roboto, "Segoe UI", sans-serif;
+        body { font-family: 'DM Sans', -apple-system, Roboto, sans-serif;
                max-width: 720px; margin: 0 auto; padding: 24px; color: #222; line-height: 1.6; }
         h1 { color: #d32f2f; }
         .box { background: #f5f5f5; border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
-        a { color: #1565c0; }
-        footer { margin-top: 40px; font-size: 0.85em; color: #777; }
+        a { color: #1565c0; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        footer { margin-top: 40px; font-size: 0.85em; color: #777; border-top: 1px solid #eee; padding-top: 10px; }
+
+        /* ── LANG SELECTOR ── */
+        .lang-selector {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .lang-btn.active {
+            background: #2a52be;
+            color: #fff;
+            border-color: #2a52be;
+        }
+        
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
     </style>
 </head>
 <body>
-<h1>🚨 Stacca! — Eliminazione dell'account</h1>
 
-<p>Se desideri eliminare il tuo account <strong>Stacca</strong> e tutti i dati
-    personali associati, invia una richiesta via email:</p>
-
-<div class="box">
-    <p>📧 <strong><a href="mailto:arch.fdm@gmail.com?subject=Richiesta%20eliminazione%20account%20Stacca">arch.fdm@gmail.com</a></strong></p>
-    <p>Oggetto: <em>Richiesta eliminazione account Stacca</em><br>
-        Indica nell'email l'indirizzo con cui ti sei registrato all'app.</p>
+<div class="lang-selector">
+    <button class="lang-btn active" onclick="setLang('it')">Italiano</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
 </div>
 
-<p>È inoltre possibile richiedere, allo stesso indirizzo email, l'eliminazione
-    di dati specifici <strong>senza chiudere l'account</strong>: indica nella
-    richiesta quali dati desideri eliminare e provvederemo entro 30 giorni,
-    salvo i dati soggetti a obblighi di conservazione di legge descritti sotto.</p>
+<!-- ITALIANO -->
+<div id="content-it" class="lang-content active">
+    <h1>🚨 Stacca! — Eliminazione dell'account</h1>
+    
+    <p>Se desideri eliminare il tuo account <strong>Stacca</strong> e tutti i dati
+        personali associati, invia una richiesta via email:</p>
+    
+    <div class="box">
+        <p>📧 <strong><a href="mailto:arch.fdm@gmail.com?subject=Richiesta%20eliminazione%20account%20Stacca">arch.fdm@gmail.com</a></strong></p>
+        <p>Oggetto: <em>Richiesta eliminazione account Stacca</em><br>
+            Indica nell'email l'indirizzo con cui ti sei registrato all'app.</p>
+    </div>
+    
+    <p>È inoltre possibile richiedere, allo stesso indirizzo email, l'eliminazione
+        di dati specifici <strong>senza chiudere l'account</strong>: indica nella
+        richiesta quali dati desideri eliminare e provvederemo entro 30 giorni,
+        salvo i dati soggetti a obblighi di conservazione di legge descritti sotto.</p>
+    
+    <h2>Cosa viene eliminato</h2>
+    <p>L'account e l'indirizzo email associato, insieme a tutti i dati personali
+        conservati nei nostri sistemi (Supabase). L'eliminazione è completata entro
+        <strong>30 giorni</strong> dalla richiesta e ti verrà confermata via email.</p>
+    
+    <h2>Cosa viene conservato</h2>
+    <p>I soli dati relativi a eventuali transazioni di acquisto, conservati per
+        <strong>10 anni</strong> in adempimento degli obblighi fiscali e contabili previsti
+        dalla normativa italiana, come indicato nella nostra
+        <a href="privacy_policy.html">Informativa sulla Privacy</a>.</p>
+    
+    <p>Nota: gli acquisti effettuati tramite Google Play sono gestiti da Google;
+        per richieste relative ai pagamenti consulta il tuo
+        <a href="https://play.google.com/store/account" target="_blank" rel="noopener">account Google Play</a>.</p>
+</div>
 
-<h2>Cosa viene eliminato</h2>
-<p>L'account e l'indirizzo email associato, insieme a tutti i dati personali
-    conservati nei nostri sistemi (Supabase). L'eliminazione è completata entro
-    <strong>30 giorni</strong> dalla richiesta e ti verrà confermata via email.</p>
+<!-- ENGLISH -->
+<div id="content-en" class="lang-content">
+    <h1>🚨 Unplug! — Account Deletion</h1>
+    
+    <p>If you want to delete your <strong>Unplug!</strong> (Stacca) account and all
+        associated personal data, send a request via email:</p>
+    
+    <div class="box">
+        <p>📧 <strong><a href="mailto:arch.fdm@gmail.com?subject=Unplug%20account%20deletion%20request">arch.fdm@gmail.com</a></strong></p>
+        <p>Subject: <em>Unplug account deletion request</em><br>
+            Include in the email the address you used to register for the app.</p>
+    </div>
+    
+    <p>You can also request, at the same email address, the deletion of specific data 
+        <strong>without closing your account</strong>: indicate in the request which data 
+        you want to delete and we will process it within 30 days, except for data subject 
+        to legal retention obligations described below.</p>
+    
+    <h2>What is deleted</h2>
+    <p>The account and the associated email address, together with all personal data 
+        stored in our systems (Supabase). The deletion is completed within 
+        <strong>30 days</strong> of the request and will be confirmed via email.</p>
+    
+    <h2>What is retained</h2>
+    <p>Only data related to any purchase transactions, kept for <strong>10 years</strong> 
+        in fulfillment of tax and accounting obligations required by Italian law, 
+        as indicated in our <a href="privacy_policy.html">Privacy Policy</a>.</p>
+    
+    <p>Note: purchases made through Google Play are managed by Google; for payment-related 
+        requests, consult your <a href="https://play.google.com/store/account" target="_blank" rel="noopener">Google Play account</a>.</p>
+</div>
 
-<h2>Cosa viene conservato</h2>
-<p>I soli dati relativi a eventuali transazioni di acquisto, conservati per
-    <strong>10 anni</strong> in adempimento degli obblighi fiscali e contabili previsti
-    dalla normativa italiana, come indicato nella nostra
-    <a href="privacy_policy.html">Informativa sulla Privacy</a>.</p>
+<!-- CHINESE -->
+<div id="content-zh" class="lang-content">
+    <h1>🚨 下班！ — 帐户删除</h1>
+    
+    <p>如果您想删除您的 <strong>下班！</strong> (Stacca) 帐户以及所有相关联的个人数据，请通过电子邮件发送请求：</p>
+    
+    <div class="box">
+        <p>📧 <strong><a href="mailto:arch.fdm@gmail.com?subject=Unplug%20account%20deletion%20request">arch.fdm@gmail.com</a></strong></p>
+        <p>主题: <em>下班！ 帐户删除请求</em><br>
+            在邮件中注明您用于注册该应用程序的电子邮件地址。</p>
+    </div>
+    
+    <p>您还可以向同一电子邮件地址请求删除特定数据，而 <strong>无需关闭您的帐户</strong>：在请求中说明您希望删除哪些数据，我们将在 30 天内处理，以下描述的受法律保留义务约束的数据除外。</p>
+    
+    <h2>删除了什么</h2>
+    <p>帐户和关联的电子邮件地址，以及存储在我们的系统（Supabase）中的所有个人数据。删除将在请求后 <strong>30 天</strong>内完成，并将通过电子邮件确认。</p>
+    
+    <h2>保留了什么</h2>
+    <p>如我们的 <a href="privacy_policy.html">隐私政策</a> 中所述，仅保留与任何购买交易相关的数据，保留期为 <strong>10 年</strong>，以履行意大利法律规定的税务和会计义务。</p>
+    
+    <p>注意：通过 Google Play 进行的购买由 Google 管理；对于与付款相关的请求，请查阅您的 <a href="https://play.google.com/store/account" target="_blank" rel="noopener">Google Play 帐户</a>。</p>
+</div>
 
-<p>Nota: gli acquisti effettuati tramite Google Play sono gestiti da Google;
-    per richieste relative ai pagamenti consulta il tuo
-    <a href="https://play.google.com/store/account">account Google Play</a>.</p>
+<footer>
+    <span id="footerText">Stacca! · Eliminazione account · Contatto: arch.fdm@gmail.com</span>
+</footer>
 
-<footer>Stacca! · Eliminazione account · Contatto: arch.fdm@gmail.com</footer>
+<script>
+    function setLang(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+        document.getElementById('content-' + lang).classList.add('active');
+        
+        if (lang === 'it') {
+            document.title = 'Eliminazione account – Stacca';
+            document.getElementById('footerText').innerText = 'Stacca! · Eliminazione account · Contatto: arch.fdm@gmail.com';
+        } else if (lang === 'en') {
+            document.title = 'Account Deletion – Unplug!';
+            document.getElementById('footerText').innerText = 'Unplug! · Account Deletion · Contact: arch.fdm@gmail.com';
+        } else if (lang === 'zh') {
+            document.title = '帐户删除 – 下班！';
+            document.getElementById('footerText').innerText = '下班！ · 帐户删除 · 联系方式: arch.fdm@gmail.com';
+        }
+    }
+</script>
 
 </body>
 </html>

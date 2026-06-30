@@ -22,6 +22,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
                 AlarmSoundManager.stop()
                 val notificationHelper = NotificationHelper(context)
                 notificationHelper.cancelAll()
+                prefs.resetEscalation()
                 
                 // Opzionale: riapre l'app
                 val mainIntent = Intent(context, com.stacca.app.ui.MainActivity::class.java).apply {

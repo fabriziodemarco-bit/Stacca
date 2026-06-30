@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">下班！</string>
+    <string name="app_tagline">别卷了，去生活。</string>
+
+    <!-- Main Screen -->
+    <string name="set_end_time">设置下班时间</string>
+    <string name="current_time">当前时间</string>
+    <string name="end_time_label">下班时间</string>
+    <string name="time_remaining">剩余时间</string>
+    <string name="overtime">被压榨的时间！</string>
+    <string name="alarm_active">⚡ 警报已激活</string>
+    <string name="alarm_inactive">未设置警报</string>
+    <string name="activate_alarm">激活警报</string>
+    <string name="deactivate_alarm">停用</string>
+
+    <string name="settings">⚙️ 设置</string>
+
+    <!-- Notification Levels -->
+    <string name="notif_channel_name">下班！通知</string>
+    <string name="notif_channel_desc">提醒你停止工作的通知</string>
+    <string name="notif_urgent_channel_name">下班！紧急警报</string>
+    <string name="notif_urgent_channel_desc">紧急和侵入性通知</string>
+
+    <!-- Action Buttons -->
+    <string name="btn_ok_stacco">好的，我下班！ ✋</string>
+    <string name="btn_ho_staccato">✋ 我已下班！</string>
+    <string name="btn_5_more_minutes">再给我5分钟… ⏰</string>
+
+    <string name="btn_save">保存</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_dismiss">关闭</string>
+
+    <!-- Full Screen Alert -->
+    <string name="fullscreen_title">下班啦！！！</string>
+    <string name="fullscreen_subtitle">是时候去生活了！</string>
+
+    <!-- Permissions -->
+    <string name="permission_notification_title">通知权限</string>
+    <string name="permission_notification_message">我们需要权限来发送（激进的）通知，以提醒你停止工作！</string>
+    <string name="permission_alarm_title">警报权限</string>
+    <string name="permission_alarm_message">我们需要权限来设置精确的警报。</string>
+
+    <!-- Settings -->
+    <string name="settings_section_notifications">🔔 通知</string>
+    <string name="settings_section_behavior">⚡ 行为</string>
+    <string name="settings_section_account">👤 账户</string>
+    <string name="settings_sound">警报声音</string>
+    <string name="settings_sound_desc">警报响起时播放声音</string>
+    <string name="settings_vibration">震动</string>
+    <string name="settings_vibration_desc">收到通知时手机震动</string>
+    <string name="settings_fullscreen">全屏警报</string>
+    <string name="settings_fullscreen_desc">针对高等级的警告显示侵入式全屏警报</string>
+    <string name="settings_auto_restart">自动重启</string>
+    <string name="settings_auto_restart_desc">每天自动重新安排警报</string>
+    <string name="settings_escalation_speed">通知频率</string>
+    <string name="settings_escalation_speed_desc">我们多久烦你一次</string>
+    <string name="settings_version">下班！ v1.7 — 充满❤️与恶意制作</string>
+    <string name="settings_logout">登出</string>
+    <string name="settings_logout_confirm">确定要登出吗？</string>
+    <string name="settings_logged_as">已登录为 %s</string>
+    <string name="settings_not_logged">您未登录</string>
+    <string name="settings_login">登录（可选）</string>
+    <string name="settings_premium_badge">✨ 高级版</string>
+    <string name="settings_upgrade">👑 升级为高级版</string>
+
+    <!-- Escalation Speeds -->
+    <string-array name="escalation_speeds">
+        <item>🐌 每8分钟</item>
+        <item>⚡ 每5分钟</item>
+        <item>🔥 每3分钟</item>
+    </string-array>
+
+    <!-- Login -->
+    <string name="login_tab_login">登录</string>
+    <string name="login_tab_register">注册</string>
+    <string name="login_email_hint">邮箱</string>
+    <string name="login_password_hint">密码</string>
+    <string name="login_forgot_password">忘记密码？</string>
+    <string name="login_btn_login">登录</string>
+    <string name="login_btn_register">注册</string>
+    <string name="login_skip">无账户继续 →</string>
+    <string name="login_success">登录成功！ 🎉</string>
+    <string name="login_register_success">注册完成！\n请查看邮箱验证您的账户。</string>
+    <string name="login_reset_sent">恢复邮件已发送！ 📧</string>
+    <string name="login_error_email_required">请输入您的邮箱</string>
+    <string name="login_error_email_invalid">无效邮箱</string>
+    <string name="login_error_password_required">请输入密码</string>
+    <string name="login_error_password_short">密码必须至少包含6个字符</string>
+    <string name="login_error_generic">错误: %s</string>
+
+    <!-- Premium -->
+    <string name="premium_title">下班！高级版</string>
+    <string name="premium_subtitle">解锁强制放松的全部威力</string>
+    <string name="premium_features_title">✨ 包含功能</string>
+    <string name="premium_feature_1">💀 全部6个警告等级（包括核弹和世界末日！）</string>
+    <string name="premium_feature_2">🎚️ 可自定义通知频率</string>
+    <string name="premium_feature_3">📱 无法忽视的全屏警报</string>
+    <string name="premium_feature_4">🚀 包含未来更新</string>
+    <string name="premium_buy_button">👑 立即购买高级版</string>
+    <string name="premium_sub_button">或按月订阅</string>
+    <string name="premium_restore">恢复购买</string>
+    <string name="premium_already">您已是高级版！ 👑</string>
+    <string name="premium_success">欢迎加入高级俱乐部！ 👑🎉</string>
+    <string name="premium_error">购买未完成</string>
+    <string name="premium_login_required">您必须登录才能购买高级版</string>
+    <string name="premium_restoring">正在恢复购买…</string>
+    <string name="premium_required">👑 高级版功能</string>
+    <string name="premium_required_message">此功能仅供高级用户使用。\n想要解锁吗？</string>
+    <string name="premium_unlock">解锁高级版</string>
+    <string name="premium_buy_price">👑 购买高级版 — %s</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">想让我不再友好吗？ &#x1F525;</string>
+    <string name="paywall_subtitle">你无视了3次温和警告。\n如果使用高级版，我现在已经到了核弹级别。\n一次购买，让我变得真正烦人。</string>
+    <string name="paywall_unlock_title">&#x1F680; 您将解锁</string>
+    <string name="paywall_feature_1">&#x1F480; 核弹和世界末日级别 &#x2014; 你的手机字面上在尖叫</string>
+    <string name="paywall_feature_2">&#x1F4E2; 全屏警报 &#x2014; 即使是神也无法忽视</string>
+    <string name="paywall_feature_3">&#x2764;&#xFE0F; 支持一个同样想下班的开发者</string>
+    <string name="paywall_price">&#x20AC;0.99</string>
+    <string name="paywall_price_desc">一次性付款。永久有效。无需订阅。</string>
+    <string name="paywall_buy_button">&#x1F513; 立即解锁 &#x2014; &#x20AC;0.99</string>
+    <string name="paywall_no_thanks">不用了谢谢，我还是保持温和级别</string>
+    <string name="paywall_success">激进通知已解锁！现在你无处可逃了！ &#x1F608;&#x1F525;</string>
+    <string name="notif_premium_teaser">&#x1F512; 如果是高级版，我现在早冲你吼了（核弹级别）</string>
+    <string name="paywall_unlock_price">🔓 立即解锁 — %s</string>
+
+    <!-- Badge escalation in MainActivity -->
+    <string name="premium_active">👑 高级版已激活</string>
+    <string name="escalation_limited_badge">基础计划（3个级别） 🔒 点击解锁</string>
+    <string name="escalation_full_badge">👑 高级版已激活（全部6个级别）</string>
+
+    <!-- Google Sign-In -->
+    <string name="login_google">使用Google登录</string>
+    <string name="login_google_success">Google登录成功！ 🎉</string>
+    <string name="login_google_error">Google登录错误: %s</string>
+    <string name="login_google_not_configured">未配置Google登录。请使用邮箱和密码。</string>
+    <string name="login_divider">或</string>
+
+    <!-- Conferma Email -->
+    <string name="login_email_confirmed">邮箱已确认！欢迎来到下班！ 🎉</string>
+    <string name="login_email_confirm_error">确认邮箱出错。请尝试重新登录。</string>
+    <string name="login_confirm_dialog_title">📧 检查您的邮箱！</string>
+    <string name="login_confirm_dialog_message">我们已向 %s 发送了一封邮件。\n\n点击邮件中的链接确认您的账户并开始使用 下班！\n\n⚠️ 还要检查垃圾邮件文件夹！</string>
+    <string name="login_confirm_dialog_ok">知道了！</string>
+
+    <!-- Schermata soft fine trial (TrialExpiredActivity freemium) -->
+    <string name="trial_soft_title">试用结束。应用没有。 &#x1F393;</string>
+    <string name="trial_soft_subtitle">您的免费试用已过期。\n您可以免费继续使用基础级别 &#x2014; 或者升级到高级版，体验真正可怕的版本。</string>
+    <string name="trial_soft_free_title">&#x2705; 永久免费</string>
+    <string name="trial_soft_free_items">&#x1F4E9; 1-3级别 (温和, 友好, 坚持)\n&#x1F525; 记录和打卡记录\n&#x23F0; 基本警报正常工作</string>
+    <string name="trial_soft_premium_title">&#x1F451; 通过高级版解锁</string>
+    <string name="trial_soft_premium_items">&#x1F480; 4-6级别 (激进, 核弹, 世界末日)\n&#x1F4E2; 无法忽视的全屏警报\n&#x2764;&#xFE0F; 支持一个同样想下班的开发者</string>
+    <string name="trial_soft_btn_premium">&#x1F451; 升级到高级版</string>
+    <string name="trial_soft_btn_free">免费继续（1-3级别）</string>
+
+    <!-- Tempo Non Vissuto -->
+    <string name="tempo_non_vissuto_title">被压榨的时间</string>
+    <string name="tempo_non_vissuto_subtitle">这是你赠送给工作，而不是自己生活的时间</string>
+    <string name="tempo_non_vissuto_btn">明白了。我会做得更好。</string>
+    <!-- Mostrato solo se l'utente aveva una streak attiva prima di staccare in ritardo -->
+    <string name="streak_lost_message">你失去了连续 %d 天的记录 💔</string>
+
+    <!-- Protezione Allarmi - Card permessi in MainActivity -->
+    <string name="perm_card_title">🛡️ 警报保护</string>
+    <string name="perm_status_ok_notification">✅ 通知：已激活</string>
+    <string name="perm_status_ok_exact_alarm">✅ 精确警报：已授权</string>
+    <string name="perm_status_ok_battery">✅ 电池优化：已禁用</string>
+    <string name="perm_status_warn_notification">⚠️ 通知已禁用 — 点击以启用</string>
+    <string name="perm_status_warn_exact_alarm">⚠️ 未授权精确警报 — 点击以启用</string>
+    <string name="perm_status_warn_battery">⚠️ 电池优化已激活 — 点击以禁用</string>
+    <!-- Dialogo quando l'utente prova ad attivare l'allarme senza il permesso allarmi esatti -->
+    <string name="permission_exact_alarm_title">精确警报权限 🔔</string>
+    <string name="permission_exact_alarm_message">没有这个权限，我没法吼你下班 😤\n\n转到设置并授权 下班！ 安排精确的警报。这是你今天能做的最重要的事情。</string>
+    <string name="permission_exact_alarm_btn">转到设置</string>
+    <!-- Toast quando l'allarme viene riprogrammato dopo la concessione del permesso -->
+    <string name="alarm_rescheduled">⚡ 权限已授予 — 警报已重新安排！</string>
+
+    <!-- Streak Badge in MainActivity -->
+    <string name="streak_badge_label">🔥 %d</string>
+    <string name="streak_dialog_title">🔥 你的记录</string>
+    <string name="streak_dialog_message">🔥 当前连续： %1$d 天\n🏆 个人最佳： %2$d 天\n⭐ 准时总天数： %3$d</string>
+
+    <!-- Celebration Activity -->
+    <string name="celebration_title">你自由了！ 🎉</string>
+    <string name="celebration_streak_label">🔥 连续</string>
+    <string name="celebration_new_record">新记录！ 🏆</string>
+    <string name="celebration_btn_close">我要去享受生活了 😎</string>
+
+    <!-- Messaggi ironici di celebrazione (scelti a random in CelebrationActivity) -->
+    <string-array name="celebration_messages">
+        <item>沙发像英雄般迎接你。 🛋️</item>
+        <item>你打败了系统。系统就是你老板。 😎</item>
+        <item>披萨还是热的。简直是奇迹。 🍕</item>
+        <item>日落还在那里等着你。 🌅</item>
+        <item>你的猫终于认出你了。 🐱</item>
+        <item>你赢得了什么都不做的权利。 🏆</item>
+        <item>自由的夜晚。你的大脑已经把电脑关了。 🧠💤</item>
+        <item>在某个地方还有人在工作。那不是你。 😇</item>
+    </string-array>
+    <string name="store_connecting">正在连接 Play 商店…</string>
+    <string name="store_connecting_toast">正在连接 Play 商店，请重试…</string>
+</resources>

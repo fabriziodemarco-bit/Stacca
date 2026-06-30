@@ -40,7 +40,7 @@ class PremiumActivity : AppCompatActivity() {
         btnBuy = findViewById(R.id.btnBuyPremium)
         // Disabilita il bottone finché il billing non è pronto
         btnBuy.isEnabled = false
-        btnBuy.text = "Caricamento..."
+        btnBuy.text = getString(R.string.store_connecting)
 
         billingManager = BillingManager(this) { success ->
             runOnUiThread {
@@ -55,12 +55,11 @@ class PremiumActivity : AppCompatActivity() {
             }
         }
 
-        // Quando i prodotti sono pronti, abilita il bottone
         billingManager.onProductsReady = {
             btnBuy.isEnabled = true
             val price = billingManager.getPremiumPrice()
             btnBuy.text = if (price != null) {
-                "👑 ACQUISTA PREMIUM — $price"
+                getString(R.string.premium_buy_price, price)
             } else {
                 getString(R.string.premium_buy_button)
             }
@@ -83,7 +82,7 @@ class PremiumActivity : AppCompatActivity() {
         // Acquisto one-time — non richiede login Supabase
         btnBuy.setOnClickListener {
             if (!billingManager.isReady()) {
-                Toast.makeText(this, "Connessione al Play Store in corso, riprova...",
+                Toast.makeText(this, getString(R.string.store_connecting_toast),
                     Toast.LENGTH_SHORT).show()
                 billingManager.connect()
                 return@setOnClickListener

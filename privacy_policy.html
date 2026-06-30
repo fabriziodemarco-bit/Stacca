@@ -71,11 +71,44 @@
       letter-spacing: .04em;
     }
 
+    /* ── LANG SELECTOR ── */
+    .lang-selector {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .lang-btn {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
     /* ── LAYOUT ── */
     main {
       max-width: 760px;
       margin: 0 auto;
       padding: 3rem 1.5rem 6rem;
+    }
+    
+    .lang-content {
+      display: none;
+    }
+    .lang-content.active {
+      display: block;
     }
 
     /* ── SECTIONS ── */
@@ -221,141 +254,430 @@
 
 <header>
   <div class="app-name">Stacca</div>
-  <div class="doc-title">Informativa sulla Privacy</div>
-  <div class="date-badge">In vigore dal 29 giugno 2026</div>
+  <div class="doc-title" id="docTitle">Informativa sulla Privacy</div>
+  <div class="date-badge" id="dateBadge">In vigore dal 29 giugno 2026</div>
+  <div class="lang-selector">
+    <button class="lang-btn active" onclick="setLang('it')">Italiano</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  </div>
 </header>
 
 <main>
+  
+  <!-- ITALIANO -->
+  <div id="content-it" class="lang-content active">
+    <section>
+      <h1><span class="num">1</span>Titolare del Trattamento</h1>
+      <p>Il Titolare del trattamento dei dati personali raccolti tramite l'applicazione <strong>Stacca</strong> è lo sviluppatore indipendente raggiungibile al seguente indirizzo:</p>
+      <div class="highlight">
+        📧 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+      </div>
+      <p>Per qualsiasi richiesta relativa al trattamento dei tuoi dati personali, incluse le richieste di esercizio dei diritti di cui al punto 8, puoi contattarci esclusivamente tramite l'indirizzo email sopra indicato.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">1</span>Titolare del Trattamento</h1>
-    <p>Il Titolare del trattamento dei dati personali raccolti tramite l'applicazione <strong>Stacca</strong> è lo sviluppatore indipendente raggiungibile al seguente indirizzo:</p>
-    <div class="highlight">
-      📧 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
-    </div>
-    <p>Per qualsiasi richiesta relativa al trattamento dei tuoi dati personali, incluse le richieste di esercizio dei diritti di cui al punto 8, puoi contattarci esclusivamente tramite l'indirizzo email sopra indicato.</p>
-  </section>
+    <section>
+      <h1><span class="num">2</span>Dati Personali Raccolti</h1>
 
-  <section>
-    <h1><span class="num">2</span>Dati Personali Raccolti</h1>
+      <h2>2.1 Dati forniti direttamente dall'utente</h2>
+      <p>La registrazione di un account è <strong>facoltativa</strong>. È possibile utilizzare l'applicazione e acquistare la versione premium anche senza creare un account. Qualora l'utente scelga di registrarsi, raccogliamo il seguente dato personale:</p>
+      <ul>
+        <li><strong>Indirizzo email</strong> — utilizzato come identificativo univoco dell'account e per le comunicazioni di servizio.</li>
+      </ul>
+      <p>È possibile utilizzare l'applicazione con una prova gratuita di 7 giorni delle funzionalità premium, al termine della quale l'app resta utilizzabile gratuitamente con funzionalità ridotte.</p>
 
-    <h2>2.1 Dati forniti direttamente dall'utente</h2>
-    <p>La registrazione di un account è <strong>facoltativa</strong>. È possibile utilizzare l'applicazione e acquistare la versione premium anche senza creare un account. Qualora l'utente scelga di registrarsi, raccogliamo il seguente dato personale:</p>
-    <ul>
-      <li><strong>Indirizzo email</strong> — utilizzato come identificativo univoco dell'account e per le comunicazioni di servizio.</li>
-    </ul>
-    <p>È possibile utilizzare l'applicazione con una prova gratuita di 7 giorni delle funzionalità premium, al termine della quale l'app resta utilizzabile gratuitamente con funzionalità ridotte.</p>
+      <h2>2.2 Dati tecnici e di utilizzo</h2>
+      <p>Attraverso i servizi tecnici di terze parti descritti al punto 5, possono essere raccolti automaticamente dati tecnici anonimi o pseudonimizzati, tra cui:</p>
+      <ul>
+        <li>Informazioni sul dispositivo (sistema operativo, versione dell'app)</li>
+        <li>Dati di utilizzo dell'applicazione in forma aggregata</li>
+        <li>Log di errori e crash, per garantire la stabilità del servizio</li>
+      </ul>
 
-    <h2>2.2 Dati tecnici e di utilizzo</h2>
-    <p>Attraverso i servizi tecnici di terze parti descritti al punto 5, possono essere raccolti automaticamente dati tecnici anonimi o pseudonimizzati, tra cui:</p>
-    <ul>
-      <li>Informazioni sul dispositivo (sistema operativo, versione dell'app)</li>
-      <li>Dati di utilizzo dell'applicazione in forma aggregata</li>
-      <li>Log di errori e crash, per garantire la stabilità del servizio</li>
-    </ul>
+      <h2>2.3 Dati di pagamento</h2>
+      <p>I pagamenti per l'acquisto della versione premium (al prezzo indicato sul Google Play Store) sono gestiti esclusivamente da Google Play Store. Non raccogliamo né conserviamo alcun dato relativo a carte di credito, dati bancari o altri strumenti di pagamento. Il trattamento dei dati di pagamento è interamente disciplinato dalla Privacy Policy di Google LLC.</p>
+    </section>
 
-    <h2>2.3 Dati di pagamento</h2>
-    <p>I pagamenti per l'acquisto della versione premium (al prezzo indicato sul Google Play Store) sono gestiti esclusivamente da Google Play Store. Non raccogliamo né conserviamo alcun dato relativo a carte di credito, dati bancari o altri strumenti di pagamento. Il trattamento dei dati di pagamento è interamente disciplinato dalla Privacy Policy di Google LLC.</p>
-  </section>
+    <section>
+      <h1><span class="num">3</span>Finalità e Basi Giuridiche del Trattamento</h1>
+      <p>Trattiamo i tuoi dati personali per le seguenti finalità:</p>
+      <ul>
+        <li>Creazione e gestione dell'account utente — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
+        <li>Erogazione del servizio premium a seguito dell'acquisto — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
+        <li>Comunicazioni strettamente legate al servizio (aggiornamenti, scadenze, modifiche ai termini) — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
+        <li>Adempimento di obblighi di legge fiscali e contabili — <em>obbligo legale (art. 6, par. 1, lett. c GDPR)</em></li>
+        <li>Miglioramento tecnico dell'applicazione tramite analisi anonime degli errori — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
+      </ul>
+    </section>
 
-  <section>
-    <h1><span class="num">3</span>Finalità e Basi Giuridiche del Trattamento</h1>
-    <p>Trattiamo i tuoi dati personali per le seguenti finalità:</p>
-    <ul>
-      <li>Creazione e gestione dell'account utente — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
-      <li>Erogazione del servizio premium a seguito dell'acquisto — <em>esecuzione del contratto (art. 6, par. 1, lett. b GDPR)</em></li>
-      <li>Comunicazioni strettamente legate al servizio (aggiornamenti, scadenze, modifiche ai termini) — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
-      <li>Adempimento di obblighi di legge fiscali e contabili — <em>obbligo legale (art. 6, par. 1, lett. c GDPR)</em></li>
-      <li>Miglioramento tecnico dell'applicazione tramite analisi anonime degli errori — <em>legittimo interesse (art. 6, par. 1, lett. f GDPR)</em></li>
-    </ul>
-  </section>
+    <section>
+      <h1><span class="num">4</span>Periodo di Conservazione dei Dati</h1>
+      <ul>
+        <li>I dati dell'account (email) sono conservati per tutta la durata del rapporto contrattuale e per un massimo di <strong>24 mesi</strong> dalla cancellazione dell'account o dall'ultima interazione con il servizio.</li>
+        <li>I dati relativi alle transazioni di acquisto sono conservati per <strong>10 anni</strong> ai sensi degli obblighi fiscali e contabili previsti dalla normativa italiana (D.P.R. 633/1972 e D.P.R. 600/1973).</li>
+        <li>I log tecnici anonimi sono conservati per un massimo di <strong>12 mesi</strong>.</li>
+      </ul>
+      <p>Trascorso il periodo di conservazione, i dati sono cancellati in modo sicuro o resi definitivamente anonimi.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">4</span>Periodo di Conservazione dei Dati</h1>
-    <ul>
-      <li>I dati dell'account (email) sono conservati per tutta la durata del rapporto contrattuale e per un massimo di <strong>24 mesi</strong> dalla cancellazione dell'account o dall'ultima interazione con il servizio.</li>
-      <li>I dati relativi alle transazioni di acquisto sono conservati per <strong>10 anni</strong> ai sensi degli obblighi fiscali e contabili previsti dalla normativa italiana (D.P.R. 633/1972 e D.P.R. 600/1973).</li>
-      <li>I log tecnici anonimi sono conservati per un massimo di <strong>12 mesi</strong>.</li>
-    </ul>
-    <p>Trascorso il periodo di conservazione, i dati sono cancellati in modo sicuro o resi definitivamente anonimi.</p>
-  </section>
+    <section>
+      <h1><span class="num">5</span>Servizi di Terze Parti</h1>
 
-  <section>
-    <h1><span class="num">5</span>Servizi di Terze Parti</h1>
+      <h2>5.1 Supabase</h2>
+      <p>Supabase Inc. è utilizzato come piattaforma backend per la gestione dell'autenticazione e l'archiviazione sicura dei dati. Agisce in qualità di Responsabile del trattamento ai sensi dell'art. 28 GDPR. I dati possono essere conservati in server nello Spazio Economico Europeo (SEE) o in paesi terzi con adeguate garanzie (Clausole Contrattuali Standard).</p>
+      <p><a href="https://supabase.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Supabase</a></p>
 
-    <h2>5.1 Supabase</h2>
-    <p>Supabase Inc. è utilizzato come piattaforma backend per la gestione dell'autenticazione e l'archiviazione sicura dei dati. Agisce in qualità di Responsabile del trattamento ai sensi dell'art. 28 GDPR. I dati possono essere conservati in server nello Spazio Economico Europeo (SEE) o in paesi terzi con adeguate garanzie (Clausole Contrattuali Standard).</p>
-    <p><a href="https://supabase.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Supabase</a></p>
+      <h2>5.2 Google Play Services</h2>
+      <p>La distribuzione dell'applicazione e la gestione degli acquisti in-app avvengono tramite Google Play Store, gestito da Google LLC.</p>
+      <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Google</a></p>
 
-    <h2>5.2 Google Play Services</h2>
-    <p>La distribuzione dell'applicazione e la gestione degli acquisti in-app avvengono tramite Google Play Store, gestito da Google LLC.</p>
-    <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">→ Privacy Policy di Google</a></p>
+      <h2>5.3 GitHub</h2>
+      <p>Il codice sorgente dell'applicazione è ospitato su GitHub (GitHub Inc., società di Microsoft). GitHub non tratta dati personali degli utenti finali dell'applicazione.</p>
+      <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">→ Privacy Statement di GitHub</a></p>
+    </section>
 
-    <h2>5.3 GitHub</h2>
-    <p>Il codice sorgente dell'applicazione è ospitato su GitHub (GitHub Inc., società di Microsoft). GitHub non tratta dati personali degli utenti finali dell'applicazione.</p>
-    <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">→ Privacy Statement di GitHub</a></p>
-  </section>
+    <section>
+      <h1><span class="num">6</span>Trasferimento dei Dati Fuori dall'UE</h1>
+      <p>Alcuni fornitori di servizi indicati al punto 5 potrebbero trasferire i tuoi dati personali al di fuori dello Spazio Economico Europeo. In tal caso, ci assicuriamo che il trasferimento avvenga nel rispetto del GDPR, in particolare mediante:</p>
+      <ul>
+        <li>Clausole Contrattuali Standard (SCC) approvate dalla Commissione Europea</li>
+        <li>Decisioni di adeguatezza della Commissione Europea per i paesi destinatari</li>
+      </ul>
+      <p>Puoi richiedere maggiori informazioni sui trasferimenti internazionali scrivendo all'indirizzo indicato al punto 1.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">6</span>Trasferimento dei Dati Fuori dall'UE</h1>
-    <p>Alcuni fornitori di servizi indicati al punto 5 potrebbero trasferire i tuoi dati personali al di fuori dello Spazio Economico Europeo. In tal caso, ci assicuriamo che il trasferimento avvenga nel rispetto del GDPR, in particolare mediante:</p>
-    <ul>
-      <li>Clausole Contrattuali Standard (SCC) approvate dalla Commissione Europea</li>
-      <li>Decisioni di adeguatezza della Commissione Europea per i paesi destinatari</li>
-    </ul>
-    <p>Puoi richiedere maggiori informazioni sui trasferimenti internazionali scrivendo all'indirizzo indicato al punto 1.</p>
-  </section>
+    <section>
+      <h1><span class="num">7</span>Sicurezza dei Dati</h1>
+      <p>Adottiamo misure tecniche e organizzative adeguate per proteggere i tuoi dati personali da accessi non autorizzati, perdita o divulgazione accidentale:</p>
+      <ul>
+        <li>Cifratura dei dati in transito tramite protocollo TLS/HTTPS</li>
+        <li>Accesso ai dati riservato alle sole parti necessarie per l'erogazione del servizio</li>
+        <li>Utilizzo di Supabase, certificato SOC 2 Type II</li>
+      </ul>
+      <p>In caso di violazione dei dati personali che comporti un rischio elevato per i tuoi diritti, sarai notificato tempestivamente ai sensi dell'art. 34 GDPR.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">7</span>Sicurezza dei Dati</h1>
-    <p>Adottiamo misure tecniche e organizzative adeguate per proteggere i tuoi dati personali da accessi non autorizzati, perdita o divulgazione accidentale:</p>
-    <ul>
-      <li>Cifratura dei dati in transito tramite protocollo TLS/HTTPS</li>
-      <li>Accesso ai dati riservato alle sole parti necessarie per l'erogazione del servizio</li>
-      <li>Utilizzo di Supabase, certificato SOC 2 Type II</li>
-    </ul>
-    <p>In caso di violazione dei dati personali che comporti un rischio elevato per i tuoi diritti, sarai notificato tempestivamente ai sensi dell'art. 34 GDPR.</p>
-  </section>
+    <section>
+      <h1><span class="num">8</span>I Tuoi Diritti</h1>
+      <p>Ai sensi degli artt. 15–22 GDPR, hai il diritto di:</p>
+      <ul>
+        <li><strong>Accesso</strong> — ottenere copia dei tuoi dati personali (art. 15)</li>
+        <li><strong>Rettifica</strong> — correggere dati inesatti o incompleti (art. 16)</li>
+        <li><strong>Cancellazione</strong> — richiedere la rimozione dei tuoi dati, salvo obblighi di legge (art. 17)</li>
+        <li><strong>Limitazione</strong> — limitare il trattamento in determinati casi (art. 18)</li>
+        <li><strong>Portabilità</strong> — ricevere i tuoi dati in formato leggibile da macchina (art. 20)</li>
+        <li><strong>Opposizione</strong> — opporti ai trattamenti basati su legittimo interesse (art. 21)</li>
+        <li><strong>Revoca del consenso</strong> — in qualsiasi momento, senza effetto retroattivo</li>
+      </ul>
+      <div class="highlight">
+        Per esercitare i tuoi diritti scrivi a <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>. Risponderemo entro <strong>30 giorni</strong>.
+      </div>
+      <p>Hai inoltre il diritto di proporre reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la Protezione dei Dati Personali</a> o all'Autorità di controllo del tuo paese di residenza UE.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">8</span>I Tuoi Diritti</h1>
-    <p>Ai sensi degli artt. 15–22 GDPR, hai il diritto di:</p>
-    <ul>
-      <li><strong>Accesso</strong> — ottenere copia dei tuoi dati personali (art. 15)</li>
-      <li><strong>Rettifica</strong> — correggere dati inesatti o incompleti (art. 16)</li>
-      <li><strong>Cancellazione</strong> — richiedere la rimozione dei tuoi dati, salvo obblighi di legge (art. 17)</li>
-      <li><strong>Limitazione</strong> — limitare il trattamento in determinati casi (art. 18)</li>
-      <li><strong>Portabilità</strong> — ricevere i tuoi dati in formato leggibile da macchina (art. 20)</li>
-      <li><strong>Opposizione</strong> — opporti ai trattamenti basati su legittimo interesse (art. 21)</li>
-      <li><strong>Revoca del consenso</strong> — in qualsiasi momento, senza effetto retroattivo</li>
-    </ul>
-    <div class="highlight">
-      Per esercitare i tuoi diritti scrivi a <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>. Risponderemo entro <strong>30 giorni</strong>.
-    </div>
-    <p>Hai inoltre il diritto di proporre reclamo al <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">Garante per la Protezione dei Dati Personali</a> o all'Autorità di controllo del tuo paese di residenza UE.</p>
-  </section>
+    <section>
+      <h1><span class="num">9</span>Minori</h1>
+      <p>L'applicazione Stacca non è destinata a persone di età inferiore ai <strong>16 anni</strong>. Non raccogliamo consapevolmente dati personali di minori di 16 anni. Qualora venissimo a conoscenza di aver raccolto inavvertitamente tali dati, provvederemo alla loro immediata cancellazione. Genitori o tutori legali sono invitati a contattarci all'indirizzo indicato al punto 1.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">9</span>Minori</h1>
-    <p>L'applicazione Stacca non è destinata a persone di età inferiore ai <strong>16 anni</strong>. Non raccogliamo consapevolmente dati personali di minori di 16 anni. Qualora venissimo a conoscenza di aver raccolto inavvertitamente tali dati, provvederemo alla loro immediata cancellazione. Genitori o tutori legali sono invitati a contattarci all'indirizzo indicato al punto 1.</p>
-  </section>
+    <section>
+      <h1><span class="num">10</span>Modifiche alla Presente Informativa</h1>
+      <p>Ci riserviamo il diritto di modificare la presente informativa per adeguarla a cambiamenti normativi, tecnologici o alle funzionalità dell'applicazione. Le modifiche sostanziali saranno comunicate agli utenti registrati tramite email con un preavviso di almeno <strong>15 giorni</strong> prima dell'entrata in vigore.</p>
+      <p>L'utilizzo continuato dell'applicazione dopo la notifica costituisce accettazione della nuova informativa.</p>
+    </section>
 
-  <section>
-    <h1><span class="num">10</span>Modifiche alla Presente Informativa</h1>
-    <p>Ci riserviamo il diritto di modificare la presente informativa per adeguarla a cambiamenti normativi, tecnologici o alle funzionalità dell'applicazione. Le modifiche sostanziali saranno comunicate agli utenti registrati tramite email con un preavviso di almeno <strong>15 giorni</strong> prima dell'entrata in vigore.</p>
-    <p>L'utilizzo continuato dell'applicazione dopo la notifica costituisce accettazione della nuova informativa.</p>
-  </section>
+    <section>
+      <h1><span class="num">11</span>Legge Applicabile</h1>
+      <p>La presente informativa è redatta in conformità al <strong>Regolamento (UE) 2016/679 (GDPR)</strong>, al D.Lgs. 196/2003 (Codice della Privacy) come modificato dal D.Lgs. 101/2018, e alle linee guida del Garante per la Protezione dei Dati Personali. Per qualsiasi controversia si applica la legge italiana.</p>
+    </section>
+  </div>
 
-  <section>
-    <h1><span class="num">11</span>Legge Applicabile</h1>
-    <p>La presente informativa è redatta in conformità al <strong>Regolamento (UE) 2016/679 (GDPR)</strong>, al D.Lgs. 196/2003 (Codice della Privacy) come modificato dal D.Lgs. 101/2018, e alle linee guida del Garante per la Protezione dei Dati Personali. Per qualsiasi controversia si applica la legge italiana.</p>
-  </section>
+  <!-- ENGLISH -->
+  <div id="content-en" class="lang-content">
+    <section>
+      <h1><span class="num">1</span>Data Controller</h1>
+      <p>The Data Controller of the personal data collected through the <strong>Unplug!</strong> app (Stacca) is the independent developer reachable at the following address:</p>
+      <div class="highlight">
+        📧 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+      </div>
+      <p>For any requests concerning the processing of your personal data, including the exercise of the rights mentioned in point 8, you can contact us exclusively via the email address indicated above.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">2</span>Collected Personal Data</h1>
+
+      <h2>2.1 Data provided directly by the user</h2>
+      <p>Account registration is <strong>optional</strong>. You can use the application and purchase the premium version even without creating an account. If the user chooses to register, we collect the following personal data:</p>
+      <ul>
+        <li><strong>Email address</strong> — used as a unique identifier for the account and for service communications.</li>
+      </ul>
+      <p>You can use the application with a 7-day free trial of premium features, after which the app remains usable for free with reduced features.</p>
+
+      <h2>2.2 Technical and usage data</h2>
+      <p>Through the third-party technical services described in point 5, anonymous or pseudonymized technical data may be automatically collected, including:</p>
+      <ul>
+        <li>Device information (operating system, app version)</li>
+        <li>Aggregated application usage data</li>
+        <li>Error and crash logs, to ensure service stability</li>
+      </ul>
+
+      <h2>2.3 Payment data</h2>
+      <p>Payments for purchasing the premium version (at the price indicated on the Google Play Store) are managed exclusively by the Google Play Store. We do not collect or store any data related to credit cards, bank details, or other payment instruments. The processing of payment data is entirely governed by the Privacy Policy of Google LLC.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">3</span>Purposes and Legal Basis for Processing</h1>
+      <p>We process your personal data for the following purposes:</p>
+      <ul>
+        <li>Creation and management of the user account — <em>performance of a contract (Art. 6, par. 1, let. b GDPR)</em></li>
+        <li>Provision of the premium service following purchase — <em>performance of a contract (Art. 6, par. 1, let. b GDPR)</em></li>
+        <li>Communications strictly related to the service (updates, deadlines, changes to terms) — <em>legitimate interest (Art. 6, par. 1, let. f GDPR)</em></li>
+        <li>Fulfillment of legal tax and accounting obligations — <em>legal obligation (Art. 6, par. 1, let. c GDPR)</em></li>
+        <li>Technical improvement of the application through anonymous error analysis — <em>legitimate interest (Art. 6, par. 1, let. f GDPR)</em></li>
+      </ul>
+    </section>
+
+    <section>
+      <h1><span class="num">4</span>Data Retention Period</h1>
+      <ul>
+        <li>Account data (email) is retained for the entire duration of the contractual relationship and for a maximum of <strong>24 months</strong> from account deletion or the last interaction with the service.</li>
+        <li>Data related to purchase transactions is retained for <strong>10 years</strong> in accordance with the tax and accounting obligations provided by Italian law.</li>
+        <li>Anonymous technical logs are retained for a maximum of <strong>12 months</strong>.</li>
+      </ul>
+      <p>After the retention period, the data is securely deleted or permanently anonymized.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">5</span>Third-Party Services</h1>
+
+      <h2>5.1 Supabase</h2>
+      <p>Supabase Inc. is used as the backend platform for authentication management and secure data storage. It acts as a Data Processor pursuant to Art. 28 GDPR. Data may be stored on servers in the European Economic Area (EEA) or in third countries with adequate guarantees (Standard Contractual Clauses).</p>
+      <p><a href="https://supabase.com/privacy" target="_blank" rel="noopener">→ Supabase Privacy Policy</a></p>
+
+      <h2>5.2 Google Play Services</h2>
+      <p>The distribution of the application and the management of in-app purchases take place via the Google Play Store, managed by Google LLC.</p>
+      <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">→ Google Privacy Policy</a></p>
+
+      <h2>5.3 GitHub</h2>
+      <p>The source code of the application is hosted on GitHub (GitHub Inc., a Microsoft company). GitHub does not process personal data of the end users of the application.</p>
+      <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">→ GitHub Privacy Statement</a></p>
+    </section>
+
+    <section>
+      <h1><span class="num">6</span>Data Transfer Outside the EU</h1>
+      <p>Some service providers mentioned in point 5 may transfer your personal data outside the European Economic Area. In this case, we ensure that the transfer takes place in compliance with the GDPR, in particular by means of:</p>
+      <ul>
+        <li>Standard Contractual Clauses (SCC) approved by the European Commission</li>
+        <li>Adequacy decisions of the European Commission for the recipient countries</li>
+      </ul>
+      <p>You can request more information on international transfers by writing to the address indicated in point 1.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">7</span>Data Security</h1>
+      <p>We adopt adequate technical and organizational measures to protect your personal data against unauthorized access, accidental loss or disclosure:</p>
+      <ul>
+        <li>Data encryption in transit via TLS/HTTPS protocol</li>
+        <li>Data access restricted only to the parties necessary to provide the service</li>
+        <li>Use of Supabase, certified SOC 2 Type II</li>
+      </ul>
+      <p>In the event of a personal data breach posing a high risk to your rights, you will be notified promptly pursuant to Art. 34 GDPR.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">8</span>Your Rights</h1>
+      <p>Pursuant to Articles 15–22 GDPR, you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — obtain a copy of your personal data (Art. 15)</li>
+        <li><strong>Rectification</strong> — correct inaccurate or incomplete data (Art. 16)</li>
+        <li><strong>Erasure</strong> — request the removal of your data, except for legal obligations (Art. 17)</li>
+        <li><strong>Restriction</strong> — restrict processing in certain cases (Art. 18)</li>
+        <li><strong>Portability</strong> — receive your data in a machine-readable format (Art. 20)</li>
+        <li><strong>Objection</strong> — object to processing based on legitimate interest (Art. 21)</li>
+        <li><strong>Withdrawal of consent</strong> — at any time, without retroactive effect</li>
+      </ul>
+      <div class="highlight">
+        To exercise your rights, write to <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>. We will respond within <strong>30 days</strong>.
+      </div>
+      <p>You also have the right to lodge a complaint with the Data Protection Authority of your EU country of residence.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">9</span>Minors</h1>
+      <p>The Unplug! app is not intended for persons under the age of <strong>16</strong>. We do not knowingly collect personal data from minors under 16. If we become aware that we have inadvertently collected such data, we will immediately delete it. Parents or legal guardians are encouraged to contact us at the address indicated in point 1.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">10</span>Changes to This Policy</h1>
+      <p>We reserve the right to modify this policy to adapt it to regulatory, technological changes, or the features of the application. Substantial changes will be communicated to registered users via email with a notice of at least <strong>15 days</strong> before they take effect.</p>
+      <p>Continued use of the application after notification constitutes acceptance of the new policy.</p>
+    </section>
+
+    <section>
+      <h1><span class="num">11</span>Applicable Law</h1>
+      <p>This privacy policy is drafted in compliance with <strong>Regulation (EU) 2016/679 (GDPR)</strong>, Italian law, and the guidelines of the Data Protection Authority. For any disputes, Italian law applies.</p>
+    </section>
+  </div>
+
+  <!-- CHINESE -->
+  <div id="content-zh" class="lang-content">
+    <section>
+      <h1><span class="num">1</span>数据控制者</h1>
+      <p>通过 <strong>下班！</strong> (Stacca) 应用收集的个人数据的数据控制者是独立开发者，可通过以下地址联系：</p>
+      <div class="highlight">
+        📧 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+      </div>
+      <p>有关处理您个人数据的任何请求，包括行使第8点中提到的权利，您只能通过上述电子邮件地址联系我们。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">2</span>收集的个人数据</h1>
+
+      <h2>2.1 用户直接提供的数据</h2>
+      <p>账户注册是<strong>可选的</strong>。即使不创建账户，您也可以使用该应用程序并购买高级版本。如果用户选择注册，我们将收集以下个人数据：</p>
+      <ul>
+        <li><strong>电子邮件地址</strong> — 用作帐户的唯一标识符和发送服务通信。</li>
+      </ul>
+      <p>您可以免费试用高级功能7天，之后该应用仍可免费使用，但功能会有所减少。</p>
+
+      <h2>2.2 技术和使用数据</h2>
+      <p>通过第5点中描述的第三方技术服务，可能会自动收集匿名或假名化的技术数据，包括：</p>
+      <ul>
+        <li>设备信息（操作系统，应用版本）</li>
+        <li>聚合的应用使用数据</li>
+        <li>错误和崩溃日志，以确保服务稳定性</li>
+      </ul>
+
+      <h2>2.3 支付数据</h2>
+      <p>购买高级版本的付款（按 Google Play 商店中显示的价格）完全由 Google Play 商店管理。我们不收集或存储任何与信用卡、银行详细信息或其他支付工具相关的数据。付款数据的处理完全受 Google LLC 的隐私政策约束。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">3</span>处理的目的和法律依据</h1>
+      <p>我们处理您的个人数据用于以下目的：</p>
+      <ul>
+        <li>创建和管理用户帐户 — <em>履行合同 (GDPR 第 6 条第 1 款 b 项)</em></li>
+        <li>购买后提供高级服务 — <em>履行合同 (GDPR 第 6 条第 1 款 b 项)</em></li>
+        <li>与服务严格相关的通信（更新，截止日期，条款变更）— <em>合法利益 (GDPR 第 6 条第 1 款 f 项)</em></li>
+        <li>履行合法的税务和会计义务 — <em>法律义务 (GDPR 第 6 条第 1 款 c 项)</em></li>
+        <li>通过匿名错误分析对应用进行技术改进 — <em>合法利益 (GDPR 第 6 条第 1 款 f 项)</em></li>
+      </ul>
+    </section>
+
+    <section>
+      <h1><span class="num">4</span>数据保留期限</h1>
+      <ul>
+        <li>帐户数据（电子邮件）将在合同关系期间保留，并在帐户删除或最后一次与服务交互后最多保留 <strong>24 个月</strong>。</li>
+        <li>根据意大利法律规定的税务和会计义务，与购买交易相关的数据将保留 <strong>10 年</strong>。</li>
+        <li>匿名技术日志最多保留 <strong>12 个月</strong>。</li>
+      </ul>
+      <p>过了保留期后，数据将被安全删除或永久匿名化。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">5</span>第三方服务</h1>
+
+      <h2>5.1 Supabase</h2>
+      <p>Supabase Inc. 用作身份验证管理和安全数据存储的后端平台。根据 GDPR 第 28 条，它作为数据处理者。数据可能会存储在欧洲经济区 (EEA) 的服务器上，或存储在具有充分保证（标准合同条款）的第三国。</p>
+      <p><a href="https://supabase.com/privacy" target="_blank" rel="noopener">→ Supabase 隐私政策</a></p>
+
+      <h2>5.2 Google Play 服务</h2>
+      <p>该应用程序的分发和应用内购买管理通过 Google LLC 管理的 Google Play 商店进行。</p>
+      <p><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">→ Google 隐私政策</a></p>
+
+      <h2>5.3 GitHub</h2>
+      <p>该应用程序的源代码托管在 GitHub (微软旗下的 GitHub Inc.)。GitHub 不处理该应用程序最终用户的个人数据。</p>
+      <p><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">→ GitHub 隐私声明</a></p>
+    </section>
+
+    <section>
+      <h1><span class="num">6</span>欧盟境外的数据传输</h1>
+      <p>第5点中提到的某些服务提供商可能会将您的个人数据传输到欧洲经济区之外。在这种情况下，我们确保数据传输符合 GDPR 的规定，特别是通过以下方式：</p>
+      <ul>
+        <li>欧盟委员会批准的标准合同条款 (SCC)</li>
+        <li>欧盟委员会针对接收国的充分性决定</li>
+      </ul>
+      <p>您可以通过写信到第1点中指定的地址索取有关国际转移的更多信息。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">7</span>数据安全</h1>
+      <p>我们采取适当的技术和组织措施，以保护您的个人数据免遭未经授权的访问、意外丢失或泄露：</p>
+      <ul>
+        <li>通过 TLS/HTTPS 协议传输的数据加密</li>
+        <li>数据访问仅限于提供服务所必需的一方</li>
+        <li>使用通过 SOC 2 Type II 认证的 Supabase</li>
+      </ul>
+      <p>如果发生对您的权利构成高风险的个人数据泄露，将根据 GDPR 第 34 条及时通知您。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">8</span>您的权利</h1>
+      <p>根据 GDPR 第 15-22 条，您有权：</p>
+      <ul>
+        <li><strong>访问</strong> — 获取您的个人数据副本 (第 15 条)</li>
+        <li><strong>纠正</strong> — 纠正不准确或不完整的数据 (第 16 条)</li>
+        <li><strong>删除</strong> — 要求删除您的数据，法律义务除外 (第 17 条)</li>
+        <li><strong>限制</strong> — 在某些情况下限制处理 (第 18 条)</li>
+        <li><strong>可移植性</strong> — 接收机器可读格式的数据 (第 20 条)</li>
+        <li><strong>反对</strong> — 反对基于合法利益的处理 (第 21 条)</li>
+        <li><strong>撤回同意</strong> — 随时可以，没有追溯力</li>
+      </ul>
+      <div class="highlight">
+        要行使您的权利，请写信至 <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>。我们将在 <strong>30 天</strong>内回复。
+      </div>
+      <p>您还有权向您居住的欧盟国家的数据保护机构提出投诉。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">9</span>未成年人</h1>
+      <p>下班！ 应用不适合 <strong>16 岁</strong> 以下的人员使用。我们不会有意收集 16 岁以下未成年人的个人数据。如果我们发现无意中收集了此类数据，我们将立即将其删除。鼓励父母或法定监护人通过第1点中指示的地址与我们联系。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">10</span>本政策的变更</h1>
+      <p>我们保留修改此政策以适应监管、技术变化或应用程序功能的权利。重大变更将在生效前至少 <strong>15 天</strong> 通过电子邮件通知注册用户。</p>
+      <p>在收到通知后继续使用该应用程序即构成对新政策的接受。</p>
+    </section>
+
+    <section>
+      <h1><span class="num">11</span>适用法律</h1>
+      <p>本隐私政策符合 <strong>欧盟第 2016/679 号法规 (GDPR)</strong>、意大利法律和数据保护机构的指导方针。如有任何争议，适用意大利法律。</p>
+    </section>
+  </div>
 
 </main>
 
 <footer>
-  Informativa Privacy – App Stacca &nbsp;·&nbsp; Aggiornata il 29 giugno 2026 &nbsp;·&nbsp; <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
+  <span id="footerText">Informativa Privacy – App Stacca &nbsp;·&nbsp; Aggiornata il 29 giugno 2026</span> &nbsp;·&nbsp; <a href="mailto:arch.fdm@gmail.com">arch.fdm@gmail.com</a>
 </footer>
+
+<script>
+  function setLang(lang) {
+    // Aggiorna bottoni
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Mostra contenuto
+    document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+    document.getElementById('content-' + lang).classList.add('active');
+    
+    // Aggiorna header e footer in base alla lingua
+    if (lang === 'it') {
+      document.getElementById('docTitle').innerText = 'Informativa sulla Privacy';
+      document.getElementById('dateBadge').innerText = 'In vigore dal 29 giugno 2026';
+      document.getElementById('footerText').innerText = 'Informativa Privacy – App Stacca · Aggiornata il 29 giugno 2026';
+    } else if (lang === 'en') {
+      document.getElementById('docTitle').innerText = 'Privacy Policy';
+      document.getElementById('dateBadge').innerText = 'Effective from June 29, 2026';
+      document.getElementById('footerText').innerText = 'Privacy Policy – Unplug! App · Updated June 29, 2026';
+    } else if (lang === 'zh') {
+      document.getElementById('docTitle').innerText = '隐私政策';
+      document.getElementById('dateBadge').innerText = '自2026年6月29日起生效';
+      document.getElementById('footerText').innerText = '隐私政策 – 下班！应用 · 更新于2026年6月29日';
+    }
+  }
+</script>
 
 </body>
 </html>

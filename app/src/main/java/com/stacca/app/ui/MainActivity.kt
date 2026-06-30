@@ -263,6 +263,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun activateAlarm() {
         prefs.isAlarmActive = true
+        prefs.resetEscalation()
         AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
         updateUI()
         Toast.makeText(this,
@@ -276,6 +277,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage("Sei sicuro? Senza allarme potresti lavorare per sempre! 😱")
             .setPositiveButton("Sì, disattiva") { _, _ ->
                 prefs.isAlarmActive = false
+                prefs.resetEscalation()
                 AlarmSoundManager.stop()
                 AlarmReceiver.cancelAlarm(this)
                 notificationHelper.cancelAll()
@@ -397,7 +399,7 @@ class MainActivity : AppCompatActivity() {
                 val minutes = (overtimeMillis % 3600000) / 60000
                 val seconds = (overtimeMillis % 60000) / 1000
                 tvCountdown.text = String.format("+%02d:%02d:%02d", hours, minutes, seconds)
-                tvCountdownLabel.text = "TEMPO NON VISSUTO"
+                tvCountdownLabel.text = getString(R.string.tempo_non_vissuto_title).uppercase()
                 cardEndTime.visibility = View.GONE
 
                 val overtimeMinutes = (overtimeMillis / 60000).toInt()
@@ -437,6 +439,7 @@ class MainActivity : AppCompatActivity() {
 
         // Cancella allarmi e notifiche
         prefs.paywallShownToday = false
+        prefs.resetEscalation()
         AlarmSoundManager.stop()
         AlarmReceiver.cancelAlarm(this)
         notificationHelper.cancelAll()
@@ -555,7 +558,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateTrialBanner() {
         if (prefs.isPremium) {
             cardTrialBanner.visibility = View.VISIBLE
-            tvTrialBanner.text = "👑 Premium attivo"
+            tvTrialBanner.text = getString(R.string.premium_active)
         } else {
             cardTrialBanner.visibility = View.VISIBLE
             tvTrialBanner.text = getString(R.string.settings_upgrade)

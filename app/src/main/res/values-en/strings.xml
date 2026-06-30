@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Unplug!</string>
+    <string name="app_tagline">Stop working. Start living.</string>
+
+    <!-- Main Screen -->
+    <string name="set_end_time">Set end of shift</string>
+    <string name="current_time">Current time</string>
+    <string name="end_time_label">End of shift</string>
+    <string name="time_remaining">Time remaining</string>
+    <string name="overtime">Unlived time!</string>
+    <string name="alarm_active">⚡ Alarm active</string>
+    <string name="alarm_inactive">No alarm set</string>
+    <string name="activate_alarm">ACTIVATE ALARM</string>
+    <string name="deactivate_alarm">DEACTIVATE</string>
+
+    <string name="settings">⚙️ Settings</string>
+
+    <!-- Notification Levels -->
+    <string name="notif_channel_name">Unplug! Notifications</string>
+    <string name="notif_channel_desc">Notifications to remind you to stop working</string>
+    <string name="notif_urgent_channel_name">Unplug! Alarm</string>
+    <string name="notif_urgent_channel_desc">Urgent and invasive notifications</string>
+
+    <!-- Action Buttons -->
+    <string name="btn_ok_stacco">OK, I\'M UNPLUGGING! ✋</string>
+    <string name="btn_ho_staccato">✋ I HAVE UNPLUGGED!</string>
+    <string name="btn_5_more_minutes">5 more minutes… ⏰</string>
+
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_dismiss">Dismiss</string>
+
+    <!-- Full Screen Alert -->
+    <string name="fullscreen_title">UNPLUGGGGG!</string>
+    <string name="fullscreen_subtitle">It\'s time to LIVE!</string>
+
+    <!-- Permissions -->
+    <string name="permission_notification_title">Notification Permission</string>
+    <string name="permission_notification_message">Unplug! needs permission to send you (aggressive) notifications to remind you to stop working!</string>
+    <string name="permission_alarm_title">Alarm Permission</string>
+    <string name="permission_alarm_message">Unplug! needs permission to set precise alarms.</string>
+
+    <!-- Settings -->
+    <string name="settings_section_notifications">🔔 Notifications</string>
+    <string name="settings_section_behavior">⚡ Behavior</string>
+    <string name="settings_section_account">👤 Account</string>
+    <string name="settings_sound">Alarm sound</string>
+    <string name="settings_sound_desc">Plays a sound when the alarm goes off</string>
+    <string name="settings_vibration">Vibration</string>
+    <string name="settings_vibration_desc">Vibrates the phone with notifications</string>
+    <string name="settings_fullscreen">Full screen alarm</string>
+    <string name="settings_fullscreen_desc">Shows an invasive alarm for high levels</string>
+    <string name="settings_auto_restart">Auto restart</string>
+    <string name="settings_auto_restart_desc">Automatically reschedules the alarm every day</string>
+    <string name="settings_escalation_speed">Notification frequency</string>
+    <string name="settings_escalation_speed_desc">How often we annoy you</string>
+    <string name="settings_version">Unplug! v1.7 — Made with ❤️ and malice</string>
+    <string name="settings_logout">Logout</string>
+    <string name="settings_logout_confirm">Are you sure you want to logout?</string>
+    <string name="settings_logged_as">Logged in as %s</string>
+    <string name="settings_not_logged">You are not logged in</string>
+    <string name="settings_login">Login (optional)</string>
+    <string name="settings_premium_badge">✨ Premium</string>
+    <string name="settings_upgrade">👑 Go Premium</string>
+
+    <!-- Escalation Speeds -->
+    <string-array name="escalation_speeds">
+        <item>🐌 Every 8 min</item>
+        <item>⚡ Every 5 min</item>
+        <item>🔥 Every 3 min</item>
+    </string-array>
+
+    <!-- Login -->
+    <string name="login_tab_login">Login</string>
+    <string name="login_tab_register">Register</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_btn_login">LOGIN</string>
+    <string name="login_btn_register">REGISTER</string>
+    <string name="login_skip">Continue without account →</string>
+    <string name="login_success">Logged in! 🎉</string>
+    <string name="login_register_success">Registration complete!\nCheck your email to verify your account.</string>
+    <string name="login_reset_sent">Recovery email sent! 📧</string>
+    <string name="login_error_email_required">Enter your email</string>
+    <string name="login_error_email_invalid">Invalid email</string>
+    <string name="login_error_password_required">Enter your password</string>
+    <string name="login_error_password_short">Password must be at least 6 characters</string>
+    <string name="login_error_generic">Error: %s</string>
+
+    <!-- Premium -->
+    <string name="premium_title">Unplug! Premium</string>
+    <string name="premium_subtitle">Unlock the full power of forced relaxation</string>
+    <string name="premium_features_title">✨ What you get</string>
+    <string name="premium_feature_1">💀 All 6 escalation levels (including Nuclear and Apocalypse!)</string>
+    <string name="premium_feature_2">🎚️ Customizable notification frequency</string>
+    <string name="premium_feature_3">📱 Invasive full screen alarm</string>
+    <string name="premium_feature_4">🚀 Future updates included</string>
+    <string name="premium_buy_button">👑 BUY PREMIUM NOW</string>
+    <string name="premium_sub_button">Or subscribe monthly</string>
+    <string name="premium_restore">Restore purchases</string>
+    <string name="premium_already">You are already premium! 👑</string>
+    <string name="premium_success">Welcome to the Premium club! 👑🎉</string>
+    <string name="premium_error">Purchase not completed</string>
+    <string name="premium_login_required">You must login to purchase Premium</string>
+    <string name="premium_restoring">Restoring purchases…</string>
+    <string name="premium_required">👑 Premium Feature</string>
+    <string name="premium_required_message">This feature is only available for Premium users.\nWant to unlock it?</string>
+    <string name="premium_unlock">Unlock Premium</string>
+    <string name="premium_buy_price">👑 BUY PREMIUM — %s</string>
+
+    <!-- Paywall -->
+    <string name="paywall_title">Want me to stop being nice? &#x1F525;</string>
+    <string name="paywall_subtitle">You ignored 3 gentle warnings.\nWith Premium I would already be at NUCLEAR level.\nA single purchase to make me really annoying.</string>
+    <string name="paywall_unlock_title">&#x1F680; What you unlock</string>
+    <string name="paywall_feature_1">&#x1F480; Nuclear and Apocalypse levels &#x2014; your phone literally screams</string>
+    <string name="paywall_feature_2">&#x1F4E2; Full screen alarm &#x2014; impossible to ignore even for God</string>
+    <string name="paywall_feature_3">&#x2764;&#xFE0F; Support a developer who would also like to unplug</string>
+    <string name="paywall_price">&#x20AC;0.99</string>
+    <string name="paywall_price_desc">A one-time payment. Forever. No subscriptions.</string>
+    <string name="paywall_buy_button">&#x1F513; UNLOCK NOW &#x2014; &#x20AC;0.99</string>
+    <string name="paywall_no_thanks">No thanks, I\'ll stick to the gentle level</string>
+    <string name="paywall_success">Aggressive notifications unlocked! Now you won\'t be able to escape! &#x1F608;&#x1F525;</string>
+    <string name="notif_premium_teaser">&#x1F512; With Premium by now I\'d be yelling at you (NUCLEAR level)</string>
+    <string name="paywall_unlock_price">🔓 UNLOCK NOW — %s</string>
+
+    <!-- Badge escalation in MainActivity -->
+    <string name="premium_active">👑 Premium active</string>
+    <string name="escalation_limited_badge">Basic Plan (3 levels) 🔒 Tap to unlock</string>
+    <string name="escalation_full_badge">👑 Premium active (All 6 levels)</string>
+
+    <!-- Google Sign-In -->
+    <string name="login_google">Sign in with Google</string>
+    <string name="login_google_success">Google Sign-In successful! 🎉</string>
+    <string name="login_google_error">Google Sign-In error: %s</string>
+    <string name="login_google_not_configured">Google Sign-In is not configured. Use email and password.</string>
+    <string name="login_divider">or</string>
+
+    <!-- Conferma Email -->
+    <string name="login_email_confirmed">Email confirmed! Welcome to Unplug! 🎉</string>
+    <string name="login_email_confirm_error">Error confirming email. Try logging in again.</string>
+    <string name="login_confirm_dialog_title">📧 Check your email!</string>
+    <string name="login_confirm_dialog_message">We sent you an email to %s.\n\nClick the link in the email to confirm your account and start using Unplug!\n\n⚠️ Check your spam folder too!</string>
+    <string name="login_confirm_dialog_ok">Got it!</string>
+
+    <!-- Schermata soft fine trial (TrialExpiredActivity freemium) -->
+    <string name="trial_soft_title">Trial over. App isn\'t. &#x1F393;</string>
+    <string name="trial_soft_subtitle">Your free trial has expired.\nYou can continue for free with the basic levels &#x2014; or upgrade to Premium for the version that\'s truly scary.</string>
+    <string name="trial_soft_free_title">&#x2705; Free forever</string>
+    <string name="trial_soft_free_items">&#x1F4E9; Levels 1-3 (Gentle, Friendly, Insistent)\n&#x1F525; Streak and unplug log\n&#x23F0; Basic alarm working</string>
+    <string name="trial_soft_premium_title">&#x1F451; Unlock with Premium</string>
+    <string name="trial_soft_premium_items">&#x1F480; Levels 4-6 (Aggressive, Nuclear, Apocalypse)\n&#x1F4E2; Impossible to ignore full screen alarm\n&#x2764;&#xFE0F; Support a developer who would also like to unplug</string>
+    <string name="trial_soft_btn_premium">&#x1F451; Go Premium</string>
+    <string name="trial_soft_btn_free">Continue for free (levels 1-3)</string>
+
+    <!-- Tempo Non Vissuto -->
+    <string name="tempo_non_vissuto_title">UNLIVED TIME</string>
+    <string name="tempo_non_vissuto_subtitle">This is the time you gifted to work instead of your life</string>
+    <string name="tempo_non_vissuto_btn">Got it. I\'ll do better.</string>
+    <!-- Mostrato solo se l'utente aveva una streak attiva prima di staccare in ritardo -->
+    <string name="streak_lost_message">You lost a %d-day streak 💔</string>
+
+    <!-- Protezione Allarmi - Card permessi in MainActivity -->
+    <string name="perm_card_title">🛡️ Alarm protection</string>
+    <string name="perm_status_ok_notification">✅ Notifications: active</string>
+    <string name="perm_status_ok_exact_alarm">✅ Exact alarms: authorized</string>
+    <string name="perm_status_ok_battery">✅ Battery optimization: disabled</string>
+    <string name="perm_status_warn_notification">⚠️ Notifications disabled — tap to enable</string>
+    <string name="perm_status_warn_exact_alarm">⚠️ Exact alarms not authorized — tap to enable</string>
+    <string name="perm_status_warn_battery">⚠️ Battery optimization active — tap to disable</string>
+    <!-- Dialogo quando l'utente prova ad attivare l'allarme senza il permesso allarmi esatti -->
+    <string name="permission_exact_alarm_title">Exact alarm permission 🔔</string>
+    <string name="permission_exact_alarm_message">Without this permission I can\'t yell at you to unplug 😤\n\nGo to settings and authorize Unplug! to schedule exact alarms. It\'s the most important thing you\'ll do today.</string>
+    <string name="permission_exact_alarm_btn">Go to settings</string>
+    <!-- Toast quando l'allarme viene riprogrammato dopo la concessione del permesso -->
+    <string name="alarm_rescheduled">⚡ Permission granted — alarm rescheduled!</string>
+
+    <!-- Streak Badge in MainActivity -->
+    <string name="streak_badge_label">🔥 %d</string>
+    <string name="streak_dialog_title">🔥 Your streak</string>
+    <string name="streak_dialog_message">🔥 Current streak: %1$d days\n🏆 Personal best: %2$d days\n⭐ Total days on time: %3$d</string>
+
+    <!-- Celebration Activity -->
+    <string name="celebration_title">YOU ARE FREE! 🎉</string>
+    <string name="celebration_streak_label">🔥 Streak</string>
+    <string name="celebration_new_record">NEW RECORD! 🏆</string>
+    <string name="celebration_btn_close">I\'m going to live 😎</string>
+
+    <!-- Messaggi ironici di celebrazione (scelti a random in CelebrationActivity) -->
+    <string-array name="celebration_messages">
+        <item>The sofa welcomes you as a hero. 🛋️</item>
+        <item>You beat the system. The system is your boss. 😎</item>
+        <item>The pizza is still hot. A miracle. 🍕</item>
+        <item>The sunset is still there waiting for you. 🌅</item>
+        <item>Your cat finally recognizes you. 🐱</item>
+        <item>You\'ve earned the right to do absolutely nothing. 🏆</item>
+        <item>Free evening. Your brain has already mentally shut down the PC. 🧠💤</item>
+        <item>Someone somewhere is still working. It\'s not you. 😇</item>
+    </string-array>
+    <string name="store_connecting">Connecting to Play Store…</string>
+    <string name="store_connecting_toast">Connecting to Play Store, please try again…</string>
+</resources>

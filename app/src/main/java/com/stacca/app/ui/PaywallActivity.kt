@@ -41,7 +41,7 @@ class PaywallActivity : AppCompatActivity() {
         btnUnlock = findViewById(R.id.btnUnlock)
         // Disabilita finché il billing non è pronto
         btnUnlock.isEnabled = false
-        btnUnlock.text = "Connessione al Play Store..."
+        btnUnlock.text = getString(R.string.store_connecting)
 
         billingManager = BillingManager(this) { success ->
             runOnUiThread {
@@ -58,12 +58,11 @@ class PaywallActivity : AppCompatActivity() {
             }
         }
 
-        // Quando i prodotti sono pronti, abilita il bottone con il prezzo reale
         billingManager.onProductsReady = {
             btnUnlock.isEnabled = true
             val price = billingManager.getPremiumPrice()
             btnUnlock.text = if (price != null) {
-                "🔓 SBLOCCA ORA — $price"
+                getString(R.string.paywall_unlock_price, price)
             } else {
                 getString(R.string.paywall_buy_button)
             }
@@ -88,7 +87,7 @@ class PaywallActivity : AppCompatActivity() {
         // Bottone acquisto
         btnUnlock.setOnClickListener {
             if (!billingManager.isReady()) {
-                Toast.makeText(this, "Connessione al Play Store in corso, riprova...",
+                Toast.makeText(this, getString(R.string.store_connecting_toast),
                     Toast.LENGTH_SHORT).show()
                 billingManager.connect()
                 return@setOnClickListener
