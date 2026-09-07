@@ -12,8 +12,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <!-- SYSTEM_ALERT_WINDOW rimosso — non usato, abbiamo già USE_FULL_SCREEN_INTENT -->
+    <!-- USE_FULL_SCREEN_INTENT rimosso — Google Play policy: permesso riservato ad app sveglia/telefono -->
+    <!-- SYSTEM_ALERT_WINDOW rimosso — non necessario -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="com.android.vending.BILLING" />

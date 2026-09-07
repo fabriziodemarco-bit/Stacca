@@ -149,7 +149,6 @@ class NotificationHelper(private val context: Context) {
             .setAutoCancel(false)
             .setOngoing(level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal)
             .setContentIntent(fullScreenPending)
-            .setFullScreenIntent(fullScreenPending, true)
             .addAction(android.R.drawable.ic_menu_close_clear_cancel,
                 context.getString(R.string.btn_dismiss), stopPending)
 
