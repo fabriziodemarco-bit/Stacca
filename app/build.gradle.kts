@@ -27,9 +27,9 @@ android {
     defaultConfig {
         applicationId = "com.stacca.app"
         minSdk = 26
-        targetSdk = 35
-        versionCode = 18
-        versionName = "2.1.4"
+        targetSdk = 36
+        versionCode = 19
+        versionName = "2.2.0"
 
         buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"]}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${localProps["SUPABASE_ANON_KEY"]}\"")
