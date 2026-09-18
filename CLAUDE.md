@@ -33,6 +33,7 @@ Tagline: *"Basta lavorare. Vivi."*
 - **La licenza sta in `stacca_license`**: "Cancella dati" azzera solo `stacca_prefs`, così il trial non si aggira.
 - **Freemium**: i livelli 1-3 sono gratis; i livelli 4-6 e l'allarme a schermo intero sono premium.
 - **Permessi rimossi per le policy di Google Play**: `USE_EXACT_ALARM`, `SYSTEM_ALERT_WINDOW`, `USE_FULL_SCREEN_INTENT`. Non reintrodurli senza parlarne prima.
+- **Ripristino automatico del premium** all'avvio (commit `a025652`), verificato sul telefono il 18/9/2026 con disinstallazione e reinstallazione da Play. Se modifichi `BillingManager` o `MainActivity`, ripeti questo test.
 - Gli allarmi esatti funzionano con il permesso runtime `SCHEDULE_EXACT_ALARM` più l'esenzione dall'ottimizzazione batteria (senza, sui telefoni reali le notifiche non partono).
 
 ## Regole specifiche del progetto
@@ -51,8 +52,7 @@ Tagline: *"Basta lavorare. Vivi."*
 - **Il billing si testa solo con l'app scaricata da Play** (test chiuso), non con una build installata via cavo.
 - Per un nuovo rilascio: aumentare `versionCode` e `versionName` in `app/build.gradle.kts`, generare l'AAB e caricarlo in Play Console.
 
-## Da fare / da verificare
-- Ripristino automatico del premium su installazione nuova: fix nel commit `a025652`, **da verificare sul telefono** con un account che ha già comprato.
+## Da fare
 - SMTP personalizzato su Supabase (Resend o Brevo) prima del lancio pubblico.
 - Idee future: onboarding con demo dell'Apocalisse, statistiche "tempo recuperato", widget con countdown, pacchetti di insulti regionali, condivisione social dello streak.
 
