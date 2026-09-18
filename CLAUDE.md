@@ -5,6 +5,7 @@ App Android per chi lavora in smart working e non riesce a staccare. Imposti l'o
 Tagline: *"Basta lavorare. Vivi."*
 
 ## Stato attuale
+- **Pubblicata in produzione** su Google Play: ci sono utenti reali, quindi ogni rilascio va testato con cura.
 - Versione **2.2.0 (versionCode 20)**, inviata a Google Play il 7/9/2026.
 - Repo: GitHub `fabriziodemarco-bit/Stacca`, branch `master`.
 - Privacy policy e pagina eliminazione account: `privacy_policy.html` e `delete_account.html` (pubblicate su GitHub Pages).
@@ -53,7 +54,7 @@ Tagline: *"Basta lavorare. Vivi."*
 - Per un nuovo rilascio: aumentare `versionCode` e `versionName` in `app/build.gradle.kts`, generare l'AAB e caricarlo in Play Console.
 
 ## Da fare
-- SMTP personalizzato su Supabase (Resend o Brevo) prima del lancio pubblico.
+- **Email di Supabase**: il mailer integrato è solo per sviluppo. Da sistemare (SMTP personalizzato, oppure rivedere il login via email).
 - Idee future: onboarding con demo dell'Apocalisse, statistiche "tempo recuperato", widget con countdown, pacchetti di insulti regionali, condivisione social dello streak.
 
 > Nota: `PROGETTO.md` è la vecchia versione di queste regole (ferma alla v1). Il riferimento aggiornato è questo file.
