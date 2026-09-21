@@ -53,8 +53,6 @@ Tagline: *"Basta lavorare. Vivi."*
 - **Il billing si testa solo con l'app scaricata da Play** (test chiuso), non con una build installata via cavo.
 - Per un nuovo rilascio: aumentare `versionCode` e `versionName` in `app/build.gradle.kts`, generare l'AAB e caricarlo in Play Console.
 
-## Da fare
-- **Email di Supabase**: il mailer integrato è solo per sviluppo. Da sistemare (SMTP personalizzato, oppure rivedere il login via email).
-- Idee future: onboarding con demo dell'Apocalisse, statistiche "tempo recuperato", widget con countdown, pacchetti di insulti regionali, condivisione social dello streak.
-
-> Nota: `PROGETTO.md` è la vecchia versione di queste regole (ferma alla v1). Il riferimento aggiornato è questo file.
+## Altri file di riferimento
+- `TODO.md`: cose da fare e idee future. Leggilo quando scegliamo su cosa lavorare.
+- `PROGETTO.md`: vecchia versione di queste regole (ferma alla v1). Il riferimento aggiornato è questo file.
