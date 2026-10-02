@@ -4,21 +4,30 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.net.Uri
 import android.util.Log
 
 object AlarmSoundManager {
     private var mediaPlayer: MediaPlayer? = null
 
+    /**
+     * Avvia un suono in loop sul volume della sveglia.
+     * @param soundRes file in res/raw (es. R.raw.stacca_siren); se null usa la sveglia di sistema.
+     */
     @Synchronized
-    fun start(context: Context) {
+    fun start(context: Context, soundRes: Int? = null) {
         if (mediaPlayer?.isPlaying == true) {
             Log.d("AlarmSoundManager", "MediaPlayer già attivo, ignoro lo start.")
             return
         }
 
         try {
-            val alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            val alarmUri = if (soundRes != null) {
+                Uri.parse("android.resource://${context.packageName}/$soundRes")
+            } else {
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                    ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            }
 
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(context, alarmUri)
@@ -35,6 +44,16 @@ object AlarmSoundManager {
             Log.d("AlarmSoundManager", "MediaPlayer avviato con successo.")
         } catch (e: Exception) {
             Log.e("AlarmSoundManager", "Errore nell'avvio del MediaPlayer", e)
+        }
+    }
+
+    /** Cambia la velocità del suono in corso (usato dalla sirena di Insultami, più veloce a ogni fase). */
+    @Synchronized
+    fun setSpeed(speed: Float) {
+        try {
+            mediaPlayer?.let { it.playbackParams = it.playbackParams.setSpeed(speed) }
+        } catch (e: Exception) {
+            Log.e("AlarmSoundManager", "Impossibile cambiare la velocità", e)
         }
     }
 

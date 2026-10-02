@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
-import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -25,8 +25,11 @@ import com.stacca.app.ui.MainActivity
 class NotificationHelper(private val context: Context) {
 
     companion object {
-        const val CHANNEL_NORMAL = "stacca_normal"
-        const val CHANNEL_URGENT = "stacca_urgent"
+        // "_v2": Android non permette di cambiare il suono di un canale già creato,
+        // quindi i canali con i suoni di Stacca hanno un nome nuovo
+        const val CHANNEL_NORMAL = "stacca_normal_v2"
+        const val CHANNEL_URGENT = "stacca_urgent_v2"
+        private val OLD_CHANNELS = listOf("stacca_normal", "stacca_urgent")
         const val NOTIFICATION_ID = 42
         const val FULLSCREEN_NOTIFICATION_ID = 43
     }
@@ -36,7 +39,10 @@ class NotificationHelper(private val context: Context) {
     }
 
     private fun createNotificationChannels() {
-        // Canale notifiche normali
+        val manager = context.getSystemService(NotificationManager::class.java)
+        OLD_CHANNELS.forEach { manager.deleteNotificationChannel(it) }
+
+        // Canale notifiche normali (livelli 1-2): "ding" di Stacca sul volume notifiche
         val normalChannel = NotificationChannel(
             CHANNEL_NORMAL,
             context.getString(R.string.notif_channel_name),
@@ -45,9 +51,16 @@ class NotificationHelper(private val context: Context) {
             description = context.getString(R.string.notif_channel_desc)
             enableVibration(true)
             vibrationPattern = longArrayOf(0, 500, 200, 500)
+            setSound(
+                rawSoundUri(R.raw.stacca_ding),
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()
+            )
         }
 
-        // Canale notifiche urgenti (per livelli alti)
+        // Canale notifiche urgenti (livelli 3-6): bip da sveglia sul volume sveglia
         val urgentChannel = NotificationChannel(
             CHANNEL_URGENT,
             context.getString(R.string.notif_urgent_channel_name),
@@ -56,9 +69,8 @@ class NotificationHelper(private val context: Context) {
             description = context.getString(R.string.notif_urgent_channel_desc)
             enableVibration(true)
             vibrationPattern = longArrayOf(0, 1000, 500, 1000, 500, 1000)
-            val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
             setSound(
-                alarmSound,
+                rawSoundUri(R.raw.stacca_alarm),
                 AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -66,10 +78,12 @@ class NotificationHelper(private val context: Context) {
             )
         }
 
-        val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(normalChannel)
         manager.createNotificationChannel(urgentChannel)
     }
+
+    private fun rawSoundUri(soundRes: Int): Uri =
+        Uri.parse("android.resource://${context.packageName}/$soundRes")
 
     /**
      * Invia una notifica basata sul livello di escalation.
@@ -182,11 +196,9 @@ class NotificationHelper(private val context: Context) {
             builder.setVibrate(vibrationPattern)
         }
 
-        // Suono condizionale
-        if (soundEnabled && level.ordinal >= NotificationMessages.Level.INSISTENT.ordinal) {
-            val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            builder.setSound(alarmSound)
-        } else if (!soundEnabled) {
+        // Il suono lo decide il canale (ding per i livelli 1-2, allarme dal 3);
+        // se l'utente ha spento il suono nelle impostazioni, la notifica è muta
+        if (!soundEnabled) {
             builder.setSilent(true)
         }
 

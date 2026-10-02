@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.util.SystemBarsHelper
 import java.util.Calendar
 
@@ -70,6 +71,11 @@ class InsultamiActivity : AppCompatActivity() {
             }
         })
 
+        // La sirena suona per tutto il minuto (sul volume della sveglia)
+        if (prefs.soundEnabled) {
+            AlarmSoundManager.start(this, R.raw.stacca_siren)
+        }
+
         showNextInsult()
         handler.postDelayed(tick, 1000)
     }
@@ -119,6 +125,8 @@ class InsultamiActivity : AppCompatActivity() {
 
         shake(tvInsult, phase)
         vibrate(phase)
+        // Sirena sempre più veloce a ogni fase
+        AlarmSoundManager.setSpeed(1f + phase * 0.35f)
     }
 
     /** Scuote il testo: più forte a ogni fase. */
@@ -149,6 +157,7 @@ class InsultamiActivity : AppCompatActivity() {
         }
         finished = true
         handler.removeCallbacksAndMessages(null)
+        AlarmSoundManager.stop()
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.alert_gentle))
         tvPhase.visibility = View.INVISIBLE
         tvTimer.visibility = View.INVISIBLE
@@ -160,6 +169,7 @@ class InsultamiActivity : AppCompatActivity() {
     /** Il minuto è finito e l'utente è ancora lì. */
     private fun onTimeUp() {
         finished = true
+        AlarmSoundManager.stop()
         tvPhase.visibility = View.INVISIBLE
         tvTimer.visibility = View.INVISIBLE
         tvEmoji.text = "💀"
@@ -194,5 +204,6 @@ class InsultamiActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+        AlarmSoundManager.stop()
     }
 }

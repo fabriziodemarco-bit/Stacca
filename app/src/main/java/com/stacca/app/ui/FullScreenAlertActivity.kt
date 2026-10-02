@@ -150,7 +150,9 @@ class FullScreenAlertActivity : AppCompatActivity() {
     }
 
     private fun playAlarmSound() {
-        AlarmSoundManager.start(this)
+        if (prefs.soundEnabled) {
+            AlarmSoundManager.start(this, R.raw.stacca_alarm)
+        }
         
         // Ferma dopo 5 secondi come fallback
         handler.postDelayed({ AlarmSoundManager.stop() }, 5000)
