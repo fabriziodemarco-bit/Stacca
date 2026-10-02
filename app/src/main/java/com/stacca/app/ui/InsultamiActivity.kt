@@ -102,7 +102,9 @@ class InsultamiActivity : AppCompatActivity() {
                 1 -> R.array.insults_phase_2
                 else -> R.array.insults_phase_3
             }
-            list.addAll(resources.getStringArray(arrayRes).toList().shuffled())
+            val insults = resources.getStringArray(arrayRes).toList()
+            // Fasi 1-2 in ordine casuale; la fase 3 segue un ordine fisso, fino al gran finale
+            list.addAll(if (phase == 2) insults else insults.shuffled())
         }
         tvInsult.text = list.removeAt(0)
 

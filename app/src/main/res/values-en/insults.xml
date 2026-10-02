@@ -13,7 +13,7 @@
         <item>Want to be insulted? Easy: you\'re still there!</item>
         <item>You\'re trading your life for a spreadsheet. What a bargain!</item>
         <item>You\'re working for free. Say it out loud: FREE!</item>
-        <item>Your boss doesn\'t love you. Your couch does.</item>
+        <item>Shut it all down or I send your browser history to your boss! 😈</item>
     </string-array>
 
     <string-array name="insults_phase_2">
@@ -24,10 +24,10 @@
     </string-array>
 
     <string-array name="insults_phase_3">
-        <item>Last chance, then I\'m calling your mother. And telling her EVERYTHING!</item>
-        <item>An app is yelling at you. You\'ve hit rock bottom and you\'re still digging.</item>
         <item>STOP! NOW. THIS IS NOT A SUGGESTION, IT\'S A THREAT!</item>
+        <item>An app is yelling at you. You\'ve hit rock bottom and you\'re still digging.</item>
         <item>CLOSE. THAT. LAPTOP.</item>
+        <item>Last chance, then I\'m calling your mother. And telling her EVERYTHING!</item>
     </string-array>
 
 </resources>

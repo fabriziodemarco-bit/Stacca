@@ -13,7 +13,7 @@
         <item>想被骂？简单：你还在这儿！</item>
         <item>你在用人生换一张Excel表格。真划算！</item>
         <item>你在免费工作。大声说出来：免费！</item>
-        <item>你的老板不爱你。你的沙发爱你。</item>
+        <item>全部关掉，不然我把你的浏览记录发给你老板！😈</item>
     </string-array>
 
     <string-array name="insults_phase_2">
@@ -24,10 +24,10 @@
     </string-array>
 
     <string-array name="insults_phase_3">
-        <item>最后一次机会，不然我就给你妈打电话。把一切都告诉她！</item>
-        <item>一个应用在冲你大喊。你已经跌到谷底，还在往下挖。</item>
         <item>停下！现在。这不是建议，是威胁！</item>
+        <item>一个应用在冲你大喊。你已经跌到谷底，还在往下挖。</item>
         <item>合上。那台。电脑。</item>
+        <item>最后一次机会，不然我就给你妈打电话。把一切都告诉她！</item>
     </string-array>
 
 </resources>

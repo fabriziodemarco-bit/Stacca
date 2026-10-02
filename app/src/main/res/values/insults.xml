@@ -18,7 +18,7 @@
         <item>Vuoi essere insultato? Facile: sei ancora lì!</item>
         <item>Ti stai giocando la vita per un foglio Excel. Che affare!</item>
         <item>Stai lavorando gratis. Ripetilo ad alta voce, GRATIS!</item>
-        <item>Il tuo capo non ti vuole bene. Il tuo divano sì.</item>
+        <item>Spegni tutto o mando la tua cronologia al tuo capo! 😈</item>
     </string-array>
 
     <!-- Fase 2: cattiveria -->
@@ -31,10 +31,10 @@
 
     <!-- Fase 3: furia -->
     <string-array name="insults_phase_3">
-        <item>Ultima possibilità, poi chiamo tua madre. E le racconto TUTTO!</item>
-        <item>Ti sta urlando contro un\'app. Hai toccato il fondo e stai scavando.</item>
         <item>SMETTILA! ADESSO. NON È UN CONSIGLIO, È UNA MINACCIA!</item>
+        <item>Ti sta urlando contro un\'app. Hai toccato il fondo e stai scavando.</item>
         <item>CHIUDI. QUEL. PORTATILE.</item>
+        <item>Ultima possibilità, poi chiamo tua madre. E le racconto TUTTO!</item>
     </string-array>
 
 </resources>
