@@ -1,5 +1,6 @@
 package com.stacca.app.notifications
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,8 +13,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.stacca.app.R
 import com.stacca.app.data.NotificationMessages
+import com.stacca.app.receivers.AlarmReceiver
 import com.stacca.app.receivers.NotificationActionReceiver
-import com.stacca.app.ui.FullScreenAlertActivity
+import com.stacca.app.ui.MainActivity
 
 
 /**
@@ -95,25 +97,36 @@ class NotificationHelper(private val context: Context) {
             CHANNEL_NORMAL
         }
 
-        // Intent per aprire l'app
-        val fullScreenIntent = Intent(context, FullScreenAlertActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("overtime_minutes", overtimeMinutes)
+        // Tocco sulla notifica: apre semplicemente l'app (NON lo schermo rosso)
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
-        val fullScreenPending = PendingIntent.getActivity(
-            context, 0, fullScreenIntent,
+        val openAppPending = PendingIntent.getActivity(
+            context, 0, openAppIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Azione: Chiudi
-        val stopIntent = Intent(context, NotificationActionReceiver::class.java).apply {
-            action = "ACTION_DISMISS_NOTIFICATION"
+        // Azione "Ho staccato": apre l'app, che registra lo stacco e ferma tutto per oggi
+        val hoStaccatoIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(MainActivity.EXTRA_HO_STACCATO, true)
         }
-        val stopPending = PendingIntent.getBroadcast(
-            context, 1, stopIntent,
+        val hoStaccatoPending = PendingIntent.getActivity(
+            context, 2, hoStaccatoIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        // Azione "Ancora X minuti": zittisce la notifica, l'escalation continua alla prossima
+        val snoozeIntent = Intent(context, NotificationActionReceiver::class.java).apply {
+            action = NotificationActionReceiver.ACTION_SNOOZE
+        }
+        val snoozePending = PendingIntent.getBroadcast(
+            context, 1, snoozeIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val snoozeMinutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
 
 
         // Vibration pattern basato sul livello
@@ -148,9 +161,9 @@ class NotificationHelper(private val context: Context) {
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(false)
             .setOngoing(level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal)
-            .setContentIntent(fullScreenPending)
-            .addAction(android.R.drawable.ic_menu_close_clear_cancel,
-                context.getString(R.string.btn_dismiss), stopPending)
+            .setContentIntent(openAppPending)
+            .addAction(0, context.getString(R.string.btn_ho_staccato), hoStaccatoPending)
+            .addAction(0, context.getString(R.string.btn_snooze, snoozeMinutes), snoozePending)
 
 
         // Vibrazione condizionale
@@ -167,7 +180,12 @@ class NotificationHelper(private val context: Context) {
         }
 
         try {
-            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, builder.build())
+            val notification = builder.build()
+            // Dal livello Aggressivo il suono si ripete finché l'utente non risponde
+            if (soundEnabled && level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal) {
+                notification.flags = notification.flags or Notification.FLAG_INSISTENT
+            }
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         } catch (e: SecurityException) {
             // Permessi notifica non concessi
             e.printStackTrace()

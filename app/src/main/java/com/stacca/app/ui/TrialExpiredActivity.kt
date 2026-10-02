@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Schermata informativa mostrata UNA SOLA VOLTA quando il trial scade.
@@ -22,6 +23,7 @@ class TrialExpiredActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trial_expired)
+        SystemBarsHelper.applyInsets(this)
 
         val prefs = PreferencesManager(this)
 

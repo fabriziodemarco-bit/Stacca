@@ -32,6 +32,7 @@ import com.stacca.app.receivers.AlarmReceiver
 import com.stacca.app.util.PermissionHelper
 import java.text.SimpleDateFormat
 import java.util.*
+import com.stacca.app.util.SystemBarsHelper
 
 
 /**
@@ -40,6 +41,11 @@ import java.util.*
  * e permette di attivare/disattivare l'allarme.
  */
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        /** Extra usato dal pulsante "Ho staccato" di notifiche e schermo rosso. */
+        const val EXTRA_HO_STACCATO = "extra_ho_staccato"
+    }
 
     private lateinit var prefs: PreferencesManager
     private lateinit var notificationHelper: NotificationHelper
@@ -122,6 +128,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
         notificationHelper = NotificationHelper(this)
@@ -134,6 +141,22 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
         updateUI()
         startClockUpdate()
+        handleHoStaccatoIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleHoStaccatoIntent(intent)
+    }
+
+    /** Se l'app è stata aperta dal pulsante "Ho staccato", registra lo stacco. */
+    private fun handleHoStaccatoIntent(intent: Intent?) {
+        if (intent?.getBooleanExtra(EXTRA_HO_STACCATO, false) != true) return
+        intent.removeExtra(EXTRA_HO_STACCATO)
+        if (prefs.isAlarmActive) {
+            handleHoStaccato()
+        }
     }
 
     private fun initViews() {

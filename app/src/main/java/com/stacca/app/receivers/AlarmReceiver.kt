@@ -37,10 +37,15 @@ class AlarmReceiver : BroadcastReceiver() {
          * 2 = Aggressivo (ogni 3 min)
          */
         private fun getIntervalMs(escalationSpeed: Int): Long {
+            return getIntervalMinutes(escalationSpeed) * 60 * 1000L
+        }
+
+        /** Minuti tra una notifica e l'altra (usato anche dal pulsante "Ancora X minuti"). */
+        fun getIntervalMinutes(escalationSpeed: Int): Int {
             return when (escalationSpeed) {
-                0 -> 8 * 60 * 1000L    // 🐌 Rilassato
-                2 -> 3 * 60 * 1000L    // 🔥 Aggressivo
-                else -> 5 * 60 * 1000L // ⚡ Normale
+                0 -> 8    // 🐌 Rilassato
+                2 -> 3    // 🔥 Aggressivo
+                else -> 5 // ⚡ Normale
             }
         }
 

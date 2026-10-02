@@ -13,6 +13,7 @@ import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Paywall freemium: mostrata quando l'utente (senza accesso completo) vuole sbloccare
@@ -29,6 +30,7 @@ class PaywallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_paywall)
+        SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
 

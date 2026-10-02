@@ -29,6 +29,7 @@ import com.stacca.app.data.PreferencesManager
 import androidx.core.widget.NestedScrollView
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Activity di login/registrazione con Supabase Auth.
@@ -76,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_login)
+        SystemBarsHelper.applyInsets(this)
 
         initViews()
         setupListeners()

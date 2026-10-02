@@ -21,6 +21,7 @@ import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
 import java.util.*
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Activity a schermo intero che appare quando il livello di escalation
@@ -35,6 +36,7 @@ class FullScreenAlertActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fullscreen_alert)
+        SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
         overtimeMinutes = intent.getIntExtra("overtime_minutes", 0)
@@ -75,9 +77,16 @@ class FullScreenAlertActivity : AppCompatActivity() {
             }
         })
 
-        // Bottone Stacco
+        // Bottone "Ho staccato": ferma tutto per oggi
         findViewById<MaterialButton>(R.id.btnStopWork).setOnClickListener {
             stopWork()
+        }
+
+        // Bottone "Ancora X minuti": chiude lo schermo, l'escalation continua
+        val snoozeMinutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
+        findViewById<MaterialButton>(R.id.btnSnooze).apply {
+            text = getString(R.string.btn_snooze, snoozeMinutes)
+            setOnClickListener { snooze() }
         }
 
     }
@@ -150,13 +159,21 @@ class FullScreenAlertActivity : AppCompatActivity() {
     private fun stopWork() {
         AlarmSoundManager.stop()
         NotificationHelper(this).cancelAll()
-        prefs.resetEscalation()
 
         finish()
 
+        // MainActivity registra lo stacco, ferma l'allarme e mostra il risultato
         startActivity(Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra(MainActivity.EXTRA_HO_STACCATO, true)
         })
+    }
+
+    private fun snooze() {
+        AlarmSoundManager.stop()
+        NotificationHelper(this).cancelAll()
+        finish()
     }
 
     override fun onDestroy() {

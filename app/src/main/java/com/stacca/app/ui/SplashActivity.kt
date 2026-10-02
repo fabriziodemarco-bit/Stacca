@@ -15,6 +15,7 @@ import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
 import kotlinx.coroutines.launch
+import com.stacca.app.util.SystemBarsHelper
 
 class SplashActivity : AppCompatActivity() {
 
@@ -27,6 +28,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        SystemBarsHelper.applyInsets(this)
 
         val splashContent = findViewById<View>(R.id.splashContent)
 

@@ -12,10 +12,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.slider.Slider
+import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
 import com.stacca.app.data.PreferencesManager
 import kotlinx.coroutines.launch
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Activity per le impostazioni dell'app.
@@ -30,6 +32,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
         authManager = AuthManager(this)
@@ -43,6 +46,10 @@ class SettingsActivity : AppCompatActivity() {
         setupAutoRestartSwitch()
         setupEscalationSpeed()
         setupAccountSection()
+
+        // Versione letta dalla build, così resta sempre aggiornata
+        findViewById<TextView>(R.id.tvVersion).text =
+            getString(R.string.settings_version, BuildConfig.VERSION_NAME)
     }
 
     private fun setupSoundSwitch() {

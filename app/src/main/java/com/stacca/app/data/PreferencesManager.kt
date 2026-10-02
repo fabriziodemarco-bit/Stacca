@@ -200,11 +200,14 @@ class PreferencesManager(context: Context) {
         get() = prefs.getInt("current_message_index", 0)
         set(value) = prefs.edit().putInt("current_message_index", value).apply()
 
-    /** Azzera i contatori di escalation (da chiamare quando l'utente stacca o disattiva). */
+    /**
+     * Azzera l'escalation (da chiamare quando l'utente stacca o disattiva).
+     * L'indice dei messaggi NON viene azzerato: così ogni giorno arrivano
+     * messaggi diversi invece della stessa sequenza.
+     */
     fun resetEscalation() {
         prefs.edit()
             .putInt("current_escalation_step", 0)
-            .putInt("current_message_index", 0)
             .apply()
     }
 

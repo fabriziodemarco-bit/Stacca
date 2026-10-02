@@ -9,6 +9,7 @@ import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Activity per la pagina di upsell premium.
@@ -23,6 +24,7 @@ class PremiumActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_premium)
+        SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
 
