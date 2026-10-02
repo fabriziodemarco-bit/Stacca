@@ -15,6 +15,7 @@ import com.stacca.app.R
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.receivers.AlarmReceiver
 import com.stacca.app.receivers.NotificationActionReceiver
+import com.stacca.app.ui.FullScreenAlertActivity
 import com.stacca.app.ui.MainActivity
 
 
@@ -97,10 +98,22 @@ class NotificationHelper(private val context: Context) {
             CHANNEL_NORMAL
         }
 
-        // Tocco sulla notifica: apre semplicemente l'app (NON lo schermo rosso)
-        val openAppIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                Intent.FLAG_ACTIVITY_SINGLE_TOP
+        // Tocco sulla notifica:
+        // - livelli 4-6 con Premium (e schermo intero attivo): apre lo schermo rosso
+        // - altrimenti: apre l'app
+        val showRedScreen = prefs.hasFullAccess && prefs.fullScreenEnabled &&
+            level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal
+        val openAppIntent = if (showRedScreen) {
+            Intent(context, FullScreenAlertActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                putExtra("overtime_minutes", overtimeMinutes)
+                putExtra("level", level.name)
+            }
+        } else {
+            Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                    Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
         }
         val openAppPending = PendingIntent.getActivity(
             context, 0, openAppIntent,

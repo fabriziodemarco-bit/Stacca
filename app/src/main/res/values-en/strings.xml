@@ -27,6 +27,7 @@
     <string name="btn_ho_staccato">✋ I HAVE UNPLUGGED!</string>
     <string name="btn_5_more_minutes">5 more minutes… ⏰</string>
     <string name="btn_snooze">%d more minutes, I swear 🙄</string>
+    <string name="snooze_toast">Fine. Back in %d minutes. Meaner. 😈</string>
 
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>

@@ -27,6 +27,7 @@
     <string name="btn_ho_staccato">✋ 我已下班！</string>
     <string name="btn_5_more_minutes">再给我5分钟… ⏰</string>
     <string name="btn_snooze">再给我%d分钟，我发誓 🙄</string>
+    <string name="snooze_toast">好吧，%d分钟后我会回来，而且更凶。😈</string>
 
     <string name="btn_save">保存</string>
     <string name="btn_cancel">取消</string>

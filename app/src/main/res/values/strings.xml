@@ -27,6 +27,7 @@
     <string name="btn_ho_staccato">✋ HO STACCATO!</string>
     <string name="btn_5_more_minutes">Ancora 5 minuti… ⏰</string>
     <string name="btn_snooze">Ancora %d minuti, giuro 🙄</string>
+    <string name="snooze_toast">Ok, tra %d minuti torno. Più cattivo. 😈</string>
 
     <string name="btn_save">Salva</string>
     <string name="btn_cancel">Annulla</string>

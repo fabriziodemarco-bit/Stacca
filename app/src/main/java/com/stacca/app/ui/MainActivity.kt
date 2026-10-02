@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     // Streak badge e bottone "Ho staccato!" (in cardCountdown)
     private lateinit var btnHoStaccato: com.google.android.material.button.MaterialButton
+    private lateinit var btnSnoozeApp: MaterialButton
 
     // Receiver per il cambio di stato del permesso allarmi esatti (API 31+)
     private val exactAlarmPermissionReceiver = object : BroadcastReceiver() {
@@ -185,6 +186,7 @@ class MainActivity : AppCompatActivity() {
 
         // Bottone "Ho staccato!"
         btnHoStaccato = findViewById(R.id.btnHoStaccato)
+        btnSnoozeApp = findViewById(R.id.btnSnoozeApp)
     }
 
 
@@ -215,6 +217,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Bottone "Ho staccato!" in MainActivity
+        btnSnoozeApp.setOnClickListener {
+            handleSnooze()
+        }
+
         btnHoStaccato.setOnClickListener {
             handleHoStaccato()
         }
@@ -415,6 +421,7 @@ class MainActivity : AppCompatActivity() {
                 tvCountdown.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
                 cardCountdown.strokeColor = ContextCompat.getColor(this, android.R.color.transparent)
                 btnHoStaccato.visibility = View.GONE
+                btnSnoozeApp.visibility = View.GONE
             } else {
                 // Straordinario!
                 val overtimeMillis = -diffMillis
@@ -435,6 +442,10 @@ class MainActivity : AppCompatActivity() {
                 cardCountdown.strokeColor = ContextCompat.getColor(this, R.color.alert_apocalypse)
 
                 btnHoStaccato.visibility = View.VISIBLE
+                btnSnoozeApp.visibility = View.VISIBLE
+                btnSnoozeApp.text = getString(
+                    R.string.btn_snooze, AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
+                )
             }
         }
     }
@@ -444,6 +455,18 @@ class MainActivity : AppCompatActivity() {
      * Calcola l'overtime corrente, chiama registraStaccato, cancella allarmi e
      * apre la schermata appropriata (Celebration o TempoNonVissuto).
      */
+    /**
+     * "Ancora X minuti" dall'app: zittisce l'allarme, l'escalation continua
+     * (la prossima notifica è già programmata e arriverà al livello successivo).
+     */
+    private fun handleSnooze() {
+        AlarmSoundManager.stop()
+        notificationHelper.cancelAll()
+        val minutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
+        Toast.makeText(this, getString(R.string.snooze_toast, minutes), Toast.LENGTH_LONG).show()
+        moveTaskToBack(true)
+    }
+
     private fun handleHoStaccato() {
         val now = Calendar.getInstance()
         val endTime = Calendar.getInstance().apply {

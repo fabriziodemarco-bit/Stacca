@@ -247,6 +247,16 @@
                     android:visibility="gone"
                     app:cornerRadius="16dp" />
 
+                <!-- Bottone "Ancora X minuti" (visibile solo in overtime) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSnoozeApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_snooze"
+                    style="@style/Widget.Stacca.Button.Secondary"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
