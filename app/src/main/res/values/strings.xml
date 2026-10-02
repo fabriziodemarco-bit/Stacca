@@ -127,6 +127,15 @@
     <string name="paywall_buy_button">&#x1F513; SBLOCCA ORA &#x2014; &#x20AC;0,99</string>
     <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
     <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai pi&#xF9; sfuggire! &#x1F608;&#x1F525;</string>
+    <string name="notif_level_label">Livello %1$d di 6 · %2$s</string>
+    <string-array name="notif_level_names">
+        <item>Gentile</item>
+        <item>Amichevole</item>
+        <item>Insistente</item>
+        <item>Aggressivo</item>
+        <item>Nucleare</item>
+        <item>Apocalisse</item>
+    </string-array>
     <string name="notif_premium_teaser">&#x1F512; Con Premium a quest\'ora ti starei gi&#xE0; urlando contro (livello NUCLEARE)</string>
     <string name="paywall_unlock_price">🔓 SBLOCCA ORA — %s</string>
 

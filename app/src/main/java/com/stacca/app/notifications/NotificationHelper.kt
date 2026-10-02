@@ -138,25 +138,23 @@ class NotificationHelper(private val context: Context) {
             else -> longArrayOf(0, 500, 200, 500)
         }
 
-        // Testo collassato: sempre "Basta lavorare. Vivi."
-        // Testo espanso: titolo grande "STACCA!" + titolo e messaggio originali sotto
+        // Il messaggio del livello si vede già a notifica chiusa, così ogni notifica è diversa.
+        // In alto: "Livello X di 6 · Nome", per rendere visibile l'escalation.
         // Se premiumTeaser=true, aggiunge riga upsell ironica (una volta al giorno)
-        val collapsedBody = context.getString(R.string.app_tagline)
+        val levelName = context.resources.getStringArray(R.array.notif_level_names)[level.ordinal]
+        val levelLabel = context.getString(R.string.notif_level_label, level.ordinal + 1, levelName)
         val expandedBody = if (premiumTeaser) {
-            "$title\n$message\n\n${context.getString(R.string.notif_premium_teaser)}"
+            "$message\n\n${context.getString(R.string.notif_premium_teaser)}"
         } else {
-            "$title\n$message"
+            message
         }
 
         val builder = NotificationCompat.Builder(context, channel)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle(title)
-            .setContentText(collapsedBody)
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .setBigContentTitle(context.getString(R.string.fullscreen_title))
-                    .bigText(expandedBody)
-            )
+            .setContentText(message)
+            .setSubText(levelLabel)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(expandedBody))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setAutoCancel(false)

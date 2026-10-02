@@ -123,6 +123,15 @@
     <string name="paywall_buy_button">&#x1F513; 立即解锁 &#x2014; &#x20AC;0.99</string>
     <string name="paywall_no_thanks">不用了谢谢，我还是保持温和级别</string>
     <string name="paywall_success">激进通知已解锁！现在你无处可逃了！ &#x1F608;&#x1F525;</string>
+    <string name="notif_level_label">第%1$d级（共6级）· %2$s</string>
+    <string-array name="notif_level_names">
+        <item>温和</item>
+        <item>友好</item>
+        <item>坚持</item>
+        <item>激进</item>
+        <item>核爆</item>
+        <item>末日</item>
+    </string-array>
     <string name="notif_premium_teaser">&#x1F512; 如果是高级版，我现在早冲你吼了（核弹级别）</string>
     <string name="paywall_unlock_price">🔓 立即解锁 — %s</string>
 

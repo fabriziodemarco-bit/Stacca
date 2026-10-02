@@ -123,6 +123,15 @@
     <string name="paywall_buy_button">&#x1F513; UNLOCK NOW &#x2014; &#x20AC;0.99</string>
     <string name="paywall_no_thanks">No thanks, I\'ll stick to the gentle level</string>
     <string name="paywall_success">Aggressive notifications unlocked! Now you won\'t be able to escape! &#x1F608;&#x1F525;</string>
+    <string name="notif_level_label">Level %1$d of 6 · %2$s</string>
+    <string-array name="notif_level_names">
+        <item>Gentle</item>
+        <item>Friendly</item>
+        <item>Insistent</item>
+        <item>Aggressive</item>
+        <item>Nuclear</item>
+        <item>Apocalypse</item>
+    </string-array>
     <string name="notif_premium_teaser">&#x1F512; With Premium by now I\'d be yelling at you (NUCLEAR level)</string>
     <string name="paywall_unlock_price">🔓 UNLOCK NOW — %s</string>
 
