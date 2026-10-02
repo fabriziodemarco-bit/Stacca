@@ -1,6 +1,8 @@
 package com.stacca.app.ui
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -37,8 +39,8 @@ import com.stacca.app.util.SystemBarsHelper
 
 /**
  * Activity principale dell'app Stacca!
- * Mostra l'orario corrente, l'orario di fine turno impostato,
- * e permette di attivare/disattivare l'allarme.
+ * Un riquadro protagonista che cambia con il momento (spento, countdown,
+ * straordinario, stacco), il pulsante Insultami e le azioni secondarie.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -51,24 +53,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var billingManager: BillingManager
     private val handler = Handler(Looper.getMainLooper())
-    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-    private val timeFormatSeconds = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
-    // Views
-    private lateinit var tvCurrentTime: TextView
-    private lateinit var tvEndTime: TextView
-    private lateinit var tvStatus: TextView
-    private lateinit var statusDot: View
-    private lateinit var tvCountdown: TextView
-    private lateinit var tvCountdownLabel: TextView
-    private lateinit var cardCountdown: MaterialCardView
-    private lateinit var cardEndTime: MaterialCardView
-    private lateinit var cardTempoNonVissuto: MaterialCardView
-    private lateinit var tvTempoNonVissuto: TextView
-    private lateinit var btnActivate: MaterialButton
+    // Riquadro protagonista: cambia in base al momento (vedi updateUI)
+    private lateinit var cardHero: MaterialCardView
+    private lateinit var tvHeroLabel: TextView
+    private lateinit var tvHeroValue: TextView
+    private lateinit var tvHeroSub: TextView
+    private lateinit var btnHeroPrimary: MaterialButton
+    private lateinit var btnHeroSecondary: MaterialButton
+
+    private lateinit var btnInsultami: MaterialButton
     private lateinit var btnDeactivate: MaterialButton
     private lateinit var btnSettings: MaterialButton
-    private lateinit var btnAncoraUnaSveglia: MaterialButton
+    private lateinit var tvPremiumBadge: TextView
 
     // Card protezione permessi
     private lateinit var cardPermissions: MaterialCardView
@@ -76,13 +73,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPermExactAlarm: TextView
     private lateinit var tvPermBattery: TextView
 
-    // Card banner trial (visibile solo ai non-premium)
-    private lateinit var cardTrialBanner: MaterialCardView
-    private lateinit var tvTrialBanner: TextView
-
-    // Streak badge e bottone "Ho staccato!" (in cardCountdown)
-    private lateinit var btnHoStaccato: com.google.android.material.button.MaterialButton
-    private lateinit var btnSnoozeApp: MaterialButton
+    /** I possibili momenti mostrati dal riquadro protagonista. */
+    private enum class HeroState { SPENTO, COUNTDOWN, STRAORDINARIO, STACCATO }
 
     // Receiver per il cambio di stato del permesso allarmi esatti (API 31+)
     private val exactAlarmPermissionReceiver = object : BroadcastReceiver() {
@@ -142,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
         updateUI()
         startClockUpdate()
+        startInsultamiPulse()
         handleHoStaccatoIntent(intent)
     }
 
@@ -161,76 +154,65 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        tvCurrentTime = findViewById(R.id.tvCurrentTime)
-        tvEndTime = findViewById(R.id.tvEndTime)
-        tvStatus = findViewById(R.id.tvStatus)
-        statusDot = findViewById(R.id.statusDot)
-        tvCountdown = findViewById(R.id.tvCountdown)
-        tvCountdownLabel = findViewById(R.id.tvCountdownLabel)
-        cardCountdown = findViewById(R.id.cardCountdown)
-        cardEndTime = findViewById(R.id.cardEndTime)
-        cardTempoNonVissuto = findViewById(R.id.cardTempoNonVissuto)
-        tvTempoNonVissuto = findViewById(R.id.tvTempoNonVissuto)
-        btnActivate = findViewById(R.id.btnActivate)
+        cardHero = findViewById(R.id.cardHero)
+        tvHeroLabel = findViewById(R.id.tvHeroLabel)
+        tvHeroValue = findViewById(R.id.tvHeroValue)
+        tvHeroSub = findViewById(R.id.tvHeroSub)
+        btnHeroPrimary = findViewById(R.id.btnHeroPrimary)
+        btnHeroSecondary = findViewById(R.id.btnHeroSecondary)
+        btnInsultami = findViewById(R.id.btnInsultami)
         btnDeactivate = findViewById(R.id.btnDeactivate)
         btnSettings = findViewById(R.id.btnSettings)
-        btnAncoraUnaSveglia = findViewById(R.id.btnAncoraUnaSveglia)
+        tvPremiumBadge = findViewById(R.id.tvPremiumBadge)
         // Card protezione permessi
         cardPermissions = findViewById(R.id.cardPermissions)
         tvPermNotification = findViewById(R.id.tvPermNotification)
         tvPermExactAlarm = findViewById(R.id.tvPermExactAlarm)
         tvPermBattery = findViewById(R.id.tvPermBattery)
-        // Card banner trial
-        cardTrialBanner = findViewById(R.id.cardTrialBanner)
-        tvTrialBanner = findViewById(R.id.tvTrialBanner)
-
-        // Bottone "Ho staccato!"
-        btnHoStaccato = findViewById(R.id.btnHoStaccato)
-        btnSnoozeApp = findViewById(R.id.btnSnoozeApp)
-        findViewById<MaterialButton>(R.id.btnInsultami).setOnClickListener {
-            startActivity(Intent(this, InsultamiActivity::class.java))
-        }
     }
 
-
     private fun setupListeners() {
-        // Imposta orario di fine
-        findViewById<MaterialButton>(R.id.btnSetTime).setOnClickListener {
-            showTimePicker()
+        // Il pulsante principale cambia funzione in base al momento
+        btnHeroPrimary.setOnClickListener {
+            when (currentHeroState()) {
+                HeroState.SPENTO -> checkPermissionsAndActivate()
+                HeroState.STRAORDINARIO -> handleHoStaccato()
+                HeroState.STACCATO -> {
+                    prefs.isWaitingForNextAlarm = false
+                    updateUI()
+                }
+                HeroState.COUNTDOWN -> Unit
+            }
+        }
+        btnHeroSecondary.setOnClickListener { handleSnooze() }
+
+        // Toccando l'orario (o la riga sotto) si cambia il fine turno
+        tvHeroValue.setOnClickListener {
+            if (currentHeroState() == HeroState.SPENTO) showTimePicker()
+        }
+        tvHeroSub.setOnClickListener {
+            val state = currentHeroState()
+            if (state == HeroState.SPENTO || state == HeroState.COUNTDOWN) showTimePicker()
         }
 
-        // Click sulla card dell'orario per aprire il picker
-        cardEndTime.setOnClickListener {
-            showTimePicker()
+        btnInsultami.setOnClickListener {
+            startActivity(Intent(this, InsultamiActivity::class.java))
         }
-
-        // Attiva allarme
-        btnActivate.setOnClickListener {
-            checkPermissionsAndActivate()
-        }
-
-        // Disattiva allarme
-        btnDeactivate.setOnClickListener {
-            deactivateAlarm()
-        }
-
-        // Impostazioni
+        btnDeactivate.setOnClickListener { deactivateAlarm() }
         btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
+    }
 
-        // Bottone "Ho staccato!" in MainActivity
-        btnSnoozeApp.setOnClickListener {
-            handleSnooze()
-        }
-
-        btnHoStaccato.setOnClickListener {
-            handleHoStaccato()
-        }
-
-        btnAncoraUnaSveglia.setOnClickListener {
-            prefs.isWaitingForNextAlarm = false
-            updateUI()
+    /** Insultami "respira": pulsa piano per attirare l'occhio. */
+    private fun startInsultamiPulse() {
+        listOf(View.SCALE_X, View.SCALE_Y).forEach { property ->
+            ObjectAnimator.ofFloat(btnInsultami, property, 1f, 1.06f).apply {
+                duration = 900
+                repeatMode = ValueAnimator.REVERSE
+                repeatCount = ValueAnimator.INFINITE
+                start()
+            }
         }
     }
 
@@ -245,7 +227,6 @@ class MainActivity : AppCompatActivity() {
         picker.addOnPositiveButtonClickListener {
             prefs.endHour = picker.hour
             prefs.endMinute = picker.minute
-            tvEndTime.text = String.format("%02d:%02d", picker.hour, picker.minute)
 
             // Se l'allarme è attivo, riprogrammalo
             if (prefs.isAlarmActive) {
@@ -253,6 +234,7 @@ class MainActivity : AppCompatActivity() {
                 AlarmReceiver.scheduleAlarm(this, picker.hour, picker.minute)
                 Toast.makeText(this, "⏰ Allarme aggiornato!", Toast.LENGTH_SHORT).show()
             }
+            updateUI()
         }
 
         picker.show(supportFragmentManager, "timePicker")
@@ -333,122 +315,123 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun updateUI() {
-        if (prefs.isWaitingForNextAlarm) {
-            val overtime = prefs.lastShiftOvertimeMinutes
-            cardTempoNonVissuto.visibility = View.VISIBLE
-            tvTempoNonVissuto.text = "$overtime min"
-            val colorRes = if (overtime > 0) R.color.alert_apocalypse else R.color.alert_friendly
-            cardTempoNonVissuto.strokeColor = ContextCompat.getColor(this, colorRes)
-            tvTempoNonVissuto.setTextColor(ContextCompat.getColor(this, colorRes))
-
-            cardEndTime.visibility = View.GONE
-            cardCountdown.visibility = View.GONE
-            btnActivate.visibility = View.GONE
-            btnDeactivate.visibility = View.GONE
-            btnSettings.visibility = View.VISIBLE
-            btnAncoraUnaSveglia.visibility = View.VISIBLE
-            
-            // Con il riavvio automatico l'allarme resta attivo per domani
-            tvStatus.text = if (prefs.isAlarmActive) {
-                getString(
-                    R.string.staccato_see_you_tomorrow,
-                    String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
-                )
-            } else {
-                getString(R.string.staccato_done)
-            }
-            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
-            btnHoStaccato.visibility = View.GONE
-            updateTrialBanner()
-            return
-        }
-
-        val isActive = prefs.isAlarmActive
-
-        // Il "Tempo non vissuto" si vede solo nel riepilogo subito dopo lo stacco
-        cardTempoNonVissuto.visibility = View.GONE
-
-        cardEndTime.visibility = View.VISIBLE
-        btnSettings.visibility = View.VISIBLE
-        btnAncoraUnaSveglia.visibility = View.GONE
-
-        tvEndTime.text = String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
-
-        if (isActive) {
-            tvStatus.text = getString(R.string.alarm_active)
-            statusDot.setBackgroundResource(R.drawable.status_dot_active)
-            btnActivate.visibility = View.GONE
-            btnDeactivate.visibility = View.VISIBLE
-            cardCountdown.visibility = View.VISIBLE
+    /** In quale momento siamo: decide cosa mostra il riquadro protagonista. */
+    private fun currentHeroState(): HeroState {
+        if (prefs.isWaitingForNextAlarm) return HeroState.STACCATO
+        if (!prefs.isAlarmActive) return HeroState.SPENTO
+        return if (System.currentTimeMillis() < currentShiftEndMillis()) {
+            HeroState.COUNTDOWN
         } else {
-            tvStatus.text = getString(R.string.alarm_inactive)
-            statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
-            btnActivate.visibility = View.VISIBLE
-            btnDeactivate.visibility = View.GONE
-            cardCountdown.visibility = View.GONE
+            HeroState.STRAORDINARIO
         }
-        updateTrialBanner()
+    }
+
+    /**
+     * Ridisegna la home. Chiamata ogni secondo dall'orologio, quindi
+     * tiene aggiornati anche countdown e straordinario.
+     */
+    private fun updateUI() {
+        val state = currentHeroState()
+        val endTimeText = String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
+        val now = System.currentTimeMillis()
+
+        // Valori di base, sovrascritti caso per caso
+        var accent = R.color.primary
+        btnHeroPrimary.visibility = View.GONE
+        btnHeroSecondary.visibility = View.GONE
+        btnDeactivate.visibility = if (prefs.isAlarmActive) View.VISIBLE else View.GONE
+
+        when (state) {
+            HeroState.SPENTO -> {
+                tvHeroLabel.setText(R.string.end_time_label)
+                tvHeroValue.text = endTimeText
+                tvHeroSub.setText(R.string.hero_tap_to_change)
+                btnHeroPrimary.setText(R.string.activate_alarm)
+                btnHeroPrimary.visibility = View.VISIBLE
+            }
+
+            HeroState.COUNTDOWN -> {
+                val endMillis = currentShiftEndMillis()
+                val isToday = isSameDay(endMillis, now)
+                tvHeroLabel.text = if (isToday) {
+                    getString(R.string.hero_countdown_label)
+                } else {
+                    getString(R.string.next_shift_tomorrow).uppercase()
+                }
+                tvHeroValue.text = formatDuration(endMillis - now, withPlus = false)
+                tvHeroSub.text = getString(R.string.hero_end_time_sub, endTimeText)
+            }
+
+            HeroState.STRAORDINARIO -> {
+                accent = R.color.alert_apocalypse
+                tvHeroLabel.setText(R.string.hero_overtime_label)
+                tvHeroValue.text = formatDuration(now - currentShiftEndMillis(), withPlus = true)
+                tvHeroSub.setText(R.string.hero_overtime_sub)
+                btnHeroPrimary.setText(R.string.btn_ho_staccato)
+                btnHeroPrimary.visibility = View.VISIBLE
+                btnHeroSecondary.text = getString(
+                    R.string.btn_snooze, AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
+                )
+                btnHeroSecondary.visibility = View.VISIBLE
+            }
+
+            HeroState.STACCATO -> {
+                // Il momento premio: si celebra lo stacco (con un pizzico di sfottò se in ritardo)
+                val overtime = prefs.lastShiftOvertimeMinutes
+                val onTime = overtime == 0
+                accent = if (onTime) R.color.alert_gentle else R.color.primary
+                tvHeroLabel.setText(
+                    if (onTime) R.string.hero_free_label_ontime else R.string.hero_free_label_late
+                )
+                tvHeroValue.text = "$overtime min"
+                val firstLine = if (onTime) {
+                    getString(R.string.hero_free_sub_ontime)
+                } else {
+                    getString(R.string.hero_free_sub_late, overtime)
+                }
+                tvHeroSub.text = if (prefs.isAlarmActive) {
+                    firstLine + "\n" + getString(R.string.hero_next_tomorrow, endTimeText)
+                } else {
+                    firstLine
+                }
+                btnHeroPrimary.setText(R.string.btn_ok_home)
+                btnHeroPrimary.visibility = View.VISIBLE
+                // Subito dopo lo stacco "Disattiva" non serve
+                btnDeactivate.visibility = View.GONE
+            }
+        }
+
+        val accentColor = ContextCompat.getColor(this, accent)
+        cardHero.strokeColor = accentColor
+        tvHeroLabel.setTextColor(accentColor)
+        tvHeroValue.setTextColor(accentColor)
+        btnHeroPrimary.backgroundTintList = android.content.res.ColorStateList.valueOf(accentColor)
+    }
+
+    /** Durata in formato 00:00:00, con "+" davanti per lo straordinario. */
+    private fun formatDuration(millis: Long, withPlus: Boolean): String {
+        val safe = millis.coerceAtLeast(0L)
+        val hours = safe / 3600000
+        val minutes = (safe % 3600000) / 60000
+        val seconds = (safe % 60000) / 1000
+        val text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        return if (withPlus) "+$text" else text
+    }
+
+    private fun isSameDay(a: Long, b: Long): Boolean {
+        val ca = Calendar.getInstance().apply { timeInMillis = a }
+        val cb = Calendar.getInstance().apply { timeInMillis = b }
+        return ca.get(Calendar.YEAR) == cb.get(Calendar.YEAR) &&
+            ca.get(Calendar.DAY_OF_YEAR) == cb.get(Calendar.DAY_OF_YEAR)
     }
 
     private fun startClockUpdate() {
         handler.post(object : Runnable {
             override fun run() {
-                updateClock()
+                updateUI()
                 handler.postDelayed(this, 1000)
             }
         })
-    }
-
-    private fun updateClock() {
-        val now = Calendar.getInstance()
-        tvCurrentTime.text = timeFormatSeconds.format(now.time)
-
-        if (prefs.isAlarmActive) {
-            val endMillis = currentShiftEndMillis()
-            val diffMillis = endMillis - now.timeInMillis
-
-            if (diffMillis > 0) {
-                // Countdown — nasconde bottone e badge quando non siamo in overtime
-                cardEndTime.visibility = View.VISIBLE
-                val hours = diffMillis / 3600000
-                val minutes = (diffMillis % 3600000) / 60000
-                val seconds = (diffMillis % 60000) / 1000
-                tvCountdown.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                val endDay = Calendar.getInstance().apply { timeInMillis = endMillis }
-                val isToday = endDay.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)
-                tvCountdownLabel.text =
-                    getString(if (isToday) R.string.time_remaining else R.string.next_shift_tomorrow)
-                tvCountdown.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
-                cardCountdown.strokeColor = ContextCompat.getColor(this, android.R.color.transparent)
-                btnHoStaccato.visibility = View.GONE
-                btnSnoozeApp.visibility = View.GONE
-            } else {
-                // Straordinario!
-                val overtimeMillis = -diffMillis
-                val hours = overtimeMillis / 3600000
-                val minutes = (overtimeMillis % 3600000) / 60000
-                val seconds = (overtimeMillis % 60000) / 1000
-                tvCountdown.text = String.format("+%02d:%02d:%02d", hours, minutes, seconds)
-                tvCountdownLabel.text = getString(R.string.tempo_non_vissuto_title).uppercase()
-                cardEndTime.visibility = View.GONE
-
-                val overtimeMinutes = (overtimeMillis / 60000).toInt()
-                val level = NotificationMessages.getLevelForMinutes(overtimeMinutes)
-
-                // Colore basato sul livello (rimosso fiamme, usiamo alert_apocalypse se overtime > 0)
-                val color = R.color.alert_apocalypse
-                tvCountdown.setTextColor(ContextCompat.getColor(this, color))
-                tvCountdownLabel.setTextColor(ContextCompat.getColor(this, color))
-                cardCountdown.strokeColor = ContextCompat.getColor(this, R.color.alert_apocalypse)
-
-                btnHoStaccato.visibility = View.VISIBLE
-                btnSnoozeApp.visibility = View.VISIBLE
-                btnSnoozeApp.text = getString(
-                    R.string.btn_snooze, AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
-                )
-            }
-        }
     }
 
     /**
@@ -500,24 +483,12 @@ class MainActivity : AppCompatActivity() {
         AlarmReceiver.cancelAlarm(this)
         notificationHelper.cancelAll()
 
-        if (prefs.autoRestartEnabled) {
-            // Riavvio automatico: l'orario di oggi è passato, quindi scatta domani
-            AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
-        } else {
-            prefs.isAlarmActive = false
-        }
+        // Riavvio automatico: l'orario di oggi è passato, quindi l'allarme scatta domani
+        AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
 
         // Aggiorna UI
         updateUI()
-        updateClock()
     }
-
-    /**
-     * Mostra un dialog con le statistiche streak dell'utente.
-     */
-
-
-
 
     override fun onResume() {
         super.onResume()
@@ -616,28 +587,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Aggiorna il banner del trial/escalation nella schermata principale.
-     *
-     * - Accesso completo (premium o trial attivo): "Escalation completa: 6 livelli 💀" — non cliccabile.
-     * - Piano gratuito: "Escalation attiva: 3 di 6 livelli 🔒" — cliccabile → PaywallActivity.
+     * Aggiorna il badge in alto a destra nella home.
+     * - Premium: "👑 Premium", non cliccabile.
+     * - Piano gratuito: "👑 Passa a Premium", apre la schermata di acquisto.
      */
     private fun updateTrialBanner() {
         if (prefs.isPremium) {
-            cardTrialBanner.visibility = View.VISIBLE
-            tvTrialBanner.text = getString(R.string.premium_active)
+            tvPremiumBadge.setText(R.string.premium_badge)
+            tvPremiumBadge.isClickable = false
+            tvPremiumBadge.setOnClickListener(null)
         } else {
-            cardTrialBanner.visibility = View.VISIBLE
-            tvTrialBanner.text = getString(R.string.settings_upgrade)
-        }
-
-        if (!prefs.isPremium) {
-            cardTrialBanner.isClickable = true
-            cardTrialBanner.setOnClickListener {
+            tvPremiumBadge.setText(R.string.settings_upgrade)
+            tvPremiumBadge.isClickable = true
+            tvPremiumBadge.setOnClickListener {
                 startActivity(Intent(this, PremiumActivity::class.java))
             }
-        } else {
-            cardTrialBanner.isClickable = false
-            cardTrialBanner.setOnClickListener(null)
         }
     }
 

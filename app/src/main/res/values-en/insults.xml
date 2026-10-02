@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="btn_insultami">💀 INSULT ME</string>
+    <string name="btn_insultami">💀\nINSULT ME</string>
     <string name="insult_btn_ok">✋ OK, I\'M UNPLUGGING!</string>
     <string name="insult_phase_1">PHASE 1 · TEASING</string>
     <string name="insult_phase_2">PHASE 2 · NASTY</string>

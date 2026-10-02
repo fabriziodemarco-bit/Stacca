@@ -5,7 +5,7 @@
 -->
 <resources>
 
-    <string name="btn_insultami">💀 INSULTAMI</string>
+    <string name="btn_insultami">💀\nINSULTAMI</string>
     <string name="insult_btn_ok">✋ OK, STACCO!</string>
     <string name="insult_phase_1">FASE 1 · SFOTTÒ</string>
     <string name="insult_phase_2">FASE 2 · CATTIVERIA</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="btn_insultami">💀 骂我</string>
+    <string name="btn_insultami">💀\n骂我</string>
     <string name="insult_btn_ok">✋ 好的，我下班！</string>
     <string name="insult_phase_1">第一阶段 · 调侃</string>
     <string name="insult_phase_2">第二阶段 · 毒舌</string>

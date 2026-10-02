@@ -28,9 +28,21 @@
     <string name="btn_5_more_minutes">再给我5分钟… ⏰</string>
     <string name="btn_snooze">再给我%d分钟，我发誓 🙄</string>
     <string name="btn_ok_home">好的 👍</string>
+    <!-- 主页：主卡片 -->
+    <string name="hero_tap_to_change">点击时间进行修改 ✏️</string>
+    <string name="hero_countdown_label">距离自由还有</string>
+    <string name="hero_end_time_sub">下班时间 %s ✏️</string>
+    <string name="hero_overtime_label">你已经加班了</string>
+    <string name="hero_overtime_sub">在这里的每一秒都是没有活过的时间。</string>
+    <string name="hero_free_label_ontime">🎉 自由了！</string>
+    <string name="hero_free_label_late">终于自由了</string>
+    <string name="hero_free_sub_ontime">零分钟送给公司。就该这样。</string>
+    <string name="hero_free_sub_late">晚了%d分钟。我们原谅你 😏</string>
+    <string name="hero_next_tomorrow">明天%s继续 ⏰</string>
+    <string name="insultami_sub">一分钟。如果你敢的话。</string>
+    <string name="premium_badge">👑 高级版</string>
+    <string name="btn_deactivate_small">关闭闹钟</string>
     <string name="next_shift_tomorrow">下次下班：明天</string>
-    <string name="staccato_done">你下班了！✌️</string>
-    <string name="staccato_see_you_tomorrow">你下班了！✌️ 明天%s见</string>
     <string name="snooze_toast">好吧，%d分钟后我会回来，而且更凶。😈</string>
 
     <string name="btn_save">保存</string>

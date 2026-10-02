@@ -28,9 +28,21 @@
     <string name="btn_5_more_minutes">5 more minutes… ⏰</string>
     <string name="btn_snooze">%d more minutes, I swear 🙄</string>
     <string name="btn_ok_home">Ok 👍</string>
+    <!-- Home: hero card -->
+    <string name="hero_tap_to_change">Tap the time to change it ✏️</string>
+    <string name="hero_countdown_label">FREEDOM IN</string>
+    <string name="hero_end_time_sub">Shift ends at %s ✏️</string>
+    <string name="hero_overtime_label">YOU\'VE BEEN WORKING OVERTIME FOR</string>
+    <string name="hero_overtime_sub">Every second here is time not lived.</string>
+    <string name="hero_free_label_ontime">🎉 FREE!</string>
+    <string name="hero_free_label_late">FREE, FINALLY</string>
+    <string name="hero_free_sub_ontime">Zero minutes gifted to the company. That\'s how it\'s done.</string>
+    <string name="hero_free_sub_late">%d min late. We forgive you 😏</string>
+    <string name="hero_next_tomorrow">Back at it tomorrow at %s ⏰</string>
+    <string name="insultami_sub">One minute. If you dare.</string>
+    <string name="premium_badge">👑 Premium</string>
+    <string name="btn_deactivate_small">Turn off alarm</string>
     <string name="next_shift_tomorrow">Next unplug: tomorrow</string>
-    <string name="staccato_done">You unplugged! ✌️</string>
-    <string name="staccato_see_you_tomorrow">You unplugged! ✌️ Back at it tomorrow at %s</string>
     <string name="snooze_toast">Fine. Back in %d minutes. Meaner. 😈</string>
 
     <string name="btn_save">Save</string>

@@ -43,7 +43,6 @@ class SettingsActivity : AppCompatActivity() {
         setupSoundSwitch()
         setupVibrationSwitch()
         setupFullScreenSwitch()
-        setupAutoRestartSwitch()
         setupEscalationSpeed()
         setupAccountSection()
 
@@ -85,14 +84,6 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnCheckedChangeListener
             }
             prefs.fullScreenEnabled = checked
-        }
-    }
-
-    private fun setupAutoRestartSwitch() {
-        val switch = findViewById<MaterialSwitch>(R.id.switchAutoRestart)
-        switch.isChecked = prefs.autoRestartEnabled
-        switch.setOnCheckedChangeListener { _, checked ->
-            prefs.autoRestartEnabled = checked
         }
     }
 
@@ -151,7 +142,6 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
     private fun performLogout() {
         lifecycleScope.launch {
             authManager.signOut()
@@ -163,7 +153,6 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
     }
-
 
 
     private fun showPremiumUpsell() {
