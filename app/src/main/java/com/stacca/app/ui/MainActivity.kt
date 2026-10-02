@@ -349,7 +349,15 @@ class MainActivity : AppCompatActivity() {
             btnSettings.visibility = View.VISIBLE
             btnAncoraUnaSveglia.visibility = View.VISIBLE
             
-            tvStatus.text = "Stacco registrato!"
+            // Con il riavvio automatico l'allarme resta attivo per domani
+            tvStatus.text = if (prefs.isAlarmActive) {
+                getString(
+                    R.string.staccato_see_you_tomorrow,
+                    String.format("%02d:%02d", prefs.endHour, prefs.endMinute)
+                )
+            } else {
+                getString(R.string.staccato_done)
+            }
             statusDot.setBackgroundResource(R.drawable.status_dot_inactive)
             btnHoStaccato.visibility = View.GONE
             updateTrialBanner()
@@ -405,13 +413,8 @@ class MainActivity : AppCompatActivity() {
         tvCurrentTime.text = timeFormatSeconds.format(now.time)
 
         if (prefs.isAlarmActive) {
-            val endTime = Calendar.getInstance().apply {
-                set(Calendar.HOUR_OF_DAY, prefs.endHour)
-                set(Calendar.MINUTE, prefs.endMinute)
-                set(Calendar.SECOND, 0)
-            }
-
-            val diffMillis = endTime.timeInMillis - now.timeInMillis
+            val endMillis = currentShiftEndMillis()
+            val diffMillis = endMillis - now.timeInMillis
 
             if (diffMillis > 0) {
                 // Countdown — nasconde bottone e badge quando non siamo in overtime
@@ -420,7 +423,10 @@ class MainActivity : AppCompatActivity() {
                 val minutes = (diffMillis % 3600000) / 60000
                 val seconds = (diffMillis % 60000) / 1000
                 tvCountdown.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                tvCountdownLabel.text = getString(R.string.time_remaining)
+                val endDay = Calendar.getInstance().apply { timeInMillis = endMillis }
+                val isToday = endDay.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)
+                tvCountdownLabel.text =
+                    getString(if (isToday) R.string.time_remaining else R.string.next_shift_tomorrow)
                 tvCountdown.setTextColor(ContextCompat.getColor(this, R.color.tertiary))
                 cardCountdown.strokeColor = ContextCompat.getColor(this, android.R.color.transparent)
                 btnHoStaccato.visibility = View.GONE
@@ -454,10 +460,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Gestisce il tap sul bottone "Ho staccato!" in MainActivity.
-     * Calcola l'overtime corrente, chiama registraStaccato, cancella allarmi e
-     * apre la schermata appropriata (Celebration o TempoNonVissuto).
+     * Orario del fine turno in corso o del prossimo (oggi o domani).
+     * Se non è ancora stato salvato (versioni precedenti), usa l'orario di oggi.
      */
+    private fun currentShiftEndMillis(): Long {
+        if (prefs.nextShiftEndMillis > 0) return prefs.nextShiftEndMillis
+        return Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, prefs.endHour)
+            set(Calendar.MINUTE, prefs.endMinute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+    }
+
     /**
      * "Ancora X minuti" dall'app: zittisce l'allarme, l'escalation continua
      * (la prossima notifica è già programmata e arriverà al livello successivo).
@@ -470,14 +485,14 @@ class MainActivity : AppCompatActivity() {
         moveTaskToBack(true)
     }
 
+    /**
+     * Gestisce "Ho staccato!" (dall'app, dalla notifica o dallo schermo rosso).
+     * Registra lo stacco, ferma allarme e notifiche e, se il riavvio automatico
+     * è attivo, riprogramma l'allarme per domani alla stessa ora.
+     */
     private fun handleHoStaccato() {
         val now = Calendar.getInstance()
-        val endTime = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, prefs.endHour)
-            set(Calendar.MINUTE, prefs.endMinute)
-            set(Calendar.SECOND, 0)
-        }
-        val overtimeMillis = (now.timeInMillis - endTime.timeInMillis).coerceAtLeast(0L)
+        val overtimeMillis = (now.timeInMillis - currentShiftEndMillis()).coerceAtLeast(0L)
         val overtimeMinutes = (overtimeMillis / 60_000).toInt()
 
         // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
@@ -493,8 +508,12 @@ class MainActivity : AppCompatActivity() {
         AlarmReceiver.cancelAlarm(this)
         notificationHelper.cancelAll()
 
-        // Disattiva definitivamente l'allarme
-        prefs.isAlarmActive = false
+        if (prefs.autoRestartEnabled) {
+            // Riavvio automatico: l'orario di oggi è passato, quindi scatta domani
+            AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
+        } else {
+            prefs.isAlarmActive = false
+        }
 
         // Aggiorna UI
         updateUI()
@@ -525,6 +544,12 @@ class MainActivity : AppCompatActivity() {
                 IntentFilter(AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED)
             )
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Il riepilogo dopo lo stacco è un momento: riaprendo l'app si torna alla home
+        prefs.isWaitingForNextAlarm = false
     }
 
     override fun onPause() {

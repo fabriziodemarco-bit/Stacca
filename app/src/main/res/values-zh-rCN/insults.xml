@@ -10,36 +10,24 @@
     <string name="insult_lose">好吧，我放弃了。你已经没救了。💀</string>
 
     <string-array name="insults_phase_1">
-        <item>想被骂？简单：你还在这儿。</item>
+        <item>想被骂？简单：你还在这儿！</item>
+        <item>你在用人生换一张Excel表格。真划算！</item>
+        <item>你在免费工作。大声说出来：免费！</item>
         <item>你的老板不爱你。你的沙发爱你。</item>
-        <item>恭喜：你已经把办公桌变成了你家。</item>
-        <item>你在免费工作。免费！大声说出来。</item>
-        <item>连咖啡机的社交生活都比你丰富。</item>
-        <item>你的电脑累了。至少它有借口。</item>
-        <item>晚上八点还回邮件的只有你。只有你。</item>
-        <item>你在用人生换一张Excel表格。</item>
     </string-array>
 
     <string-array name="insults_phase_2">
-        <item>到最后，从来没有人说过：“真希望我多回几封邮件。”</item>
-        <item>你的植物死了。你的社交生活也是。</item>
+        <item>你的老板已经回家了。躺在沙发上。正在笑你！</item>
+        <item>你退休的时候他们会送你一个蛋糕。打折店买的。还过期了！</item>
+        <item>你的植物死了。你的社交生活也是。猜猜下一个是谁？</item>
         <item>你的工资连你叫什么都不知道。</item>
-        <item>公司一周就能找人替代你。而你已经错过了三个周末。</item>
-        <item>朋友们不再约你了。现在你知道为什么了。</item>
-        <item>你的老板已经回家了。正在笑你。</item>
-        <item>你的工作群比朋友还多。多得多。</item>
-        <item>你退休的时候他们会送你一个蛋糕。打折店买的。</item>
     </string-array>
 
     <string-array name="insults_phase_3">
+        <item>最后一次机会，不然我就给你妈打电话。把一切都告诉她！</item>
+        <item>一个应用在冲你大喊。你已经跌到谷底，还在往下挖。</item>
+        <item>停下！现在。这不是建议，是威胁！</item>
         <item>合上。那台。电脑。</item>
-        <item>你。还。在。为什么。</item>
-        <item>一个应用在冲你大喊。你已经跌到谷底了。</item>
-        <item>最后一次机会，不然我就给你妈打电话。</item>
-        <item>停下。现在。这不是建议。</item>
-        <item>工作烈士：没人会给你立雕像。没有人。</item>
-        <item>你在输。输给一部手机。真丢人。</item>
-        <item>够了。我也有底线。而你越过了。</item>
     </string-array>
 
 </resources>

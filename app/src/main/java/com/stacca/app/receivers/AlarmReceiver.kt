@@ -71,6 +71,9 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
             }
 
+            // Ricorda quando scatterà, per il countdown nella schermata principale
+            PreferencesManager(context).nextShiftEndMillis = calendar.timeInMillis
+
             // Verifica il permesso prima di usare setExactAndAllowWhileIdle (richiesto API 31+)
             if (PermissionHelper.canScheduleExactAlarms(context)) {
                 try {

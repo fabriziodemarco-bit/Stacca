@@ -361,7 +361,7 @@
             android:id="@+id/btnAncoraUnaSveglia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ancora una sveglia"
+            android:text="@string/btn_ok_home"
             style="@style/Widget.Stacca.Button.Primary"
             android:backgroundTint="@color/tertiary"
             android:visibility="gone"

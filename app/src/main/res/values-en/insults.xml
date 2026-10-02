@@ -10,36 +10,24 @@
     <string name="insult_lose">Ok, I give up. You\'re a clinical case. 💀</string>
 
     <string-array name="insults_phase_1">
-        <item>Want to be insulted? Easy: you\'re still there.</item>
+        <item>Want to be insulted? Easy: you\'re still there!</item>
+        <item>You\'re trading your life for a spreadsheet. What a bargain!</item>
+        <item>You\'re working for free. Say it out loud: FREE!</item>
         <item>Your boss doesn\'t love you. Your couch does.</item>
-        <item>Congrats: you\'ve turned your desk into your home address.</item>
-        <item>You\'re working for free. FREE. Say it out loud.</item>
-        <item>Even the coffee machine has a better social life than you.</item>
-        <item>Your laptop is tired. At least it has an excuse.</item>
-        <item>You\'re the only one answering emails at 8 PM. The only one.</item>
-        <item>You\'re trading your life for a spreadsheet.</item>
     </string-array>
 
     <string-array name="insults_phase_2">
-        <item>Nobody, in the end, ever said: \"I wish I\'d answered more emails\".</item>
-        <item>Your plants are dead. So is your social life.</item>
+        <item>Your boss is already home. On the couch. Laughing at you!</item>
+        <item>When you retire they\'ll get you a cake. From the discount store. Expired!</item>
+        <item>Your plants are dead. So is your social life. Guess who\'s next?</item>
         <item>Your paycheck doesn\'t even know your name.</item>
-        <item>The company would replace you in a week. You\'ve already lost three weekends.</item>
-        <item>Your friends stopped inviting you. Now you know why.</item>
-        <item>Your boss is already home. Laughing at you.</item>
-        <item>You have more work chats than friends. Way more.</item>
-        <item>When you retire they\'ll get you a cake. From the discount store.</item>
     </string-array>
 
     <string-array name="insults_phase_3">
+        <item>Last chance, then I\'m calling your mother. And telling her EVERYTHING!</item>
+        <item>An app is yelling at you. You\'ve hit rock bottom and you\'re still digging.</item>
+        <item>STOP! NOW. THIS IS NOT A SUGGESTION, IT\'S A THREAT!</item>
         <item>CLOSE. THAT. LAPTOP.</item>
-        <item>YOU. ARE. STILL. THERE. WHY.</item>
-        <item>An app is yelling at you. You\'ve hit rock bottom.</item>
-        <item>Last chance, then I\'m calling your mother.</item>
-        <item>STOP. NOW. THIS IS NOT A SUGGESTION.</item>
-        <item>Work martyr: nobody will build you a statue. Nobody.</item>
-        <item>You\'re losing. To a phone. Shameful.</item>
-        <item>ENOUGH. Even I have limits. And you crossed them.</item>
     </string-array>
 
 </resources>

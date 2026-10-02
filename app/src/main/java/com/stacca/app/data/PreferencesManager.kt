@@ -140,6 +140,15 @@ class PreferencesManager(context: Context) {
         get() = prefs.getString(KEY_LAST_TRIGGER_DATE, "") ?: ""
         set(value) = prefs.edit().putString(KEY_LAST_TRIGGER_DATE, value).apply()
 
+    /**
+     * Data e ora esatte (in millisecondi) del prossimo fine turno programmato.
+     * Salvata da AlarmReceiver.scheduleAlarm: serve al countdown, che così sa
+     * se il prossimo stacco è oggi o domani. 0 = non ancora salvata.
+     */
+    var nextShiftEndMillis: Long
+        get() = prefs.getLong("next_shift_end_millis", 0L)
+        set(value) = prefs.edit().putLong("next_shift_end_millis", value).apply()
+
     var isWaitingForNextAlarm: Boolean
         get() {
             if (lastStaccatoDate != today()) {
