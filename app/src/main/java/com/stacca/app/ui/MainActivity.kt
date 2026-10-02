@@ -366,16 +366,8 @@ class MainActivity : AppCompatActivity() {
 
         val isActive = prefs.isAlarmActive
 
-        if (!isActive && prefs.shiftsCompletedToday > 0) {
-            val overtime = prefs.lastShiftOvertimeMinutes
-            cardTempoNonVissuto.visibility = View.VISIBLE
-            tvTempoNonVissuto.text = "$overtime min"
-            val colorRes = if (overtime > 0) R.color.alert_apocalypse else R.color.alert_friendly
-            cardTempoNonVissuto.strokeColor = ContextCompat.getColor(this, colorRes)
-            tvTempoNonVissuto.setTextColor(ContextCompat.getColor(this, colorRes))
-        } else {
-            cardTempoNonVissuto.visibility = View.GONE
-        }
+        // Il "Tempo non vissuto" si vede solo nel riepilogo subito dopo lo stacco
+        cardTempoNonVissuto.visibility = View.GONE
 
         cardEndTime.visibility = View.VISIBLE
         btnSettings.visibility = View.VISIBLE
