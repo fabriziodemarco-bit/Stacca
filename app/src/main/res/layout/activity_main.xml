@@ -385,6 +385,16 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
+        <!-- Insultami: un minuto di insulti, gratis per tutti -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnInsultami"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_insultami"
+            style="@style/Widget.Stacca.Button.Primary"
+            android:backgroundTint="@color/alert_apocalypse"
+            android:textSize="18sp"
+            android:layout_marginBottom="12dp" />
 
 
         <com.google.android.material.button.MaterialButton

@@ -187,6 +187,9 @@ class MainActivity : AppCompatActivity() {
         // Bottone "Ho staccato!"
         btnHoStaccato = findViewById(R.id.btnHoStaccato)
         btnSnoozeApp = findViewById(R.id.btnSnoozeApp)
+        findViewById<MaterialButton>(R.id.btnInsultami).setOnClickListener {
+            startActivity(Intent(this, InsultamiActivity::class.java))
+        }
     }
 
 

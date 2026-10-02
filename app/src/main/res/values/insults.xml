@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Insulti della funzione "Insultami": un minuto di fuoco in 3 fasi.
+    Cattivi sì, volgari no (niente parolacce pesanti: Google classifica l'app anche per il linguaggio).
+-->
+<resources>
+
+    <string name="btn_insultami">💀 INSULTAMI</string>
+    <string name="insult_btn_ok">✋ OK, STACCO!</string>
+    <string name="insult_phase_1">FASE 1 · SFOTTÒ</string>
+    <string name="insult_phase_2">FASE 2 · CATTIVERIA</string>
+    <string name="insult_phase_3">FASE 3 · FURIA</string>
+    <string name="insult_win">Finalmente. Era così difficile? 🎉</string>
+    <string name="insult_lose">Ok, ci rinuncio. Sei un caso clinico. 💀</string>
+
+    <!-- Fase 1: sfottò -->
+    <string-array name="insults_phase_1">
+        <item>Vuoi essere insultato? Facile: sei ancora lì.</item>
+        <item>Il tuo capo non ti vuole bene. Il tuo divano sì.</item>
+        <item>Complimenti: hai trasformato la scrivania nella tua residenza.</item>
+        <item>Stai lavorando gratis. GRATIS. Ripetilo ad alta voce.</item>
+        <item>Anche la macchinetta del caffè ha più vita sociale di te.</item>
+        <item>Il tuo portatile è stanco. Lui almeno ha una scusa.</item>
+        <item>Sei l\'unico che risponde alle mail alle 20. L\'unico.</item>
+        <item>Ti stai giocando la vita per un foglio Excel.</item>
+    </string-array>
+
+    <!-- Fase 2: cattiveria -->
+    <string-array name="insults_phase_2">
+        <item>Nessuno, alla fine, ha mai detto: \"Avrei voluto rispondere a più mail\".</item>
+        <item>Le tue piante sono morte. La tua vita sociale pure.</item>
+        <item>Il tuo stipendio non sa nemmeno come ti chiami.</item>
+        <item>L\'azienda ti sostituirebbe in una settimana. Tu ti sei già perso tre weekend.</item>
+        <item>I tuoi amici hanno smesso di invitarti. Ora sai perché.</item>
+        <item>Il tuo capo è già a casa. E ride di te.</item>
+        <item>Hai più chat di lavoro che amici. Molte di più.</item>
+        <item>Alla tua pensione ti regaleranno una torta. Del discount.</item>
+    </string-array>
+
+    <!-- Fase 3: furia -->
+    <string-array name="insults_phase_3">
+        <item>CHIUDI. QUEL. PORTATILE.</item>
+        <item>SEI. ANCORA. LÌ. PERCHÉ.</item>
+        <item>Ti sta urlando contro un\'app. Hai toccato il fondo.</item>
+        <item>Ultima possibilità, poi chiamo tua madre.</item>
+        <item>SMETTILA. ADESSO. NON È UN CONSIGLIO.</item>
+        <item>Martire del lavoro: nessuno ti farà una statua. Nessuno.</item>
+        <item>Stai perdendo. Contro un telefono. Che vergogna.</item>
+        <item>BASTA. Anche io ho un limite. E l\'hai superato.</item>
+    </string-array>
+
+</resources>
