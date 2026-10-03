@@ -7,9 +7,8 @@
     <string name="btn_insultami_home">Insult me · 60 s</string>
     <string name="btn_deactivate_small">Turn off alarm</string>
     <string name="btn_ho_staccato_home">I\'ve unplugged</string>
-    <string name="home_insultami_channels">Sound, vibration and text</string>
-    <string name="home_explain_overtime">Not enough? One minute of roasting to convince you to log off.</string>
-    <string name="home_explain_default">Need a push? One minute of roasting to convince you to log off.</string>
+    <string name="home_explain_overtime">Not enough?</string>
+    <string name="home_explain_default">Need a push?</string>
     <string name="home_edit_time">Change time</string>
 
     <string name="home_off_label">ALARM OFF</string>

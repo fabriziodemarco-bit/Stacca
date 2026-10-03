@@ -8,9 +8,8 @@
     <string name="btn_insultami_home">Insultami · 60 s</string>
     <string name="btn_deactivate_small">Disattiva allarme</string>
     <string name="btn_ho_staccato_home">Ho staccato</string>
-    <string name="home_insultami_channels">Audio, vibrazione e testo</string>
-    <string name="home_explain_overtime">Non è bastato? Un minuto di sfottò per convincerti a chiudere.</string>
-    <string name="home_explain_default">Serve una spinta? Un minuto di sfottò per convincerti a chiudere.</string>
+    <string name="home_explain_overtime">Non è bastato?</string>
+    <string name="home_explain_default">Serve una spinta?</string>
     <string name="home_edit_time">Modifica orario</string>
 
     <!-- Allarme spento -->

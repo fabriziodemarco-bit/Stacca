@@ -124,9 +124,7 @@
         <Space
             android:id="@+id/spaceTop"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:minHeight="16dp" />
+            android:layout_height="24dp" />
 
         <!-- 2. Messaggio principale -->
         <TextView
@@ -252,20 +250,10 @@
             android:lineSpacingMultiplier="1.15"
             android:textColor="@color/home_text_secondary" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/home_insultami_channels"
-            android:textSize="13sp"
-            android:textColor="@color/text_hint" />
-
         <Space
             android:id="@+id/spaceBottom"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:minHeight="16dp" />
+            android:layout_height="20dp" />
 
         <!-- 5. Azioni: un solo pulsante dominante -->
         <com.google.android.material.button.MaterialButton
@@ -334,6 +322,12 @@
                 android:textColor="@color/home_text_secondary"
                 android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
+
+        <!-- Lo spazio libero resta in fondo: i comandi stanno in alto -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </ScrollView>
