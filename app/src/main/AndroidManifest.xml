@@ -18,6 +18,13 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
+    <!-- Insultami usa la sintesi vocale di Android: da Android 11 va dichiarato -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
         android:name=".StaccaApplication"
         android:allowBackup="true"

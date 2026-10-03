@@ -172,6 +172,11 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_FULLSCREEN_ENABLED, true)
         set(value) = prefs.edit().putBoolean(KEY_FULLSCREEN_ENABLED, value).apply()
 
+    /** Flash della fotocamera durante Insultami (attivo di default, si spegne dalle Impostazioni). */
+    var flashEnabled: Boolean
+        get() = prefs.getBoolean("flash_enabled", true)
+        set(value) = prefs.edit().putBoolean("flash_enabled", value).apply()
+
     /** 0 = Rilassato, 1 = Normale, 2 = Aggressivo */
     var escalationSpeed: Int
         get() = prefs.getInt(KEY_ESCALATION_SPEED, 1)

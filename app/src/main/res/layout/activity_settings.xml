@@ -100,6 +100,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+
+                    <View style="@style/Stacca.Settings.Divider" />
+
+                    <!-- Flash durante Insultami -->
+                    <LinearLayout style="@style/Stacca.Settings.Row">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView
+                                style="@style/Stacca.Settings.RowTitle"
+                                android:text="@string/settings_flash" />
+                            <TextView
+                                style="@style/Stacca.Settings.RowDesc"
+                                android:text="@string/settings_flash_desc" />
+                        </LinearLayout>
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switchFlash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

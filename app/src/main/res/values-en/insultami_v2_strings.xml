@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game_over">GAME OVER!</string>
+    <string name="settings_flash">Flash</string>
+    <string name="settings_flash_desc">Flashes during Insult me</string>
+</resources>

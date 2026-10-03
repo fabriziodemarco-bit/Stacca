@@ -44,6 +44,7 @@ class SettingsActivity : AppCompatActivity() {
         setupSoundSwitch()
         setupVibrationSwitch()
         setupFullScreenSwitch()
+        setupFlashSwitch()
         setupEscalationSpeed()
         setupAccountSection()
 
@@ -85,6 +86,14 @@ class SettingsActivity : AppCompatActivity() {
                 return@setOnCheckedChangeListener
             }
             prefs.fullScreenEnabled = checked
+        }
+    }
+
+    private fun setupFlashSwitch() {
+        val switch = findViewById<MaterialSwitch>(R.id.switchFlash)
+        switch.isChecked = prefs.flashEnabled
+        switch.setOnCheckedChangeListener { _, checked ->
+            prefs.flashEnabled = checked
         }
     }
 
