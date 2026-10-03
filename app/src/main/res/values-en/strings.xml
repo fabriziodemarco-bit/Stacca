@@ -80,8 +80,8 @@
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login_forgot_password">Forgot password?</string>
-    <string name="login_btn_login">LOGIN</string>
-    <string name="login_btn_register">REGISTER</string>
+    <string name="login_btn_login">Log in</string>
+    <string name="login_btn_register">Sign up</string>
     <string name="login_skip">Continue without account →</string>
     <string name="login_success">Logged in! 🎉</string>
     <string name="login_register_success">Registration complete!\nCheck your email to verify your account.</string>

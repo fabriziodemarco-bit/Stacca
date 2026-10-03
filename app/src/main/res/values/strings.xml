@@ -84,8 +84,8 @@
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login_forgot_password">Password dimenticata?</string>
-    <string name="login_btn_login">ACCEDI</string>
-    <string name="login_btn_register">REGISTRATI</string>
+    <string name="login_btn_login">Accedi</string>
+    <string name="login_btn_register">Registrati</string>
     <string name="login_skip">Continua senza account →</string>
     <string name="login_success">Accesso effettuato! 🎉</string>
     <string name="login_register_success">Registrazione completata!\nControlla la tua email per verificare l\'account.</string>

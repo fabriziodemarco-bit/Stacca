@@ -21,6 +21,7 @@ import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
 import java.util.*
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 
 /**
@@ -160,6 +161,11 @@ class FullScreenAlertActivity : AppCompatActivity() {
 
     private fun stopWork() {
         AlarmSoundManager.stop()
+        // In anteprima (solo versione di prova) si chiude e basta, senza registrare lo stacco
+        if (PreviewMode.isOn(intent)) {
+            finish()
+            return
+        }
         NotificationHelper(this).cancelAll()
 
         finish()

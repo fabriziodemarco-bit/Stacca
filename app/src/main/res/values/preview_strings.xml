@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Menu di anteprima: esiste solo nella versione di prova, quindi non serve tradurlo -->
+<resources>
+    <string name="preview_title" translatable="false">Anteprima schermate</string>
+    <string-array name="preview_items" translatable="false">
+        <item>Paywall</item>
+        <item>Fine prova gratuita</item>
+        <item>Riquadro permessi (mostra/nascondi)</item>
+        <item>Schermo rosso</item>
+        <item>Insultami</item>
+        <item>Pagina di accesso</item>
+    </string-array>
+</resources>

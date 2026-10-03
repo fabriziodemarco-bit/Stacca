@@ -23,6 +23,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.NotificationMessages
@@ -33,6 +34,7 @@ import com.stacca.app.receivers.AlarmReceiver
 import com.stacca.app.util.PermissionHelper
 import java.text.SimpleDateFormat
 import java.util.*
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 
 
@@ -142,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         initViews()
         applyCompactLayoutIfNeeded()
         setupListeners()
+        setupPreviewMenu()
         updateUI()
         startClockUpdate()
         handleHoStaccatoIntent(intent)
@@ -214,6 +217,44 @@ class MainActivity : AppCompatActivity() {
 
         tvHeroTitle.textSize = 26f
         tvCardValue.textSize = 38f
+    }
+
+    /** Solo versione di prova: mostra il riquadro permessi anche se sono tutti attivi. */
+    private var previewPermissionsCard = false
+
+    /**
+     * Solo versione di prova (debug): pressione lunga su "Stacca!" apre il menu
+     * per vedere ogni schermata, anche da utente Premium. Nella versione su Play non esiste.
+     */
+    private fun setupPreviewMenu() {
+        if (!BuildConfig.DEBUG) return
+        findViewById<View>(R.id.tvAppTitle).setOnLongClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.preview_title)
+                .setItems(R.array.preview_items) { _, which ->
+                    fun open(target: Class<*>, extra: Intent.() -> Unit = {}) {
+                        startActivity(Intent(this, target).apply {
+                            putExtra(PreviewMode.EXTRA, true)
+                            extra()
+                        })
+                    }
+                    when (which) {
+                        0 -> open(PaywallActivity::class.java)
+                        1 -> open(TrialExpiredActivity::class.java)
+                        2 -> {
+                            previewPermissionsCard = !previewPermissionsCard
+                            updatePermissionsCard()
+                        }
+                        3 -> open(FullScreenAlertActivity::class.java) {
+                            putExtra("level", NotificationMessages.Level.NUCLEAR.name)
+                        }
+                        4 -> open(InsultamiActivity::class.java)
+                        5 -> open(LoginActivity::class.java)
+                    }
+                }
+                .show()
+            true
+        }
     }
 
     private fun setupListeners() {
@@ -604,9 +645,9 @@ class MainActivity : AppCompatActivity() {
      * Le righe con ⚠️ sono cliccabili per aprire la schermata di sistema corrispondente.
      */
     private fun updatePermissionsCard() {
-        val hasNotif = PermissionHelper.hasNotificationPermission(this)
-        val hasExact = PermissionHelper.canScheduleExactAlarms(this)
-        val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this)
+        val hasNotif = PermissionHelper.hasNotificationPermission(this) && !previewPermissionsCard
+        val hasExact = PermissionHelper.canScheduleExactAlarms(this) && !previewPermissionsCard
+        val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this) && !previewPermissionsCard
 
         // Nascondi la card se tutto è a posto
         if (hasNotif && hasExact && hasBattery) {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Testi della pagina di accesso (stile "editoriale" della home) -->
+<resources>
+    <string name="login_label">ACCOUNT · FACOLTATIVO</string>
+    <string name="login_title">Accedi o\ncrea un account.</string>
+    <string name="login_sub">Non è obbligatorio: Stacca funziona benissimo anche senza.</string>
+</resources>

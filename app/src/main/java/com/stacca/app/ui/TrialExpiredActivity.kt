@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 
 /**
@@ -28,8 +29,11 @@ class TrialExpiredActivity : AppCompatActivity() {
         val prefs = PreferencesManager(this)
 
         // Segna subito come mostrata: anche se l'utente preme "indietro",
-        // non rivedrà questa schermata (il routing la mostra una sola volta)
-        prefs.trialEndShown = true
+        // non rivedrà questa schermata (il routing la mostra una sola volta).
+        // In anteprima (solo versione di prova) non si tocca niente.
+        if (!PreviewMode.isOn(intent)) {
+            prefs.trialEndShown = true
+        }
 
         // Bottone principale: vai al paywall
         findViewById<MaterialButton>(R.id.btnTrialRegister).setOnClickListener {
@@ -57,7 +61,7 @@ class TrialExpiredActivity : AppCompatActivity() {
         // Se nel frattempo l'utente ha acquistato Premium (dalla PaywallActivity),
         // vai direttamente alla Main senza tornare qui
         val prefs = PreferencesManager(this)
-        if (prefs.isPremium) {
+        if (prefs.isPremium && !PreviewMode.isOn(intent)) {
             navigateToMain()
         }
     }

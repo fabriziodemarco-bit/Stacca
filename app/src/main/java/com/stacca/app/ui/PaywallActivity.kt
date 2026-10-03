@@ -8,6 +8,7 @@ import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 
 /**
@@ -31,7 +32,7 @@ class PaywallActivity : AppCompatActivity() {
         prefs = PreferencesManager(this)
 
         // Se è già premium, chiudi subito
-        if (prefs.isPremium) {
+        if (prefs.isPremium && !PreviewMode.isOn(intent)) {
             finish()
             return
         }

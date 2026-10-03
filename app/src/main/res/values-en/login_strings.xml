@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_label">ACCOUNT · OPTIONAL</string>
+    <string name="login_title">Log in or\ncreate an account.</string>
+    <string name="login_sub">It\'s not required: Unplug works just fine without it.</string>
+</resources>

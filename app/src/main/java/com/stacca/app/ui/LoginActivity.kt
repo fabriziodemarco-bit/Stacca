@@ -29,6 +29,7 @@ import com.stacca.app.data.PreferencesManager
 import androidx.core.widget.NestedScrollView
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 
 /**
@@ -71,12 +72,13 @@ class LoginActivity : AppCompatActivity() {
         prefs = PreferencesManager(this)
 
         // Se è già loggato, vai direttamente alla main
-        if (prefs.isLoggedIn) {
+        if (prefs.isLoggedIn && !PreviewMode.isOn(intent)) {
             goToMain()
             return
         }
 
         setContentView(R.layout.activity_login)
+        window.setBackgroundDrawableResource(R.color.home_bg)
         SystemBarsHelper.applyInsets(this)
 
         initViews()
