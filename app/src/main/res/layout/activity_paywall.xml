@@ -1,163 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Paywall: l'unica schermata di vendita, nello stile "editoriale" della home.
+    Etichetta, titolo, una scheda con cosa si sblocca, un pulsante dominante.
+    Il prezzo sul pulsante arriva sempre da Google Play.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
+    android:background="@color/home_bg"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="24dp">
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="8dp">
 
-        <!-- Spacer top -->
-        <View
-            android:layout_width="1dp"
-            android:layout_height="48dp" />
-
-        <!-- Emoji animata -->
         <TextView
-            android:id="@+id/tvPaywallEmoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🔥"
-            android:textSize="72sp"
-            android:layout_marginBottom="24dp" />
+            android:text="@string/paywall_label"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.14"
+            android:textColor="@color/home_accent" />
 
-        <!-- Titolo -->
         <TextView
             android:id="@+id/tvPaywallTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/paywall_title"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:gravity="center"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Sottotitolo -->
-        <TextView
-            android:id="@+id/tvPaywallSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/paywall_subtitle"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"
-            android:gravity="center"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="32dp" />
-
-        <!-- Card delle feature premium -->
-        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/background_card"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="8dp"
-            app:strokeColor="@color/premium_gold"
-            app:strokeWidth="1dp"
-            android:layout_marginBottom="24dp">
+            android:layout_marginTop="10dp"
+            android:text="@string/paywall_title_v2"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-black"
+            android:lineSpacingMultiplier="1.08"
+            android:letterSpacing="-0.01"
+            android:textColor="@color/home_text" />
+
+        <TextView
+            android:id="@+id/tvPaywallSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/paywall_sub_v2"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.15"
+            android:textColor="@color/home_text_secondary" />
+
+        <!-- Cosa si sblocca -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Stacca.Settings.Card"
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paywall_unlock_title"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/premium_gold"
-                    android:layout_marginBottom="16dp" />
+                <LinearLayout style="@style/Stacca.Settings.Row">
+                    <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                        <TextView
+                            style="@style/Stacca.Settings.RowTitle"
+                            android:text="@string/paywall_f1_title" />
+                        <TextView
+                            style="@style/Stacca.Settings.RowDesc"
+                            android:text="@string/paywall_f1_desc" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <!-- Feature 1 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paywall_feature_1"
-                    android:textSize="15sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
+                <View style="@style/Stacca.Settings.Divider" />
 
-                <!-- Feature 2 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paywall_feature_2"
-                    android:textSize="15sp"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginBottom="10dp" />
+                <LinearLayout style="@style/Stacca.Settings.Row">
+                    <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                        <TextView
+                            style="@style/Stacca.Settings.RowTitle"
+                            android:text="@string/paywall_f2_title" />
+                        <TextView
+                            style="@style/Stacca.Settings.RowDesc"
+                            android:text="@string/paywall_f2_desc" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                <!-- Feature 3 -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/paywall_feature_3"
-                    android:textSize="15sp"
-                    android:textColor="@color/text_primary" />
+                <View style="@style/Stacca.Settings.Divider" />
 
+                <LinearLayout style="@style/Stacca.Settings.Row">
+                    <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                        <TextView
+                            style="@style/Stacca.Settings.RowTitle"
+                            android:text="@string/paywall_f3_title" />
+                        <TextView
+                            style="@style/Stacca.Settings.RowDesc"
+                            android:text="@string/paywall_f3_desc" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Prezzo -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/paywall_price"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="@color/premium_gold"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/paywall_price_desc"
+            android:layout_marginTop="16dp"
+            android:text="@string/paywall_once"
             android:textSize="14sp"
-            android:textColor="@color/text_hint"
-            android:layout_marginBottom="24dp" />
+            android:textColor="@color/home_text" />
 
-        <!-- Bottone acquisto -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/paywall_support"
+            android:textSize="13sp"
+            android:textColor="@color/home_text_secondary" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="20dp" />
+
+        <!-- Acquisto: il testo con il prezzo lo imposta il codice -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUnlock"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="@string/paywall_buy_button"
-            android:textSize="16sp"
+            android:layout_height="52dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/paywall_unlock_v2"
+            android:textSize="17sp"
             android:textStyle="bold"
-            style="@style/Widget.Stacca.Button.Primary"
-            android:backgroundTint="@color/premium_gold"
-            android:textColor="@color/background_dark"
-            android:layout_marginBottom="12dp" />
+            android:textAllCaps="false"
+            android:letterSpacing="0"
+            android:textColor="@color/home_on_accent"
+            app:backgroundTint="@color/home_accent"
+            app:cornerRadius="14dp"
+            app:elevation="0dp" />
 
-        <!-- Bottone "No grazie" -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNoThanks"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/paywall_no_thanks"
-            android:textSize="14sp"
-            style="@style/Widget.Stacca.Button.Secondary"
-            android:strokeColor="@color/text_hint"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="16dp" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:letterSpacing="0"
+            android:textColor="@color/home_text"
+            app:strokeColor="@color/home_border"
+            app:strokeWidth="1dp"
+            app:cornerRadius="14dp" />
 
-        <!-- Restore -->
         <TextView
             android:id="@+id/tvPaywallRestore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:minHeight="44dp"
+            android:minWidth="44dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:gravity="center"
             android:text="@string/premium_restore"
-            android:textSize="14sp"
-            android:textColor="@color/text_hint"
-            android:padding="8dp" />
+            android:textSize="13sp"
+            android:textColor="@color/home_text_secondary"
+            android:background="?attr/selectableItemBackgroundBorderless" />
 
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="paywall_label">下班！高级版</string>
+    <string name="paywall_title_v2">想让我\n别再客气了吗？</string>
+    <string name="paywall_sub_v2">你已经无视了3次温和的提醒。有了高级版，我早就到核爆级了。</string>
+
+    <string name="paywall_f1_title">第4、5、6级</string>
+    <string name="paywall_f1_desc">激进、核爆、末日：闹钟会一直响，直到你投降。</string>
+    <string name="paywall_f2_title">红色全屏</string>
+    <string name="paywall_f2_desc">在最高级别：无法忽视。</string>
+    <string name="paywall_f3_title">自选频率</string>
+    <string name="paywall_f3_desc">每5、10或15分钟来找你一次。</string>
+
+    <string name="paywall_once">一次付费，永久使用。没有订阅。</string>
+    <string name="paywall_support">同时支持一位也想下班的开发者。</string>
+
+    <string name="paywall_unlock_v2">解锁高级版</string>
+    <string name="paywall_unlock_price_v2">解锁高级版 · %s</string>
+</resources>

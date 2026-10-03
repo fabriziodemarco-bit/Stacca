@@ -114,15 +114,6 @@
     <string name="premium_buy_price">👑 购买高级版 — %s</string>
 
     <!-- Paywall -->
-    <string name="paywall_title">想让我不再友好吗？ &#x1F525;</string>
-    <string name="paywall_subtitle">你无视了3次温和警告。\n如果使用高级版，我现在已经到了核弹级别。\n一次购买，让我变得真正烦人。</string>
-    <string name="paywall_unlock_title">&#x1F680; 您将解锁</string>
-    <string name="paywall_feature_1">&#x1F480; 核弹和世界末日级别 &#x2014; 你的手机字面上在尖叫</string>
-    <string name="paywall_feature_2">&#x1F4E2; 全屏警报 &#x2014; 即使是神也无法忽视</string>
-    <string name="paywall_feature_3">&#x2764;&#xFE0F; 支持一个同样想下班的开发者</string>
-    <string name="paywall_price">&#x20AC;0.99</string>
-    <string name="paywall_price_desc">一次性付款。永久有效。无需订阅。</string>
-    <string name="paywall_buy_button">&#x1F513; 立即解锁 &#x2014; &#x20AC;0.99</string>
     <string name="paywall_no_thanks">不用了谢谢，我还是保持温和级别</string>
     <string name="paywall_success">激进通知已解锁！现在你无处可逃了！ &#x1F608;&#x1F525;</string>
     <string name="notif_level_label">第%1$d级（共6级）· %2$s</string>
@@ -135,7 +126,6 @@
         <item>末日</item>
     </string-array>
     <string name="notif_premium_teaser">&#x1F512; 如果是高级版，我现在早冲你吼了（核弹级别）</string>
-    <string name="paywall_unlock_price">🔓 立即解锁 — %s</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 高级版已激活</string>

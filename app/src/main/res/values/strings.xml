@@ -118,15 +118,6 @@
     <string name="premium_buy_price">👑 ACQUISTA PREMIUM — %s</string>
 
     <!-- Paywall -->
-    <string name="paywall_title">Vuoi che smetta di fare il carino? &#x1F525;</string>
-    <string name="paywall_subtitle">Hai ignorato 3 avvisi gentili.\nCon Premium sarei gi&#xE0; al livello NUCLEARE.\nUn solo acquisto per rendermi davvero fastidioso.</string>
-    <string name="paywall_unlock_title">&#x1F680; Cosa sblocchi</string>
-    <string name="paywall_feature_1">&#x1F480; Livelli Nucleare e Apocalisse &#x2014; il tuo telefono urla letteralmente</string>
-    <string name="paywall_feature_2">&#x1F4E2; Allarme a schermo intero &#x2014; impossibile da ignorare anche da Dio</string>
-    <string name="paywall_feature_3">&#x2764;&#xFE0F; Sostieni uno sviluppatore che vorrebbe staccare anche lui</string>
-    <string name="paywall_price">&#x20AC;0,99</string>
-    <string name="paywall_price_desc">Un pagamento unico. Per sempre. Niente abbonamenti.</string>
-    <string name="paywall_buy_button">&#x1F513; SBLOCCA ORA &#x2014; &#x20AC;0,99</string>
     <string name="paywall_no_thanks">No grazie, resto al livello gentile</string>
     <string name="paywall_success">Notifiche aggressive sbloccate! Ora non potrai pi&#xF9; sfuggire! &#x1F608;&#x1F525;</string>
     <string name="notif_level_label">Livello %1$d di 6 · %2$s</string>
@@ -139,7 +130,6 @@
         <item>Apocalisse</item>
     </string-array>
     <string name="notif_premium_teaser">&#x1F512; Con Premium a quest\'ora ti starei gi&#xE0; urlando contro (livello NUCLEARE)</string>
-    <string name="paywall_unlock_price">🔓 SBLOCCA ORA — %s</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 Premium attivo</string>

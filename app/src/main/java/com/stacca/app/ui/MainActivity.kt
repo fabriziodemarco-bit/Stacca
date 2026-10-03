@@ -671,7 +671,7 @@ class MainActivity : AppCompatActivity() {
             tvPremiumBadge.setText(R.string.premium_badge_upgrade)
             tvPremiumBadge.isClickable = true
             tvPremiumBadge.setOnClickListener {
-                startActivity(Intent(this, PremiumActivity::class.java))
+                startActivity(Intent(this, PaywallActivity::class.java))
             }
         }
     }

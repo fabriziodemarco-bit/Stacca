@@ -114,15 +114,6 @@
     <string name="premium_buy_price">👑 BUY PREMIUM — %s</string>
 
     <!-- Paywall -->
-    <string name="paywall_title">Want me to stop being nice? &#x1F525;</string>
-    <string name="paywall_subtitle">You ignored 3 gentle warnings.\nWith Premium I would already be at NUCLEAR level.\nA single purchase to make me really annoying.</string>
-    <string name="paywall_unlock_title">&#x1F680; What you unlock</string>
-    <string name="paywall_feature_1">&#x1F480; Nuclear and Apocalypse levels &#x2014; your phone literally screams</string>
-    <string name="paywall_feature_2">&#x1F4E2; Full screen alarm &#x2014; impossible to ignore even for God</string>
-    <string name="paywall_feature_3">&#x2764;&#xFE0F; Support a developer who would also like to unplug</string>
-    <string name="paywall_price">&#x20AC;0.99</string>
-    <string name="paywall_price_desc">A one-time payment. Forever. No subscriptions.</string>
-    <string name="paywall_buy_button">&#x1F513; UNLOCK NOW &#x2014; &#x20AC;0.99</string>
     <string name="paywall_no_thanks">No thanks, I\'ll stick to the gentle level</string>
     <string name="paywall_success">Aggressive notifications unlocked! Now you won\'t be able to escape! &#x1F608;&#x1F525;</string>
     <string name="notif_level_label">Level %1$d of 6 · %2$s</string>
@@ -135,7 +126,6 @@
         <item>Apocalypse</item>
     </string-array>
     <string name="notif_premium_teaser">&#x1F512; With Premium by now I\'d be yelling at you (NUCLEAR level)</string>
-    <string name="paywall_unlock_price">🔓 UNLOCK NOW — %s</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 Premium active</string>

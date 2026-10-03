@@ -161,7 +161,7 @@ class SettingsActivity : AppCompatActivity() {
             .setTitle(getString(R.string.premium_required))
             .setMessage(getString(R.string.premium_required_message))
             .setPositiveButton(getString(R.string.premium_unlock)) { _, _ ->
-                startActivity(Intent(this, PremiumActivity::class.java))
+                startActivity(Intent(this, PaywallActivity::class.java))
             }
             .setNegativeButton(getString(R.string.btn_cancel), null)
             .show()
