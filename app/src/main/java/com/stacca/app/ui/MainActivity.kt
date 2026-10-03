@@ -208,7 +208,6 @@ class MainActivity : AppCompatActivity() {
         card.getChildAt(0).setPadding(dp(16), dp(14), dp(16), dp(6))
         segments.setTopMargin(10)
         (tvCardFootLeft.parent as View).setTopMargin(4)
-        tvExplain.setTopMargin(12)
         btnPrimary.layoutParams.height = dp(48)
         btnSecondary.layoutParams.height = dp(44)
         btnSecondary.setTopMargin(8)
