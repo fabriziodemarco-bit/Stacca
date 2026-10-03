@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -86,7 +87,10 @@ class MainActivity : AppCompatActivity() {
             if (intent?.action == AlarmManager.ACTION_SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED) {
                 // Aggiorna la card e, se l'allarme era attivo, riprogramma ora che abbiamo il permesso
                 updatePermissionsCard()
-                if (prefs.isAlarmActive && PermissionHelper.canScheduleExactAlarms(this@MainActivity)) {
+                // Non durante lo straordinario: riprogrammare ora sposterebbe il turno a domani
+                if (prefs.isAlarmActive &&
+                    PermissionHelper.canScheduleExactAlarms(this@MainActivity) &&
+                    System.currentTimeMillis() < currentShiftEndMillis()) {
                     AlarmReceiver.scheduleAlarm(this@MainActivity, prefs.endHour, prefs.endMinute)
                     Toast.makeText(
                         this@MainActivity,
@@ -136,6 +140,7 @@ class MainActivity : AppCompatActivity() {
         billingManager.connect()
 
         initViews()
+        applyCompactLayoutIfNeeded()
         setupListeners()
         updateUI()
         startClockUpdate()
@@ -179,6 +184,37 @@ class MainActivity : AppCompatActivity() {
         tvPermNotification = findViewById(R.id.tvPermNotification)
         tvPermExactAlarm = findViewById(R.id.tvPermExactAlarm)
         tvPermBattery = findViewById(R.id.tvPermBattery)
+    }
+
+    /**
+     * Schermi bassi (es. 360×640): perché tutto stia in una schermata senza tagliare nulla,
+     * riduce prima spaziature e padding, poi titolo e numero grande.
+     * Con caratteri molto ingranditi la home può comunque scorrere.
+     */
+    private fun applyCompactLayoutIfNeeded() {
+        if (resources.configuration.screenHeightDp >= 720) return
+
+        fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
+        fun View.setTopMargin(value: Int) {
+            (layoutParams as ViewGroup.MarginLayoutParams).topMargin = dp(value)
+        }
+
+        findViewById<View>(R.id.spaceTop).minimumHeight = dp(6)
+        findViewById<View>(R.id.spaceBottom).minimumHeight = dp(8)
+        tvHeroTitle.setTopMargin(4)
+        tvHeroSub.setTopMargin(4)
+        val card = findViewById<MaterialCardView>(R.id.cardInfo)
+        card.setTopMargin(12)
+        card.getChildAt(0).setPadding(dp(16), dp(14), dp(16), dp(6))
+        segments.setTopMargin(10)
+        (tvCardFootLeft.parent as View).setTopMargin(4)
+        tvExplain.setTopMargin(12)
+        btnPrimary.layoutParams.height = dp(48)
+        btnSecondary.layoutParams.height = dp(44)
+        btnSecondary.setTopMargin(8)
+
+        tvHeroTitle.textSize = 26f
+        tvCardValue.textSize = 38f
     }
 
     private fun setupListeners() {
@@ -341,6 +377,7 @@ class MainActivity : AppCompatActivity() {
         tvSnooze.visibility = View.GONE
         tvCardFootRight.text = ""
         tvCardFootRight.isClickable = false
+        tvCardFootRight.minHeight = 0
         tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
         tvExplain.setText(R.string.home_explain_default)
 
@@ -433,6 +470,8 @@ class MainActivity : AppCompatActivity() {
     private fun showEditTimeCommand() {
         tvCardFootRight.setText(R.string.home_edit_time)
         tvCardFootRight.isClickable = true
+        // Area di tocco di almeno 44 dp solo quando il comando c'è
+        tvCardFootRight.minHeight = (44 * resources.displayMetrics.density).toInt()
         tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_accent))
     }
 

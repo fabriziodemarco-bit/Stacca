@@ -40,8 +40,7 @@
                 android:layout_weight="1"
                 android:text="@string/app_name"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                android:textFontWeight="800"
+                android:fontFamily="sans-serif-black"
                 android:letterSpacing="-0.02"
                 android:textColor="@color/home_accent" />
 
@@ -123,9 +122,10 @@
         </com.google.android.material.card.MaterialCardView>
 
         <Space
+            android:id="@+id/spaceTop"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:minHeight="16dp" />
 
         <!-- 2. Messaggio principale -->
@@ -144,8 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:textFontWeight="800"
+            android:fontFamily="sans-serif-black"
             android:lineSpacingMultiplier="1.08"
             android:letterSpacing="-0.01"
             android:textColor="@color/home_text" />
@@ -191,7 +190,6 @@
                     android:layout_marginTop="6dp"
                     android:textSize="46sp"
                     android:textStyle="bold"
-                    android:textFontWeight="750"
                     android:fontFeatureSettings="tnum"
                     android:letterSpacing="-0.02"
                     android:includeFontPadding="false"
@@ -263,6 +261,7 @@
             android:textColor="@color/text_hint" />
 
         <Space
+            android:id="@+id/spaceBottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -301,32 +300,40 @@
             app:strokeWidth="1dp"
             app:cornerRadius="14dp" />
 
-        <!-- "Ancora X minuti": link discreto, solo durante lo straordinario -->
-        <TextView
-            android:id="@+id/tvSnooze"
+        <!-- 6. Riga finale: "Ancora X minuti" (solo in straordinario) e Impostazioni -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="44dp"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:textColor="@color/home_text_secondary"
-            android:visibility="gone" />
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        <!-- 6. Impostazioni -->
-        <TextView
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:minHeight="44dp"
-            android:minWidth="44dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:gravity="center"
-            android:text="@string/home_settings"
-            android:textSize="13sp"
-            android:textColor="@color/home_text_secondary"
-            android:background="?attr/selectableItemBackgroundBorderless" />
+            <TextView
+                android:id="@+id/tvSnooze"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="44dp"
+                android:gravity="center_vertical|start"
+                android:textSize="14sp"
+                android:textColor="@color/home_text"
+                android:background="?attr/selectableItemBackground"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/btnSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="44dp"
+                android:minWidth="44dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:gravity="center"
+                android:text="@string/home_settings"
+                android:textSize="13sp"
+                android:textColor="@color/home_text_secondary"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
