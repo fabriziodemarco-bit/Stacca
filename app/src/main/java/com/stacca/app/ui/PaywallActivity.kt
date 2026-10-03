@@ -1,9 +1,13 @@
 package com.stacca.app.ui
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
@@ -80,9 +84,21 @@ class PaywallActivity : AppCompatActivity() {
 
         setupUI()
 
-        // Schermi bassi: la riga "sostieni lo sviluppatore" si nasconde, così i pulsanti restano visibili
-        if (resources.configuration.screenHeightDp < 720) {
-            findViewById<TextView>(R.id.tvPaywallSupport).visibility = android.view.View.GONE
+        highlightPremium()
+    }
+
+    /** Nel sottotitolo la parola "Premium" è in arancione, il colore del tema. */
+    private fun highlightPremium() {
+        val tvSubtitle = findViewById<TextView>(R.id.tvPaywallSubtitle)
+        val text = getString(R.string.paywall_sub_v2)
+        val word = getString(R.string.paywall_highlight)
+        val start = text.lastIndexOf(word)
+        if (start < 0) return
+        tvSubtitle.text = SpannableString(text).apply {
+            setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(this@PaywallActivity, R.color.home_accent)),
+                start, start + word.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
     }
 

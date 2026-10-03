@@ -2,7 +2,8 @@
 <resources>
     <string name="paywall_label">UNPLUG! PREMIUM</string>
     <string name="paywall_title_v2">Want me to stop\nbeing nice?</string>
-    <string name="paywall_sub_v2">You ignored 3 gentle reminders. With Premium I\'d already be at Nuclear level.</string>
+    <string name="paywall_sub_v2">You ignored 3 gentle reminders. Go Premium:</string>
+    <string name="paywall_highlight">Premium</string>
 
     <string name="paywall_f1_title">Levels 4, 5 and 6</string>
     <string name="paywall_f1_desc">Aggressive, Nuclear, Apocalypse: the alarm rings until you give up.</string>
@@ -12,7 +13,6 @@
     <string name="paywall_f3_desc">We come looking for you every 5, 10 or 15 minutes.</string>
 
     <string name="paywall_once">One payment. No subscriptions.</string>
-    <string name="paywall_support">And support a developer who\'d like to unplug too.</string>
 
     <string name="paywall_unlock_v2">Unlock Premium</string>
     <string name="paywall_unlock_price_v2">Unlock Premium · %s</string>

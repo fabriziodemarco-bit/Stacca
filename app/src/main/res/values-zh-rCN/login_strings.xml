@@ -2,5 +2,5 @@
 <resources>
     <string name="login_label">账户 · 可选</string>
     <string name="login_title">登录或\n创建账户。</string>
-    <string name="login_sub">这不是必须的：不登录也完全可以使用。</string>
+    <string name="login_sub">注：不登录也完全可以使用。</string>
 </resources>

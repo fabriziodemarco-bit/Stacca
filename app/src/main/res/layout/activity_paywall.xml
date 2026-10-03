@@ -87,7 +87,7 @@
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
                         <TextView
-                            style="@style/Stacca.Settings.RowTitle"
+                            style="@style/Stacca.Settings.RowTitle.Accent"
                             android:text="@string/paywall_f1_title" />
                         <TextView
                             style="@style/Stacca.Settings.RowDesc"
@@ -100,7 +100,7 @@
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
                         <TextView
-                            style="@style/Stacca.Settings.RowTitle"
+                            style="@style/Stacca.Settings.RowTitle.Accent"
                             android:text="@string/paywall_f2_title" />
                         <TextView
                             style="@style/Stacca.Settings.RowDesc"
@@ -113,7 +113,7 @@
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
                         <TextView
-                            style="@style/Stacca.Settings.RowTitle"
+                            style="@style/Stacca.Settings.RowTitle.Accent"
                             android:text="@string/paywall_f3_title" />
                         <TextView
                             style="@style/Stacca.Settings.RowDesc"
@@ -126,19 +126,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="36dp"
             android:text="@string/paywall_once"
             android:textSize="14sp"
             android:textColor="@color/home_text" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:id="@+id/tvPaywallSupport"
-            android:text="@string/paywall_support"
-            android:textSize="13sp"
-            android:textColor="@color/home_text_secondary" />
 
         <Space
             android:layout_width="match_parent"

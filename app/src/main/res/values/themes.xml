@@ -116,6 +116,11 @@
         <item name="android:textColor">@color/home_text</item>
     </style>
 
+    <!-- Titolo riga in arancione (cosa sblocca Premium) -->
+    <style name="Stacca.Settings.RowTitle.Accent">
+        <item name="android:textColor">@color/home_accent</item>
+    </style>
+
     <style name="Stacca.Settings.RowDesc">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

@@ -71,7 +71,7 @@
 
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
-                        <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/paywall_f1_title" />
+                        <TextView style="@style/Stacca.Settings.RowTitle.Accent" android:text="@string/paywall_f1_title" />
                         <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/paywall_f1_desc" />
                     </LinearLayout>
                 </LinearLayout>
@@ -80,7 +80,7 @@
 
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
-                        <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/paywall_f2_title" />
+                        <TextView style="@style/Stacca.Settings.RowTitle.Accent" android:text="@string/paywall_f2_title" />
                         <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/paywall_f2_desc" />
                     </LinearLayout>
                 </LinearLayout>
@@ -89,7 +89,7 @@
 
                 <LinearLayout style="@style/Stacca.Settings.Row">
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
-                        <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/paywall_f3_title" />
+                        <TextView style="@style/Stacca.Settings.RowTitle.Accent" android:text="@string/paywall_f3_title" />
                         <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/paywall_f3_desc" />
                     </LinearLayout>
                 </LinearLayout>

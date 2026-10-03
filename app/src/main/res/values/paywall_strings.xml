@@ -3,7 +3,8 @@
 <resources>
     <string name="paywall_label">STACCA! PREMIUM</string>
     <string name="paywall_title_v2">Vuoi che smetta\ndi fare il carino?</string>
-    <string name="paywall_sub_v2">Hai ignorato 3 avvisi gentili. Con Premium sarei già al livello Nucleare.</string>
+    <string name="paywall_sub_v2">Hai ignorato 3 avvisi gentili. Passa a Premium:</string>
+    <string name="paywall_highlight">Premium</string>
 
     <string name="paywall_f1_title">Livelli 4, 5 e 6</string>
     <string name="paywall_f1_desc">Aggressivo, Nucleare, Apocalisse: la sveglia suona finché non molli.</string>
@@ -13,7 +14,6 @@
     <string name="paywall_f3_desc">Ti veniamo a cercare ogni 5, 10 o 15 minuti.</string>
 
     <string name="paywall_once">Pagamento unico. Niente abbonamenti.</string>
-    <string name="paywall_support">E sostieni uno sviluppatore che vorrebbe staccare anche lui.</string>
 
     <string name="paywall_unlock_v2">Sblocca Premium</string>
     <string name="paywall_unlock_price_v2">Sblocca Premium · %s</string>
