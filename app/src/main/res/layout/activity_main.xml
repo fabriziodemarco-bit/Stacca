@@ -60,66 +60,87 @@
                 android:textColor="@color/home_text_secondary" />
         </LinearLayout>
 
-        <!-- Card Protezione Allarmi (visibile solo se manca almeno un permesso) -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- Riquadro permessi: visibile solo se manca almeno un permesso -->
+        <LinearLayout
             android:id="@+id/cardPermissions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/home_surface"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#FFAB00"
-            app:strokeWidth="1dp"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perm_v2_label"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.14"
+                android:textColor="@color/home_accent" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="6dp"
+                android:text="@string/perm_v2_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/home_text" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/perm_card_title"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/home_text"
-                    android:layout_marginBottom="4dp" />
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Stacca.Settings.Card"
+                android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/tvPermNotification"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:textColor="@color/home_text_secondary"
-                    android:focusable="true" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvPermExactAlarm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:textColor="@color/home_text_secondary"
-                    android:focusable="true" />
+                    <LinearLayout
+                        android:id="@+id/rowPermNotification"
+                        style="@style/Stacca.Settings.Row"
+                        android:background="?attr/selectableItemBackground">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_notif_title" />
+                            <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_notif_desc" />
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvPermNotification"
+                            style="@style/Stacca.Permission.Status" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvPermBattery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:textColor="@color/home_text_secondary"
-                    android:focusable="true" />
+                    <View style="@style/Stacca.Settings.Divider" />
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <LinearLayout
+                        android:id="@+id/rowPermExactAlarm"
+                        style="@style/Stacca.Settings.Row"
+                        android:background="?attr/selectableItemBackground">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_exact_title" />
+                            <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_exact_desc" />
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvPermExactAlarm"
+                            style="@style/Stacca.Permission.Status" />
+                    </LinearLayout>
+
+                    <View style="@style/Stacca.Settings.Divider" />
+
+                    <LinearLayout
+                        android:id="@+id/rowPermBattery"
+                        style="@style/Stacca.Settings.Row"
+                        android:background="?attr/selectableItemBackground">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_battery_title" />
+                            <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_battery_desc" />
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvPermBattery"
+                            style="@style/Stacca.Permission.Status" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <Space
             android:id="@+id/spaceTop"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trial_v2_label">免费试用已结束</string>
+    <string name="trial_v2_title">试用结束了。\n应用没有。</string>
+    <string name="trial_v2_sub">你可以继续免费使用基础级别，或者升级高级版，体验真正吓人的版本。</string>
+    <string name="trial_v2_free_line">永久免费：第1-3级和“骂我”。</string>
+    <string name="trial_v2_premium_label">高级版</string>
+    <string name="trial_v2_btn_premium">升级高级版</string>
+    <string name="trial_v2_btn_free">继续免费使用</string>
+
+    <string name="perm_v2_label">开始之前</string>
+    <string name="perm_v2_title">三个权限，我就准备好了。</string>
+    <string name="perm_v2_notif_title">通知</string>
+    <string name="perm_v2_notif_desc">告诉你该下班了。</string>
+    <string name="perm_v2_exact_title">准时闹钟</string>
+    <string name="perm_v2_exact_desc">在正确的时间响，不会迟到。</string>
+    <string name="perm_v2_battery_title">不限制电池</string>
+    <string name="perm_v2_battery_desc">防止安卓让我睡着。</string>
+    <string name="perm_v2_enable">开启</string>
+    <string name="perm_v2_done">完成</string>
+</resources>

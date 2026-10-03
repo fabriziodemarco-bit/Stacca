@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fine prova gratuita e riquadro permessi (stile "editoriale" della home) -->
+<resources>
+    <!-- Fine prova -->
+    <string name="trial_v2_label">PROVA GRATUITA FINITA</string>
+    <string name="trial_v2_title">Prova finita.\nL\'app no.</string>
+    <string name="trial_v2_sub">Puoi continuare gratis con i livelli base, o passare a Premium per la versione che fa davvero paura.</string>
+    <string name="trial_v2_free_line">Gratis per sempre: livelli 1-3 e Insultami.</string>
+    <string name="trial_v2_premium_label">Con Premium</string>
+    <string name="trial_v2_btn_premium">Passa a Premium</string>
+    <string name="trial_v2_btn_free">Continua gratis</string>
+
+    <!-- Riquadro permessi nella home -->
+    <string name="perm_v2_label">PRIMA DI INIZIARE</string>
+    <string name="perm_v2_title">Tre permessi e sono pronto.</string>
+    <string name="perm_v2_notif_title">Notifiche</string>
+    <string name="perm_v2_notif_desc">Per dirti quando è ora di staccare.</string>
+    <string name="perm_v2_exact_title">Allarmi puntuali</string>
+    <string name="perm_v2_exact_desc">Per suonare all\'orario giusto, non dopo.</string>
+    <string name="perm_v2_battery_title">Batteria senza limiti</string>
+    <string name="perm_v2_battery_desc">Per non farmi addormentare da Android.</string>
+    <string name="perm_v2_enable">Attiva</string>
+    <string name="perm_v2_done">Fatto</string>
+</resources>

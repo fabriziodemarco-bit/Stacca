@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trial_v2_label">FREE TRIAL OVER</string>
+    <string name="trial_v2_title">Trial\'s over.\nThe app isn\'t.</string>
+    <string name="trial_v2_sub">You can keep going for free with the basic levels, or go Premium for the version that\'s actually scary.</string>
+    <string name="trial_v2_free_line">Free forever: levels 1-3 and Insult me.</string>
+    <string name="trial_v2_premium_label">With Premium</string>
+    <string name="trial_v2_btn_premium">Go Premium</string>
+    <string name="trial_v2_btn_free">Continue for free</string>
+
+    <string name="perm_v2_label">BEFORE WE START</string>
+    <string name="perm_v2_title">Three permissions and I\'m ready.</string>
+    <string name="perm_v2_notif_title">Notifications</string>
+    <string name="perm_v2_notif_desc">To tell you when it\'s time to unplug.</string>
+    <string name="perm_v2_exact_title">On-time alarms</string>
+    <string name="perm_v2_exact_desc">To ring at the right time, not later.</string>
+    <string name="perm_v2_battery_title">Unrestricted battery</string>
+    <string name="perm_v2_battery_desc">So Android doesn\'t put me to sleep.</string>
+    <string name="perm_v2_enable">Enable</string>
+    <string name="perm_v2_done">Done</string>
+</resources>

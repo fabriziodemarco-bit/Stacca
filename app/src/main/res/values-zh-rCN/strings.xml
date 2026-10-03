@@ -147,14 +147,6 @@
     <string name="login_confirm_dialog_ok">知道了！</string>
 
     <!-- Schermata soft fine trial (TrialExpiredActivity freemium) -->
-    <string name="trial_soft_title">试用结束。应用没有。 &#x1F393;</string>
-    <string name="trial_soft_subtitle">您的免费试用已过期。\n您可以免费继续使用基础级别 &#x2014; 或者升级到高级版，体验真正可怕的版本。</string>
-    <string name="trial_soft_free_title">&#x2705; 永久免费</string>
-    <string name="trial_soft_free_items">&#x1F4E9; 1-3级别 (温和, 友好, 坚持)\n&#x1F525; 记录和打卡记录\n&#x23F0; 基本警报正常工作</string>
-    <string name="trial_soft_premium_title">&#x1F451; 通过高级版解锁</string>
-    <string name="trial_soft_premium_items">&#x1F480; 4-6级别 (激进, 核弹, 世界末日)\n&#x1F4E2; 无法忽视的全屏警报\n&#x2764;&#xFE0F; 支持一个同样想下班的开发者</string>
-    <string name="trial_soft_btn_premium">&#x1F451; 升级到高级版</string>
-    <string name="trial_soft_btn_free">免费继续（1-3级别）</string>
 
     <!-- Tempo Non Vissuto -->
     <string name="tempo_non_vissuto_title">被压榨的时间</string>
@@ -164,13 +156,6 @@
     <string name="streak_lost_message">你失去了连续 %d 天的记录 💔</string>
 
     <!-- Protezione Allarmi - Card permessi in MainActivity -->
-    <string name="perm_card_title">🛡️ 警报保护</string>
-    <string name="perm_status_ok_notification">✅ 通知：已激活</string>
-    <string name="perm_status_ok_exact_alarm">✅ 精确警报：已授权</string>
-    <string name="perm_status_ok_battery">✅ 电池优化：已禁用</string>
-    <string name="perm_status_warn_notification">⚠️ 通知已禁用 — 点击以启用</string>
-    <string name="perm_status_warn_exact_alarm">⚠️ 未授权精确警报 — 点击以启用</string>
-    <string name="perm_status_warn_battery">⚠️ 电池优化已激活 — 点击以禁用</string>
     <!-- Dialogo quando l'utente prova ad attivare l'allarme senza il permesso allarmi esatti -->
     <string name="permission_exact_alarm_title">精确警报权限 🔔</string>
     <string name="permission_exact_alarm_message">没有这个权限，我没法吼你下班 😤\n\n转到设置并授权 下班！ 安排精确的警报。这是你今天能做的最重要的事情。</string>

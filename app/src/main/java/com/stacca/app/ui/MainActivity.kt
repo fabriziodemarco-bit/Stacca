@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPremiumBadge: TextView
 
     // Card protezione permessi
-    private lateinit var cardPermissions: MaterialCardView
+    private lateinit var cardPermissions: View
     private lateinit var tvPermNotification: TextView
     private lateinit var tvPermExactAlarm: TextView
     private lateinit var tvPermBattery: TextView
@@ -649,52 +649,40 @@ class MainActivity : AppCompatActivity() {
         val hasExact = PermissionHelper.canScheduleExactAlarms(this) && !previewPermissionsCard
         val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this) && !previewPermissionsCard
 
-        // Nascondi la card se tutto è a posto
+        // Nascondi il riquadro se tutto è a posto
         if (hasNotif && hasExact && hasBattery) {
             cardPermissions.visibility = View.GONE
             return
         }
         cardPermissions.visibility = View.VISIBLE
 
-        // Riga notifiche
-        if (hasNotif) {
-            tvPermNotification.text = getString(R.string.perm_status_ok_notification)
-            tvPermNotification.setOnClickListener(null)
-            tvPermNotification.isClickable = false
-        } else {
-            tvPermNotification.text = getString(R.string.perm_status_warn_notification)
-            tvPermNotification.isClickable = true
-            tvPermNotification.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    notificationPermissionFromCardLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
+        showPermissionRow(R.id.rowPermNotification, tvPermNotification, hasNotif) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                notificationPermissionFromCardLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-
-        // Riga allarmi esatti
-        if (hasExact) {
-            tvPermExactAlarm.text = getString(R.string.perm_status_ok_exact_alarm)
-            tvPermExactAlarm.setOnClickListener(null)
-            tvPermExactAlarm.isClickable = false
-        } else {
-            tvPermExactAlarm.text = getString(R.string.perm_status_warn_exact_alarm)
-            tvPermExactAlarm.isClickable = true
-            tvPermExactAlarm.setOnClickListener {
-                PermissionHelper.exactAlarmSettingsIntent(this)?.let { startActivity(it) }
-            }
+        showPermissionRow(R.id.rowPermExactAlarm, tvPermExactAlarm, hasExact) {
+            PermissionHelper.exactAlarmSettingsIntent(this)?.let { startActivity(it) }
         }
+        showPermissionRow(R.id.rowPermBattery, tvPermBattery, hasBattery) {
+            startActivity(PermissionHelper.batteryOptimizationIntent(this))
+        }
+    }
 
-        // Riga ottimizzazione batteria
-        if (hasBattery) {
-            tvPermBattery.text = getString(R.string.perm_status_ok_battery)
-            tvPermBattery.setOnClickListener(null)
-            tvPermBattery.isClickable = false
+    /** Una riga del riquadro permessi: "Fatto" se concesso, altrimenti "Attiva" e la riga è toccabile. */
+    private fun showPermissionRow(rowId: Int, status: TextView, granted: Boolean, enable: () -> Unit) {
+        val row = findViewById<View>(rowId)
+        if (granted) {
+            status.setText(R.string.perm_v2_done)
+            status.background = null
+            status.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
+            row.setOnClickListener(null)
+            row.isClickable = false
         } else {
-            tvPermBattery.text = getString(R.string.perm_status_warn_battery)
-            tvPermBattery.isClickable = true
-            tvPermBattery.setOnClickListener {
-                startActivity(PermissionHelper.batteryOptimizationIntent(this))
-            }
+            status.setText(R.string.perm_v2_enable)
+            status.setBackgroundResource(R.drawable.bg_pill_accent)
+            status.setTextColor(ContextCompat.getColor(this, R.color.home_on_accent))
+            row.setOnClickListener { enable() }
         }
     }
 

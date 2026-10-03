@@ -24,6 +24,7 @@ class TrialExpiredActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trial_expired)
+        window.setBackgroundDrawableResource(R.color.home_bg)
         SystemBarsHelper.applyInsets(this)
 
         val prefs = PreferencesManager(this)

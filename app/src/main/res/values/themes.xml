@@ -124,6 +124,19 @@
         <item name="android:textColor">@color/home_text_secondary</item>
     </style>
 
+    <!-- Stato a destra di ogni permesso: "Attiva" (arancione) o "Fatto" (grigio) -->
+    <style name="Stacca.Permission" />
+    <style name="Stacca.Permission.Status">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Stacca.Settings.Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
