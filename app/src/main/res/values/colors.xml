@@ -54,6 +54,15 @@
     <color name="overlay_dark">#CC000000</color>
     <color name="white">#FFFFFF</color>
 
+    <!-- Home (restyling "editoriale", tema scuro) -->
+    <color name="home_bg">#101019</color>
+    <color name="home_surface">#20202C</color>
+    <color name="home_text">#F8F5F0</color>
+    <color name="home_text_secondary">#B6B1BF</color>
+    <color name="home_border">#383643</color>
+    <color name="home_accent">#FF875F</color>
+    <color name="home_on_accent">#20110B</color>
+
     <!-- Premium -->
     <color name="premium_gold">#FFD700</color>
     <color name="premium_gold_dark">#E6B800</color>

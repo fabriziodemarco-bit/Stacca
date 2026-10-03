@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home_settings">设置</string>
+    <string name="premium_badge">高级版</string>
+    <string name="premium_badge_upgrade">升级高级版</string>
+    <string name="btn_insultami_home">骂我 · 60 秒</string>
+    <string name="btn_deactivate_small">关闭闹钟</string>
+    <string name="btn_ho_staccato_home">我已下班</string>
+    <string name="home_insultami_channels">声音、振动和文字</string>
+    <string name="home_explain_overtime">还不够？用一分钟的毒舌劝你下线。</string>
+    <string name="home_explain_default">需要推一把？用一分钟的毒舌劝你下线。</string>
+    <string name="home_edit_time">修改时间</string>
+
+    <string name="home_off_label">闹钟已关闭</string>
+    <string name="home_off_title">决定\n什么时候下班。</string>
+    <string name="home_off_sub">设置时间并打开闹钟。</string>
+    <string name="home_card_end_time">下班时间</string>
+    <string name="home_off_foot">闹钟已关闭</string>
+
+    <string name="home_cd_label_today">今天下班</string>
+    <string name="home_cd_label_tomorrow">明天下班</string>
+    <string name="home_cd_title">再坚持一下\n就结束了。</string>
+    <string name="home_cd_sub_today">你在%s下班。</string>
+    <string name="home_cd_sub_tomorrow">你明天%s下班。</string>
+    <string name="home_card_remaining">还剩</string>
+    <string name="home_cd_foot">下班时间 %s</string>
+
+    <string name="home_ot_label">今天的工作结束了</string>
+    <string name="home_ot_title">剩下的\n都可以等。</string>
+    <string name="home_ot_sub">你本该在%s下班。</string>
+    <string name="home_card_still_here">你已经多待了</string>
+    <string name="home_reminders_total">%d / 6</string>
+    <plurals name="home_reminders_sent">
+        <item quantity="other">已发送%d条提醒</item>
+    </plurals>
+
+    <string name="home_done_label_ontime">准时下班</string>
+    <string name="home_done_label_late">已下班</string>
+    <string name="home_done_title_ontime">自由了。\n就该这样。</string>
+    <string name="home_done_title_late">终于\n自由了。</string>
+    <string name="home_done_sub_ontime">零分钟送给公司。</string>
+    <string name="home_done_sub_late">晚了一点。我们原谅你。</string>
+    <string name="home_card_not_lived">没有活过的时间</string>
+    <string name="home_done_foot">明天%s继续</string>
+
+    <plurals name="home_minutes">
+        <item quantity="other">%d分钟</item>
+    </plurals>
+    <string name="home_hours_minutes">%1$d小时%2$02d分钟</string>
+    <string name="home_less_than_minute">不到1分钟</string>
+
+</resources>

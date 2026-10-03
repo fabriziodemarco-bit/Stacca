@@ -40,7 +40,6 @@ class InsultamiActivity : AppCompatActivity() {
 
     private lateinit var root: View
     private lateinit var tvPhase: TextView
-    private lateinit var tvEmoji: TextView
     private lateinit var tvInsult: TextView
     private lateinit var tvTimer: TextView
 
@@ -58,7 +57,6 @@ class InsultamiActivity : AppCompatActivity() {
         prefs = PreferencesManager(this)
         root = findViewById(R.id.insultRoot)
         tvPhase = findViewById(R.id.tvInsultPhase)
-        tvEmoji = findViewById(R.id.tvInsultEmoji)
         tvInsult = findViewById(R.id.tvInsult)
         tvTimer = findViewById(R.id.tvInsultTimer)
 
@@ -114,13 +112,12 @@ class InsultamiActivity : AppCompatActivity() {
         }
         tvInsult.text = list.removeAt(0)
 
-        val (phaseLabel, colorRes, emoji) = when (phase) {
-            0 -> Triple(R.string.insult_phase_1, R.color.alert_aggressive, "😏")
-            1 -> Triple(R.string.insult_phase_2, R.color.alert_nuclear, "😤")
-            else -> Triple(R.string.insult_phase_3, R.color.alert_apocalypse, "🤬")
+        val (phaseLabel, colorRes) = when (phase) {
+            0 -> R.string.insult_phase_1 to R.color.alert_aggressive
+            1 -> R.string.insult_phase_2 to R.color.alert_nuclear
+            else -> R.string.insult_phase_3 to R.color.alert_apocalypse
         }
         tvPhase.setText(phaseLabel)
-        tvEmoji.text = emoji
         root.setBackgroundColor(ContextCompat.getColor(this, colorRes))
 
         shake(tvInsult, phase)
@@ -161,7 +158,6 @@ class InsultamiActivity : AppCompatActivity() {
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.alert_gentle))
         tvPhase.visibility = View.INVISIBLE
         tvTimer.visibility = View.INVISIBLE
-        tvEmoji.text = "🎉"
         tvInsult.setText(R.string.insult_win)
         handler.postDelayed({ close() }, 2500)
     }
@@ -172,7 +168,6 @@ class InsultamiActivity : AppCompatActivity() {
         AlarmSoundManager.stop()
         tvPhase.visibility = View.INVISIBLE
         tvTimer.visibility = View.INVISIBLE
-        tvEmoji.text = "💀"
         tvInsult.setText(R.string.insult_lose)
         vibrate(2)
     }

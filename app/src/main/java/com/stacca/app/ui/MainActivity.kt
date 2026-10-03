@@ -1,8 +1,6 @@
 package com.stacca.app.ui
 
 import android.Manifest
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -54,17 +52,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var billingManager: BillingManager
     private val handler = Handler(Looper.getMainLooper())
 
-    // Riquadro protagonista: cambia in base al momento (vedi updateUI)
-    private lateinit var cardHero: MaterialCardView
+    // Messaggio principale e scheda informativa: cambiano in base al momento (vedi updateUI)
     private lateinit var tvHeroLabel: TextView
-    private lateinit var tvHeroValue: TextView
+    private lateinit var tvHeroTitle: TextView
     private lateinit var tvHeroSub: TextView
-    private lateinit var btnHeroPrimary: MaterialButton
-    private lateinit var btnHeroSecondary: MaterialButton
+    private lateinit var tvCardLabel: TextView
+    private lateinit var tvCardValue: TextView
+    private lateinit var segments: View
+    private lateinit var segmentViews: List<View>
+    private lateinit var tvCardFootLeft: TextView
+    private lateinit var tvCardFootRight: TextView
+    private lateinit var tvExplain: TextView
 
-    private lateinit var btnInsultami: MaterialButton
-    private lateinit var btnDeactivate: MaterialButton
-    private lateinit var btnSettings: MaterialButton
+    // Azioni
+    private lateinit var btnPrimary: MaterialButton
+    private lateinit var btnSecondary: MaterialButton
+    private lateinit var tvSnooze: TextView
+    private lateinit var btnSettings: TextView
     private lateinit var tvPremiumBadge: TextView
 
     // Card protezione permessi
@@ -121,6 +125,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.setBackgroundDrawableResource(R.color.home_bg)
         SystemBarsHelper.applyInsets(this)
 
         prefs = PreferencesManager(this)
@@ -134,7 +139,6 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
         updateUI()
         startClockUpdate()
-        startInsultamiPulse()
         handleHoStaccatoIntent(intent)
     }
 
@@ -154,14 +158,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        cardHero = findViewById(R.id.cardHero)
         tvHeroLabel = findViewById(R.id.tvHeroLabel)
-        tvHeroValue = findViewById(R.id.tvHeroValue)
+        tvHeroTitle = findViewById(R.id.tvHeroTitle)
         tvHeroSub = findViewById(R.id.tvHeroSub)
-        btnHeroPrimary = findViewById(R.id.btnHeroPrimary)
-        btnHeroSecondary = findViewById(R.id.btnHeroSecondary)
-        btnInsultami = findViewById(R.id.btnInsultami)
-        btnDeactivate = findViewById(R.id.btnDeactivate)
+        tvCardLabel = findViewById(R.id.tvCardLabel)
+        tvCardValue = findViewById(R.id.tvCardValue)
+        segments = findViewById(R.id.segments)
+        segmentViews = listOf(R.id.seg1, R.id.seg2, R.id.seg3, R.id.seg4, R.id.seg5, R.id.seg6)
+            .map { findViewById(it) }
+        tvCardFootLeft = findViewById(R.id.tvCardFootLeft)
+        tvCardFootRight = findViewById(R.id.tvCardFootRight)
+        tvExplain = findViewById(R.id.tvExplain)
+        btnPrimary = findViewById(R.id.btnPrimary)
+        btnSecondary = findViewById(R.id.btnSecondary)
+        tvSnooze = findViewById(R.id.tvSnooze)
         btnSettings = findViewById(R.id.btnSettings)
         tvPremiumBadge = findViewById(R.id.tvPremiumBadge)
         // Card protezione permessi
@@ -172,48 +182,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Il pulsante principale cambia funzione in base al momento
-        btnHeroPrimary.setOnClickListener {
+        // I due pulsanti cambiano funzione in base al momento (vedi updateUI)
+        btnPrimary.setOnClickListener {
             when (currentHeroState()) {
                 HeroState.SPENTO -> checkPermissionsAndActivate()
-                HeroState.STRAORDINARIO -> handleHoStaccato()
+                HeroState.COUNTDOWN, HeroState.STRAORDINARIO -> openInsultami()
                 HeroState.STACCATO -> {
                     prefs.isWaitingForNextAlarm = false
                     updateUI()
                 }
-                HeroState.COUNTDOWN -> Unit
             }
         }
-        btnHeroSecondary.setOnClickListener { handleSnooze() }
-
-        // Toccando l'orario (o la riga sotto) si cambia il fine turno
-        tvHeroValue.setOnClickListener {
-            if (currentHeroState() == HeroState.SPENTO) showTimePicker()
+        btnSecondary.setOnClickListener {
+            when (currentHeroState()) {
+                HeroState.SPENTO, HeroState.STACCATO -> openInsultami()
+                HeroState.COUNTDOWN -> deactivateAlarm()
+                HeroState.STRAORDINARIO -> handleHoStaccato()
+            }
         }
-        tvHeroSub.setOnClickListener {
+        tvSnooze.setOnClickListener { handleSnooze() }
+
+        // "Modifica orario" nella scheda, quando l'orario si può cambiare
+        tvCardFootRight.setOnClickListener {
             val state = currentHeroState()
             if (state == HeroState.SPENTO || state == HeroState.COUNTDOWN) showTimePicker()
         }
 
-        btnInsultami.setOnClickListener {
-            startActivity(Intent(this, InsultamiActivity::class.java))
-        }
-        btnDeactivate.setOnClickListener { deactivateAlarm() }
         btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
-    /** Insultami "respira": pulsa piano per attirare l'occhio. */
-    private fun startInsultamiPulse() {
-        listOf(View.SCALE_X, View.SCALE_Y).forEach { property ->
-            ObjectAnimator.ofFloat(btnInsultami, property, 1f, 1.06f).apply {
-                duration = 900
-                repeatMode = ValueAnimator.REVERSE
-                repeatCount = ValueAnimator.INFINITE
-                start()
-            }
-        }
+    private fun openInsultami() {
+        startActivity(Intent(this, InsultamiActivity::class.java))
     }
 
     private fun showTimePicker() {
@@ -336,86 +337,118 @@ class MainActivity : AppCompatActivity() {
         val now = System.currentTimeMillis()
 
         // Valori di base, sovrascritti caso per caso
-        var accent = R.color.primary
-        btnHeroPrimary.visibility = View.GONE
-        btnHeroSecondary.visibility = View.GONE
-        btnDeactivate.visibility = if (prefs.isAlarmActive) View.VISIBLE else View.GONE
+        segments.visibility = View.GONE
+        tvSnooze.visibility = View.GONE
+        tvCardFootRight.text = ""
+        tvCardFootRight.isClickable = false
+        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
+        tvExplain.setText(R.string.home_explain_default)
 
         when (state) {
             HeroState.SPENTO -> {
-                tvHeroLabel.setText(R.string.end_time_label)
-                tvHeroValue.text = endTimeText
-                tvHeroSub.setText(R.string.hero_tap_to_change)
-                btnHeroPrimary.setText(R.string.activate_alarm)
-                btnHeroPrimary.visibility = View.VISIBLE
+                tvHeroLabel.setText(R.string.home_off_label)
+                tvHeroTitle.setText(R.string.home_off_title)
+                tvHeroSub.setText(R.string.home_off_sub)
+                tvCardLabel.setText(R.string.home_card_end_time)
+                tvCardValue.text = endTimeText
+                tvCardFootLeft.setText(R.string.home_off_foot)
+                showEditTimeCommand()
+                btnPrimary.setText(R.string.activate_alarm)
+                btnSecondary.setText(R.string.btn_insultami_home)
             }
 
             HeroState.COUNTDOWN -> {
                 val endMillis = currentShiftEndMillis()
                 val isToday = isSameDay(endMillis, now)
-                tvHeroLabel.text = if (isToday) {
-                    getString(R.string.hero_countdown_label)
-                } else {
-                    getString(R.string.next_shift_tomorrow).uppercase()
-                }
-                tvHeroValue.text = formatDuration(endMillis - now, withPlus = false)
-                tvHeroSub.text = getString(R.string.hero_end_time_sub, endTimeText)
+                tvHeroLabel.setText(
+                    if (isToday) R.string.home_cd_label_today else R.string.home_cd_label_tomorrow
+                )
+                tvHeroTitle.setText(R.string.home_cd_title)
+                tvHeroSub.text = getString(
+                    if (isToday) R.string.home_cd_sub_today else R.string.home_cd_sub_tomorrow,
+                    endTimeText
+                )
+                tvCardLabel.setText(R.string.home_card_remaining)
+                tvCardValue.text = formatRemaining(endMillis - now)
+                tvCardFootLeft.text = getString(R.string.home_cd_foot, endTimeText)
+                showEditTimeCommand()
+                btnPrimary.setText(R.string.btn_insultami_home)
+                btnSecondary.setText(R.string.btn_deactivate_small)
             }
 
             HeroState.STRAORDINARIO -> {
-                accent = R.color.alert_apocalypse
-                tvHeroLabel.setText(R.string.hero_overtime_label)
-                tvHeroValue.text = formatDuration(now - currentShiftEndMillis(), withPlus = true)
-                tvHeroSub.setText(R.string.hero_overtime_sub)
-                btnHeroPrimary.setText(R.string.btn_ho_staccato)
-                btnHeroPrimary.visibility = View.VISIBLE
-                btnHeroSecondary.text = getString(
+                // I segmenti mostrano i promemoria davvero inviati (max 6)
+                val sent = prefs.currentEscalationStep.coerceIn(0, 6)
+                tvHeroLabel.setText(R.string.home_ot_label)
+                tvHeroTitle.setText(R.string.home_ot_title)
+                tvHeroSub.text = getString(R.string.home_ot_sub, endTimeText)
+                tvCardLabel.setText(R.string.home_card_still_here)
+                val overtimeMinutes = ((now - currentShiftEndMillis()) / 60_000).toInt()
+                tvCardValue.text = formatMinutes(overtimeMinutes)
+                segments.visibility = View.VISIBLE
+                val accent = ContextCompat.getColor(this, R.color.home_accent)
+                val neutral = ContextCompat.getColor(this, R.color.home_border)
+                segmentViews.forEachIndexed { i, seg ->
+                    seg.background.mutate().setTint(if (i < sent) accent else neutral)
+                }
+                tvCardFootLeft.text =
+                    resources.getQuantityString(R.plurals.home_reminders_sent, sent, sent)
+                tvCardFootRight.text = getString(R.string.home_reminders_total, sent)
+                tvExplain.setText(R.string.home_explain_overtime)
+                btnPrimary.setText(R.string.btn_insultami_home)
+                btnSecondary.setText(R.string.btn_ho_staccato_home)
+                tvSnooze.text = getString(
                     R.string.btn_snooze, AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
                 )
-                btnHeroSecondary.visibility = View.VISIBLE
+                tvSnooze.visibility = View.VISIBLE
             }
 
             HeroState.STACCATO -> {
-                // Il momento premio: si celebra lo stacco (con un pizzico di sfottò se in ritardo)
+                // Il momento premio
                 val overtime = prefs.lastShiftOvertimeMinutes
                 val onTime = overtime == 0
-                accent = if (onTime) R.color.alert_gentle else R.color.primary
                 tvHeroLabel.setText(
-                    if (onTime) R.string.hero_free_label_ontime else R.string.hero_free_label_late
+                    if (onTime) R.string.home_done_label_ontime else R.string.home_done_label_late
                 )
-                tvHeroValue.text = "$overtime min"
-                val firstLine = if (onTime) {
-                    getString(R.string.hero_free_sub_ontime)
+                tvHeroTitle.setText(
+                    if (onTime) R.string.home_done_title_ontime else R.string.home_done_title_late
+                )
+                tvHeroSub.setText(
+                    if (onTime) R.string.home_done_sub_ontime else R.string.home_done_sub_late
+                )
+                tvCardLabel.setText(R.string.home_card_not_lived)
+                tvCardValue.text = formatMinutes(overtime)
+                tvCardFootLeft.text = if (prefs.isAlarmActive) {
+                    getString(R.string.home_done_foot, endTimeText)
                 } else {
-                    getString(R.string.hero_free_sub_late, overtime)
+                    ""
                 }
-                tvHeroSub.text = if (prefs.isAlarmActive) {
-                    firstLine + "\n" + getString(R.string.hero_next_tomorrow, endTimeText)
-                } else {
-                    firstLine
-                }
-                btnHeroPrimary.setText(R.string.btn_ok_home)
-                btnHeroPrimary.visibility = View.VISIBLE
-                // Subito dopo lo stacco "Disattiva" non serve
-                btnDeactivate.visibility = View.GONE
+                btnPrimary.setText(R.string.btn_ok_home)
+                btnSecondary.setText(R.string.btn_insultami_home)
             }
         }
-
-        val accentColor = ContextCompat.getColor(this, accent)
-        cardHero.strokeColor = accentColor
-        tvHeroLabel.setTextColor(accentColor)
-        tvHeroValue.setTextColor(accentColor)
-        btnHeroPrimary.backgroundTintList = android.content.res.ColorStateList.valueOf(accentColor)
     }
 
-    /** Durata in formato 00:00:00, con "+" davanti per lo straordinario. */
-    private fun formatDuration(millis: Long, withPlus: Boolean): String {
-        val safe = millis.coerceAtLeast(0L)
-        val hours = safe / 3600000
-        val minutes = (safe % 3600000) / 60000
-        val seconds = (safe % 60000) / 1000
-        val text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-        return if (withPlus) "+$text" else text
+    /** Mostra "Modifica orario" a destra nella scheda, come comando toccabile. */
+    private fun showEditTimeCommand() {
+        tvCardFootRight.setText(R.string.home_edit_time)
+        tvCardFootRight.isClickable = true
+        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_accent))
+    }
+
+    /** "26 minuti" oppure "1 h 05 min". */
+    private fun formatMinutes(totalMinutes: Int): String {
+        val minutes = totalMinutes.coerceAtLeast(0)
+        if (minutes < 60) {
+            return resources.getQuantityString(R.plurals.home_minutes, minutes, minutes)
+        }
+        return getString(R.string.home_hours_minutes, minutes / 60, minutes % 60)
+    }
+
+    /** Tempo che manca, senza secondi: "2 h 14 min", "14 minuti", "meno di 1 min". */
+    private fun formatRemaining(millis: Long): String {
+        val minutes = (millis / 60_000).toInt()
+        return if (minutes < 1) getString(R.string.home_less_than_minute) else formatMinutes(minutes)
     }
 
     private fun isSameDay(a: Long, b: Long): Boolean {
@@ -588,8 +621,8 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Aggiorna il badge in alto a destra nella home.
-     * - Premium: "👑 Premium", non cliccabile.
-     * - Piano gratuito: "👑 Passa a Premium", apre la schermata di acquisto.
+     * - Premium: "PREMIUM", non cliccabile.
+     * - Piano gratuito: "PASSA A PREMIUM", apre la schermata di acquisto.
      */
     private fun updateTrialBanner() {
         if (prefs.isPremium) {
@@ -597,7 +630,7 @@ class MainActivity : AppCompatActivity() {
             tvPremiumBadge.isClickable = false
             tvPremiumBadge.setOnClickListener(null)
         } else {
-            tvPremiumBadge.setText(R.string.settings_upgrade)
+            tvPremiumBadge.setText(R.string.premium_badge_upgrade)
             tvPremiumBadge.isClickable = true
             tvPremiumBadge.setOnClickListener {
                 startActivity(Intent(this, PremiumActivity::class.java))

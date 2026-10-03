@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Testi della home (restyling "editoriale") -->
+<resources>
+
+    <string name="home_settings">Impostazioni</string>
+    <string name="premium_badge">PREMIUM</string>
+    <string name="premium_badge_upgrade">PASSA A PREMIUM</string>
+    <string name="btn_insultami_home">Insultami · 60 s</string>
+    <string name="btn_deactivate_small">Disattiva allarme</string>
+    <string name="btn_ho_staccato_home">Ho staccato</string>
+    <string name="home_insultami_channels">Audio, vibrazione e testo</string>
+    <string name="home_explain_overtime">Non è bastato? Un minuto di sfottò per convincerti a chiudere.</string>
+    <string name="home_explain_default">Serve una spinta? Un minuto di sfottò per convincerti a chiudere.</string>
+    <string name="home_edit_time">Modifica orario</string>
+
+    <!-- Allarme spento -->
+    <string name="home_off_label">ALLARME SPENTO</string>
+    <string name="home_off_title">Decidi quando\nsi stacca.</string>
+    <string name="home_off_sub">Imposta l\'orario e attiva l\'allarme.</string>
+    <string name="home_card_end_time">FINE TURNO</string>
+    <string name="home_off_foot">Allarme spento</string>
+
+    <!-- Prima dell'orario -->
+    <string name="home_cd_label_today">OGGI SI STACCA</string>
+    <string name="home_cd_label_tomorrow">DOMANI SI STACCA</string>
+    <string name="home_cd_title">Ancora un po\'\ne poi basta.</string>
+    <string name="home_cd_sub_today">Stacchi alle %s.</string>
+    <string name="home_cd_sub_tomorrow">Stacchi domani alle %s.</string>
+    <string name="home_card_remaining">MANCANO</string>
+    <string name="home_cd_foot">Fine turno %s</string>
+
+    <!-- Oltre l'orario -->
+    <string name="home_ot_label">LA GIORNATA È FINITA</string>
+    <string name="home_ot_title">Il resto può\naspettare.</string>
+    <string name="home_ot_sub">Dovevi staccare alle %s.</string>
+    <string name="home_card_still_here">SEI ANCORA QUI DA</string>
+    <string name="home_reminders_total">%d / 6</string>
+    <plurals name="home_reminders_sent">
+        <item quantity="one">%d promemoria inviato</item>
+        <item quantity="other">%d promemoria inviati</item>
+    </plurals>
+
+    <!-- Dopo lo stacco -->
+    <string name="home_done_label_ontime">HAI STACCATO IN ORARIO</string>
+    <string name="home_done_label_late">HAI STACCATO</string>
+    <string name="home_done_title_ontime">Libero.\nCosì si fa.</string>
+    <string name="home_done_title_late">Libero,\nfinalmente.</string>
+    <string name="home_done_sub_ontime">Zero minuti regalati all\'azienda.</string>
+    <string name="home_done_sub_late">Con un po\' di ritardo. Ti perdoniamo.</string>
+    <string name="home_card_not_lived">TEMPO NON VISSUTO</string>
+    <string name="home_done_foot">Domani alle %s si riparte</string>
+
+    <!-- Durate -->
+    <plurals name="home_minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minuti</item>
+    </plurals>
+    <string name="home_hours_minutes">%1$d h %2$02d min</string>
+    <string name="home_less_than_minute">meno di 1 min</string>
+
+</resources>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Insultami: un minuto di insulti a tutto schermo, stessa tipografia della home -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/insultRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp">
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
 
         <!-- Fase corrente -->
         <TextView
@@ -18,33 +22,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/insult_phase_1"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:letterSpacing="0.15"
-            android:textColor="#FFFFFFCC"
-            android:layout_marginBottom="24dp" />
+            android:letterSpacing="0.14"
+            android:textColor="#CCFFFFFF" />
 
-        <TextView
-            android:id="@+id/tvInsultEmoji"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="💀"
-            android:textSize="72sp"
-            android:layout_marginBottom="24dp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <!-- L'insulto -->
+        <!-- L'insulto, al centro dello schermo -->
         <TextView
             android:id="@+id/tvInsult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="160dp"
-            android:gravity="center"
-            android:textSize="30sp"
+            android:textSize="32sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-black"
-            android:textColor="@color/white"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="32dp" />
+            android:textFontWeight="800"
+            android:lineSpacingMultiplier="1.08"
+            android:letterSpacing="-0.01"
+            android:textColor="@color/white" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <!-- Secondi rimanenti -->
         <TextView
@@ -52,21 +55,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="60"
-            android:textSize="48sp"
+            android:textSize="46sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFeatureSettings="tnum"
+            android:includeFontPadding="false"
             android:textColor="@color/white"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginBottom="20dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnInsultOk"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/insult_btn_ok"
-            style="@style/Widget.Stacca.Button.Primary"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/alert_apocalypse"
-            android:textSize="20sp" />
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:letterSpacing="0"
+            android:textColor="@color/home_bg"
+            app:backgroundTint="@color/white"
+            app:cornerRadius="14dp"
+            app:elevation="0dp" />
 
     </LinearLayout>
 </FrameLayout>

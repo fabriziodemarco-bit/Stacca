@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Segmento della barra dei promemoria (il colore viene impostato dal codice) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/home_border" />
+    <corners android:radius="3dp" />
+</shape>

@@ -28,21 +28,6 @@
     <string name="btn_5_more_minutes">Ancora 5 minuti… ⏰</string>
     <string name="btn_snooze">Ancora %d minuti, giuro 🙄</string>
     <string name="btn_ok_home">Ok 👍</string>
-    <!-- Home: riquadro protagonista -->
-    <string name="hero_tap_to_change">Tocca l\'orario per cambiarlo ✏️</string>
-    <string name="hero_countdown_label">ALLA LIBERTÀ MANCANO</string>
-    <string name="hero_end_time_sub">Fine turno %s ✏️</string>
-    <string name="hero_overtime_label">SEI IN STRAORDINARIO DA</string>
-    <string name="hero_overtime_sub">Ogni secondo qui è tempo non vissuto.</string>
-    <string name="hero_free_label_ontime">🎉 LIBERO!</string>
-    <string name="hero_free_label_late">LIBERO, FINALMENTE</string>
-    <string name="hero_free_sub_ontime">Zero minuti regalati all\'azienda. Così si fa.</string>
-    <string name="hero_free_sub_late">Con %d min di ritardo. Ti perdoniamo 😏</string>
-    <string name="hero_next_tomorrow">Domani alle %s si riparte ⏰</string>
-    <string name="insultami_sub">Un minuto. Se hai il coraggio.</string>
-    <string name="premium_badge">👑 Premium</string>
-    <string name="btn_deactivate_small">Disattiva allarme</string>
-    <string name="next_shift_tomorrow">Prossimo stacco: domani</string>
     <string name="snooze_toast">Ok, tra %d minuti torno. Più cattivo. 😈</string>
 
     <string name="btn_save">Salva</string>
