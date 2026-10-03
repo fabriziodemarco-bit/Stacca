@@ -124,9 +124,7 @@
         <Space
             android:id="@+id/spaceTop"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:minHeight="24dp" />
+            android:layout_height="20dp" />
 
         <!-- 2. Messaggio principale -->
         <TextView
@@ -255,7 +253,9 @@
         <Space
             android:id="@+id/spaceBottom"
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:minHeight="20dp" />
 
         <!-- 5. Azioni: un solo pulsante dominante -->
         <com.google.android.material.button.MaterialButton
@@ -325,7 +325,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
 
-        <!-- Lo spazio libero si divide a metà: sopra il messaggio e sotto i comandi -->
+        <!-- Come nel riferimento grafico: contenuto in alto, spazio libero soprattutto
+             tra la frase e i pulsanti, solo un piccolo margine sotto Impostazioni -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"

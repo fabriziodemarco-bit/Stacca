@@ -199,8 +199,8 @@ class MainActivity : AppCompatActivity() {
             (layoutParams as ViewGroup.MarginLayoutParams).topMargin = dp(value)
         }
 
-        findViewById<View>(R.id.spaceTop).minimumHeight = dp(12)
-        findViewById<View>(R.id.spaceBottom).layoutParams.height = dp(14)
+        findViewById<View>(R.id.spaceTop).layoutParams.height = dp(12)
+        findViewById<View>(R.id.spaceBottom).minimumHeight = dp(12)
         tvHeroTitle.setTopMargin(4)
         tvHeroSub.setTopMargin(4)
         val card = findViewById<MaterialCardView>(R.id.cardInfo)
