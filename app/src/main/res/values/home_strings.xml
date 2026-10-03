@@ -29,8 +29,8 @@
     <string name="home_cd_foot">Fine turno %s</string>
 
     <!-- Oltre l'orario -->
-    <string name="home_ot_label">LA GIORNATA LAVORATIVA È FINITA. VAI!</string>
-    <string name="home_ot_title">Il resto non può\npiù aspettare.</string>
+    <string name="home_ot_label">IL LAVORO È FINITO.</string>
+    <string name="home_ot_title">Il resto non può\npiù aspettare</string>
     <string name="home_ot_sub">Dovevi staccare alle %s.</string>
     <string name="home_card_still_here">SEI ANCORA QUI DA</string>
     <string name="home_reminders_total">%d / 6</string>

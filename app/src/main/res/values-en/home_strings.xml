@@ -25,8 +25,8 @@
     <string name="home_card_remaining">TIME LEFT</string>
     <string name="home_cd_foot">Shift ends at %s</string>
 
-    <string name="home_ot_label">THE WORKDAY IS OVER. GO!</string>
-    <string name="home_ot_title">Everything else\ncan\'t wait anymore.</string>
+    <string name="home_ot_label">WORK IS OVER.</string>
+    <string name="home_ot_title">Everything else\ncan\'t wait anymore</string>
     <string name="home_ot_sub">You were supposed to unplug at %s.</string>
     <string name="home_card_still_here">YOU\'VE BEEN HERE FOR</string>
     <string name="home_reminders_total">%d / 6</string>
