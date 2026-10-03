@@ -11,7 +11,7 @@
     <string name="paywall_f3_title">Choose the frequency</string>
     <string name="paywall_f3_desc">We come looking for you every 5, 10 or 15 minutes.</string>
 
-    <string name="paywall_once">One payment, forever. No subscriptions.</string>
+    <string name="paywall_once">One payment. No subscriptions.</string>
     <string name="paywall_support">And support a developer who\'d like to unplug too.</string>
 
     <string name="paywall_unlock_v2">Unlock Premium</string>

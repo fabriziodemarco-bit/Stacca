@@ -12,7 +12,7 @@
     <string name="paywall_f3_title">Frequenza a scelta</string>
     <string name="paywall_f3_desc">Ti veniamo a cercare ogni 5, 10 o 15 minuti.</string>
 
-    <string name="paywall_once">Un solo pagamento, per sempre. Niente abbonamenti.</string>
+    <string name="paywall_once">Pagamento unico. Niente abbonamenti.</string>
     <string name="paywall_support">E sostieni uno sviluppatore che vorrebbe staccare anche lui.</string>
 
     <string name="paywall_unlock_v2">Sblocca Premium</string>

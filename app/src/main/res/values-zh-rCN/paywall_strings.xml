@@ -11,7 +11,7 @@
     <string name="paywall_f3_title">自选频率</string>
     <string name="paywall_f3_desc">每5、10或15分钟来找你一次。</string>
 
-    <string name="paywall_once">一次付费，永久使用。没有订阅。</string>
+    <string name="paywall_once">一次付费。没有订阅。</string>
     <string name="paywall_support">同时支持一位也想下班的开发者。</string>
 
     <string name="paywall_unlock_v2">解锁高级版</string>

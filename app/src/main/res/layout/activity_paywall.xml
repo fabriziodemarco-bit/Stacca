@@ -17,25 +17,48 @@
         android:orientation="vertical"
         android:paddingStart="22dp"
         android:paddingEnd="22dp"
-        android:paddingTop="24dp"
+        android:paddingTop="@dimen/page_padding_top"
         android:paddingBottom="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- In alto: etichetta a sinistra, "Ripristina acquisti" discreto a destra -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/paywall_label"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.14"
-            android:textColor="@color/home_accent" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/paywall_label"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.14"
+                android:textColor="@color/home_accent" />
+
+            <TextView
+                android:id="@+id/tvPaywallRestore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="44dp"
+                android:minWidth="44dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:gravity="center"
+                android:text="@string/premium_restore"
+                android:textSize="13sp"
+                android:textColor="@color/home_text_secondary"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvPaywallTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:text="@string/paywall_title_v2"
-            android:textSize="30sp"
+            android:textSize="@dimen/page_title_size"
             android:fontFamily="sans-serif-black"
             android:lineSpacingMultiplier="1.08"
             android:letterSpacing="-0.01"
@@ -54,7 +77,7 @@
         <!-- Cosa si sblocca -->
         <com.google.android.material.card.MaterialCardView
             style="@style/Stacca.Settings.Card"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="@dimen/page_card_margin_top">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -112,6 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:id="@+id/tvPaywallSupport"
             android:text="@string/paywall_support"
             android:textSize="13sp"
             android:textColor="@color/home_text_secondary" />
@@ -156,22 +180,6 @@
             app:strokeColor="@color/home_border"
             app:strokeWidth="1dp"
             app:cornerRadius="14dp" />
-
-        <TextView
-            android:id="@+id/tvPaywallRestore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="4dp"
-            android:minHeight="44dp"
-            android:minWidth="44dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center"
-            android:text="@string/premium_restore"
-            android:textSize="13sp"
-            android:textColor="@color/home_text_secondary"
-            android:background="?attr/selectableItemBackgroundBorderless" />
 
     </LinearLayout>
 </ScrollView>

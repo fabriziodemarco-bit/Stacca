@@ -78,6 +78,11 @@ class PaywallActivity : AppCompatActivity() {
         billingManager.connect()
 
         setupUI()
+
+        // Schermi bassi: la riga "sostieni lo sviluppatore" si nasconde, così i pulsanti restano visibili
+        if (resources.configuration.screenHeightDp < 720) {
+            findViewById<TextView>(R.id.tvPaywallSupport).visibility = android.view.View.GONE
+        }
     }
 
     private fun setupUI() {

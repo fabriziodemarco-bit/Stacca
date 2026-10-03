@@ -17,4 +17,12 @@
     <dimen name="text_clock">72sp</dimen>
     <dimen name="text_countdown">56sp</dimen>
     <dimen name="text_alert">48sp</dimen>
+
+    <!-- Paywall e Impostazioni: valori compatti per schermi bassi
+         (sugli schermi normali valgono quelli in values-h720dp) -->
+    <dimen name="page_title_size">26sp</dimen>
+    <dimen name="page_padding_top">12dp</dimen>
+    <dimen name="page_card_margin_top">14dp</dimen>
+    <dimen name="settings_row_padding_v">10dp</dimen>
+    <dimen name="settings_row_min_height">52dp</dimen>
 </resources>

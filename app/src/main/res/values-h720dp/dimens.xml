@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Schermi con almeno 720 dp di altezza: spaziature e titoli pieni -->
+<resources>
+    <dimen name="page_title_size">30sp</dimen>
+    <dimen name="page_padding_top">24dp</dimen>
+    <dimen name="page_card_margin_top">20dp</dimen>
+    <dimen name="settings_row_padding_v">14dp</dimen>
+    <dimen name="settings_row_min_height">64dp</dimen>
+</resources>

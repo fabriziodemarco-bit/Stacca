@@ -93,11 +93,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:minHeight">64dp</item>
+        <item name="android:minHeight">@dimen/settings_row_min_height</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">16dp</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingTop">@dimen/settings_row_padding_v</item>
+        <item name="android:paddingBottom">@dimen/settings_row_padding_v</item>
     </style>
 
     <style name="Stacca.Settings.RowTexts">
