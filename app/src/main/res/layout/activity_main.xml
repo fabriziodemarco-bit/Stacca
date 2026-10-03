@@ -66,14 +66,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
             android:paddingBottom="40dp"
             android:orientation="vertical"
             android:visibility="gone">
 
+            <!-- In alto, subito sotto l'header -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/perm_v2_label"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -89,9 +90,15 @@
                 android:textStyle="bold"
                 android:textColor="@color/home_text" />
 
+            <!-- La scheda dei permessi sta al centro dello spazio che resta -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:minHeight="16dp" />
+
             <com.google.android.material.card.MaterialCardView
-                style="@style/Stacca.Settings.Card"
-                android:layout_marginTop="10dp">
+                style="@style/Stacca.Settings.Card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -143,21 +150,10 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Uscita per chi non vuole concedere subito tutti i permessi -->
-            <TextView
-                android:id="@+id/tvPermLater"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:minHeight="44dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:gravity="center"
-                android:text="@string/perm_v2_later"
-                android:textSize="14sp"
-                android:textColor="@color/home_text_secondary"
-                android:background="?attr/selectableItemBackgroundBorderless" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <!-- Contenuto della home: nascosto quando mancano permessi (si vede solo il riquadro sopra) -->

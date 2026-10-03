@@ -3,4 +3,6 @@
     <string name="login_label">账户 · 可选</string>
     <string name="login_title">登录或\n创建账户。</string>
     <string name="login_sub">注：不登录也完全可以使用。</string>
+    <string name="login_switch_to_register">还没有账户？注册</string>
+    <string name="login_switch_to_login">已有账户？登录</string>
 </resources>

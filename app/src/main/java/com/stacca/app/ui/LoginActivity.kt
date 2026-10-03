@@ -19,7 +19,6 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingExcept
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.stacca.app.BuildConfig
@@ -51,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var authManager: AuthManager
     private lateinit var prefs: PreferencesManager
 
-    private lateinit var tabLayout: TabLayout
+    private lateinit var tvSwitchMode: TextView
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var tilEmail: TextInputLayout
@@ -206,7 +205,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        tabLayout = findViewById(R.id.tabLayout)
+        tvSwitchMode = findViewById(R.id.tvSwitchMode)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         tilEmail = findViewById(R.id.tilEmail)
@@ -219,22 +218,20 @@ class LoginActivity : AppCompatActivity() {
         nestedScrollView = findViewById(R.id.nestedScrollView)
     }
 
+    /** Accesso o registrazione: cambia pulsante, link in basso e "Password dimenticata?". */
+    private fun setLoginMode(login: Boolean) {
+        isLoginMode = login
+        btnLogin.setText(if (login) R.string.login_btn_login else R.string.login_btn_register)
+        tvSwitchMode.setText(if (login) R.string.login_switch_to_register else R.string.login_switch_to_login)
+        tvForgotPassword.visibility = if (login) View.VISIBLE else View.GONE
+        tvError.visibility = View.GONE
+    }
+
     private fun setupListeners() {
         // Tab switch login/registrazione
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                isLoginMode = tab?.position == 0
-                btnLogin.text = if (isLoginMode) {
-                    getString(R.string.login_btn_login)
-                } else {
-                    getString(R.string.login_btn_register)
-                }
-                tvForgotPassword.visibility = if (isLoginMode) View.VISIBLE else View.GONE
-                tvError.visibility = View.GONE
-            }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+        // Link sotto il pulsante: passa da "Accedi" a "Registrati" e viceversa
+        tvSwitchMode.setOnClickListener { setLoginMode(!isLoginMode) }
+        setLoginMode(true)
 
         // Login/Register button
         btnLogin.setOnClickListener {
@@ -427,7 +424,7 @@ class LoginActivity : AppCompatActivity() {
             .setPositiveButton(getString(R.string.login_confirm_dialog_ok)) { dialog, _ ->
                 dialog.dismiss()
                 // Torna alla modalità login
-                tabLayout.getTabAt(0)?.select()
+                setLoginMode(true)
             }
             .setCancelable(false)
             .show()

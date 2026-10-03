@@ -18,5 +18,4 @@
     <string name="perm_v2_battery_desc">So Android doesn\'t put me to sleep.</string>
     <string name="perm_v2_enable">Enable</string>
     <string name="perm_v2_done">Done</string>
-    <string name="perm_v2_later">Later</string>
 </resources>

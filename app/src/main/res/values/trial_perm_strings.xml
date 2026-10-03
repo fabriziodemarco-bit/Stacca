@@ -12,7 +12,7 @@
 
     <!-- Riquadro permessi nella home -->
     <string name="perm_v2_label">PRIMA DI INIZIARE</string>
-    <string name="perm_v2_title">Tre permessi e sono pronto.</string>
+    <string name="perm_v2_title">Tre permessi e sono pronta.</string>
     <string name="perm_v2_notif_title">Notifiche</string>
     <string name="perm_v2_notif_desc">Per dirti quando è ora di staccare.</string>
     <string name="perm_v2_exact_title">Allarmi puntuali</string>
@@ -21,5 +21,4 @@
     <string name="perm_v2_battery_desc">Per non farmi addormentare da Android.</string>
     <string name="perm_v2_enable">Attiva</string>
     <string name="perm_v2_done">Fatto</string>
-    <string name="perm_v2_later">Più tardi</string>
 </resources>

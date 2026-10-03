@@ -115,31 +115,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@android:color/transparent"
-                    app:tabTextColor="@color/home_text_secondary"
-                    app:tabSelectedTextColor="@color/home_text"
-                    app:tabIndicatorColor="@color/home_accent"
-                    app:tabRippleColor="@android:color/transparent"
-                    app:tabMode="fixed"
-                    app:tabGravity="fill">
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/login_tab_login" />
-
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/login_tab_register" />
-                </com.google.android.material.tabs.TabLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEmail"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
@@ -237,8 +212,29 @@
                     android:textColor="@color/alert_aggressive"
                     android:visibility="gone" />
 
+                <!-- Passa da accesso a registrazione e viceversa -->
+                <TextView
+                    android:id="@+id/tvSwitchMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/home_text_secondary"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Spazio sotto il blocco di accesso: lo tiene più in alto -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -18,5 +18,4 @@
     <string name="perm_v2_battery_desc">防止安卓让我睡着。</string>
     <string name="perm_v2_enable">开启</string>
     <string name="perm_v2_done">完成</string>
-    <string name="perm_v2_later">稍后</string>
 </resources>

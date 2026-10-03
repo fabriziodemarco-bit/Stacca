@@ -222,9 +222,6 @@ class MainActivity : AppCompatActivity() {
     /** Solo versione di prova: mostra il riquadro permessi anche se sono tutti attivi. */
     private var previewPermissionsCard = false
 
-    /** "Più tardi" sul riquadro permessi: lo nasconde finché l'app resta aperta. */
-    private var permissionsPostponed = false
-
     /**
      * Solo versione di prova (debug): pressione lunga su "Stacca!" apre il menu
      * per vedere ogni schermata, anche da utente Premium. Nella versione su Play non esiste.
@@ -246,7 +243,6 @@ class MainActivity : AppCompatActivity() {
                         1 -> open(TrialExpiredActivity::class.java)
                         2 -> {
                             previewPermissionsCard = !previewPermissionsCard
-                            permissionsPostponed = false
                             updatePermissionsCard()
                         }
                         3 -> open(FullScreenAlertActivity::class.java) {
@@ -653,9 +649,9 @@ class MainActivity : AppCompatActivity() {
         val hasExact = PermissionHelper.canScheduleExactAlarms(this) && !previewPermissionsCard
         val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this) && !previewPermissionsCard
 
-        // Tutto a posto (o "Più tardi"): si vede la home normale
+        // Tutto a posto: si vede la home normale
         val homeContent = findViewById<View>(R.id.homeContent)
-        if ((hasNotif && hasExact && hasBattery) || permissionsPostponed) {
+        if (hasNotif && hasExact && hasBattery) {
             cardPermissions.visibility = View.GONE
             homeContent.visibility = View.VISIBLE
             return
@@ -663,10 +659,6 @@ class MainActivity : AppCompatActivity() {
         // Mancano permessi: si vede solo il riquadro, centrato
         cardPermissions.visibility = View.VISIBLE
         homeContent.visibility = View.GONE
-        findViewById<View>(R.id.tvPermLater).setOnClickListener {
-            permissionsPostponed = true
-            updatePermissionsCard()
-        }
 
         showPermissionRow(R.id.rowPermNotification, tvPermNotification, hasNotif) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

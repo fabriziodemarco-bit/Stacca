@@ -3,4 +3,6 @@
     <string name="login_label">ACCOUNT · OPTIONAL</string>
     <string name="login_title">Log in or\ncreate an account.</string>
     <string name="login_sub">Note: Unplug works just fine without it.</string>
+    <string name="login_switch_to_register">No account? Sign up</string>
+    <string name="login_switch_to_login">Already have an account? Log in</string>
 </resources>
