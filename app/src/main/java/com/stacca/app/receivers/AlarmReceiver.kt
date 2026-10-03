@@ -23,7 +23,7 @@ import java.util.*
  * Gestisce l'escalation delle notifiche con logica step-based:
  * - Ogni notifica avanza di 1 step
  * - Il livello è determinato dallo step, non dal tempo reale
- * - Intervallo fisso di 5 minuti tra le notifiche
+ * - Intervallo tra le notifiche scelto in "Frequenza notifiche" (5, 10 o 15 minuti)
  */
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -32,9 +32,9 @@ class AlarmReceiver : BroadcastReceiver() {
          * Restituisce l'intervallo tra le notifiche in millisecondi,
          * in base all'impostazione "Frequenza notifiche" dell'utente.
          *
-         * 0 = Rilassato (ogni 8 min)
-         * 1 = Normale   (ogni 5 min)
-         * 2 = Aggressivo (ogni 3 min)
+         * 0 = Rilassato (ogni 15 min)
+         * 1 = Normale   (ogni 10 min)
+         * 2 = Aggressivo (ogni 5 min)
          */
         private fun getIntervalMs(escalationSpeed: Int): Long {
             return getIntervalMinutes(escalationSpeed) * 60 * 1000L
@@ -43,9 +43,9 @@ class AlarmReceiver : BroadcastReceiver() {
         /** Minuti tra una notifica e l'altra (usato anche dal pulsante "Ancora X minuti"). */
         fun getIntervalMinutes(escalationSpeed: Int): Int {
             return when (escalationSpeed) {
-                0 -> 8    // 🐌 Rilassato
-                2 -> 3    // 🔥 Aggressivo
-                else -> 5 // ⚡ Normale
+                0 -> 15    // 🐌 Rilassato
+                2 -> 5     // 🔥 Aggressivo
+                else -> 10 // ⚡ Normale
             }
         }
 
@@ -229,7 +229,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     /**
      * Programma il prossimo allarme con intervallo basato sull'impostazione
-     * "Frequenza notifiche": 🐌 8 min / ⚡ 5 min / 🔥 3 min.
+     * "Frequenza notifiche": 🐌 15 min / ⚡ 10 min / 🔥 5 min.
      */
     private fun scheduleNextAlarm(context: Context, escalationSpeed: Int) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

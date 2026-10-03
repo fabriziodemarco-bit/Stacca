@@ -61,7 +61,7 @@
     <string name="settings_auto_restart">Riavvio automatico</string>
     <string name="settings_auto_restart_desc">Riprogramma l\'allarme automaticamente ogni giorno</string>
     <string name="settings_escalation_speed">Frequenza notifiche</string>
-    <string name="settings_escalation_speed_desc">Ogni quanti minuti ti rompiamo le scatole</string>
+    <string name="settings_escalation_speed_desc">Ogni quanti minuti ti veniamo a cercare?</string>
     <string name="settings_version">Stacca! v%1$s — Fatto con ❤️ e cattiveria</string>
     <string name="settings_logout">Esci</string>
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
@@ -73,9 +73,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>Ogni 8 min</item>
+        <item>Ogni 15 min</item>
+        <item>Ogni 10 min</item>
         <item>Ogni 5 min</item>
-        <item>Ogni 3 min</item>
     </string-array>
 
     <!-- Login -->

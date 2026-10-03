@@ -57,7 +57,7 @@
     <string name="settings_auto_restart">自动重启</string>
     <string name="settings_auto_restart_desc">每天自动重新安排警报</string>
     <string name="settings_escalation_speed">通知频率</string>
-    <string name="settings_escalation_speed_desc">我们多久烦你一次</string>
+    <string name="settings_escalation_speed_desc">我们每隔几分钟来找你？</string>
     <string name="settings_version">下班！ v%1$s — 充满❤️与恶意制作</string>
     <string name="settings_logout">登出</string>
     <string name="settings_logout_confirm">确定要登出吗？</string>
@@ -69,9 +69,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>每8分钟</item>
+        <item>每15分钟</item>
+        <item>每10分钟</item>
         <item>每5分钟</item>
-        <item>每3分钟</item>
     </string-array>
 
     <!-- Login -->

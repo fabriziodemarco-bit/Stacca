@@ -57,7 +57,7 @@
     <string name="settings_auto_restart">Auto restart</string>
     <string name="settings_auto_restart_desc">Automatically reschedules the alarm every day</string>
     <string name="settings_escalation_speed">Notification frequency</string>
-    <string name="settings_escalation_speed_desc">How often we annoy you</string>
+    <string name="settings_escalation_speed_desc">How often should we come looking for you?</string>
     <string name="settings_version">Unplug! v%1$s — Made with ❤️ and spite</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_logout_confirm">Are you sure you want to logout?</string>
@@ -69,9 +69,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>Every 8 min</item>
+        <item>Every 15 min</item>
+        <item>Every 10 min</item>
         <item>Every 5 min</item>
-        <item>Every 3 min</item>
     </string-array>
 
     <!-- Login -->
