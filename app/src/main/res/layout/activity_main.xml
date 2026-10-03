@@ -124,7 +124,9 @@
         <Space
             android:id="@+id/spaceTop"
             android:layout_width="match_parent"
-            android:layout_height="24dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:minHeight="24dp" />
 
         <!-- 2. Messaggio principale -->
         <TextView
@@ -323,7 +325,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
 
-        <!-- Lo spazio libero resta in fondo: i comandi stanno in alto -->
+        <!-- Lo spazio libero si divide a metà: sopra il messaggio e sotto i comandi -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
