@@ -105,6 +105,26 @@ class AlarmReceiver : BroadcastReceiver() {
         }
 
         /**
+         * Ripristina l'allarme dopo un riavvio del telefono (o dopo un arresto forzato dell'app).
+         * Se l'utente è in straordinario da poco, l'escalation riprende da dove era;
+         * altrimenti si programma il prossimo fine turno.
+         */
+        fun restoreAfterRestart(context: Context) {
+            val prefs = PreferencesManager(context)
+            if (!prefs.isAlarmActive) return
+
+            val now = System.currentTimeMillis()
+            val shiftEnd = prefs.nextShiftEndMillis
+            val maxOvertimeMillis = 6 * 60 * 60 * 1000L
+            if (shiftEnd in 1 until now && now - shiftEnd < maxOvertimeMillis) {
+                // In straordinario: manda subito la prossima notifica, che riprogramma le successive
+                context.sendBroadcast(Intent(context, AlarmReceiver::class.java))
+            } else {
+                scheduleAlarm(context, prefs.endHour, prefs.endMinute)
+            }
+        }
+
+        /**
          * Cancella l'allarme programmato.
          */
         fun cancelAlarm(context: Context) {
