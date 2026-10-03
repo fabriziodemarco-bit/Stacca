@@ -45,9 +45,9 @@
     <string name="permission_alarm_message">我们需要权限来设置精确的警报。</string>
 
     <!-- Settings -->
-    <string name="settings_section_notifications">🔔 通知</string>
-    <string name="settings_section_behavior">⚡ 行为</string>
-    <string name="settings_section_account">👤 账户</string>
+    <string name="settings_section_notifications">通知</string>
+    <string name="settings_section_behavior">行为</string>
+    <string name="settings_section_account">账户</string>
     <string name="settings_sound">警报声音</string>
     <string name="settings_sound_desc">警报响起时播放声音</string>
     <string name="settings_vibration">震动</string>
@@ -69,9 +69,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>🐌 每8分钟</item>
-        <item>⚡ 每5分钟</item>
-        <item>🔥 每3分钟</item>
+        <item>每8分钟</item>
+        <item>每5分钟</item>
+        <item>每3分钟</item>
     </string-array>
 
     <!-- Login -->

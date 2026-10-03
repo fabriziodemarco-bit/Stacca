@@ -49,9 +49,9 @@
     <string name="permission_alarm_message">Stacca! ha bisogno del permesso per impostare allarmi precisi.</string>
 
     <!-- Settings -->
-    <string name="settings_section_notifications">🔔 Notifiche</string>
-    <string name="settings_section_behavior">⚡ Comportamento</string>
-    <string name="settings_section_account">👤 Account</string>
+    <string name="settings_section_notifications">Notifiche</string>
+    <string name="settings_section_behavior">Comportamento</string>
+    <string name="settings_section_account">Account</string>
     <string name="settings_sound">Suono allarme</string>
     <string name="settings_sound_desc">Riproduce un suono quando scatta l\'allarme</string>
     <string name="settings_vibration">Vibrazione</string>
@@ -73,9 +73,9 @@
 
     <!-- Escalation Speeds -->
     <string-array name="escalation_speeds">
-        <item>🐌 Ogni 8 min</item>
-        <item>⚡ Ogni 5 min</item>
-        <item>🔥 Ogni 3 min</item>
+        <item>Ogni 8 min</item>
+        <item>Ogni 5 min</item>
+        <item>Ogni 3 min</item>
     </string-array>
 
     <!-- Login -->

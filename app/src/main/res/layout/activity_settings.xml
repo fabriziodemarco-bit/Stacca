@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Impostazioni nello stile "editoriale" della home:
+    stessa palette, intestazioni di sezione discrete, una scheda per sezione
+    con le voci separate da una linea sottile.
+-->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_dark"
+    android:background="@color/home_bg"
     android:fillViewport="true">
 
     <LinearLayout
@@ -11,274 +16,160 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Toolbar -->
+        <!-- Barra in alto: freccia indietro + titolo -->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/background_dark"
+            android:background="@color/home_bg"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/text_primary"
-            app:title="@string/settings"
-            app:titleTextColor="@color/text_primary" />
+            app:navigationIconTint="@color/home_text"
+            app:title="@string/home_settings"
+            app:titleTextColor="@color/home_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
-
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:paddingBottom="16dp">
 
             <!-- Sezione Notifiche -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Stacca.Settings.SectionLabel"
                 android:text="@string/settings_section_notifications"
-                android:textSize="14sp"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginTop="8dp" />
 
-            <!-- Suono -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/background_card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
+                style="@style/Stacca.Settings.Card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:gravity="center_vertical">
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
+                    <!-- Suono -->
+                    <LinearLayout style="@style/Stacca.Settings.Row">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView
+                                style="@style/Stacca.Settings.RowTitle"
+                                android:text="@string/settings_sound" />
+                            <TextView
+                                style="@style/Stacca.Settings.RowDesc"
+                                android:text="@string/settings_sound_desc" />
+                        </LinearLayout>
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switchSound"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_sound"
-                            android:textSize="16sp"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_sound_desc"
-                            android:textSize="13sp"
-                            android:textColor="@color/text_hint"
-                            android:layout_marginTop="4dp" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchSound"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    <View style="@style/Stacca.Settings.Divider" />
 
-            <!-- Vibrazione -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/background_card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:gravity="center_vertical">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
+                    <!-- Vibrazione -->
+                    <LinearLayout style="@style/Stacca.Settings.Row">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView
+                                style="@style/Stacca.Settings.RowTitle"
+                                android:text="@string/settings_vibration" />
+                            <TextView
+                                style="@style/Stacca.Settings.RowDesc"
+                                android:text="@string/settings_vibration_desc" />
+                        </LinearLayout>
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switchVibration"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_vibration"
-                            android:textSize="16sp"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_vibration_desc"
-                            android:textSize="13sp"
-                            android:textColor="@color/text_hint"
-                            android:layout_marginTop="4dp" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchVibration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    <View style="@style/Stacca.Settings.Divider" />
 
-            <!-- Schermo intero -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/background_card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:gravity="center_vertical">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
+                    <!-- Schermo intero -->
+                    <LinearLayout style="@style/Stacca.Settings.Row">
+                        <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                            <TextView
+                                style="@style/Stacca.Settings.RowTitle"
+                                android:text="@string/settings_fullscreen" />
+                            <TextView
+                                style="@style/Stacca.Settings.RowDesc"
+                                android:text="@string/settings_fullscreen_desc" />
+                        </LinearLayout>
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switchFullScreen"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_fullscreen"
-                            android:textSize="16sp"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_fullscreen_desc"
-                            android:textSize="13sp"
-                            android:textColor="@color/text_hint"
-                            android:layout_marginTop="4dp" />
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchFullScreen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Sezione Comportamento -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_section_behavior"
-                android:textSize="14sp"
-                android:textColor="@color/primary"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
+                style="@style/Stacca.Settings.SectionLabel"
+                android:text="@string/settings_section_behavior" />
 
-            <!-- Velocità Escalation -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/background_card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
+                style="@style/Stacca.Settings.Card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="12dp">
+                        android:gravity="center_vertical">
 
                         <TextView
+                            style="@style/Stacca.Settings.RowTitle"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/settings_escalation_speed"
-                            android:textSize="16sp"
-                            android:textColor="@color/text_primary"
-                            android:textStyle="bold" />
+                            android:text="@string/settings_escalation_speed" />
 
                         <TextView
                             android:id="@+id/tvSpeedLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
-                            android:textColor="@color/tertiary"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFeatureSettings="tnum"
+                            android:textColor="@color/home_accent" />
                     </LinearLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_escalation_speed_desc"
-                        android:textSize="13sp"
-                        android:textColor="@color/text_hint"
-                        android:layout_marginBottom="12dp" />
+                        style="@style/Stacca.Settings.RowDesc"
+                        android:text="@string/settings_escalation_speed_desc" />
 
                     <com.google.android.material.slider.Slider
                         android:id="@+id/sliderEscalation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:valueFrom="0"
                         android:valueTo="2"
                         android:stepSize="1"
-                        app:trackColorActive="@color/primary"
-                        app:trackColorInactive="@color/surface_variant"
-                        app:thumbColor="@color/primary"
-                        app:tickColorActive="@color/primary_light"
-                        app:tickColorInactive="@color/text_hint" />
+                        app:trackColorActive="@color/home_accent"
+                        app:trackColorInactive="@color/home_border"
+                        app:thumbColor="@color/home_accent"
+                        app:tickColorActive="@color/home_on_accent"
+                        app:tickColorInactive="@color/home_text_secondary"
+                        app:labelBehavior="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-
-
-
             <!-- Sezione Account -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_section_account"
-                android:textSize="14sp"
-                android:textColor="@color/premium_gold"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp" />
+                style="@style/Stacca.Settings.SectionLabel"
+                android:text="@string/settings_section_account" />
 
-            <!-- Account Card -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/background_card"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="12dp">
+                style="@style/Stacca.Settings.Card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -291,30 +182,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
-                        android:textColor="@color/text_secondary"
-                        android:layout_marginBottom="12dp" />
+                        android:textColor="@color/home_text"
+                        android:layout_marginBottom="14dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAccountAction"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.Stacca.Button.Secondary"
-                        android:strokeColor="@color/text_hint"
-                        android:textColor="@color/text_secondary" />
+                        android:layout_height="46dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:letterSpacing="0"
+                        android:textColor="@color/home_text"
+                        app:strokeColor="@color/home_border"
+                        app:strokeWidth="1dp"
+                        app:cornerRadius="14dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Versione -->
             <TextView
+                android:id="@+id/tvVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvVersion"
                 android:text="@string/settings_version"
                 android:textSize="13sp"
                 android:textColor="@color/text_hint"
                 android:gravity="center"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginTop="28dp" />
 
         </LinearLayout>
     </LinearLayout>
