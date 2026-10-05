@@ -454,7 +454,14 @@ class MainActivity : AppCompatActivity() {
                 tvHeroLabel.setText(
                     if (isToday) R.string.home_cd_label_today else R.string.home_cd_label_tomorrow
                 )
-                tvHeroTitle.setText(R.string.home_cd_title)
+                // Il titolo cambia con quanto manca: domani, tanto tempo, quasi ci siamo
+                tvHeroTitle.setText(
+                    when {
+                        !isToday -> R.string.home_cd_title_tomorrow
+                        endMillis - now > 2 * 60 * 60 * 1000L -> R.string.home_cd_title_far
+                        else -> R.string.home_cd_title
+                    }
+                )
                 tvHeroSub.text = getString(
                     if (isToday) R.string.home_cd_sub_today else R.string.home_cd_sub_tomorrow,
                     endTimeText

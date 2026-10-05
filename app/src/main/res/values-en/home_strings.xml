@@ -21,6 +21,8 @@
     <string name="home_cd_label_today">UNPLUGGING TODAY</string>
     <string name="home_cd_label_tomorrow">UNPLUGGING TOMORROW</string>
     <string name="home_cd_title">A little longer,\nthen that\'s it.</string>
+    <string name="home_cd_title_far">Work in peace.\nI\'ll handle the rest.</string>
+    <string name="home_cd_title_tomorrow">Done\nfor today.</string>
     <string name="home_cd_sub_today">You unplug at %s.</string>
     <string name="home_cd_sub_tomorrow">You unplug tomorrow at %s.</string>
     <string name="home_card_remaining">TIME LEFT</string>

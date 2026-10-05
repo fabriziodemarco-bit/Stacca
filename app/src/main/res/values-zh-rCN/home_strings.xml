@@ -21,6 +21,8 @@
     <string name="home_cd_label_today">今天下班</string>
     <string name="home_cd_label_tomorrow">明天下班</string>
     <string name="home_cd_title">再坚持一下\n就结束了。</string>
+    <string name="home_cd_title_far">安心工作。\n剩下的交给我。</string>
+    <string name="home_cd_title_tomorrow">今天\n到此为止。</string>
     <string name="home_cd_sub_today">你在%s下班。</string>
     <string name="home_cd_sub_tomorrow">你明天%s下班。</string>
     <string name="home_card_remaining">还剩</string>
