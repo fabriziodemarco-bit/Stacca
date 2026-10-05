@@ -6,10 +6,11 @@
     <string name="premium_badge">PREMIUM</string>
     <string name="premium_badge_upgrade">PASSA A PREMIUM</string>
     <string name="btn_insultami_home">Insultami · 60 s</string>
+    <string name="btn_try_insultami">Prova Insultami · 60 s</string>
     <string name="btn_deactivate_small">Disattiva allarme</string>
     <string name="btn_ho_staccato_home">Ho staccato</string>
-    <string name="home_explain_overtime">Non è bastato?</string>
-    <string name="home_explain_default">Serve una spinta?</string>
+    <string name="home_explain_overtime">Caso disperato confermato:</string>
+    <string name="home_explain_default">Per i casi disperati:</string>
     <string name="home_edit_time">Modifica orario</string>
 
     <!-- Allarme spento -->

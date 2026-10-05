@@ -11,7 +11,7 @@
     <string name="overtime">Tempo non vissuto!</string>
     <string name="alarm_active">⚡ Allarme attivo</string>
     <string name="alarm_inactive">Nessun allarme impostato</string>
-    <string name="activate_alarm">ATTIVA ALLARME</string>
+    <string name="activate_alarm">Attiva allarme</string>
     <string name="deactivate_alarm">DISATTIVA</string>
 
     <string name="settings">⚙️ Impostazioni</string>

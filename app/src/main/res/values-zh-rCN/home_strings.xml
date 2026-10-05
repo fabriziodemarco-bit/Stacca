@@ -5,10 +5,11 @@
     <string name="premium_badge">高级版</string>
     <string name="premium_badge_upgrade">升级高级版</string>
     <string name="btn_insultami_home">骂我 · 60 秒</string>
+    <string name="btn_try_insultami">试试骂我 · 60 秒</string>
     <string name="btn_deactivate_small">关闭闹钟</string>
     <string name="btn_ho_staccato_home">我已下班</string>
-    <string name="home_explain_overtime">还不够？</string>
-    <string name="home_explain_default">需要推一把？</string>
+    <string name="home_explain_overtime">确认无药可救：</string>
+    <string name="home_explain_default">无药可救时用：</string>
     <string name="home_edit_time">修改时间</string>
 
     <string name="home_off_label">闹钟已关闭</string>

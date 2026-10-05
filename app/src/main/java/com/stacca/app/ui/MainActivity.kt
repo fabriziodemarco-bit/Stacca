@@ -442,8 +442,10 @@ class MainActivity : AppCompatActivity() {
                 tvCardValue.text = endTimeText
                 tvCardFootLeft.setText(R.string.home_off_foot)
                 showEditTimeCommand()
+                // Porta d'ingresso: prima si attiva l'allarme, Insultami è solo una prova
+                tvExplain.visibility = View.INVISIBLE
                 btnPrimary.setText(R.string.activate_alarm)
-                btnSecondary.setText(R.string.btn_insultami_home)
+                btnSecondary.setText(R.string.btn_try_insultami)
             }
 
             HeroState.COUNTDOWN -> {

@@ -11,7 +11,7 @@
     <string name="overtime">Unlived time!</string>
     <string name="alarm_active">⚡ Alarm active</string>
     <string name="alarm_inactive">No alarm set</string>
-    <string name="activate_alarm">ACTIVATE ALARM</string>
+    <string name="activate_alarm">Activate alarm</string>
     <string name="deactivate_alarm">DEACTIVATE</string>
 
     <string name="settings">⚙️ Settings</string>
