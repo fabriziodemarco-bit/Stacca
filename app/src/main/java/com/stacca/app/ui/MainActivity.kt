@@ -266,14 +266,16 @@ class MainActivity : AppCompatActivity() {
                 HeroState.SPENTO -> checkPermissionsAndActivate()
                 HeroState.COUNTDOWN, HeroState.STRAORDINARIO -> openInsultami()
                 HeroState.STACCATO -> {
+                    // "Buona serata": il riepilogo ha fatto il suo lavoro, si chiude l'app
                     prefs.isWaitingForNextAlarm = false
-                    updateUI()
+                    finish()
                 }
             }
         }
         btnSecondary.setOnClickListener {
             when (currentHeroState()) {
-                HeroState.SPENTO, HeroState.STACCATO -> openInsultami()
+                HeroState.SPENTO -> openInsultami()
+                HeroState.STACCATO -> startActivity(Intent(this, HistoryActivity::class.java))
                 HeroState.COUNTDOWN -> deactivateAlarm()
                 HeroState.STRAORDINARIO -> handleHoStaccato()
             }
@@ -427,6 +429,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.tvEditTime).visibility = View.GONE
         (tvCardFootLeft.parent as View).visibility = View.VISIBLE
         tvExplain.setText(R.string.home_explain_default)
+        tvExplain.visibility = View.VISIBLE
+        tvCardValue.setTextColor(ContextCompat.getColor(this, R.color.home_text))
+        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
 
         when (state) {
             HeroState.SPENTO -> {
@@ -496,15 +501,30 @@ class MainActivity : AppCompatActivity() {
                 tvHeroSub.setText(
                     if (onTime) R.string.home_done_sub_ontime else R.string.home_done_sub_late
                 )
-                tvCardLabel.setText(R.string.home_card_not_lived)
-                tvCardValue.text = formatMinutes(overtime)
-                tvCardFootLeft.text = if (prefs.isAlarmActive) {
-                    getString(R.string.home_done_foot, endTimeText)
+                // Scheda del premio: la serie se in orario, i minuti regalati se in ritardo
+                if (onTime) {
+                    val streak = prefs.streakCount
+                    tvCardLabel.setText(R.string.home_done_card_streak)
+                    tvCardValue.text = resources.getQuantityString(R.plurals.history_days, streak, streak) + " 🔥"
+                    tvCardValue.setTextColor(ContextCompat.getColor(this, R.color.home_success))
+                    if (streak >= 2 && streak >= prefs.bestStreak) {
+                        tvCardFootRight.setText(R.string.home_done_record)
+                        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_success))
+                    }
                 } else {
-                    ""
+                    tvCardLabel.setText(R.string.home_done_card_gifted)
+                    tvCardValue.text = formatMinutes(overtime)
+                    tvCardValue.setTextColor(ContextCompat.getColor(this, R.color.home_accent))
                 }
-                btnPrimary.setText(R.string.btn_ok_home)
-                btnSecondary.setText(R.string.btn_insultami_home)
+                tvCardFootLeft.text = when {
+                    !prefs.isAlarmActive -> ""
+                    onTime -> getString(R.string.home_done_foot, endTimeText)
+                    else -> getString(R.string.home_done_foot_late, endTimeText)
+                }
+                // Dopo lo stacco non servono spinte: si saluta e si va
+                tvExplain.visibility = View.INVISIBLE
+                btnPrimary.setText(R.string.btn_good_evening)
+                btnSecondary.setText(R.string.btn_open_history)
             }
         }
     }

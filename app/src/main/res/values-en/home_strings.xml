@@ -41,8 +41,13 @@
     <string name="home_done_title_late">Free,\nfinally.</string>
     <string name="home_done_sub_ontime">Zero minutes gifted to the company.</string>
     <string name="home_done_sub_late">A bit late. We forgive you.</string>
-    <string name="home_card_not_lived">TIME NOT LIVED</string>
+    <string name="home_done_card_streak">ON-TIME STREAK</string>
+    <string name="home_done_card_gifted">GIFTED</string>
+    <string name="home_done_record">New record! 🏆</string>
     <string name="home_done_foot">Back at it tomorrow at %s</string>
+    <string name="home_done_foot_late">Back at %s tomorrow, from zero</string>
+    <string name="btn_good_evening">Have a good evening 👋</string>
+    <string name="btn_open_history">See your history</string>
 
     <plurals name="home_minutes">
         <item quantity="one">%d minute</item>

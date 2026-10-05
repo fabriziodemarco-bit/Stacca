@@ -40,8 +40,13 @@
     <string name="home_done_title_late">终于\n自由了。</string>
     <string name="home_done_sub_ontime">零分钟送给公司。</string>
     <string name="home_done_sub_late">晚了一点。我们原谅你。</string>
-    <string name="home_card_not_lived">没有活过的时间</string>
+    <string name="home_done_card_streak">准时连续</string>
+    <string name="home_done_card_gifted">白送</string>
+    <string name="home_done_record">新纪录！🏆</string>
     <string name="home_done_foot">明天%s继续</string>
+    <string name="home_done_foot_late">明天%s从零开始</string>
+    <string name="btn_good_evening">晚上愉快 👋</string>
+    <string name="btn_open_history">查看历史</string>
 
     <plurals name="home_minutes">
         <item quantity="other">%d分钟</item>

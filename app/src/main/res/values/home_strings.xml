@@ -46,8 +46,13 @@
     <string name="home_done_title_late">Libero,\nfinalmente.</string>
     <string name="home_done_sub_ontime">Zero minuti regalati all\'azienda.</string>
     <string name="home_done_sub_late">Con un po\' di ritardo. Ti perdoniamo.</string>
-    <string name="home_card_not_lived">TEMPO NON VISSUTO</string>
+    <string name="home_done_card_streak">SERIE IN ORARIO</string>
+    <string name="home_done_card_gifted">REGALATI</string>
+    <string name="home_done_record">Nuovo record! 🏆</string>
     <string name="home_done_foot">Domani alle %s si riparte</string>
+    <string name="home_done_foot_late">Domani alle %s si riparte da zero</string>
+    <string name="btn_good_evening">Buona serata 👋</string>
+    <string name="btn_open_history">Vedi lo storico</string>
 
     <!-- Durate -->
     <plurals name="home_minutes">
