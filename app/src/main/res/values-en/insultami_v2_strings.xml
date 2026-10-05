@@ -3,4 +3,7 @@
     <string name="game_over">GAME OVER!</string>
     <string name="settings_flash">Flash</string>
     <string name="settings_flash_desc">Flashes during Insult me</string>
+    <string name="notif_reward_title_ontime">Free! ✌️ Zero minutes gifted.</string>
+    <string name="notif_reward_title_late">Free, finally. ✌️</string>
+    <string name="notif_reward_text">Back at it tomorrow at %s.</string>
 </resources>

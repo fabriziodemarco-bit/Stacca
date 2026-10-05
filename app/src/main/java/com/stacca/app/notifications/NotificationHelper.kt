@@ -134,13 +134,11 @@ class NotificationHelper(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Azione "Ho staccato": apre l'app, che registra lo stacco e ferma tutto per oggi
-        val hoStaccatoIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                Intent.FLAG_ACTIVITY_SINGLE_TOP
-            putExtra(MainActivity.EXTRA_HO_STACCATO, true)
+        // Azione "Ho staccato": registra lo stacco senza aprire l'app (poi un breve messaggio di premio)
+        val hoStaccatoIntent = Intent(context, NotificationActionReceiver::class.java).apply {
+            action = NotificationActionReceiver.ACTION_HO_STACCATO
         }
-        val hoStaccatoPending = PendingIntent.getActivity(
+        val hoStaccatoPending = PendingIntent.getBroadcast(
             context, 2, hoStaccatoIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -215,6 +213,36 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
+
+    /**
+     * Dopo "Ho staccato" dalla notifica: un breve messaggio di premio, muto,
+     * che sparisce da solo dopo qualche secondo.
+     */
+    fun showStaccoReward(overtimeMinutes: Int, endTimeText: String) {
+        val title = if (overtimeMinutes == 0) {
+            context.getString(R.string.notif_reward_title_ontime)
+        } else {
+            context.getString(R.string.notif_reward_title_late)
+        }
+        val openApp = PendingIntent.getActivity(
+            context, 3, Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val notification = NotificationCompat.Builder(context, CHANNEL_NORMAL)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle(title)
+            .setContentText(context.getString(R.string.notif_reward_text, endTimeText))
+            .setSilent(true)
+            .setAutoCancel(true)
+            .setTimeoutAfter(8_000)
+            .setContentIntent(openApp)
+            .build()
+        try {
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
+    }
 
     /**
      * Cancella tutte le notifiche.

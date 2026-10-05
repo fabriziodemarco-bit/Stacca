@@ -28,6 +28,7 @@ import com.stacca.app.R
 import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.data.StaccoManager
 import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.receivers.AlarmReceiver
@@ -578,27 +579,7 @@ class MainActivity : AppCompatActivity() {
      * è attivo, riprogramma l'allarme per domani alla stessa ora.
      */
     private fun handleHoStaccato() {
-        val now = Calendar.getInstance()
-        val overtimeMillis = (now.timeInMillis - currentShiftEndMillis()).coerceAtLeast(0L)
-        val overtimeMinutes = (overtimeMillis / 60_000).toInt()
-
-        // Legge lo streak PRIMA di registraStaccato (che lo azzera in caso di ritardo)
-        val streakBeforeReset = prefs.streakCount
-
-        // Registra (idempotente)
-        val result = prefs.registraStaccato(overtimeMinutes)
-
-        // Cancella allarmi e notifiche
-        prefs.paywallShownToday = false
-        prefs.resetEscalation()
-        AlarmSoundManager.stop()
-        AlarmReceiver.cancelAlarm(this)
-        notificationHelper.cancelAll()
-
-        // Riavvio automatico: l'orario di oggi è passato, quindi l'allarme scatta domani
-        AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
-
-        // Aggiorna UI
+        StaccoManager.registerStacco(this)
         updateUI()
     }
 

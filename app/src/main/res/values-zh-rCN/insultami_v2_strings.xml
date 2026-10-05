@@ -3,4 +3,7 @@
     <string name="game_over">游戏结束！</string>
     <string name="settings_flash">闪光灯</string>
     <string name="settings_flash_desc">在“骂我”时闪烁</string>
+    <string name="notif_reward_title_ontime">自由了！✌️ 零分钟送给公司。</string>
+    <string name="notif_reward_title_late">终于自由了。✌️</string>
+    <string name="notif_reward_text">明天%s继续。</string>
 </resources>
