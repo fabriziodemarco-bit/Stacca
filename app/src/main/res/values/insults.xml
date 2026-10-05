@@ -43,4 +43,22 @@
         <item>È finita. Fattene una ragione.</item>
     </string-array>
 
+    <string-array name="insults_version_d">
+        <item>Ah, sei ancora qui? Che sorpresa.</item>
+        <item>In piedi, ficus da scrivania!</item>
+        <item>Stacca quelle dita dai tasti!</item>
+        <item>Post-it con le gambe!</item>
+        <item>Spegni! Alzati! Esci!</item>
+        <item>Io stacco. Tu fai come vuoi.</item>
+    </string-array>
+
+    <string-array name="insults_version_e">
+        <item>Solo un attimo, vero? Come ieri.</item>
+        <item>Forza, appendiabiti!</item>
+        <item>Basta cliccare, adesso!</item>
+        <item>Stampante inceppata con le scarpe!</item>
+        <item>Mollalo! Chiudilo! Vattene!</item>
+        <item>Lo schermo si spegne da solo. Tu no.</item>
+    </string-array>
+
 </resources>

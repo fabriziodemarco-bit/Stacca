@@ -59,7 +59,9 @@ class InsultamiActivity : AppCompatActivity() {
         private val VERSIONS = listOf(
             R.array.insults_version_a,
             R.array.insults_version_b,
-            R.array.insults_version_c
+            R.array.insults_version_c,
+            R.array.insults_version_d,
+            R.array.insults_version_e
         )
 
         /**
@@ -123,8 +125,10 @@ class InsultamiActivity : AppCompatActivity() {
         tvInsult = findViewById(R.id.tvInsult)
         tvTimer = findViewById(R.id.tvInsultTimer)
 
-        // Una versione a caso, ma mai la stessa della volta scorsa
-        version = VERSIONS.indices.filter { it != prefs.lastInsultVersion }.random()
+        // Una versione a caso tra quelle non ancora sentite; finito il giro si ricomincia,
+        // ma mai con la stessa della volta scorsa
+        val fresh = VERSIONS.indices.filter { it !in prefs.usedInsultVersions }
+        version = fresh.ifEmpty { VERSIONS.indices.filter { it != prefs.lastInsultVersion } }.random()
         lines = resources.getStringArray(VERSIONS[version])
 
         findViewById<MaterialButton>(R.id.btnInsultOk).setOnClickListener { onOkStacco() }
@@ -236,7 +240,10 @@ class InsultamiActivity : AppCompatActivity() {
     private fun startShow() {
         if (started || finished) return
         started = true
-        prefs.lastInsultVersion = version // conta anche se poi viene interrotta
+        // Conta come sentita anche se poi viene interrotta
+        val used = prefs.usedInsultVersions
+        prefs.usedInsultVersions = (if (used.size >= VERSIONS.size) emptySet() else used) + version
+        prefs.lastInsultVersion = version
 
         // Il minuto si misura da qui: i caricamenti non lo consumano
         startAt = SystemClock.uptimeMillis()

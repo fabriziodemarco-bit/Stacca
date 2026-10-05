@@ -182,6 +182,12 @@ class PreferencesManager(context: Context) {
         get() = prefs.getInt("last_insult_version", -1)
         set(value) = prefs.edit().putInt("last_insult_version", value).apply()
 
+    /** Versioni di Insultami già sentite nel giro in corso: si ricomincia quando le hai sentite tutte. */
+    var usedInsultVersions: Set<Int>
+        get() = prefs.getString("used_insult_versions", "").orEmpty()
+            .split(",").mapNotNull { it.toIntOrNull() }.toSet()
+        set(value) = prefs.edit().putString("used_insult_versions", value.joinToString(",")).apply()
+
     /** 0 = Rilassato, 1 = Normale, 2 = Aggressivo */
     var escalationSpeed: Int
         get() = prefs.getInt(KEY_ESCALATION_SPEED, 1)

@@ -37,4 +37,22 @@
         <item>It\'s over. Deal with it.</item>
     </string-array>
 
+    <string-array name="insults_version_d">
+        <item>Oh, you\'re still here? What a surprise.</item>
+        <item>On your feet, desk ficus!</item>
+        <item>Get those fingers off the keys!</item>
+        <item>A Post-it with legs!</item>
+        <item>Shut down! Get up! Get out!</item>
+        <item>I\'m unplugging. Do what you want.</item>
+    </string-array>
+
+    <string-array name="insults_version_e">
+        <item>Just a sec, right? Like yesterday.</item>
+        <item>Come on, coat rack!</item>
+        <item>Stop clicking, now!</item>
+        <item>A jammed printer in shoes!</item>
+        <item>Drop it! Close it! Go!</item>
+        <item>The screen turns itself off. You don\'t.</item>
+    </string-array>
+
 </resources>

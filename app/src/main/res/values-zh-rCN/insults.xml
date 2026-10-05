@@ -37,4 +37,22 @@
         <item>结束了。接受现实吧。</item>
     </string-array>
 
+    <string-array name="insults_version_d">
+        <item>啊，你还在这儿？真意外。</item>
+        <item>站起来，办公桌上的盆栽！</item>
+        <item>把手指从键盘上拿开！</item>
+        <item>长了腿的便利贴！</item>
+        <item>关机！起来！出去！</item>
+        <item>我下班了。你随便。</item>
+    </string-array>
+
+    <string-array name="insults_version_e">
+        <item>就一下，对吧？跟昨天一样。</item>
+        <item>快点，衣帽架！</item>
+        <item>别再点了，现在！</item>
+        <item>穿着鞋的卡纸打印机！</item>
+        <item>放下！关掉！走开！</item>
+        <item>屏幕会自己熄灭。你不会。</item>
+    </string-array>
+
 </resources>
