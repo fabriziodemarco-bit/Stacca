@@ -59,17 +59,22 @@
                 android:letterSpacing="0.12"
                 android:textColor="@color/home_text_secondary" />
 
-            <!-- Storico: icona a barre -->
-            <ImageView
+            <!-- Storico: scritta con contorno arancione -->
+            <TextView
                 android:id="@+id/btnHistory"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="4dp"
-                android:padding="10dp"
-                android:src="@drawable/ic_history"
-                android:contentDescription="@string/history_screen_title"
-                app:tint="@color/home_text_secondary"
-                android:background="?attr/selectableItemBackgroundBorderless" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:minHeight="32dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:gravity="center"
+                android:text="@string/history_screen_title"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/home_accent"
+                android:background="@drawable/bg_badge_accent"
+                android:foreground="?attr/selectableItemBackground" />
 
             <!-- Impostazioni: rotellina -->
             <ImageView

@@ -458,8 +458,7 @@ class MainActivity : AppCompatActivity() {
                 tvCardFootLeft.text = ""
                 showEditTimeCommand()
                 btnPrimary.setText(R.string.btn_insultami_home)
-                btnSecondary.visibility = View.GONE
-                findViewById<View>(R.id.tvDeactivate).visibility = View.VISIBLE
+                btnSecondary.setText(R.string.btn_deactivate_small)
             }
 
             HeroState.STRAORDINARIO -> {
