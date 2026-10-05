@@ -5,7 +5,6 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 - **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
 
 ## Prima della release 2.3.0 (mar 06/10)
-- **Riquadro permessi più bello** (proposta approvata da rivedere al mattino): titolo grande "Dammi tre sì. / Al resto penso io." + riga "Senza questi non posso venirti a cercare."; barra a 3 segmenti "0 di 3" che si accende in verde; un passo alla volta (solo il prossimo tasto arancio pieno, fatti = "✓ Fatto" verde, successivi spenti); icone campanella/orologio/batteria; testi: "Per venirti a cercare quando è ora." / "Per essere puntuale. Almeno io." / "Così Android non mi addormenta mentre tu lavori."; a 3 su 3 un attimo di festa "Ci siamo. Ora decidi quando si stacca." poi home; riquadro più in alto. 3 lingue.
 - **Check di sicurezza**: nessun segreto nel codice o su GitHub, permessi del manifest (solo quelli usati), componenti esportati, chiavi Supabase e regole di accesso ai dati.
 - **Privacy e burocrazia**: informativa privacy aggiornata alle funzioni nuove (storico salvato sul telefono, voce, flash, vibrazione), modulo "Sicurezza dei dati" su Play, questionario di classificazione dei contenuti (gli insulti), scheda Play (testi e screenshot nuovi).
 

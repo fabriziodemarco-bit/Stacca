@@ -110,24 +110,54 @@
                 android:letterSpacing="0.14"
                 android:textColor="@color/home_accent" />
 
+            <!-- Titolo grande, come nelle altre schermate (a 3 su 3 diventa "Ci siamo.") -->
             <TextView
+                android:id="@+id/tvPermTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/perm_v2_title"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="@dimen/page_title_size"
+                android:fontFamily="sans-serif-black"
+                android:lineSpacingMultiplier="1.08"
+                android:letterSpacing="-0.01"
                 android:textColor="@color/home_text" />
 
-            <!-- La scheda dei permessi sta al centro dello spazio che resta -->
-            <Space
+            <TextView
+                android:id="@+id/tvPermSub"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:minHeight="16dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/perm_v2_sub"
+                android:textSize="15sp"
+                android:textColor="@color/home_text_secondary" />
+
+            <!-- Avanzamento: 3 segmenti che si accendono in verde + "1 di 3" -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View android:id="@+id/permSeg1" style="@style/Stacca.Permission.Segment" />
+                <View android:id="@+id/permSeg2" style="@style/Stacca.Permission.Segment" />
+                <View android:id="@+id/permSeg3" style="@style/Stacca.Permission.Segment" />
+
+                <TextView
+                    android:id="@+id/tvPermProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFeatureSettings="tnum"
+                    android:textColor="@color/home_text_secondary" />
+            </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Stacca.Settings.Card">
+                style="@style/Stacca.Settings.Card"
+                android:layout_marginTop="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -138,6 +168,7 @@
                         android:id="@+id/rowPermNotification"
                         style="@style/Stacca.Settings.Row"
                         android:background="?attr/selectableItemBackground">
+                        <ImageView android:id="@+id/ivPermNotification" style="@style/Stacca.Permission.Icon" android:src="@drawable/ic_perm_bell" />
                         <LinearLayout style="@style/Stacca.Settings.RowTexts">
                             <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_notif_title" />
                             <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_notif_desc" />
@@ -153,6 +184,7 @@
                         android:id="@+id/rowPermExactAlarm"
                         style="@style/Stacca.Settings.Row"
                         android:background="?attr/selectableItemBackground">
+                        <ImageView android:id="@+id/ivPermExactAlarm" style="@style/Stacca.Permission.Icon" android:src="@drawable/ic_perm_alarm" />
                         <LinearLayout style="@style/Stacca.Settings.RowTexts">
                             <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_exact_title" />
                             <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_exact_desc" />
@@ -168,6 +200,7 @@
                         android:id="@+id/rowPermBattery"
                         style="@style/Stacca.Settings.Row"
                         android:background="?attr/selectableItemBackground">
+                        <ImageView android:id="@+id/ivPermBattery" style="@style/Stacca.Permission.Icon" android:src="@drawable/ic_perm_battery" />
                         <LinearLayout style="@style/Stacca.Settings.RowTexts">
                             <TextView style="@style/Stacca.Settings.RowTitle" android:text="@string/perm_v2_battery_title" />
                             <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/perm_v2_battery_desc" />

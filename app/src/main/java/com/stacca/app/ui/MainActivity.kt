@@ -13,6 +13,8 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
+import android.content.res.ColorStateList
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -222,6 +224,8 @@ class MainActivity : AppCompatActivity() {
 
     /** Solo versione di prova: mostra il riquadro permessi anche se sono tutti attivi. */
     private var previewPermissionsCard = false
+    // Festa "Ci siamo." in corso dopo l'ultimo permesso concesso
+    private var permissionsCelebrating = false
 
     /**
      * Solo versione di prova (debug): pressione lunga su "Stacca!" apre il menu
@@ -652,43 +656,92 @@ class MainActivity : AppCompatActivity() {
         val hasExact = PermissionHelper.canScheduleExactAlarms(this) && !previewPermissionsCard
         val hasBattery = PermissionHelper.isIgnoringBatteryOptimizations(this) && !previewPermissionsCard
 
-        // Tutto a posto: si vede la home normale
         val homeContent = findViewById<View>(R.id.homeContent)
-        if (hasNotif && hasExact && hasBattery) {
-            cardPermissions.visibility = View.GONE
-            homeContent.visibility = View.VISIBLE
+        val granted = listOf(hasNotif, hasExact, hasBattery)
+        val done = granted.count { it }
+
+        if (done == 3) {
+            if (cardPermissions.visibility == View.VISIBLE && !permissionsCelebrating) {
+                // Tutti e tre appena concessi: un attimo di festa, poi la home
+                permissionsCelebrating = true
+                showPermissionProgress(granted)
+                findViewById<TextView>(R.id.tvPermTitle).setText(R.string.perm_v2_ready_title)
+                findViewById<TextView>(R.id.tvPermSub).setText(R.string.perm_v2_ready_sub)
+                showPermissionRow(R.id.rowPermNotification, R.id.ivPermNotification, tvPermNotification, true, false) {}
+                showPermissionRow(R.id.rowPermExactAlarm, R.id.ivPermExactAlarm, tvPermExactAlarm, true, false) {}
+                showPermissionRow(R.id.rowPermBattery, R.id.ivPermBattery, tvPermBattery, true, false) {}
+                cardPermissions.postDelayed({
+                    permissionsCelebrating = false
+                    cardPermissions.visibility = View.GONE
+                    homeContent.visibility = View.VISIBLE
+                }, 1600)
+            } else if (!permissionsCelebrating) {
+                cardPermissions.visibility = View.GONE
+                homeContent.visibility = View.VISIBLE
+            }
             return
         }
-        // Mancano permessi: si vede solo il riquadro, centrato
+        // Mancano permessi: si vede solo il riquadro
         cardPermissions.visibility = View.VISIBLE
         homeContent.visibility = View.GONE
+        findViewById<TextView>(R.id.tvPermTitle).setText(R.string.perm_v2_title)
+        findViewById<TextView>(R.id.tvPermSub).setText(R.string.perm_v2_sub)
+        showPermissionProgress(granted)
 
-        showPermissionRow(R.id.rowPermNotification, tvPermNotification, hasNotif) {
+        // Un passo alla volta: solo il primo permesso mancante ha il tasto acceso
+        val next = granted.indexOfFirst { !it }
+        showPermissionRow(R.id.rowPermNotification, R.id.ivPermNotification, tvPermNotification, hasNotif, next == 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 notificationPermissionFromCardLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-        showPermissionRow(R.id.rowPermExactAlarm, tvPermExactAlarm, hasExact) {
+        showPermissionRow(R.id.rowPermExactAlarm, R.id.ivPermExactAlarm, tvPermExactAlarm, hasExact, next == 1) {
             PermissionHelper.exactAlarmSettingsIntent(this)?.let { startActivity(it) }
         }
-        showPermissionRow(R.id.rowPermBattery, tvPermBattery, hasBattery) {
+        showPermissionRow(R.id.rowPermBattery, R.id.ivPermBattery, tvPermBattery, hasBattery, next == 2) {
             startActivity(PermissionHelper.batteryOptimizationIntent(this))
         }
     }
 
-    /** Una riga del riquadro permessi: "Fatto" se concesso, altrimenti "Attiva" e la riga è toccabile. */
-    private fun showPermissionRow(rowId: Int, status: TextView, granted: Boolean, enable: () -> Unit) {
+    /** Barra a 3 segmenti: verdi quelli concessi, più "1 di 3". */
+    private fun showPermissionProgress(granted: List<Boolean>) {
+        val green = ContextCompat.getColor(this, R.color.home_success)
+        val off = ContextCompat.getColor(this, R.color.home_border)
+        listOf(R.id.permSeg1, R.id.permSeg2, R.id.permSeg3).forEachIndexed { i, id ->
+            findViewById<View>(id).background.mutate().setTint(if (granted[i]) green else off)
+        }
+        findViewById<TextView>(R.id.tvPermProgress).text =
+            getString(R.string.perm_v2_progress, granted.count { it })
+    }
+
+    /**
+     * Una riga del riquadro permessi:
+     * - concesso: "✓ Fatto" e icona verdi, riga non toccabile;
+     * - il prossimo da dare: tasto arancio pieno e icona arancio;
+     * - quelli dopo: spenti (ma toccabili lo stesso, per non bloccare nessuno).
+     */
+    private fun showPermissionRow(
+        rowId: Int, iconId: Int, status: TextView, granted: Boolean, isNext: Boolean, enable: () -> Unit
+    ) {
         val row = findViewById<View>(rowId)
+        val icon = findViewById<ImageView>(iconId)
+        val green = ContextCompat.getColor(this, R.color.home_success)
+        val accent = ContextCompat.getColor(this, R.color.home_accent)
+        val muted = ContextCompat.getColor(this, R.color.home_text_secondary)
+        row.alpha = 1f
         if (granted) {
             status.setText(R.string.perm_v2_done)
             status.background = null
-            status.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
+            status.setTextColor(green)
+            icon.imageTintList = ColorStateList.valueOf(green)
             row.setOnClickListener(null)
             row.isClickable = false
         } else {
             status.setText(R.string.perm_v2_enable)
             status.setBackgroundResource(R.drawable.bg_pill_accent)
             status.setTextColor(ContextCompat.getColor(this, R.color.home_on_accent))
+            icon.imageTintList = ColorStateList.valueOf(if (isNext) accent else muted)
+            if (!isNext) row.alpha = 0.4f
             row.setOnClickListener { enable() }
         }
     }

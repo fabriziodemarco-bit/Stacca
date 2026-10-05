@@ -158,6 +158,19 @@
 
     <!-- Stato a destra di ogni permesso: "Attiva" (arancione) o "Fatto" (grigio) -->
     <style name="Stacca.Permission" />
+    <style name="Stacca.Permission.Segment">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:background">@drawable/bg_segment</item>
+    </style>
+    <style name="Stacca.Permission.Icon">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_marginEnd">14dp</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
     <style name="Stacca.Permission.Status">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

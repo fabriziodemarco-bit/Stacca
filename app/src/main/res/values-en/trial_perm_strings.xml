@@ -9,13 +9,17 @@
     <string name="trial_v2_btn_free">Continue for free</string>
 
     <string name="perm_v2_label">BEFORE WE START</string>
-    <string name="perm_v2_title">Three permissions and I\'m ready.</string>
+    <string name="perm_v2_title">Give me three yeses.\nI\'ll handle the rest.</string>
+    <string name="perm_v2_sub">Without these I can\'t come and get you.</string>
+    <string name="perm_v2_progress">%1$d of 3</string>
     <string name="perm_v2_notif_title">Notifications</string>
-    <string name="perm_v2_notif_desc">To tell you when it\'s time to unplug.</string>
+    <string name="perm_v2_notif_desc">So I can come and get you when it\'s time.</string>
     <string name="perm_v2_exact_title">On-time alarms</string>
-    <string name="perm_v2_exact_desc">To ring at the right time, not later.</string>
+    <string name="perm_v2_exact_desc">So I\'m on time. At least one of us is.</string>
     <string name="perm_v2_battery_title">Unrestricted battery</string>
-    <string name="perm_v2_battery_desc">So Android doesn\'t put me to sleep.</string>
+    <string name="perm_v2_battery_desc">So Android doesn\'t put me to sleep while you work.</string>
     <string name="perm_v2_enable">Enable</string>
-    <string name="perm_v2_done">Done</string>
+    <string name="perm_v2_done">✓ Done</string>
+    <string name="perm_v2_ready_title">We\'re set.</string>
+    <string name="perm_v2_ready_sub">Now decide when to unplug.</string>
 </resources>
