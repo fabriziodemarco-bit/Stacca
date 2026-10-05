@@ -12,7 +12,7 @@ object AlarmSoundManager {
 
     /**
      * Avvia un suono in loop sul volume della sveglia.
-     * @param soundRes file in res/raw (es. R.raw.stacca_siren); se null usa la sveglia di sistema.
+     * @param soundRes file in res/raw (es. R.raw.stacca_alarm); se null usa la sveglia di sistema.
      */
     @Synchronized
     fun start(context: Context, soundRes: Int? = null) {
