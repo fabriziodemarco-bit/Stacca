@@ -1,89 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Schermo rosso, stile "bollettino d'emergenza":
+    sfondo bordeaux che "respira" (rosso pieno all'Apocalisse), livello in alto,
+    messaggio, cronometro del tempo non vissuto con i 6 segmenti, due pulsanti.
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/alertRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/alert_background">
+    android:background="@color/alert_bg_nuclear">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp">
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="16dp">
 
-        <!-- Animated Warning Icon -->
+        <!-- Livello -->
         <TextView
-            android:id="@+id/tvAlertEmoji"
+            android:id="@+id/tvAlertLevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🚨"
-            android:textSize="80sp"
-            android:layout_marginBottom="24dp" />
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.14"
+            android:textColor="#CCFFFFFF" />
 
-        <!-- Main Alert Title -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Messaggio del livello -->
         <TextView
             android:id="@+id/tvAlertTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fullscreen_title"
-            style="@style/TextAppearance.Stacca.Alert"
-            android:gravity="center"
-            android:layout_marginBottom="16dp" />
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-black"
+            android:lineSpacingMultiplier="1.08"
+            android:letterSpacing="-0.01"
+            android:textColor="@color/white" />
 
-        <!-- Alert Message -->
         <TextView
             android:id="@+id/tvAlertMessage"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fullscreen_subtitle"
-            android:textSize="22sp"
-            android:textColor="#FFFFFFCC"
-            android:gravity="center"
-            android:layout_marginBottom="48dp"
-            android:lineSpacingExtra="4dp" />
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.15"
+            android:textColor="#D9FFFFFF" />
 
-        <!-- Overtime Counter -->
-        <TextView
-            android:id="@+id/tvOvertimeCounter"
-            android:layout_width="wrap_content"
+        <!-- Tempo non vissuto -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="#33000000"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/overtime"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF99"
-            android:layout_marginBottom="48dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- Action Buttons -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tempo_non_vissuto_title"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.14"
+                    android:textColor="#CCFFFFFF" />
+
+                <TextView
+                    android:id="@+id/tvOvertimeCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="+00:00:00"
+                    android:textSize="52sp"
+                    android:textStyle="bold"
+                    android:fontFeatureSettings="tnum"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/white" />
+
+                <!-- Sei segmenti: il livello raggiunto -->
+                <LinearLayout
+                    android:id="@+id/alertSegments"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginEnd="6dp" android:background="@drawable/bg_segment" />
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginEnd="6dp" android:background="@drawable/bg_segment" />
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginEnd="6dp" android:background="@drawable/bg_segment" />
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginEnd="6dp" android:background="@drawable/bg_segment" />
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:layout_marginEnd="6dp" android:background="@drawable/bg_segment" />
+                    <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@drawable/bg_segment" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnStopWork"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_ho_staccato"
-            style="@style/Widget.Stacca.Button.Primary"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/alert_nuclear"
-            android:textSize="20sp"
-            android:layout_marginBottom="12dp" />
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/btn_ho_staccato_home"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:letterSpacing="0"
+            android:textColor="@color/alert_bg_nuclear"
+            app:backgroundTint="@color/white"
+            app:cornerRadius="14dp"
+            app:elevation="0dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSnooze"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_snooze"
-            style="@style/Widget.Stacca.Button.Secondary"
-            app:strokeColor="@color/white"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:letterSpacing="0"
             android:textColor="@color/white"
-            android:layout_marginBottom="16dp" />
+            app:strokeColor="#66FFFFFF"
+            app:strokeWidth="1dp"
+            app:cornerRadius="14dp" />
 
     </LinearLayout>
 </FrameLayout>

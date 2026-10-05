@@ -63,6 +63,12 @@
     <color name="home_accent">#FF875F</color>
     <color name="home_on_accent">#20110B</color>
 
+    <!-- Schermo rosso ("bollettino d'emergenza"): lo sfondo "respira" tra i due toni -->
+    <color name="alert_bg_nuclear">#2A0A0E</color>
+    <color name="alert_bg_nuclear_light">#4A1118</color>
+    <color name="alert_bg_apocalypse">#8E1616</color>
+    <color name="alert_bg_apocalypse_light">#C62828</color>
+
     <!-- Premium -->
     <color name="premium_gold">#FFD700</color>
     <color name="premium_gold_dark">#E6B800</color>
