@@ -90,10 +90,9 @@ class FullScreenAlertActivity : AppCompatActivity() {
             stopWork()
         }
 
-        // Bottone "Ancora X minuti": chiude lo schermo, l'escalation continua
-        val snoozeMinutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
+        // Bottone "Ancora un po'": chiude lo schermo, l'escalation continua
         findViewById<MaterialButton>(R.id.btnSnooze).apply {
-            text = getString(R.string.btn_snooze, snoozeMinutes)
+            text = getString(R.string.btn_snooze)
             setOnClickListener { snooze() }
         }
     }

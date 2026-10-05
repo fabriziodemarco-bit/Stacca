@@ -41,7 +41,7 @@ class AlarmReceiver : BroadcastReceiver() {
             return getIntervalMinutes(escalationSpeed) * 60 * 1000L
         }
 
-        /** Minuti tra una notifica e l'altra (usato anche dal pulsante "Ancora X minuti"). */
+        /** Minuti tra una notifica e l'altra. */
         fun getIntervalMinutes(escalationSpeed: Int): Int {
             return when (escalationSpeed) {
                 0 -> 15    // 🐌 Rilassato

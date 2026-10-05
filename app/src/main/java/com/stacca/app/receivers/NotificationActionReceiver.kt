@@ -9,7 +9,7 @@ import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 
 /**
- * Receiver per i pulsanti delle notifiche ("Ho staccato" e "Ancora X minuti").
+ * Receiver per i pulsanti delle notifiche ("Ho staccato" e "Ancora un po'").
  * Nessuno dei due apre l'app.
  */
 class NotificationActionReceiver : BroadcastReceiver() {
@@ -34,7 +34,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
             }
 
             ACTION_SNOOZE, ACTION_DISMISS_OLD -> {
-                // "Ancora X minuti": zittisce e chiude la notifica.
+                // "Ancora un po'": zittisce e chiude la notifica.
                 // L'allarme successivo è già programmato e l'escalation NON si azzera:
                 // la prossima notifica arriva al livello successivo.
                 AlarmSoundManager.stop()

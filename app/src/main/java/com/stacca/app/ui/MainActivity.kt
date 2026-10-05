@@ -482,10 +482,9 @@ class MainActivity : AppCompatActivity() {
                 tvExplain.setText(R.string.home_explain_overtime)
                 btnPrimary.setText(R.string.btn_insultami_home)
                 btnSecondary.setText(R.string.btn_ho_staccato_home)
-                tvSnooze.text = getString(
-                    R.string.btn_snooze, AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
-                )
-                tvSnooze.visibility = View.VISIBLE
+                // "Ancora un po'" solo mentre l'allarme sta suonando: è lì che serve zittirlo
+                tvSnooze.setText(R.string.btn_snooze)
+                tvSnooze.visibility = if (notificationHelper.isAlarmShowing()) View.VISIBLE else View.GONE
             }
 
             HeroState.STACCATO -> {
@@ -567,14 +566,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * "Ancora X minuti" dall'app: zittisce l'allarme, l'escalation continua
+     * "Ancora un po'" dall'app: zittisce l'allarme, l'escalation continua
      * (la prossima notifica è già programmata e arriverà al livello successivo).
      */
     private fun handleSnooze() {
         AlarmSoundManager.stop()
         notificationHelper.cancelAll()
-        val minutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
-        Toast.makeText(this, getString(R.string.snooze_toast, minutes), Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.snooze_toast, Toast.LENGTH_LONG).show()
         moveTaskToBack(true)
     }
 

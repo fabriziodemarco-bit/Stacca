@@ -143,7 +143,7 @@ class NotificationHelper(private val context: Context) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        // Azione "Ancora X minuti": zittisce la notifica, l'escalation continua alla prossima
+        // Azione "Ancora un po'": zittisce la notifica, l'escalation continua alla prossima
         val snoozeIntent = Intent(context, NotificationActionReceiver::class.java).apply {
             action = NotificationActionReceiver.ACTION_SNOOZE
         }
@@ -151,7 +151,6 @@ class NotificationHelper(private val context: Context) {
             context, 1, snoozeIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val snoozeMinutes = AlarmReceiver.getIntervalMinutes(prefs.escalationSpeed)
 
 
         // Vibration pattern basato sul livello
@@ -186,7 +185,7 @@ class NotificationHelper(private val context: Context) {
             .setOngoing(level.ordinal >= NotificationMessages.Level.AGGRESSIVE.ordinal)
             .setContentIntent(openAppPending)
             .addAction(0, context.getString(R.string.btn_ho_staccato), hoStaccatoPending)
-            .addAction(0, context.getString(R.string.btn_snooze, snoozeMinutes), snoozePending)
+            .addAction(0, context.getString(R.string.btn_snooze), snoozePending)
 
 
         // Vibrazione condizionale
@@ -241,6 +240,14 @@ class NotificationHelper(private val context: Context) {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         } catch (e: SecurityException) {
             e.printStackTrace()
+        }
+    }
+
+    /** true se in questo momento c'è una notifica dell'allarme (o lo schermo rosso) aperta. */
+    fun isAlarmShowing(): Boolean {
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return manager.activeNotifications.any {
+            it.id == NOTIFICATION_ID || it.id == FULLSCREEN_NOTIFICATION_ID
         }
     }
 
