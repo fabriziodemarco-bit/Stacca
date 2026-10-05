@@ -29,7 +29,8 @@ class HistoryActivity : AppCompatActivity() {
 
     companion object {
         private const val FREE_DAYS = 7
-        private const val MAX_ROWS = 90
+        private const val PREMIUM_DAYS = 14   // elenco giorno per giorno: le ultime 2 settimane
+        private const val MAX_MONTHS = 12
         private const val DAY_MILLIS = 24 * 60 * 60 * 1000L
     }
 
@@ -65,15 +66,16 @@ class HistoryActivity : AppCompatActivity() {
         renderStats(entries, premium, now)
 
         findViewById<View>(R.id.sectionChart).visibility = if (premium) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.sectionMonths).visibility =
+            if (premium && entries.isNotEmpty()) View.VISIBLE else View.GONE
         findViewById<View>(R.id.cardPremiumTeaser).visibility = if (premium) View.GONE else View.VISIBLE
-        if (premium) renderWeekBars(entries)
-
-        val visible = if (premium) {
-            entries.take(MAX_ROWS)
-        } else {
-            entries.filter { now - it.timestampMillis < FREE_DAYS * DAY_MILLIS }
+        if (premium) {
+            renderWeekBars(entries)
+            renderMonths(entries)
         }
-        renderList(visible)
+
+        val days = if (premium) PREMIUM_DAYS else FREE_DAYS
+        renderList(entries.filter { now - it.timestampMillis < days * DAY_MILLIS })
     }
 
     // ------------------------------------------------------------------
@@ -103,8 +105,10 @@ class HistoryActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvStreak).text = days(streak)
         findViewById<TextView>(R.id.tvRecord).text = if (premium) days(record) else "🔒"
         findViewById<TextView>(R.id.tvLost).text = if (premium) {
+            // Regalato di questo mese (dal giorno 1): coincide con la prima riga del "mese per mese"
+            val thisMonth = monthKey(now)
             val minutes = entries
-                .filter { now - it.timestampMillis < 30 * DAY_MILLIS }
+                .filter { monthKey(it.timestampMillis) == thisMonth }
                 .sumOf { it.overtimeMinutes }
             formatMinutes(minutes)
         } else {
@@ -168,6 +172,145 @@ class HistoryActivity : AppCompatActivity() {
             column.addView(tvLabel)
             container.addView(column)
         }
+    }
+
+    /**
+     * Una riga per mese (il più recente in alto): nome, quanti in orario, una barretta verde/arancio
+     * e il tempo regalato. Sul mese più recente, il confronto con il mese prima.
+     * Il confronto è sulla media al giorno, così un mese appena iniziato non vince "per forza".
+     */
+    private fun renderMonths(entries: List<HistoryStore.Entry>) {
+        val list = findViewById<LinearLayout>(R.id.monthsList)
+        list.removeAllViews()
+        val density = resources.displayMetrics.density
+
+        val months = entries.groupBy { monthKey(it.timestampMillis) }
+            .toList()
+            .sortedByDescending { it.first }
+            .take(MAX_MONTHS)
+
+        months.forEachIndexed { index, (key, monthEntries) ->
+            if (index > 0) {
+                list.addView(View(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1).apply {
+                        marginStart = (20 * density).toInt()
+                    }
+                    setBackgroundColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_border))
+                })
+            }
+            // Confronto solo se il mese prima c'è ed è proprio quello precedente
+            val previous = months.getOrNull(index + 1)?.takeIf { index == 0 && it.first == key - 1 }
+            list.addView(buildMonthRow(key, monthEntries, previous, density))
+        }
+    }
+
+    private fun buildMonthRow(
+        key: Int,
+        monthEntries: List<HistoryStore.Entry>,
+        previous: Pair<Int, List<HistoryStore.Entry>>?,
+        density: Float
+    ): View {
+        val pad = (20 * density).toInt()
+        val row = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(pad, (14 * density).toInt(), pad, (14 * density).toInt())
+        }
+        val onTime = monthEntries.count { it.isOnTime }
+        val gifted = monthEntries.sumOf { it.overtimeMinutes }
+
+        // Riga 1: mese a sinistra, "15 su 18 in orario" a destra
+        val top = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        top.addView(TextView(this).apply {
+            text = monthName(key).replaceFirstChar { it.uppercase() }
+            textSize = 16f
+            setTypeface(typeface, android.graphics.Typeface.BOLD)
+            setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text))
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        })
+        top.addView(TextView(this).apply {
+            text = getString(R.string.history_month_ontime, onTime, monthEntries.size)
+            textSize = 13f
+            setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+        })
+        row.addView(top)
+
+        // Barretta: verde per i giorni in orario, arancio per gli altri
+        val bar = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (6 * density).toInt()).apply {
+                topMargin = (10 * density).toInt()
+            }
+        }
+        val late = monthEntries.size - onTime
+        if (onTime > 0) bar.addView(barPiece(onTime, R.color.home_success, density, late > 0))
+        if (late > 0) bar.addView(barPiece(late, R.color.home_accent, density, false))
+        row.addView(bar)
+
+        // Riga 3: tempo regalato
+        row.addView(TextView(this).apply {
+            text = getString(R.string.history_month_gifted, formatMinutes(gifted))
+            textSize = 13f
+            setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+            setPadding(0, (8 * density).toInt(), 0, 0)
+        })
+
+        // Riga 4 (solo mese più recente): confronto con il mese prima, media al giorno
+        if (previous != null) {
+            val avgNow = gifted / monthEntries.size
+            val avgBefore = previous.second.sumOf { it.overtimeMinutes } / previous.second.size
+            val diff = avgNow - avgBefore
+            val prevName = monthName(previous.first, inSentence = true)
+            row.addView(TextView(this).apply {
+                textSize = 14f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setPadding(0, (6 * density).toInt(), 0, 0)
+                when {
+                    diff < 0 -> {
+                        text = getString(R.string.history_month_better, formatMinutes(-diff), prevName)
+                        setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_success))
+                    }
+                    diff > 0 -> {
+                        text = getString(R.string.history_month_worse, formatMinutes(diff), prevName)
+                        setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
+                    }
+                    else -> {
+                        text = getString(R.string.history_month_same, prevName)
+                        setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+                    }
+                }
+            })
+        }
+        return row
+    }
+
+    private fun barPiece(weight: Int, colorRes: Int, density: Float, gapAfter: Boolean): View =
+        View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight.toFloat()).apply {
+                if (gapAfter) marginEnd = (3 * density).toInt()
+            }
+            setBackgroundResource(R.drawable.bg_segment)
+            background.mutate().setTint(ContextCompat.getColor(this@HistoryActivity, colorRes))
+        }
+
+    /** Mese come numero unico (anno * 12 + mese): così "il mese prima" è semplicemente key - 1. */
+    private fun monthKey(millis: Long): Int {
+        val c = Calendar.getInstance().apply { timeInMillis = millis }
+        return c.get(Calendar.YEAR) * 12 + c.get(Calendar.MONTH)
+    }
+
+    /** Nome del mese nella lingua del telefono. Dentro una frase: "di settembre" (minuscolo in italiano). */
+    private fun monthName(key: Int, inSentence: Boolean = false): String {
+        val c = Calendar.getInstance().apply {
+            set(Calendar.DAY_OF_MONTH, 1)
+            set(Calendar.YEAR, key / 12)
+            set(Calendar.MONTH, key % 12)
+        }
+        val name = SimpleDateFormat("LLLL", Locale.getDefault()).format(c.time)
+        // Alcuni telefoni scrivono "Settembre" anche dentro la frase: in italiano va minuscolo
+        return if (inSentence && Locale.getDefault().language == "it") name.lowercase(Locale.ITALIAN) else name
     }
 
     private fun renderList(entries: List<HistoryStore.Entry>) {
@@ -238,9 +381,15 @@ class HistoryActivity : AppCompatActivity() {
 
     // ------------------------------------------------------------------
 
-    /** Solo anteprima: 15 giorni lavorativi inventati (fine turno 18:00), un po' in orario e un po' no. */
+    /**
+     * Solo anteprima: 2 mesi di giorni lavorativi inventati (fine turno 18:00), dal più recente.
+     * Il secondo mese va meglio del primo, per vedere come si legge un miglioramento.
+     */
     private fun sampleEntries(): List<HistoryStore.Entry> {
-        val overtimes = listOf(0, 3, 0, 12, 0, 0, 27, 0, 2, 41, 0, 0, 8, 0, 55)
+        val overtimes = listOf(
+            0, 0, 3, 0, 8, 0, 0, 0, 12, 0, 2, 0, 0, 27, 0, 0, 5, 0, 0, 15, 0, 0,  // ultimo mese
+            0, 35, 12, 0, 48, 20, 0, 27, 55, 0, 15, 40, 0, 22, 30, 0, 0, 18, 62, 0, 10 // mese prima
+        )
         val result = mutableListOf<HistoryStore.Entry>()
         val day = Calendar.getInstance()
         var i = 0

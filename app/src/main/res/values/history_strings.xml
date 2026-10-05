@@ -7,7 +7,7 @@
     <string name="history_week_none">Negli ultimi 7 giorni\nnessuno stacco.</string>
     <string name="history_empty_title">Il tuo storico\ninizia oggi.</string>
     <string name="history_empty_sub">Stacca in orario e guarda la serie crescere.</string>
-    <string name="history_sub">In orario = entro %d minuti dalla fine del turno.\nRegalato = straordinario degli ultimi 30 giorni.</string>
+    <string name="history_sub">In orario = entro %d minuti dalla fine del turno.\nRegalato = straordinario di questo mese.</string>
 
     <string name="history_streak">SERIE</string>
     <string name="history_record">RECORD</string>
@@ -23,7 +23,14 @@
     <string name="history_row_late">+%1$d min · livello %2$d</string>
     <string name="history_row_end">Fine turno %s</string>
 
+    <string name="history_months_label">MESE PER MESE</string>
+    <string name="history_month_ontime">%1$d su %2$d in orario</string>
+    <string name="history_month_gifted">%s regalati</string>
+    <string name="history_month_better">▼ %1$s al giorno in meno di %2$s</string>
+    <string name="history_month_worse">▲ %1$s al giorno in più di %2$s</string>
+    <string name="history_month_same">Come %s</string>
+
     <string name="history_premium_title">Tutto lo storico con Premium</string>
-    <string name="history_premium_desc">Record, tempo non vissuto del mese, grafico della settimana e tutti i giorni, non solo gli ultimi 7.</string>
+    <string name="history_premium_desc">Record, i tuoi progressi mese per mese, grafico della settimana e le ultime 2 settimane, non solo gli ultimi 7 giorni.</string>
     <string name="history_premium_cta">Sblocca Premium</string>
 </resources>

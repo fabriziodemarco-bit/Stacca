@@ -115,6 +115,26 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+            <!-- Mese per mese (Premium): un riassunto per mese e il confronto con il mese prima -->
+            <LinearLayout
+                android:id="@+id/sectionMonths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Stacca.Settings.SectionLabel"
+                    android:text="@string/history_months_label" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/monthsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
             <!-- Invito al Premium (al posto del grafico per chi non ha Premium) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPremiumTeaser"

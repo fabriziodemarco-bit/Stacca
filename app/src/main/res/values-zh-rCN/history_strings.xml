@@ -6,7 +6,7 @@
     <string name="history_week_none">最近7天\n没有下班记录。</string>
     <string name="history_empty_title">你的历史\n从今天开始。</string>
     <string name="history_empty_sub">准时下班，看着连续记录增长。</string>
-    <string name="history_sub">准时 = 下班时间后%d分钟内。\n白送 = 最近30天的加班时间。</string>
+    <string name="history_sub">准时 = 下班时间后%d分钟内。\n白送 = 本月的加班时间。</string>
 
     <string name="history_streak">连续</string>
     <string name="history_record">记录</string>
@@ -21,7 +21,14 @@
     <string name="history_row_late">+%1$d分钟 · 第%2$d级</string>
     <string name="history_row_end">下班时间 %s</string>
 
+    <string name="history_months_label">逐月</string>
+    <string name="history_month_ontime">%2$d次中%1$d次准时</string>
+    <string name="history_month_gifted">白送%s</string>
+    <string name="history_month_better">▼ 比%2$s每天少%1$s</string>
+    <string name="history_month_worse">▲ 比%2$s每天多%1$s</string>
+    <string name="history_month_same">与%s持平</string>
+
     <string name="history_premium_title">高级版查看完整历史</string>
-    <string name="history_premium_desc">记录、本月没有活过的时间、每周图表和所有日子，而不仅是最近7天。</string>
+    <string name="history_premium_desc">记录、逐月进步、每周图表和最近两周，而不仅是最近7天。</string>
     <string name="history_premium_cta">解锁高级版</string>
 </resources>
