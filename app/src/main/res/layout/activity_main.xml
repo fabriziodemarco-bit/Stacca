@@ -356,16 +356,17 @@
                     android:id="@+id/btnHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minHeight="44dp"
-                    android:minWidth="44dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:minHeight="36dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
                     android:gravity="center"
                     android:text="@string/history_screen_title"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/home_accent"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
+                    android:background="@drawable/bg_badge_accent"
+                    android:foreground="?attr/selectableItemBackground" />
 
                 <!-- Impostazioni: rotellina grigia -->
                 <ImageView

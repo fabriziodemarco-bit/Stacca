@@ -6,7 +6,7 @@
     <string name="history_week_none">最近7天\n没有下班记录。</string>
     <string name="history_empty_title">你的历史\n从今天开始。</string>
     <string name="history_empty_sub">准时下班，看着连续记录增长。</string>
-    <string name="history_sub">准时 = 下班时间后%d分钟内。白送 = 最近30天的加班时间。</string>
+    <string name="history_sub">准时 = 下班时间后%d分钟内。\n白送 = 最近30天的加班时间。</string>
 
     <string name="history_streak">连续</string>
     <string name="history_record">记录</string>

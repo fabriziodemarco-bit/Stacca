@@ -6,7 +6,7 @@
     <string name="history_week_none">No unplugging\nin the last 7 days.</string>
     <string name="history_empty_title">Your history\nstarts today.</string>
     <string name="history_empty_sub">Unplug on time and watch your streak grow.</string>
-    <string name="history_sub">On time = within %d minutes of your shift end. Gifted = overtime in the last 30 days.</string>
+    <string name="history_sub">On time = within %d minutes of your shift end.\nGifted = overtime in the last 30 days.</string>
 
     <string name="history_streak">STREAK</string>
     <string name="history_record">RECORD</string>

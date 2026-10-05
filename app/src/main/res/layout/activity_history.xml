@@ -86,7 +86,7 @@
 
                     <LinearLayout style="@style/Stacca.History.Stat">
                         <TextView style="@style/Stacca.History.StatLabel" android:text="@string/history_lost" />
-                        <TextView android:id="@+id/tvLost" style="@style/Stacca.History.StatValue" />
+                        <TextView android:id="@+id/tvLost" style="@style/Stacca.History.StatValue" android:textColor="@color/home_accent" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

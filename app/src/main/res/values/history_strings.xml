@@ -7,7 +7,7 @@
     <string name="history_week_none">Negli ultimi 7 giorni\nnessuno stacco.</string>
     <string name="history_empty_title">Il tuo storico\ninizia oggi.</string>
     <string name="history_empty_sub">Stacca in orario e guarda la serie crescere.</string>
-    <string name="history_sub">In orario = entro %d minuti dalla fine del turno. Regalato = straordinario degli ultimi 30 giorni.</string>
+    <string name="history_sub">In orario = entro %d minuti dalla fine del turno.\nRegalato = straordinario degli ultimi 30 giorni.</string>
 
     <string name="history_streak">SERIE</string>
     <string name="history_record">RECORD</string>
