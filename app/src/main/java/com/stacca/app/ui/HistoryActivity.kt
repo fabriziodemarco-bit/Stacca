@@ -148,7 +148,7 @@ class HistoryActivity : AppCompatActivity() {
             val color = when {
                 dayEntries.isEmpty() -> R.color.home_border
                 late -> R.color.home_accent
-                else -> R.color.home_text_secondary
+                else -> R.color.home_success
             }
             val height = if (dayEntries.isEmpty() || !late) minBarPx
             else maxOf(minBarPx, maxBarPx * minutes / maxMinutes)
@@ -225,7 +225,7 @@ class HistoryActivity : AppCompatActivity() {
             setTypeface(typeface, android.graphics.Typeface.BOLD)
             if (entry.isOnTime) {
                 setText(R.string.history_row_ontime)
-                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_success))
             } else {
                 text = getString(R.string.history_row_late, entry.overtimeMinutes, entry.level)
                 setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
