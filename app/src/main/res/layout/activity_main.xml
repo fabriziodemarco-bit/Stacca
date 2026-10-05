@@ -265,6 +265,24 @@
                         android:includeFontPadding="false"
                         android:textColor="@color/home_text" />
 
+                    <!-- "Modifica orario": pulsantino con contorno arancione, sotto il numero -->
+                    <TextView
+                        android:id="@+id/tvEditTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:minHeight="36dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:gravity="center"
+                        android:text="@string/home_edit_time"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/home_accent"
+                        android:background="@drawable/bg_badge_accent"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:visibility="gone" />
+
                     <!-- Sei segmenti: uno per ogni promemoria inviato -->
                     <LinearLayout
                         android:id="@+id/segments"

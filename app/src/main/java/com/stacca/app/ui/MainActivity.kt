@@ -281,7 +281,7 @@ class MainActivity : AppCompatActivity() {
         tvSnooze.setOnClickListener { handleSnooze() }
 
         // "Modifica orario" nella scheda, quando l'orario si può cambiare
-        tvCardFootRight.setOnClickListener {
+        findViewById<View>(R.id.tvEditTime).setOnClickListener {
             val state = currentHeroState()
             if (state == HeroState.SPENTO || state == HeroState.COUNTDOWN) showTimePicker()
         }
@@ -424,9 +424,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.tvDeactivate).visibility = View.GONE
         btnSecondary.visibility = View.VISIBLE
         tvCardFootRight.text = ""
-        tvCardFootRight.isClickable = false
         tvCardFootRight.minHeight = 0
-        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_text_secondary))
+        findViewById<View>(R.id.tvEditTime).visibility = View.GONE
+        (tvCardFootLeft.parent as View).visibility = View.VISIBLE
         tvExplain.setText(R.string.home_explain_default)
 
         when (state) {
@@ -516,11 +516,9 @@ class MainActivity : AppCompatActivity() {
 
     /** Mostra "Modifica orario" a destra nella scheda, come comando toccabile. */
     private fun showEditTimeCommand() {
-        tvCardFootRight.setText(R.string.home_edit_time)
-        tvCardFootRight.isClickable = true
-        // Area di tocco di almeno 44 dp solo quando il comando c'è
-        tvCardFootRight.minHeight = (44 * resources.displayMetrics.density).toInt()
-        tvCardFootRight.setTextColor(ContextCompat.getColor(this, R.color.home_accent))
+        // Pulsantino "Modifica orario" sotto il numero; la riga in fondo alla scheda non serve
+        findViewById<View>(R.id.tvEditTime).visibility = View.VISIBLE
+        (tvCardFootLeft.parent as View).visibility = View.GONE
     }
 
     /** "26 minuti" oppure "1 h 05 min". */
