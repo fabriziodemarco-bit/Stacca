@@ -31,7 +31,7 @@
 
     <!-- Oltre l'orario -->
     <string name="home_ot_label">IL TUO LAVORO È FINITO.</string>
-    <string name="home_ot_title">Il resto non può\npiù aspettare</string>
+    <string name="home_ot_title">Il resto non può\npiù aspettare.</string>
     <string name="home_ot_sub">Dovevi staccare alle %s.</string>
     <string name="home_card_still_here">SEI ANCORA QUI DA</string>
     <string name="home_reminders_total">%d / 6</string>

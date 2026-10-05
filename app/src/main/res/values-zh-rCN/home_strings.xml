@@ -27,7 +27,7 @@
     <string name="home_cd_foot">下班时间 %s</string>
 
     <string name="home_ot_label">你的工作结束了。</string>
-    <string name="home_ot_title">剩下的\n不能再等了</string>
+    <string name="home_ot_title">剩下的\n不能再等了。</string>
     <string name="home_ot_sub">你本该在%s下班。</string>
     <string name="home_card_still_here">你已经多待了</string>
     <string name="home_reminders_total">%d / 6</string>
