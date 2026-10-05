@@ -125,7 +125,7 @@
         <item>核爆</item>
         <item>末日</item>
     </string-array>
-    <string name="notif_premium_teaser">&#x1F512; 如果是高级版，我现在早冲你吼了（核弹级别）</string>
+    <string name="notif_premium_teaser">&#x1F512; 高级版还会解锁激进、核爆和末日级别。永远站在你这边，只是耐心少一点。</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 高级版已激活</string>

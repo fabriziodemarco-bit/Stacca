@@ -1,177 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 1 — Gentle (0 min)                      -->
-    <!-- ================================================================ -->
+    <!-- 第1级 · 温和 -->
     <string-array name="notif_gentle_titles">
-        <item>下班啦！ 🕐</item>
-        <item>时间到了！ ⏰</item>
-        <item>到点啦！ ⌛</item>
-        <item>别干了！ 👋</item>
-        <item>下班！ 🎉</item>
-        <item>打卡结束！ 🔔</item>
-        <item>时间用光啦！ ⏱️</item>
+        <item>今天到此为止</item>
+        <item>该下班了</item>
+        <item>剩下的可以等</item>
+        <item>收工</item>
+        <item>属于你的时间</item>
+        <item>工作结束</item>
+        <item>你已经尽力了</item>
     </string-array>
-
     <string-array name="notif_gentle_messages">
-        <item>嘿！该下班了！保存工作并关闭所有东西 🕐</item>
-        <item>你的班已经结束了！是时候享受夜晚了 ✨</item>
-        <item>嘘… 工作时间结束了。关掉那台笔记本！ 💻</item>
-        <item>温馨提示：今天的工作已经结束了！ 🌅</item>
-        <item>嘿同事，到点了！沙发在等着你呢！ 🛋️</item>
-        <item>滴答滴答！时钟说到点了。你怎么说？ ⏰</item>
-        <item>今天的工作结束啦！你已经做得够多了，相信我 👏</item>
+        <item>保存工作，关掉电脑。现在时间属于你了。</item>
+        <item>你的工作时间结束了。你也可以停下来了。</item>
+        <item>留点事情给明天也没关系。</item>
+        <item>合上笔记本。剩下的以后慢慢来。</item>
+        <item>你和生活的其他部分有个约会。下班吧。</item>
+        <item>是时候站起来，换个风景了。</item>
+        <item>今天可以画上句号了，就算没全做完。</item>
     </string-array>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 2 — Friendly (+5 min)           -->
-    <!-- ================================================================ -->
+    <!-- 第2级 · 友好 -->
     <string-array name="notif_friendly_titles">
-        <item>嘿，还在卷？！ 🍷</item>
-        <item>电脑外还有生活！ 🌍</item>
-        <item>下流的提议 😏</item>
-        <item>你有更好的选择！ 🎭</item>
-        <item>世界在呼唤你！ 📱</item>
-        <item>多了5分钟… 🤨</item>
-        <item>还在工作？！ 🫠</item>
-        <item>你正在错过精彩！ 🎪</item>
-        <item>醒醒！还有其他事呢！ 🌈</item>
+        <item>我看到你了</item>
+        <item>还在这儿？</item>
+        <item>工作会等你</item>
+        <item>离开屏幕</item>
+        <item>生活还有别的</item>
+        <item>来吧，关掉</item>
+        <item>更好的提议</item>
+        <item>明天也存在</item>
+        <item>最后一封邮件？</item>
     </string-array>
-
     <string-array name="notif_friendly_messages">
-        <item>快点，全都关掉！外面有冰镇饮料等着你！ 🍹</item>
-        <item>Netflix刚刚更新了你想看的剧… 但你还在工作？！ 📺</item>
-        <item>你的大床正在哭泣，因为你不在那里。快去安慰它！ 🛏️</item>
-        <item>外面有绝美的日落。你居然为了发邮件错过了。认真的吗？！ 🌅</item>
-        <item>披萨可不会自己点！下班去想想吃什么晚餐吧！ 🍕</item>
-        <item>你的伴侣/朋友/猫在等你。别让他们再等了！ ❤️</item>
-        <item>手工冰淇淋、散步… 还是再写一行代码？选择很明显吧！ 🍦</item>
-        <item>沙发刚刚发出了被遗弃的警告。快回去陪它！ 🛋️</item>
-        <item>你知道什么和完成工作最配吗？你余下的生活！ 🎊</item>
+        <item>这看起来可不像关机界面。</item>
+        <item>“做完这个就关。”这话我们是不是听过了？</item>
+        <item>待办清单跑不掉的。很遗憾。</item>
+        <item>试着合上笔记本，今天剩下的时光就打开了。</item>
+        <item>什么都不做，也是很体面的安排。</item>
+        <item>鼠标可以自己待着，它已经长大了。</item>
+        <item>沙发不需要更新。考虑换一下吧。</item>
+        <item>你已经把注意力给了工作，现在换个对象吧。</item>
+        <item>它还有个姐妹。别把它全家都认识一遍。</item>
     </string-array>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 3 — Insistent (+10 min)                                 -->
-    <!-- ================================================================ -->
+    <!-- 第3级 · 坚持 -->
     <string-array name="notif_insistent_titles">
-        <item>还在干？！ 😤</item>
-        <item>拜托！！ 🙄</item>
-        <item>下班！！！ ⚡</item>
-        <item>停下！！ 🛑</item>
-        <item>我不敢相信！ 😱</item>
-        <item>认真的吗？！ 😳</item>
-        <item>够了！ 💢</item>
-        <item>你太夸张了！ 🫨</item>
-        <item>别搞了！ 🚫</item>
+        <item>别讨价还价了</item>
+        <item>别再来一件</item>
+        <item>不加演</item>
+        <item>我们是认真的</item>
+        <item>回到现实</item>
+        <item>就是现在</item>
+        <item>那个可以等</item>
+        <item>保存并关闭</item>
+        <item>就是这一刻</item>
+        <item>最后登机广播</item>
+        <item>这不是紧急情况</item>
+        <item>关掉一样东西</item>
     </string-array>
-
     <string-array name="notif_insistent_messages">
-        <item>认真的吗？！已经过去10分钟了！你老板又不会给你付加班费！ 💸</item>
-        <item>你的身体需要活动！你的脊椎看起来像个麻花！ 🥨</item>
-        <item>警告：工作狂指数危险地升高！现在就下班！ ⚠️</item>
-        <item>你的眼睛都快要罢工了。给自己放个假吧！ 👀</item>
-        <item>10分钟的免费加班。你是公司的慈善家还是什么？！ 🤡</item>
-        <item>你的屏幕比太阳还要亮。出去。现在。立刻。 ☀️</item>
-        <item>你正在送走你的自由时间。你。的。自。由。时。间。 🕐💢</item>
-        <item>你放在键盘上的手指在哭泣。它们都有老茧了。让它们休息吧！ ⌨️😢</item>
-        <item>连机器都要关机。你甚至不是个机器。下班！ 🤖</item>
+        <item>“还有一件事”可不是下班时间。</item>
+        <item>保存文件。别为了庆祝再打开一个。</item>
+        <item>工作想要返场加演。你来拉上帷幕。</item>
+        <item>不用做完清单，也能结束这一天。</item>
+        <item>你在拉长工作，缩短其他一切。</item>
+        <item>连充电器都知道断开。学着点。</item>
+        <item>那个逗号可以等。你可以站起来了。</item>
+        <item>“关闭”按钮在还有事没做完时也一样好用。</item>
+        <item>提醒就是这条。下一步你自己来。</item>
+        <item>你今晚的航班即将停止登机。</item>
+        <item>真紧急的话，就不会用邮件发来了。</item>
+        <item>不用全部，只要一样：笔记本电脑。</item>
     </string-array>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 4 — Aggressive (+15 min)                                 -->
-    <!-- ================================================================ -->
+    <!-- 第4级 · 激进（高级版） -->
     <string-array name="notif_aggressive_titles">
-        <item>你怎么还在？！ 🤬</item>
-        <item>真的够了！ 💢</item>
-        <item>最后警告！ ⚠️</item>
-        <item>紧急情况！ 🚨</item>
-        <item>没开玩笑！ 😡</item>
-        <item>你惹怒我了！ 🔥</item>
-        <item>你无药可救了！ 💀</item>
-        <item>为你感到羞耻！ 🫵</item>
-        <item>我说真的！ 🤯</item>
-        <item>你不可理喻！ 😤</item>
+        <item>你不是配件</item>
+        <item>别拍续集了</item>
+        <item>粘在椅子上了？</item>
+        <item>拖得太久了</item>
+        <item>需要除胶剂吗？</item>
+        <item>错过出口了？</item>
+        <item>别当家具了</item>
+        <item>谈判结束</item>
+        <item>这是张书桌</item>
+        <item>站起来吧？</item>
     </string-array>
-
     <string-array name="notif_aggressive_messages">
-        <item>你在干什么？！给你老板免费干了15分钟！你疯了吗？！ 🤬</item>
-        <item>你的工作生活平衡比比萨斜塔还要不平衡！下班！ 🏗️</item>
-        <item>你的同事已经去酒吧了。你还在盯着Excel。你好可悲。 🍺</item>
-        <item>突发新闻：固执的员工拒绝停止工作。家人们很担心！ 📰</item>
-        <item>过劳死可不是你想达成的目标！全关掉！ 🔥</item>
-        <item>机器都需要停止。你又不是机器！ 🤖</item>
-        <item>注意：多出来的一分钟就是从你生命里偷走的一分钟！现在下班！ ⏳💀</item>
-        <item>你知道自己被压榨了，对吧？然后你还让他们这么干！干得漂亮，天才！ 👏🤡</item>
-        <item>你老板正躺在自己家里的沙发上，看着你免费工作。觉得好笑吗？他觉得好笑！ 😂</item>
-        <item>你这纯粹是在给公司送钱。你是我认识的最慷慨（也是最固执）的人！ 💸🤦</item>
+        <item>你可以离开办公桌，你们不是捆绑销售的。</item>
+        <item>你的“最后一封邮件”续集比电影还多。</item>
+        <item>笔记本电脑不爱你。合上它。</item>
+        <item>你把“马上就好”变成了一个长期项目。</item>
+        <item>椅子不会收养你。站起来。</item>
+        <item>你不用看守那个文件，它不会越狱。</item>
+        <item>你是在工作，还是在等桌子长出轮子？</item>
+        <item>关掉一切，不需要专门开个会。</item>
+        <item>居家办公不等于住在键盘里。</item>
+        <item>你已经说过再见了，现在付诸行动吧。</item>
     </string-array>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 5 — Nuclear (+20 min)                                   -->
-    <!-- ================================================================ -->
+    <!-- 第5级 · 核爆（高级版） -->
     <string-array name="notif_nuclear_titles">
-        <item>💀 停下！！！ 💀</item>
-        <item>红色警报！ 🚨</item>
-        <item>全面警告！ 🔴</item>
-        <item>游戏结束！ 💣</item>
-        <item>工作狂SOS！ 🆘</item>
-        <item>你已经没救了！ 💀</item>
-        <item>救命啊！ 😱</item>
-        <item>不可接受！ ☢️</item>
-        <item>我讨厌你！（开个玩笑） 💔</item>
-        <item>真恶心！下班！ 🤮</item>
+        <item>千年最佳员工</item>
+        <item>浪费天赋</item>
+        <item>固执大奖</item>
+        <item>摆件模式</item>
+        <item>说好的灵活呢</item>
+        <item>工作感谢你</item>
+        <item>就差个标签了</item>
+        <item>真聪明</item>
+        <item>返场冠军</item>
+        <item>别再精神加班了</item>
+        <item>监视居住</item>
     </string-array>
-
     <string-array name="notif_nuclear_messages">
-        <item>下班啦！！！20分钟了！你想让我过去帮你关掉笔记本吗？！ 💀</item>
-        <item>你的电脑将在 3… 2… 1… 后自毁（我希望！） 💣</item>
-        <item>快讯：从来没有人因为按时关掉笔记本而死过！ 📢</item>
-        <item>你正在成为一个临床病例！医生称之为\'晚期工作狂\'！ 🏥</item>
-        <item>你的猫因为你没回来已经把你的晚饭吃了。恭喜你！ 🐱</item>
-        <item>你知道有个词叫\'私人生活\'吗？！它就在外面等你！ 🚪</item>
-        <item>任务：关掉所有东西，从椅子上站起来，去生活！重复：去生活！ 🎯</item>
-        <item>你已经累成这样了，如果把你放在日落前，你可能会想到那些还没解决的工单！ 🌅🤮</item>
-        <item>你知道那张椅子已经留下了你永久的印记吗？你造出了一个活化石！ 🪑💀</item>
-        <item>20分钟了。二十。如果是我，我早就把你的笔记本扔出窗外了！ 🪟💻</item>
-        <item>我从没见过这么固执又迟钝的人。下班，不然我把你卸载了！ 📱🗑️</item>
+        <item>你赢得了更多工作。关掉一切即可领奖。</item>
+        <item>你的超能力？把空闲时间变成积压任务。</item>
+        <item>你比卡死的程序还难关掉。</item>
+        <item>你正在变成办公桌的配件，连保修都没有。</item>
+        <item>你把一切都变灵活了，除了下班时间。</item>
+        <item>工作永远做不完。你可以带个好头。</item>
+        <item>你就差一个资产编号了。趁还没分配给你，快起来。</item>
+        <item>你刚把“下班”也加进了拖延清单。</item>
+        <item>那个文件叫“最终版”。真羡慕你的乐观。</item>
+        <item>如果找借口留下有工资，你早就能退休了。</item>
+        <item>你是在远程办公，还是被软禁了？试着走开吧。</item>
     </string-array>
 
-    <!-- ================================================================ -->
-    <!-- LIVELLO 6 — Apocalypse (+30 min)                                 -->
-    <!-- ================================================================ -->
+    <!-- 第6级 · 末日（高级版） -->
     <string-array name="notif_apocalypse_titles">
-        <item>☠️ 你不可救药了 ☠️</item>
-        <item>绝望的案例！ 😱</item>
-        <item>救命！！！ 🆘</item>
-        <item>需要干预！ 🏥</item>
-        <item>再见，理智！ 🧠💥</item>
-        <item>你是个失败者！ 🤡</item>
-        <item>你太糟了！ 🤮</item>
-        <item>小丑！ 🎪</item>
-        <item>人类的耻辱！ 😤</item>
-        <item>最后一个脑细胞！ 🧠💀</item>
-        <item>白痴！下班！ 🫵💢</item>
-        <item>临床病例！ 🏥☠️</item>
-        <item>彻底绝望！ 😭</item>
-        <item>你活该累死！ 🔥</item>
+        <item>镇纸部门</item>
+        <item>够了，冠军</item>
+        <item>表演很精彩</item>
+        <item>厉害了，下班吧</item>
+        <item>有人在等你</item>
+        <item>椅子赢了</item>
+        <item>最后一封邮件大奖</item>
+        <item>你的生活来电了</item>
+        <item>完美规划</item>
+        <item>日落直播中</item>
+        <item>需要吊车吗？</item>
+        <item>冰箱很困惑</item>
+        <item>马戏团打烊了</item>
+        <item>加班诺贝尔奖</item>
     </string-array>
-
     <string-array name="notif_apocalypse_messages">
-        <item>30分钟。三十。你搬进办公室了吗？！要不要我给你送床单去？！ ☠️</item>
-        <item>既然这样你就睡在那儿吧！反正你也没有社交生活！ 🏢🛏️</item>
-        <item>恭喜你：你赢得了\'年度被压榨最多员工\'奖！ 🏆</item>
-        <item>你老板在嘲笑你。大笑。而你在免费打工！ 😂💸</item>
-        <item>你椅子上的痕迹比沙发的还深。这就说明了一切！ 🪑</item>
-        <item>最后通牒：如果你现在不下班，明天你就会发现这个应用在用47种语言骂你！ 🌍🤬</item>
-        <item>你是个无可救药的人。但我们爱你。请下班吧。下班！ 💔</item>
-        <item>你知道你是什么吗？一个在老板泡游泳池的时候免费打工的 小丑 🤡！ 🏊</item>
-        <item>受够了。你是我见过的最固执、最死脑筋、最受虐狂的人！ 🤦💢</item>
-        <item>我讨厌你。我打心底里讨厌你。下班，不然我发誓把你从手机里删除！ ☠️📱</item>
-        <item>你妈妈会很失望。你爸爸会觉得尴尬。你的狗已经取代了你。下班！ 🐕💀</item>
-        <item>你知道你在做什么吗？毫无用处。因为下午6点以后，你的大脑已经关机了。像你一样！ 🧠❌</item>
-        <item>如果老板看到你在这个时候还在工作，他会想：真可悲，也没什么别的事可做了！ 😂🫵</item>
-        <item>为了发一封没人会看的邮件，你生命中的三十分钟就被冲进厕所了！ 🚽📧</item>
+        <item>你是办公室里最贵的镇纸。可以走了。</item>
+        <item>仓鼠至少还有个轮子。你只有Excel。</item>
+        <item>一个应用都在教训你了，你还留下来看续集。</item>
+        <item>“关机”按钮不是装饰品。</item>
+        <item>工作谁都可以等。他们等的只有你。</item>
+        <item>今天它又赢了。明天至少反抗一下。</item>
+        <item>你的“最后一件事”已经有了自己的待办清单。</item>
+        <item>它留了言：“下班之后我也存在。”</item>
+        <item>你规划好了一切，除了你的离开。</item>
+        <item>只直播一次，没有重播。</item>
+        <item>要怎样才能让你动起来：一个截止日期，还是直接叫搬家公司？</item>
+        <item>它等了你好几个小时，只有一个问题：“吃什么？”</item>
+        <item>你在等一张电子表格的片尾字幕。</item>
+        <item>关掉一切吧。获奖感言就免了。</item>
     </string-array>
 
 </resources>

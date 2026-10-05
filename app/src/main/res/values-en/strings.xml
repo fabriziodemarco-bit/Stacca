@@ -125,7 +125,7 @@
         <item>Nuclear</item>
         <item>Apocalypse</item>
     </string-array>
-    <string name="notif_premium_teaser">&#x1F512; With Premium by now I\'d be yelling at you (NUCLEAR level)</string>
+    <string name="notif_premium_teaser">&#x1F512; Premium also unlocks Aggressive, Nuclear and Apocalypse. Always on your side, with less patience.</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 Premium active</string>

@@ -129,7 +129,7 @@
         <item>Nucleare</item>
         <item>Apocalisse</item>
     </string-array>
-    <string name="notif_premium_teaser">&#x1F512; Con Premium a quest\'ora ti starei gi&#xE0; urlando contro (livello NUCLEARE)</string>
+    <string name="notif_premium_teaser">&#x1F512; Con Premium arrivano anche Aggressivo, Nucleare e Apocalisse. Sempre dalla tua parte, con meno pazienza.</string>
 
     <!-- Badge escalation in MainActivity -->
     <string name="premium_active">👑 Premium attivo</string>
