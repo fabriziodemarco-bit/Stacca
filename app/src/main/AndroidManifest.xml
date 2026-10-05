@@ -98,6 +98,13 @@
             android:theme="@style/Theme.Stacca"
             android:parentActivityName=".ui.MainActivity" />
 
+        <!-- Storico degli stacchi -->
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Stacca"
+            android:parentActivityName=".ui.MainActivity" />
+
         <!-- Premium Activity -->
         <activity
             android:name=".ui.PremiumActivity"

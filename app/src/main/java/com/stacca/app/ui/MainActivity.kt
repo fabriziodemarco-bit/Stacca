@@ -288,6 +288,9 @@ class MainActivity : AppCompatActivity() {
         btnSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
+        findViewById<View>(R.id.btnHistory).setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
     }
 
     private fun openInsultami() {
@@ -484,7 +487,7 @@ class MainActivity : AppCompatActivity() {
             HeroState.STACCATO -> {
                 // Il momento premio
                 val overtime = prefs.lastShiftOvertimeMinutes
-                val onTime = overtime == 0
+                val onTime = overtime <= PreferencesManager.ON_TIME_THRESHOLD_MINUTES
                 tvHeroLabel.setText(
                     if (onTime) R.string.home_done_label_ontime else R.string.home_done_label_late
                 )

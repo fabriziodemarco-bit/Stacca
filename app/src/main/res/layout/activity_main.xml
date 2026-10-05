@@ -353,6 +353,20 @@
                     android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/btnHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="44dp"
+                    android:minWidth="44dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:gravity="center"
+                    android:text="@string/history_screen_title"
+                    android:textSize="13sp"
+                    android:textColor="@color/home_text_secondary"
+                    android:background="?attr/selectableItemBackgroundBorderless" />
+
+                <TextView
                     android:id="@+id/btnSettings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

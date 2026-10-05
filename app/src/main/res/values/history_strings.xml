@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Testi dello Storico -->
+<resources>
+    <string name="history_screen_title">Storico</string>
+    <string name="history_label">IL TUO STORICO</string>
+    <string name="history_week_title">Questa settimana:\n%1$d su %2$d in orario.</string>
+    <string name="history_week_none">Questa settimana\nancora nessuno stacco.</string>
+    <string name="history_empty_title">Il tuo storico\ninizia oggi.</string>
+    <string name="history_empty_sub">Stacca in orario e guarda la serie crescere.</string>
+    <string name="history_sub">In orario = entro %d minuti dalla fine del turno.</string>
+
+    <string name="history_streak">SERIE</string>
+    <string name="history_record">RECORD</string>
+    <string name="history_lost">NON VISSUTO · 30 GG</string>
+    <plurals name="history_days">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
+
+    <string name="history_week_chart">QUESTA SETTIMANA</string>
+    <string name="history_list_label">ULTIMI GIORNI</string>
+    <string name="history_row_ontime">In orario ✓</string>
+    <string name="history_row_late">+%1$d min · livello %2$d</string>
+    <string name="history_row_end">Fine turno %s</string>
+
+    <string name="history_premium_title">Tutto lo storico con Premium</string>
+    <string name="history_premium_desc">Record, tempo non vissuto del mese, grafico della settimana e tutti i giorni, non solo gli ultimi 7.</string>
+    <string name="history_premium_cta">Sblocca Premium</string>
+</resources>

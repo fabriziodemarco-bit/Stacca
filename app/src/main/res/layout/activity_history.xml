@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Storico, nello stile "editoriale" della home:
+    titolo con la settimana, 3 numeri, grafico della settimana (Premium), elenco dei giorni.
+    I contenuti dinamici (barre e righe) li costruisce HistoryActivity.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/home_bg"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/home_text"
+            app:title="@string/history_screen_title"
+            app:titleTextColor="@color/home_text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/history_label"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.14"
+                android:textColor="@color/home_accent" />
+
+            <TextView
+                android:id="@+id/tvHistoryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/page_title_size"
+                android:fontFamily="sans-serif-black"
+                android:lineSpacingMultiplier="1.08"
+                android:letterSpacing="-0.01"
+                android:textColor="@color/home_text" />
+
+            <TextView
+                android:id="@+id/tvHistorySub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/home_text_secondary" />
+
+            <!-- Tre numeri: serie, record, tempo non vissuto -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Stacca.Settings.Card"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="18dp">
+
+                    <LinearLayout style="@style/Stacca.History.Stat">
+                        <TextView style="@style/Stacca.History.StatLabel" android:text="@string/history_streak" />
+                        <TextView android:id="@+id/tvStreak" style="@style/Stacca.History.StatValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/Stacca.History.Stat">
+                        <TextView style="@style/Stacca.History.StatLabel" android:text="@string/history_record" />
+                        <TextView android:id="@+id/tvRecord" style="@style/Stacca.History.StatValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/Stacca.History.Stat">
+                        <TextView style="@style/Stacca.History.StatLabel" android:text="@string/history_lost" />
+                        <TextView android:id="@+id/tvLost" style="@style/Stacca.History.StatValue" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Grafico della settimana (Premium) -->
+            <LinearLayout
+                android:id="@+id/sectionChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Stacca.Settings.SectionLabel"
+                    android:text="@string/history_week_chart" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/weekBars"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="12dp" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Invito al Premium (al posto del grafico per chi non ha Premium) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPremiumTeaser"
+                style="@style/Stacca.Settings.Card"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        style="@style/Stacca.Settings.RowTitle.Accent"
+                        android:text="@string/history_premium_title" />
+
+                    <TextView
+                        style="@style/Stacca.Settings.RowDesc"
+                        android:text="@string/history_premium_desc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_pill_accent"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:text="@string/history_premium_cta"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/home_on_accent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Elenco dei giorni -->
+            <LinearLayout
+                android:id="@+id/sectionList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Stacca.Settings.SectionLabel"
+                    android:text="@string/history_list_label" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/historyList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

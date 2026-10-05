@@ -219,7 +219,7 @@ class NotificationHelper(private val context: Context) {
      * che sparisce da solo dopo qualche secondo.
      */
     fun showStaccoReward(overtimeMinutes: Int, endTimeText: String) {
-        val title = if (overtimeMinutes == 0) {
+        val title = if (overtimeMinutes <= com.stacca.app.data.PreferencesManager.ON_TIME_THRESHOLD_MINUTES) {
             context.getString(R.string.notif_reward_title_ontime)
         } else {
             context.getString(R.string.notif_reward_title_late)

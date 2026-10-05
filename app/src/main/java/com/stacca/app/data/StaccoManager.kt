@@ -25,6 +25,17 @@ object StaccoManager {
         }
         val overtimeMinutes = (overtimeMillis / 60_000).toInt()
 
+        // Storico: il livello raggiunto è il numero di promemoria già partiti (0-6)
+        HistoryStore(context).add(
+            HistoryStore.Entry(
+                timestampMillis = System.currentTimeMillis(),
+                endHour = prefs.endHour,
+                endMinute = prefs.endMinute,
+                overtimeMinutes = overtimeMinutes,
+                level = prefs.currentEscalationStep.coerceIn(0, 6)
+            )
+        )
+
         prefs.registraStaccato(overtimeMinutes)
 
         prefs.paywallShownToday = false
