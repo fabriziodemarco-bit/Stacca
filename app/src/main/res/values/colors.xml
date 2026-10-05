@@ -62,6 +62,12 @@
     <color name="home_border">#383643</color>
     <color name="home_accent">#FF875F</color>
     <color name="home_success">#7FD1A0</color>
+
+    <!-- Insultami: colori delle nuvolette del fumetto -->
+    <color name="insult_bubble_white">#FFFFFF</color>
+    <color name="insult_bubble_yellow">#FFE14D</color>
+    <color name="insult_bubble_scream">#FF5A1F</color>
+    <color name="insult_cold">#A9C4D6</color>
     <color name="home_on_accent">#20110B</color>
 
     <!-- Schermo rosso ("bollettino d'emergenza"): lo sfondo "respira" tra i due toni -->

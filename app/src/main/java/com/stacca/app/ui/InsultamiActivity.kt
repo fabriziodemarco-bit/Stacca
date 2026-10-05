@@ -17,7 +17,11 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.content.res.ColorStateList
+import android.graphics.drawable.GradientDrawable
 import android.view.View
+import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -85,6 +89,9 @@ class InsultamiActivity : AppCompatActivity() {
     private lateinit var root: View
     private lateinit var tvPhase: TextView
     private lateinit var tvInsult: TextView
+    private lateinit var bubble: View
+    private lateinit var tail: View
+    private lateinit var tailFill: ImageView
     private lateinit var tvTimer: TextView
 
     private var version = 0
@@ -123,6 +130,10 @@ class InsultamiActivity : AppCompatActivity() {
         root = findViewById(R.id.insultRoot)
         tvPhase = findViewById(R.id.tvInsultPhase)
         tvInsult = findViewById(R.id.tvInsult)
+        bubble = findViewById(R.id.insultBubble)
+        tail = findViewById(R.id.insultTail)
+        tailFill = findViewById(R.id.ivInsultTailFill)
+        bubble.visibility = View.INVISIBLE // compare con la prima battuta
         tvTimer = findViewById(R.id.tvInsultTimer)
 
         // Una versione a caso tra quelle non ancora sentite; finito il giro si ricomincia,
@@ -290,10 +301,86 @@ class InsultamiActivity : AppCompatActivity() {
     private fun showLine(index: Int) {
         if (index !in lines.indices) return
         val line = lines[index]
-        tvInsult.text = line
+        showBubble(line, index)
         val (rate, pitch) = LINE_VOICE[index.coerceAtMost(LINE_VOICE.lastIndex)]
         speak(line, rate, pitch)
         vibrateForLine(index)
+    }
+
+    // --- Fumetto: la nuvoletta cambia colore seguendo la curva delle battute ---
+
+    /**
+     * Battute 1-2 bianche, 3-4 gialle, 5 (urlo) arancio grande che trema.
+     * La 6 (gelo) è senza nuvoletta: piccola, grigio azzurro, minuscola e immobile.
+     */
+    private fun showBubble(line: String, index: Int) {
+        handler.removeCallbacks(bubbleShake)
+        bubble.visibility = View.VISIBLE
+        bubble.translationX = 0f
+
+        if (index >= 5) {
+            showPlainText(line, R.color.insult_cold)
+            return
+        }
+
+        val d = resources.displayMetrics.density
+        val scream = index == 4
+        val fill = ContextCompat.getColor(
+            this,
+            when {
+                scream -> R.color.insult_bubble_scream
+                index >= 2 -> R.color.insult_bubble_yellow
+                else -> R.color.insult_bubble_white
+            }
+        )
+        val background = tvInsult.background as? GradientDrawable
+            ?: (ContextCompat.getDrawable(this, R.drawable.bg_insult_bubble) as GradientDrawable)
+        background.mutate()
+        background.setColor(fill)
+        background.setStroke(((if (scream) 5 else 3) * d).toInt(), 0xFF000000.toInt())
+        tvInsult.background = background
+        tvInsult.setTextColor(0xFF000000.toInt())
+        tvInsult.textSize = if (scream) 30f else 24f
+        tvInsult.text = line.uppercase(Locale.getDefault())
+        tail.visibility = View.VISIBLE
+        tailFill.imageTintList = ColorStateList.valueOf(fill)
+
+        // "Pop": salta fuori con un rimbalzo, ogni volta storta in modo diverso
+        val tilt = (2f + Random.nextFloat() * 3f) * (if (Random.nextBoolean()) 1 else -1)
+        bubble.rotation = tilt
+        bubble.scaleX = 0.6f
+        bubble.scaleY = 0.6f
+        bubble.animate().scaleX(1f).scaleY(1f)
+            .setDuration(280).setInterpolator(OvershootInterpolator(3f)).start()
+
+        if (scream) handler.postDelayed(bubbleShake, 300)
+    }
+
+    /** Testo semplice, senza nuvoletta: per il gelo e per i due finali. */
+    private fun showPlainText(text: String, colorRes: Int) {
+        handler.removeCallbacks(bubbleShake)
+        bubble.animate().cancel()
+        bubble.visibility = View.VISIBLE
+        bubble.rotation = 0f
+        bubble.scaleX = 1f
+        bubble.scaleY = 1f
+        bubble.translationX = 0f
+        tvInsult.background = null
+        tail.visibility = View.GONE
+        tvInsult.setTextColor(ContextCompat.getColor(this, colorRes))
+        tvInsult.textSize = 19f
+        tvInsult.text = text
+    }
+
+    // L'urlo trema finché non arriva la battuta successiva
+    private val bubbleShake = object : Runnable {
+        override fun run() {
+            if (finished) return
+            val d = resources.displayMetrics.density
+            bubble.translationX = (Random.nextFloat() * 8f - 4f) * d
+            bubble.rotation = Random.nextFloat() * 8f - 4f
+            handler.postDelayed(this, 90)
+        }
     }
 
     /** La voce legge il testo (senza emoji). QUEUE_FLUSH: due battute non si sovrappongono mai. */
@@ -427,7 +514,7 @@ class InsultamiActivity : AppCompatActivity() {
         tvPhase.visibility = View.INVISIBLE
         resetTimerLook()
         tvTimer.text = "✌️"
-        tvInsult.setText(R.string.insult_win)
+        showPlainText(getString(R.string.insult_win), R.color.home_text)
         speak(getString(R.string.insult_win_voice), 0.7f, 0.8f)
 
         // Battiti sempre più lenti e piano: il sollievo si sente
@@ -460,7 +547,7 @@ class InsultamiActivity : AppCompatActivity() {
         resetTimerLook()
         tvTimer.text = "💥"
         pulse(tvTimer)
-        tvInsult.setText(R.string.insult_lose)
+        showPlainText(getString(R.string.insult_lose), R.color.home_text)
     }
 
     /**
