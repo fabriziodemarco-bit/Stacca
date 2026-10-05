@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Insultami v2 (countdown, voce, flash) e interruttore Flash nelle Impostazioni -->
 <resources>
-    <string name="game_over">GAME OVER!</string>
     <string name="settings_flash">Flash</string>
     <string name="settings_flash_desc">Lampeggia durante Insultami</string>
     <string name="notif_reward_title_ontime">Libero! ✌️ Zero minuti regalati.</string>

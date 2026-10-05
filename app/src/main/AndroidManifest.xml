@@ -86,6 +86,7 @@
         <!-- Insultami: un minuto di insulti -->
         <activity
             android:name=".ui.InsultamiActivity"
+            android:launchMode="singleTop"
             android:exported="false"
             android:theme="@style/Theme.Stacca.FullScreen" />
 

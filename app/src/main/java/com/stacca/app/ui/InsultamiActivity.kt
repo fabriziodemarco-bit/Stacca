@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -27,27 +28,53 @@ import com.stacca.app.data.PreferencesManager
 import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 import java.util.Locale
+import kotlin.random.Random
 
 /**
- * "Insultami": un minuto di caos, pensato per chi NON guarda lo schermo.
- * - countdown arancione gigante su nero
- * - suoni a strati che si accumulano (sirena, poi antifurto e campane, poi tromba da stadio)
- * - la voce del telefono urla gli insulti (sintesi vocale di Android)
- * - vibrazione e flash della fotocamera sempre più intensi (max ~3 lampi al secondo)
- * - alla fine: esplosione e "GAME OVER!"
+ * "Insultami": un minuto, sei battute dette dalla voce del telefono.
+ * - countdown arancione gigante su nero, che trema e si "sporca" sempre di più
+ * - una battuta ogni 10 secondi (a 0, 10, 20, 30, 40, 50), da una delle 3 versioni
+ * - unico effetto sonoro: un battito del cuore che accelera
+ * - flash della fotocamera e un colpo di vibrazione a ogni battuta
+ * - se stacchi: il cuore rallenta e "Finalmente."; se arrivi a zero: esplosione
  * Finisce prima se l'utente preme "Ok, stacco". Gratis per tutti.
  */
 class InsultamiActivity : AppCompatActivity() {
 
     companion object {
         private const val TOTAL_SECONDS = 60
-        private const val SECONDS_PER_INSULT = 5
+        private const val SECONDS_PER_LINE = 10
         private const val SECONDS_PER_PHASE = 20
-        private const val FINAL_BEEPS_FROM = 5
+        private const val SHAKE_HARD_FROM = 10 // ultimi secondi: il numero trema di più
 
-        // Volume dei suoni di sottofondo, normale e "abbassato" mentre parla la voce
-        private const val LOOP_VOLUME = 0.9f
-        private const val LOOP_VOLUME_DUCKED = 0.35f
+        // Si parte appena voce e suoni sono pronti; se tardano, si parte comunque
+        private const val READY_TIMEOUT_MS = 2500L
+
+        // Battito del cuore: da tranquillo ad ansia
+        private const val BPM_START = 60f
+        private const val BPM_END = 150f
+        private const val HEART_VOLUME_START = 0.35f
+        private const val HEART_VOLUME_END = 1f
+
+        private val VERSIONS = listOf(
+            R.array.insults_version_a,
+            R.array.insults_version_b,
+            R.array.insults_version_c
+        )
+
+        /**
+         * Voce provvisoria (sintesi vocale di Android): velocità e tono di ciascuna battuta.
+         * Ordine: sarcasmo, richiamo, impazienza, sfottò, urlo, gelo.
+         * Separata dai testi: per cambiare voce si tocca solo questa lista.
+         */
+        private val LINE_VOICE = listOf(
+            0.80f to 1.50f, // lenta e acuta, finta stupita
+            1.15f to 1.10f, // svelta
+            1.35f to 1.20f, // ancora più veloce
+            0.75f to 0.60f, // bassa e lenta, presa in giro
+            1.60f to 1.90f, // criceto isterico
+            0.60f to 0.55f  // glaciale
+        )
     }
 
     private lateinit var prefs: PreferencesManager
@@ -58,22 +85,25 @@ class InsultamiActivity : AppCompatActivity() {
     private lateinit var tvInsult: TextView
     private lateinit var tvTimer: TextView
 
+    private var version = 0
+    private lateinit var lines: Array<String>
+
+    private var startAt = 0L      // istante (uptime) in cui è partita la prima battuta
     private var elapsedSeconds = 0
     private var started = false
     private var finished = false
 
-    // Insulti ancora da usare per ogni fase (fasi 1-2 a caso, fase 3 in ordine fisso)
-    private val remaining = mutableMapOf<Int, MutableList<String>>()
-
-    // --- Suoni ---
+    // --- Suoni (solo battito ed esplosione) ---
     private var soundPool: SoundPool? = null
-    private val sounds = mutableMapOf<Int, Int>()      // risorsa raw -> id nel SoundPool
-    private val loopStreams = mutableMapOf<Int, Int>() // risorsa raw -> stream in loop
-    private var soundsToLoad = 0
+    private var heartbeatId = 0
+    private var explosionId = 0
+    private var soundsReady = false
 
     // --- Voce ---
     private var tts: TextToSpeech? = null
     private var ttsReady = false
+    private var ttsDone = false   // pronta oppure non disponibile: in ogni caso non la aspettiamo più
+    private var speaking = false
 
     // --- Flash e vibrazione ---
     private var cameraManager: CameraManager? = null
@@ -93,6 +123,10 @@ class InsultamiActivity : AppCompatActivity() {
         tvInsult = findViewById(R.id.tvInsult)
         tvTimer = findViewById(R.id.tvInsultTimer)
 
+        // Una versione a caso, ma mai la stessa della volta scorsa
+        version = VERSIONS.indices.filter { it != prefs.lastInsultVersion }.random()
+        lines = resources.getStringArray(VERSIONS[version])
+
         findViewById<MaterialButton>(R.id.btnInsultOk).setOnClickListener { onOkStacco() }
 
         // Il tasto indietro non salva nessuno: si esce solo staccando 😈
@@ -106,7 +140,8 @@ class InsultamiActivity : AppCompatActivity() {
         if (prefs.flashEnabled) setupTorch()
         if (prefs.soundEnabled) {
             setupVoice()
-            loadSounds() // lo spettacolo parte quando i suoni sono pronti
+            loadSounds()
+            handler.postDelayed({ startShow() }, READY_TIMEOUT_MS)
         } else {
             startShow()
         }
@@ -121,49 +156,53 @@ class InsultamiActivity : AppCompatActivity() {
             .setUsage(AudioAttributes.USAGE_ALARM)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
             .build()
-        val pool = SoundPool.Builder().setMaxStreams(8).setAudioAttributes(attributes).build()
+        val pool = SoundPool.Builder().setMaxStreams(4).setAudioAttributes(attributes).build()
         soundPool = pool
 
-        val all = listOf(
-            R.raw.stacca_siren, R.raw.insult_caralarm, R.raw.insult_bells,
-            R.raw.insult_horn, R.raw.insult_beep, R.raw.insult_explosion
-        )
-        soundsToLoad = all.size
+        var toLoad = 2
         pool.setOnLoadCompleteListener { _, _, _ ->
-            soundsToLoad--
-            if (soundsToLoad == 0) handler.post { startShow() }
+            toLoad--
+            if (toLoad == 0) handler.post {
+                soundsReady = true
+                startIfReady()
+            }
         }
-        all.forEach { res -> sounds[res] = pool.load(this, res, 1) }
-
-        // Se per qualche motivo i suoni non si caricano, si parte comunque
-        handler.postDelayed({ startShow() }, 1500)
+        heartbeatId = pool.load(this, R.raw.insult_heartbeat, 1)
+        explosionId = pool.load(this, R.raw.insult_explosion, 1)
     }
 
     private fun setupVoice() {
         tts = TextToSpeech(this) { status ->
-            val engine = tts ?: return@TextToSpeech
-            if (status != TextToSpeech.SUCCESS) return@TextToSpeech
-            val result = engine.setLanguage(Locale.getDefault())
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                return@TextToSpeech
+            val engine = tts
+            val ok = engine != null && status == TextToSpeech.SUCCESS &&
+                engine.setLanguage(Locale.getDefault()).let {
+                    it != TextToSpeech.LANG_MISSING_DATA && it != TextToSpeech.LANG_NOT_SUPPORTED
+                }
+            if (ok && engine != null) {
+                engine.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .build()
+                )
+                // Mentre la voce parla, il battito si abbassa
+                engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                    override fun onStart(utteranceId: String?) { speaking = true }
+                    override fun onDone(utteranceId: String?) { speaking = false }
+                    @Deprecated("Deprecated in Java")
+                    override fun onError(utteranceId: String?) { speaking = false }
+                })
+                ttsReady = true
             }
-            engine.setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
-                    .build()
-            )
-            engine.setSpeechRate(1.05f)
-            engine.setPitch(0.9f)
-            // Mentre la voce parla, i suoni di sottofondo si abbassano
-            engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-                override fun onStart(utteranceId: String?) { handler.post { duckLoops(true) } }
-                override fun onDone(utteranceId: String?) { handler.post { duckLoops(false) } }
-                @Deprecated("Deprecated in Java")
-                override fun onError(utteranceId: String?) { handler.post { duckLoops(false) } }
-            })
-            ttsReady = true
+            handler.post {
+                ttsDone = true
+                startIfReady()
+            }
         }
+    }
+
+    private fun startIfReady() {
+        if (soundsReady && ttsDone) startShow()
     }
 
     private fun setupTorch() {
@@ -197,13 +236,19 @@ class InsultamiActivity : AppCompatActivity() {
     private fun startShow() {
         if (started || finished) return
         started = true
-        tvTimer.text = TOTAL_SECONDS.toString()
+        prefs.lastInsultVersion = version // conta anche se poi viene interrotta
+
+        // Il minuto si misura da qui: i caricamenti non lo consumano
+        startAt = SystemClock.uptimeMillis()
+        showTimer(TOTAL_SECONDS)
         enterPhase(0)
-        showNextInsult()
-        handler.postDelayed(tick, 1000)
+        showLine(0)
+        handler.postAtTime(tick, startAt + 1000)
         handler.post(strobe)
+        handler.post(heartbeat)
     }
 
+    // Un tick al secondo, agganciato all'orologio: niente ritardi che si accumulano
     private val tick = object : Runnable {
         override fun run() {
             if (finished) return
@@ -214,23 +259,16 @@ class InsultamiActivity : AppCompatActivity() {
                 onTimeUp()
                 return
             }
-            tvTimer.text = left.toString()
-
+            showTimer(left)
             if (elapsedSeconds % SECONDS_PER_PHASE == 0) enterPhase(currentPhase())
-            if (elapsedSeconds % SECONDS_PER_INSULT == 0) showNextInsult()
+            if (elapsedSeconds % SECONDS_PER_LINE == 0) showLine(elapsedSeconds / SECONDS_PER_LINE)
 
-            // Ultimi secondi: bip e numero che "pulsa"
-            if (left <= FINAL_BEEPS_FROM) {
-                playOnce(R.raw.insult_beep, 1f)
-                pulse(tvTimer)
-            }
-            handler.postDelayed(this, 1000)
+            handler.postAtTime(this, startAt + (elapsedSeconds + 1) * 1000L)
         }
     }
 
     private fun currentPhase(): Int = (elapsedSeconds / SECONDS_PER_PHASE).coerceAtMost(2)
 
-    /** Ogni fase aggiunge suoni, alza la vibrazione e accelera la sirena. */
     private fun enterPhase(phase: Int) {
         tvPhase.setText(
             when (phase) {
@@ -239,40 +277,64 @@ class InsultamiActivity : AppCompatActivity() {
                 else -> R.string.insult_phase_3
             }
         )
-        when (phase) {
-            0 -> startLoop(R.raw.stacca_siren)
-            1 -> {
-                startLoop(R.raw.insult_caralarm)
-                startLoop(R.raw.insult_bells)
-            }
-            else -> startLoop(R.raw.insult_horn)
-        }
-        loopStreams[R.raw.stacca_siren]?.let { soundPool?.setRate(it, 1f + phase * 0.25f) }
-        vibrateForPhase(phase)
     }
 
-    private fun showNextInsult() {
-        val phase = currentPhase()
-        val list = remaining.getOrPut(phase) { mutableListOf() }
-        if (list.isEmpty()) {
-            val arrayRes = when (phase) {
-                0 -> R.array.insults_phase_1
-                1 -> R.array.insults_phase_2
-                else -> R.array.insults_phase_3
-            }
-            val insults = resources.getStringArray(arrayRes).toList()
-            list.addAll(if (phase == 2) insults else insults.shuffled())
-        }
-        val insult = list.removeAt(0)
-        tvInsult.text = insult
-        speak(insult)
+    /** Battuta n. [index] (0-5): testo, voce e vibrazione partono insieme. */
+    private fun showLine(index: Int) {
+        if (index !in lines.indices) return
+        val line = lines[index]
+        tvInsult.text = line
+        val (rate, pitch) = LINE_VOICE[index.coerceAtMost(LINE_VOICE.lastIndex)]
+        speak(line, rate, pitch)
+        vibrateForLine(index)
     }
 
-    /** La voce legge l'insulto (senza emoji, che leggerebbe ad alta voce come parole). */
-    private fun speak(text: String) {
+    /** La voce legge il testo (senza emoji). QUEUE_FLUSH: due battute non si sovrappongono mai. */
+    private fun speak(text: String, rate: Float, pitch: Float) {
+        val engine = tts ?: return
         if (!ttsReady) return
         val clean = text.replace(Regex("[^\\p{L}\\p{N}\\p{P}\\s]"), "").trim()
-        tts?.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "insult")
+        engine.setSpeechRate(rate)
+        engine.setPitch(pitch)
+        engine.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "insult")
+    }
+
+    // --- Countdown: numero gigante che trema, con un'ombra rossa sfasata ---
+    private fun showTimer(left: Int) {
+        tvTimer.text = left.toString()
+        val d = resources.displayMetrics.density
+        val hard = left <= SHAKE_HARD_FROM
+        val move = (if (hard) 10f else 4f) * d
+        val tilt = if (hard) 7f else 3f
+        tvTimer.translationX = Random.nextFloat() * 2 * move - move
+        tvTimer.translationY = Random.nextFloat() * 2 * move - move
+        tvTimer.rotation = Random.nextFloat() * 2 * tilt - tilt
+
+        val glitch = (if (hard) 7f else 4f) * d
+        val dx = if (Random.nextBoolean()) glitch else -glitch
+        val dy = if (Random.nextBoolean()) glitch / 2 else -glitch / 2
+        tvTimer.setShadowLayer(0.01f, dx, dy, 0xCCFF2D2D.toInt())
+        if (hard) pulse(tvTimer)
+    }
+
+    private fun resetTimerLook() {
+        tvTimer.translationX = 0f
+        tvTimer.translationY = 0f
+        tvTimer.rotation = 0f
+        tvTimer.setShadowLayer(0f, 0f, 0f, 0)
+    }
+
+    // --- Battito del cuore: accelera e cresce con il passare del minuto ---
+    private val heartbeat = object : Runnable {
+        override fun run() {
+            if (finished) return
+            val progress = ((SystemClock.uptimeMillis() - startAt) / (TOTAL_SECONDS * 1000f)).coerceIn(0f, 1f)
+            val bpm = BPM_START + (BPM_END - BPM_START) * progress
+            var volume = HEART_VOLUME_START + (HEART_VOLUME_END - HEART_VOLUME_START) * progress
+            if (speaking) volume *= 0.5f
+            playSound(heartbeatId, volume)
+            handler.postDelayed(this, (60_000f / bpm).toLong())
+        }
     }
 
     // --- Flash: lampi sempre più frequenti, al massimo ~3 al secondo ---
@@ -301,69 +363,50 @@ class InsultamiActivity : AppCompatActivity() {
         }
     }
 
-    private fun vibrateForPhase(phase: Int) {
+    /** Un colpo di vibrazione a ogni battuta; tre colpi sull'urlo. */
+    private fun vibrateForLine(index: Int) {
         val v = vibrator ?: return
-        // Ritmo che si ripete: [pausa, vibra, pausa, vibra...] sempre più fitto e forte
-        val (timings, amplitude) = when (phase) {
-            0 -> longArrayOf(0, 200, 800) to 120
-            1 -> longArrayOf(0, 400, 300) to 200
-            else -> longArrayOf(0, 800, 100) to 255
-        }
-        val effect = if (v.hasAmplitudeControl()) {
-            VibrationEffect.createWaveform(timings, intArrayOf(0, amplitude, 0), 0)
+        val amplitude = (110 + index * 28).coerceAtMost(255)
+        val effect = if (index == 4) {
+            val timings = longArrayOf(0, 140, 90, 140, 90, 140)
+            if (v.hasAmplitudeControl()) {
+                VibrationEffect.createWaveform(timings, intArrayOf(0, 255, 0, 255, 0, 255), -1)
+            } else {
+                VibrationEffect.createWaveform(timings, -1)
+            }
         } else {
-            VibrationEffect.createWaveform(timings, 0)
+            VibrationEffect.createOneShot(
+                160,
+                if (v.hasAmplitudeControl()) amplitude else VibrationEffect.DEFAULT_AMPLITUDE
+            )
         }
-        v.cancel()
         v.vibrate(effect)
     }
 
-    // --- Suoni ---
-
-    private fun startLoop(res: Int) {
-        val pool = soundPool ?: return
-        val id = sounds[res] ?: return
-        if (loopStreams.containsKey(res)) return
-        val stream = pool.play(id, LOOP_VOLUME, LOOP_VOLUME, 1, -1, 1f)
-        if (stream != 0) loopStreams[res] = stream
+    private fun playSound(id: Int, volume: Float) {
+        if (id == 0) return
+        soundPool?.play(id, volume, volume, 1, 0, 1f)
     }
 
-    private fun playOnce(res: Int, volume: Float) {
-        val pool = soundPool ?: return
-        val id = sounds[res] ?: return
-        pool.play(id, volume, volume, 2, 0, 1f)
-    }
-
-    private fun duckLoops(ducked: Boolean) {
-        if (finished) return
-        val volume = if (ducked) LOOP_VOLUME_DUCKED else LOOP_VOLUME
-        loopStreams.values.forEach { soundPool?.setVolume(it, volume, volume) }
-    }
-
-    private fun stopLoops() {
-        loopStreams.values.forEach { soundPool?.stop(it) }
-        loopStreams.clear()
-    }
-
-    /** Ferma tutto: suoni, voce, flash, vibrazione. */
+    /** Ferma tutto: timer, voce, flash, vibrazione. Il battito già partito si esaurisce da solo. */
     private fun stopEverything() {
         handler.removeCallbacksAndMessages(null)
-        stopLoops()
+        soundPool?.autoPause()
         tts?.stop()
         setTorch(false)
         vibrator?.cancel()
     }
 
     private fun pulse(view: View) {
-        ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 1.15f, 1f).setDuration(300).start()
-        ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 1.15f, 1f).setDuration(300).start()
+        ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 1.12f, 1f).setDuration(250).start()
+        ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 1.12f, 1f).setDuration(250).start()
     }
 
     // ------------------------------------------------------------------
     // Finali
     // ------------------------------------------------------------------
 
-    /** L'utente si arrende e stacca: silenzio, piccolo premio, poi si chiude. */
+    /** L'utente stacca: il cuore rallenta, la voce dice "Finalmente.", poi si chiude. */
     private fun onOkStacco() {
         if (finished) {
             close()
@@ -371,32 +414,46 @@ class InsultamiActivity : AppCompatActivity() {
         }
         finished = true
         stopEverything()
+        soundPool?.autoResume()
+
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.home_bg))
         tvPhase.visibility = View.INVISIBLE
-        tvTimer.text = "🎉"
+        resetTimerLook()
+        tvTimer.text = "✌️"
         tvInsult.setText(R.string.insult_win)
-        handler.postDelayed({ close() }, 2500)
+        speak(getString(R.string.insult_win_voice), 0.7f, 0.8f)
+
+        // Battiti sempre più lenti e piano: il sollievo si sente
+        var at = 0L
+        listOf(450L to 0.7f, 600L to 0.55f, 800L to 0.45f, 1000L to 0.35f, 1150L to 0.3f).forEach { (gap, volume) ->
+            handler.postDelayed({ playSound(heartbeatId, volume) }, at)
+            at += gap
+        }
+        handler.postDelayed({ close() }, at + 300)
     }
 
-    /** Il minuto è finito e l'utente è ancora lì: esplosione e GAME OVER. */
+    /** Il minuto è finito e l'utente è ancora lì: esplosione, lo schermo trema, poi la resa. */
     private fun onTimeUp() {
         finished = true
         stopEverything()
-        playOnce(R.raw.insult_explosion, 1f)
+        soundPool?.autoResume()
+        playSound(explosionId, 1f)
 
-        // Lampo: flash acceso, schermo arancione e vibrazione lunga
+        // Lampo: flash acceso, schermo arancione, vibrazione lunga e scossone
         setTorch(true)
         handler.postDelayed({ setTorch(false) }, 600)
         vibrator?.vibrate(VibrationEffect.createOneShot(1500, VibrationEffect.DEFAULT_AMPLITUDE))
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.home_accent))
         handler.postDelayed({ root.setBackgroundColor(0xFF000000.toInt()) }, 250)
+        val d = resources.displayMetrics.density
+        ObjectAnimator.ofFloat(root, View.TRANSLATION_X, 0f, 24 * d, -24 * d, 18 * d, -18 * d, 10 * d, -10 * d, 0f)
+            .setDuration(700).start()
 
         tvPhase.visibility = View.INVISIBLE
-        tvTimer.textSize = 64f
-        tvTimer.setText(R.string.game_over)
+        resetTimerLook()
+        tvTimer.text = "💥"
         pulse(tvTimer)
         tvInsult.setText(R.string.insult_lose)
-        handler.postDelayed({ speak(getString(R.string.game_over)) }, 1200)
     }
 
     /**
@@ -416,7 +473,7 @@ class InsultamiActivity : AppCompatActivity() {
         finish()
     }
 
-    /** Se l'utente esce dall'app (tasto Home), il caos si ferma: niente suoni senza schermo. */
+    /** Se l'utente esce dall'app (tasto Home), lo spettacolo si ferma: niente suoni senza schermo. */
     override fun onStop() {
         super.onStop()
         if (!isFinishing) {
@@ -427,7 +484,8 @@ class InsultamiActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        stopEverything()
+        handler.removeCallbacksAndMessages(null)
+        tts?.stop()
         tts?.shutdown()
         soundPool?.release()
         soundPool = null

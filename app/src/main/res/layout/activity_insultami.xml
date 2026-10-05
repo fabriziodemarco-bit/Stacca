@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Insultami: un minuto di caos. Pensato per chi NON guarda lo schermo:
-    countdown arancione gigante su nero, suoni a strati, voce, vibrazione e flash.
+    countdown arancione gigante su nero che trema, voce, battito, vibrazione e flash.
     L'insulto scritto c'è, ma piccolo: tanto lo dice la voce.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,12 +9,15 @@
     android:id="@+id/insultRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="#000000"
+    android:clipChildren="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:gravity="center_horizontal"
         android:paddingStart="22dp"
         android:paddingEnd="22dp"
@@ -38,21 +41,21 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Countdown gigante (alla fine diventa "GAME OVER!") -->
+        <!-- Countdown gigante: trema e si "sporca" (ombra rossa sfasata, impostata nel codice) -->
         <TextView
             android:id="@+id/tvInsultTimer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="60"
-            android:textSize="180sp"
+            android:textSize="210sp"
             android:fontFamily="sans-serif-black"
             android:fontFeatureSettings="tnum"
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="@color/home_accent" />
 
-        <!-- L'insulto: piccolo, tanto lo urla la voce -->
+        <!-- La battuta: piccola, tanto la dice la voce -->
         <TextView
             android:id="@+id/tvInsult"
             android:layout_width="match_parent"

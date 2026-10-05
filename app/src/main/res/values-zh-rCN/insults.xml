@@ -6,28 +6,35 @@
     <string name="insult_phase_1">第一阶段 · 调侃</string>
     <string name="insult_phase_2">第二阶段 · 毒舌</string>
     <string name="insult_phase_3">第三阶段 · 暴怒</string>
-    <string name="insult_win">终于。有那么难吗？🎉</string>
-    <string name="insult_lose">好吧，我放弃了。你已经没救了。💀</string>
+    <string name="insult_win">心跳恢复正常。\n今晚得救了。✌️</string>
+    <string name="insult_win_voice">终于。</string>
+    <string name="insult_lose">好吧。我放弃了。\n但应用不会：下一条通知见。</string>
 
-    <string-array name="insults_phase_1">
-        <item>想被骂？简单：你还在这儿！</item>
-        <item>你在用人生换一张Excel表格。真划算！</item>
-        <item>你在免费工作。大声说出来：免费！</item>
-        <item>全部关掉，不然我把你的浏览记录发给你老板！😈</item>
+    <string-array name="insults_version_a">
+        <item>真的还在那儿？？</item>
+        <item>起来，摆件！</item>
+        <item>从屏幕里出来！</item>
+        <item>带密码的门垫！</item>
+        <item>保存！关机！消失！</item>
+        <item>我说完了。你呢？</item>
     </string-array>
 
-    <string-array name="insults_phase_2">
-        <item>你的老板已经回家了。躺在沙发上。正在笑你！</item>
-        <item>你退休的时候他们会送你一个蛋糕。打折店买的。还过期了！</item>
-        <item>你的植物死了。你的社交生活也是。猜猜下一个是谁？</item>
-        <item>你的工资连你叫什么都不知道。</item>
+    <string-array name="insults_version_b">
+        <item>你被粘在那儿了？</item>
+        <item>动起来，镇纸！</item>
+        <item>放开那个键盘！</item>
+        <item>领工资的订书机！</item>
+        <item>关掉！下班！走人！</item>
+        <item>椅子留下。你走。</item>
     </string-array>
 
-    <string-array name="insults_phase_3">
-        <item>停下！现在。这不是建议，是威胁！</item>
-        <item>一个应用在冲你大喊。你已经跌到谷底，还在往下挖。</item>
-        <item>合上。那台。电脑。</item>
-        <item>最后一次机会，不然我就给你妈打电话。把一切都告诉她！</item>
+    <string-array name="insults_version_c">
+        <item>还有最后一件事？当然。</item>
+        <item>醒醒，办公室仓鼠！</item>
+        <item>放下那个该死的鼠标！</item>
+        <item>带屏保的劳模！</item>
+        <item>够了！关掉！出去！</item>
+        <item>结束了。接受现实吧。</item>
     </string-array>
 
 </resources>

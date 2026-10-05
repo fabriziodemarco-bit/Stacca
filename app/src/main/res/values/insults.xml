@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Insulti della funzione "Insultami": un minuto di fuoco in 3 fasi.
-    Cattivi sì, volgari no (niente parolacce pesanti: Google classifica l'app anche per il linguaggio).
+    Insultami: un minuto, sei battute (a 0, 10, 20, 30, 40, 50 secondi).
+    Tre versioni complete: se ne sceglie una a caso, mai la stessa due volte di fila.
+    Ogni versione ha sempre 6 battute, nello stesso ordine della curva:
+    sarcasmo, richiamo, impazienza, sfottò, urlo, gelo.
 -->
 <resources>
 
@@ -10,31 +12,35 @@
     <string name="insult_phase_1">FASE 1 · SFOTTÒ</string>
     <string name="insult_phase_2">FASE 2 · CATTIVERIA</string>
     <string name="insult_phase_3">FASE 3 · FURIA</string>
-    <string name="insult_win">Finalmente. Era così difficile? 🎉</string>
-    <string name="insult_lose">Ok, ci rinuncio. Sei un caso clinico. 💀</string>
+    <string name="insult_win">Battito regolare.\nSerata salvata. ✌️</string>
+    <string name="insult_win_voice">Finalmente.</string>
+    <string name="insult_lose">Ok. Ci rinuncio. Io.\nL\'app no: ci rivediamo alla prossima notifica.</string>
 
-    <!-- Fase 1: sfottò -->
-    <string-array name="insults_phase_1">
-        <item>Vuoi essere insultato? Facile: sei ancora lì!</item>
-        <item>Ti stai giocando la vita per un foglio Excel. Che affare!</item>
-        <item>Stai lavorando gratis. Ripetilo ad alta voce, GRATIS!</item>
-        <item>Spegni tutto o mando la tua cronologia al tuo capo! 😈</item>
+    <string-array name="insults_version_a">
+        <item>Davvero ancora lì??</item>
+        <item>Alzati, soprammobile!</item>
+        <item>Esci da quello schermo!</item>
+        <item>Zerbino con la password!</item>
+        <item>Salva! Spegni! Sparisci!</item>
+        <item>Io ho finito. E tu?</item>
     </string-array>
 
-    <!-- Fase 2: cattiveria -->
-    <string-array name="insults_phase_2">
-        <item>Il tuo capo è già a casa. Sul divano. Ride di te!</item>
-        <item>Alla tua pensione ti regaleranno una torta. Del discount. Scaduta!</item>
-        <item>Le tue piante sono morte. La tua vita sociale pure. Indovina chi è il prossimo?</item>
-        <item>Il tuo stipendio non sa nemmeno come ti chiami.</item>
+    <string-array name="insults_version_b">
+        <item>Ti hanno incollato lì?</item>
+        <item>Muoviti, fermacarte!</item>
+        <item>Molla quella tastiera!</item>
+        <item>Graffettatrice con lo stipendio!</item>
+        <item>Chiudi! Stacca! Cammina!</item>
+        <item>La sedia resta. Tu vai.</item>
     </string-array>
 
-    <!-- Fase 3: furia -->
-    <string-array name="insults_phase_3">
-        <item>SMETTILA! ADESSO. NON È UN CONSIGLIO, È UNA MINACCIA!</item>
-        <item>Ti sta urlando contro un\'app. Hai toccato il fondo e stai scavando.</item>
-        <item>CHIUDI. QUEL. PORTATILE.</item>
-        <item>Ultima possibilità, poi chiamo tua madre. E le racconto TUTTO!</item>
+    <string-array name="insults_version_c">
+        <item>Ancora un\'ultima cosa? Certo.</item>
+        <item>Sveglia, criceto da ufficio!</item>
+        <item>Molla quel maledetto mouse!</item>
+        <item>Stakanov col salvaschermo!</item>
+        <item>Basta! Chiudi! Fuori!</item>
+        <item>È finita. Fattene una ragione.</item>
     </string-array>
 
 </resources>

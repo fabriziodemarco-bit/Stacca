@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="game_over">游戏结束！</string>
     <string name="settings_flash">闪光灯</string>
     <string name="settings_flash_desc">在“骂我”时闪烁</string>
     <string name="notif_reward_title_ontime">自由了！✌️ 零分钟送给公司。</string>

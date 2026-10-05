@@ -177,6 +177,11 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean("flash_enabled", true)
         set(value) = prefs.edit().putBoolean("flash_enabled", value).apply()
 
+    /** Ultima versione di Insultami usata (0, 1, 2), per non ripeterla due volte di fila. -1 = mai usato. */
+    var lastInsultVersion: Int
+        get() = prefs.getInt("last_insult_version", -1)
+        set(value) = prefs.edit().putInt("last_insult_version", value).apply()
+
     /** 0 = Rilassato, 1 = Normale, 2 = Aggressivo */
     var escalationSpeed: Int
         get() = prefs.getInt(KEY_ESCALATION_SPEED, 1)

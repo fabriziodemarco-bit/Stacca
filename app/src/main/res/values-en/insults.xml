@@ -6,28 +6,35 @@
     <string name="insult_phase_1">PHASE 1 · TEASING</string>
     <string name="insult_phase_2">PHASE 2 · NASTY</string>
     <string name="insult_phase_3">PHASE 3 · FURY</string>
-    <string name="insult_win">Finally. Was that so hard? 🎉</string>
-    <string name="insult_lose">Ok, I give up. You\'re a clinical case. 💀</string>
+    <string name="insult_win">Heartbeat back to normal.\nEvening saved. ✌️</string>
+    <string name="insult_win_voice">Finally.</string>
+    <string name="insult_lose">Ok. I give up. Me.\nThe app doesn\'t: see you at the next notification.</string>
 
-    <string-array name="insults_phase_1">
-        <item>Want to be insulted? Easy: you\'re still there!</item>
-        <item>You\'re trading your life for a spreadsheet. What a bargain!</item>
-        <item>You\'re working for free. Say it out loud: FREE!</item>
-        <item>Shut it all down or I send your browser history to your boss! 😈</item>
+    <string-array name="insults_version_a">
+        <item>Seriously, still there??</item>
+        <item>Get up, you ornament!</item>
+        <item>Get out of that screen!</item>
+        <item>A doormat with a password!</item>
+        <item>Save! Shut down! Vanish!</item>
+        <item>I\'m done. Are you?</item>
     </string-array>
 
-    <string-array name="insults_phase_2">
-        <item>Your boss is already home. On the couch. Laughing at you!</item>
-        <item>When you retire they\'ll get you a cake. From the discount store. Expired!</item>
-        <item>Your plants are dead. So is your social life. Guess who\'s next?</item>
-        <item>Your paycheck doesn\'t even know your name.</item>
+    <string-array name="insults_version_b">
+        <item>Did someone glue you there?</item>
+        <item>Move it, paperweight!</item>
+        <item>Let go of that keyboard!</item>
+        <item>A stapler with a salary!</item>
+        <item>Close! Unplug! Walk!</item>
+        <item>The chair stays. You go.</item>
     </string-array>
 
-    <string-array name="insults_phase_3">
-        <item>STOP! NOW. THIS IS NOT A SUGGESTION, IT\'S A THREAT!</item>
-        <item>An app is yelling at you. You\'ve hit rock bottom and you\'re still digging.</item>
-        <item>CLOSE. THAT. LAPTOP.</item>
-        <item>Last chance, then I\'m calling your mother. And telling her EVERYTHING!</item>
+    <string-array name="insults_version_c">
+        <item>One last thing? Sure.</item>
+        <item>Wake up, office hamster!</item>
+        <item>Drop that damn mouse!</item>
+        <item>Employee of the year, with a screensaver!</item>
+        <item>Enough! Close! Out!</item>
+        <item>It\'s over. Deal with it.</item>
     </string-array>
 
 </resources>
