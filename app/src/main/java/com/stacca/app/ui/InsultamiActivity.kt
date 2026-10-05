@@ -406,7 +406,7 @@ class InsultamiActivity : AppCompatActivity() {
             tvTimer.translationY = 0f
             tvTimer.rotation = 0f
             tvTimer.setTextColor(ContextCompat.getColor(this, R.color.insult_ice))
-            tvTimer.setShadowLayer(0.01f, 4 * d, 4 * d, 0x99FFFFFF.toInt())
+            tvTimer.setShadowLayer(0.01f, 4 * d, 4 * d, 0xFF5E9CC2.toInt())
             return
         }
         val hard = left <= SHAKE_HARD_FROM
@@ -522,6 +522,8 @@ class InsultamiActivity : AppCompatActivity() {
         stopEverything()
         soundPool?.autoResume()
 
+        // Anche la fascia della barra di stato: tutto lo schermo si calma
+        window.decorView.setBackgroundColor(ContextCompat.getColor(this, R.color.home_bg))
         root.setBackgroundColor(ContextCompat.getColor(this, R.color.home_bg))
         tvPhase.visibility = View.INVISIBLE
         resetTimerLook()
