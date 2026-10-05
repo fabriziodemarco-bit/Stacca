@@ -13,7 +13,7 @@
     <string name="perm_v2_sub">没有这些，我就没法来找你。</string>
     <string name="perm_v2_progress">%1$d / 3</string>
     <string name="perm_v2_notif_title">通知</string>
-    <string name="perm_v2_notif_desc">到点时好来找你。</string>
+    <string name="perm_v2_notif_desc">先提醒你，再缠着你。</string>
     <string name="perm_v2_exact_title">准时闹钟</string>
     <string name="perm_v2_exact_desc">让我准时。至少我得准时。</string>
     <string name="perm_v2_battery_title">不限制电池</string>

@@ -13,7 +13,7 @@
     <string name="perm_v2_sub">Without these I can\'t come and get you.</string>
     <string name="perm_v2_progress">%1$d of 3</string>
     <string name="perm_v2_notif_title">Notifications</string>
-    <string name="perm_v2_notif_desc">So I can come and get you when it\'s time.</string>
+    <string name="perm_v2_notif_desc">To let you know. Then to insist.</string>
     <string name="perm_v2_exact_title">On-time alarms</string>
     <string name="perm_v2_exact_desc">So I\'m on time. At least one of us is.</string>
     <string name="perm_v2_battery_title">Unrestricted battery</string>

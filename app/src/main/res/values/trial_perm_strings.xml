@@ -16,7 +16,7 @@
     <string name="perm_v2_sub">Senza questi non posso venirti a cercare.</string>
     <string name="perm_v2_progress">%1$d di 3</string>
     <string name="perm_v2_notif_title">Notifiche</string>
-    <string name="perm_v2_notif_desc">Per venirti a cercare quando è ora.</string>
+    <string name="perm_v2_notif_desc">Per avvisarti. Poi per insistere.</string>
     <string name="perm_v2_exact_title">Allarmi puntuali</string>
     <string name="perm_v2_exact_desc">Per essere puntuale. Almeno io.</string>
     <string name="perm_v2_battery_title">Batteria senza limiti</string>
