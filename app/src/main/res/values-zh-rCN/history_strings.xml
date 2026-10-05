@@ -2,20 +2,20 @@
 <resources>
     <string name="history_screen_title">历史</string>
     <string name="history_label">你的历史</string>
-    <string name="history_week_title">本周：\n%2$d次中%1$d次准时。</string>
-    <string name="history_week_none">本周\n还没有下班记录。</string>
+    <string name="history_week_title">最近7天：\n%2$d次中%1$d次准时。</string>
+    <string name="history_week_none">最近7天\n没有下班记录。</string>
     <string name="history_empty_title">你的历史\n从今天开始。</string>
     <string name="history_empty_sub">准时下班，看着连续记录增长。</string>
-    <string name="history_sub">准时 = 下班时间后%d分钟内。</string>
+    <string name="history_sub">准时 = 下班时间后%d分钟内。白送 = 最近30天的加班时间。</string>
 
     <string name="history_streak">连续</string>
     <string name="history_record">记录</string>
-    <string name="history_lost">没有活过 · 30天</string>
+    <string name="history_lost">白送</string>
     <plurals name="history_days">
         <item quantity="other">%d天</item>
     </plurals>
 
-    <string name="history_week_chart">本周</string>
+    <string name="history_week_chart">最近7天</string>
     <string name="history_list_label">最近几天</string>
     <string name="history_row_ontime">准时 ✓</string>
     <string name="history_row_late">+%1$d分钟 · 第%2$d级</string>

@@ -2,21 +2,21 @@
 <resources>
     <string name="history_screen_title">History</string>
     <string name="history_label">YOUR HISTORY</string>
-    <string name="history_week_title">This week:\n%1$d of %2$d on time.</string>
-    <string name="history_week_none">This week\nno unplugging yet.</string>
+    <string name="history_week_title">Last 7 days:\n%1$d of %2$d on time.</string>
+    <string name="history_week_none">No unplugging\nin the last 7 days.</string>
     <string name="history_empty_title">Your history\nstarts today.</string>
     <string name="history_empty_sub">Unplug on time and watch your streak grow.</string>
-    <string name="history_sub">On time = within %d minutes of your shift end.</string>
+    <string name="history_sub">On time = within %d minutes of your shift end. Gifted = overtime in the last 30 days.</string>
 
     <string name="history_streak">STREAK</string>
     <string name="history_record">RECORD</string>
-    <string name="history_lost">NOT LIVED · 30 DAYS</string>
+    <string name="history_lost">GIFTED</string>
     <plurals name="history_days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
 
-    <string name="history_week_chart">THIS WEEK</string>
+    <string name="history_week_chart">LAST 7 DAYS</string>
     <string name="history_list_label">RECENT DAYS</string>
     <string name="history_row_ontime">On time ✓</string>
     <string name="history_row_late">+%1$d min · level %2$d</string>

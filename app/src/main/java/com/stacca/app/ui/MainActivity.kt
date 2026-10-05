@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPrimary: MaterialButton
     private lateinit var btnSecondary: MaterialButton
     private lateinit var tvSnooze: TextView
-    private lateinit var btnSettings: TextView
+    private lateinit var btnSettings: View
     private lateinit var tvPremiumBadge: TextView
 
     // Card protezione permessi
@@ -251,6 +251,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         4 -> open(InsultamiActivity::class.java)
                         5 -> open(LoginActivity::class.java)
+                        6 -> open(HistoryActivity::class.java)
                     }
                 }
                 .show()

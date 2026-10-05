@@ -13,6 +13,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.stacca.app.R
 import com.stacca.app.data.HistoryStore
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -54,8 +55,10 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun render() {
-        val entries = HistoryStore(this).all()
-        val premium = prefs.hasFullAccess
+        // In anteprima (solo versione di prova): 15 giorni inventati, lo storico vero non si tocca
+        val preview = PreviewMode.isOn(intent)
+        val entries = if (preview) sampleEntries() else HistoryStore(this).all()
+        val premium = preview || prefs.hasFullAccess
         val now = System.currentTimeMillis()
 
         renderTitle(entries)
@@ -83,7 +86,7 @@ class HistoryActivity : AppCompatActivity() {
             tvSub.setText(R.string.history_empty_sub)
             return
         }
-        val weekStart = startOfWeek().timeInMillis
+        val weekStart = System.currentTimeMillis() - 7 * DAY_MILLIS
         val thisWeek = entries.filter { it.timestampMillis >= weekStart }
         tvTitle.text = if (thisWeek.isEmpty()) {
             getString(R.string.history_week_none)
@@ -94,8 +97,11 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun renderStats(entries: List<HistoryStore.Entry>, premium: Boolean, now: Long) {
-        findViewById<TextView>(R.id.tvStreak).text = days(prefs.streakCount)
-        findViewById<TextView>(R.id.tvRecord).text = if (premium) days(prefs.bestStreak) else "🔒"
+        val preview = PreviewMode.isOn(intent)
+        val streak = if (preview) entries.takeWhile { it.isOnTime }.size else prefs.streakCount
+        val record = if (preview) 6 else prefs.bestStreak
+        findViewById<TextView>(R.id.tvStreak).text = days(streak)
+        findViewById<TextView>(R.id.tvRecord).text = if (premium) days(record) else "🔒"
         findViewById<TextView>(R.id.tvLost).text = if (premium) {
             val minutes = entries
                 .filter { now - it.timestampMillis < 30 * DAY_MILLIS }
@@ -106,7 +112,7 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    /** Sette colonne (lun-dom): più alta = più ritardo; arancione se in ritardo, grigia se in orario. */
+    /** Sette colonne (ultimi 7 giorni, oggi a destra): più alta = più ritardo; arancione se in ritardo, grigia se in orario. */
     private fun renderWeekBars(entries: List<HistoryStore.Entry>) {
         val container = findViewById<LinearLayout>(R.id.weekBars)
         container.removeAllViews()
@@ -114,7 +120,14 @@ class HistoryActivity : AppCompatActivity() {
         val maxBarPx = (80 * density).toInt()
         val minBarPx = (6 * density).toInt()
 
-        val day = startOfWeek()
+        // Si parte da 6 giorni fa, a mezzanotte
+        val day = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.DAY_OF_YEAR, -6)
+        }
         val dayLetter = SimpleDateFormat("EEEEE", Locale.getDefault())
         val days = (0 until 7).map {
             val start = day.timeInMillis
@@ -225,15 +238,32 @@ class HistoryActivity : AppCompatActivity() {
 
     // ------------------------------------------------------------------
 
-    /** Lunedì di questa settimana, a mezzanotte. */
-    private fun startOfWeek(): Calendar = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 0)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-        // Giorni passati da lunedì (lun = 0 ... dom = 6)
-        val daysSinceMonday = (get(Calendar.DAY_OF_WEEK) + 5) % 7
-        add(Calendar.DAY_OF_YEAR, -daysSinceMonday)
+    /** Solo anteprima: 15 giorni lavorativi inventati (fine turno 18:00), un po' in orario e un po' no. */
+    private fun sampleEntries(): List<HistoryStore.Entry> {
+        val overtimes = listOf(0, 3, 0, 12, 0, 0, 27, 0, 2, 41, 0, 0, 8, 0, 55)
+        val result = mutableListOf<HistoryStore.Entry>()
+        val day = Calendar.getInstance()
+        var i = 0
+        while (result.size < overtimes.size) {
+            val weekday = day.get(Calendar.DAY_OF_WEEK)
+            if (weekday != Calendar.SATURDAY && weekday != Calendar.SUNDAY) {
+                val overtime = overtimes[i++]
+                val stacco = (day.clone() as Calendar).apply {
+                    set(Calendar.HOUR_OF_DAY, 18)
+                    set(Calendar.MINUTE, 0)
+                    add(Calendar.MINUTE, overtime)
+                }
+                result += HistoryStore.Entry(
+                    timestampMillis = stacco.timeInMillis,
+                    endHour = 18,
+                    endMinute = 0,
+                    overtimeMinutes = overtime,
+                    level = (overtime / 10 + if (overtime > 5) 1 else 0).coerceAtMost(6)
+                )
+            }
+            day.add(Calendar.DAY_OF_YEAR, -1)
+        }
+        return result
     }
 
     private fun days(count: Int): String =
