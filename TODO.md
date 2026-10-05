@@ -8,6 +8,7 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 - **Schermo rosso**: ridisegnarlo nello stile maturo dell'app (proposta "Bollettino d'emergenza": sfondo bordeaux che "respira", cronometro grande, segmenti dei livelli, niente emoji che saltano).
 - **Insultami free o premium?** Domanda di marketing (da fare anche ad Andrea): Insultami completo (60 s) gratis per tutti, oppure anteprima breve (20-30 s) gratis e versione completa solo con Premium?
 - **Riquadro permessi senza uscita**: chi rifiuta anche un solo permesso non vede mai la home. Valutare un'uscita guardando i primi utenti.
+- **Storico, giorni persi**: se una sera non si tocca mai "Ho staccato", quel giorno non viene registrato e nello storico sembra un giorno libero. Lo storico così risulta migliore della realtà. Idea: al primo allarme del giorno dopo, registrare il giorno prima come "non chiuso".
 - **Tema chiaro**: la palette chiara è già definita, ma l'app oggi ha solo il tema scuro.
 - **Giorni lavorativi**: oggi il riavvio automatico vale anche sabato e domenica.
 - **Più turni al giorno** (es. pranzo + sera in automatico).
