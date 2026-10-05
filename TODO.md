@@ -11,6 +11,7 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 - **Tema chiaro**: la palette chiara è già definita, ma l'app oggi ha solo il tema scuro.
 - **Giorni lavorativi**: oggi il riavvio automatico vale anche sabato e domenica.
 - **Più turni al giorno** (es. pranzo + sera in automatico).
+- **"Inizio giornata" (candidata per la 2.4)**: per chi ha orari mobili (smart working, partite IVA, commerciali). Si preme "Inizio" e si sceglie una durata (es. 8 ore): Stacca calcola da solo quando staccare, e lo storico mostra le ore lavorate. Prima di farla, chiedere ad Andrea e ai primi utenti: "il tuo orario è fisso o ti serve contare le ore?". Domande aperte: cosa succede se ci si dimentica di premere "Inizio", se i due modi convivono, come gestire pause e pranzo.
 
 ## Idee future
 - Onboarding con demo del livello Apocalisse.
