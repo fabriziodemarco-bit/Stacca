@@ -58,6 +58,30 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.12"
                 android:textColor="@color/home_text_secondary" />
+
+            <!-- Storico: icona a barre -->
+            <ImageView
+                android:id="@+id/btnHistory"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="4dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_history"
+                android:contentDescription="@string/history_screen_title"
+                app:tint="@color/home_text_secondary"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+            <!-- Impostazioni: rotellina -->
+            <ImageView
+                android:id="@+id/btnSettings"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="-10dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_settings"
+                android:contentDescription="@string/home_settings"
+                app:tint="@color/home_text_secondary"
+                android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
 
         <!-- Riquadro permessi: visibile solo se manca almeno un permesso -->
@@ -332,7 +356,7 @@
                 app:strokeWidth="1dp"
                 app:cornerRadius="14dp" />
 
-            <!-- 6. Riga finale: "Ancora X minuti" (solo in straordinario) e Impostazioni -->
+            <!-- 6. Riga finale, discreta: "Ancora X minuti" (straordinario) o "Disattiva allarme" (countdown) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -342,42 +366,30 @@
 
                 <TextView
                     android:id="@+id/tvSnooze"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:minHeight="44dp"
-                    android:gravity="center_vertical|start"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/home_text"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/btnHistory"
+                    android:id="@+id/tvDeactivate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:minHeight="36dp"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
+                    android:minHeight="44dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:gravity="center"
-                    android:text="@string/history_screen_title"
+                    android:text="@string/btn_deactivate_small"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/home_accent"
-                    android:background="@drawable/bg_badge_accent"
-                    android:foreground="?attr/selectableItemBackground" />
-
-                <!-- Impostazioni: rotellina grigia -->
-                <ImageView
-                    android:id="@+id/btnSettings"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_settings"
-                    android:contentDescription="@string/home_settings"
-                    app:tint="@color/home_text_secondary"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
+                    android:textColor="@color/home_text_secondary"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Come nel riferimento grafico: contenuto in alto, spazio libero soprattutto

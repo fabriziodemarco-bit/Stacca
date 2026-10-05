@@ -292,6 +292,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnHistory).setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
+        findViewById<View>(R.id.tvDeactivate).setOnClickListener { deactivateAlarm() }
     }
 
     private fun openInsultami() {
@@ -420,6 +421,8 @@ class MainActivity : AppCompatActivity() {
         // Valori di base, sovrascritti caso per caso
         segments.visibility = View.GONE
         tvSnooze.visibility = View.GONE
+        findViewById<View>(R.id.tvDeactivate).visibility = View.GONE
+        btnSecondary.visibility = View.VISIBLE
         tvCardFootRight.text = ""
         tvCardFootRight.isClickable = false
         tvCardFootRight.minHeight = 0
@@ -452,10 +455,11 @@ class MainActivity : AppCompatActivity() {
                 )
                 tvCardLabel.setText(R.string.home_card_remaining)
                 tvCardValue.text = formatRemaining(endMillis - now)
-                tvCardFootLeft.text = getString(R.string.home_cd_foot, endTimeText)
+                tvCardFootLeft.text = ""
                 showEditTimeCommand()
                 btnPrimary.setText(R.string.btn_insultami_home)
-                btnSecondary.setText(R.string.btn_deactivate_small)
+                btnSecondary.visibility = View.GONE
+                findViewById<View>(R.id.tvDeactivate).visibility = View.VISIBLE
             }
 
             HeroState.STRAORDINARIO -> {
@@ -682,10 +686,11 @@ class MainActivity : AppCompatActivity() {
      */
     private fun updateTrialBanner() {
         if (prefs.isPremium) {
-            tvPremiumBadge.setText(R.string.premium_badge)
+            tvPremiumBadge.visibility = View.GONE
             tvPremiumBadge.isClickable = false
             tvPremiumBadge.setOnClickListener(null)
         } else {
+            tvPremiumBadge.visibility = View.VISIBLE
             tvPremiumBadge.setText(R.string.premium_badge_upgrade)
             tvPremiumBadge.isClickable = true
             tvPremiumBadge.setOnClickListener {
