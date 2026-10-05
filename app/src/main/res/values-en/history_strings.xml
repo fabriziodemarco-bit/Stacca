@@ -17,8 +17,9 @@
     </plurals>
 
     <string name="history_week_chart">LAST 7 DAYS</string>
-    <string name="history_list_label">RECENT DAYS</string>
+    <string name="history_list_label">LAST 7 WORKDAYS</string>
     <string name="history_row_ontime">On time ✓</string>
+    <string name="history_row_unclosed">Not closed ✗</string>
     <string name="history_row_late">+%1$d min · level %2$d</string>
     <string name="history_row_end">Shift end %s</string>
 
@@ -30,6 +31,6 @@
     <string name="history_month_same">Same as %s</string>
 
     <string name="history_premium_title">Full history with Premium</string>
-    <string name="history_premium_desc">Record, your progress month by month, weekly chart and the last 2 weeks, not just the last 7 days.</string>
+    <string name="history_premium_desc">Record, your progress month by month and the weekly chart.</string>
     <string name="history_premium_cta">Unlock Premium</string>
 </resources>

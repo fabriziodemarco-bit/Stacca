@@ -11,16 +11,21 @@ import org.json.JSONObject
  */
 class HistoryStore(context: Context) {
 
-    /** Uno stacco: quando, a che ora finiva il turno, quanti minuti di ritardo, livello raggiunto (0-6). */
+    /**
+     * Uno stacco: quando, a che ora finiva il turno, quanti minuti di ritardo, livello raggiunto (0-6).
+     * [unclosed] = la sera nessuno ha toccato "Ho staccato" e Stacca si è arreso: non è in orario,
+     * ma i minuti regalati restano 0 perché non sappiamo se eri davvero al lavoro.
+     */
     data class Entry(
         val timestampMillis: Long,
         val endHour: Int,
         val endMinute: Int,
         val overtimeMinutes: Int,
-        val level: Int
+        val level: Int,
+        val unclosed: Boolean = false
     ) {
         val isOnTime: Boolean
-            get() = overtimeMinutes <= PreferencesManager.ON_TIME_THRESHOLD_MINUTES
+            get() = !unclosed && overtimeMinutes <= PreferencesManager.ON_TIME_THRESHOLD_MINUTES
     }
 
     companion object {
@@ -42,7 +47,8 @@ class HistoryStore(context: Context) {
                     endHour = o.getInt("h"),
                     endMinute = o.getInt("m"),
                     overtimeMinutes = o.getInt("o"),
-                    level = o.getInt("l")
+                    level = o.getInt("l"),
+                    unclosed = o.optBoolean("u", false)
                 )
             }.sortedByDescending { it.timestampMillis }
         } catch (e: Exception) {
@@ -61,6 +67,7 @@ class HistoryStore(context: Context) {
                     .put("m", it.endMinute)
                     .put("o", it.overtimeMinutes)
                     .put("l", it.level)
+                    .put("u", it.unclosed)
             )
         }
         prefs.edit().putString(KEY, array.toString()).apply()

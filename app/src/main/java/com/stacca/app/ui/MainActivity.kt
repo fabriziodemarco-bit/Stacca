@@ -590,6 +590,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Turno lasciato aperto da più di 3 ore (allarmi ignorati o telefono spento): si chiude qui
+        StaccoManager.closeAbandonedShift(this, notify = false)
         updateUI()
 
         // (Rimosso: safety net del login obbligatorio - ora il login è opzionale)

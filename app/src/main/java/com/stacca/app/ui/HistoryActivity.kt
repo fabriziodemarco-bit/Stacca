@@ -28,8 +28,7 @@ import java.util.Locale
 class HistoryActivity : AppCompatActivity() {
 
     companion object {
-        private const val FREE_DAYS = 7
-        private const val PREMIUM_DAYS = 14   // elenco giorno per giorno: le ultime 2 settimane
+        private const val LIST_WORKDAYS = 7   // elenco: le ultime 7 giornate registrate, per tutti
         private const val MAX_MONTHS = 12
         private const val DAY_MILLIS = 24 * 60 * 60 * 1000L
     }
@@ -74,8 +73,7 @@ class HistoryActivity : AppCompatActivity() {
             renderMonths(entries)
         }
 
-        val days = if (premium) PREMIUM_DAYS else FREE_DAYS
-        renderList(entries.filter { now - it.timestampMillis < days * DAY_MILLIS })
+        renderList(entries.take(LIST_WORKDAYS))
     }
 
     // ------------------------------------------------------------------
@@ -366,7 +364,10 @@ class HistoryActivity : AppCompatActivity() {
         val status = TextView(this).apply {
             textSize = 14f
             setTypeface(typeface, android.graphics.Typeface.BOLD)
-            if (entry.isOnTime) {
+            if (entry.unclosed) {
+                setText(R.string.history_row_unclosed)
+                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
+            } else if (entry.isOnTime) {
                 setText(R.string.history_row_ontime)
                 setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_success))
             } else {
@@ -387,7 +388,7 @@ class HistoryActivity : AppCompatActivity() {
      */
     private fun sampleEntries(): List<HistoryStore.Entry> {
         val overtimes = listOf(
-            0, 0, 3, 0, 8, 0, 0, 0, 12, 0, 2, 0, 0, 27, 0, 0, 5, 0, 0, 15, 0, 0,  // ultimo mese
+            0, 0, 3, -1, 8, 0, 0, 0, 12, 0, 2, 0, 0, 27, 0, 0, 5, 0, 0, 15, 0, 0, // ultimo mese (-1 = non chiuso)
             0, 35, 12, 0, 48, 20, 0, 27, 55, 0, 15, 40, 0, 22, 30, 0, 0, 18, 62, 0, 10 // mese prima
         )
         val result = mutableListOf<HistoryStore.Entry>()
@@ -396,7 +397,8 @@ class HistoryActivity : AppCompatActivity() {
         while (result.size < overtimes.size) {
             val weekday = day.get(Calendar.DAY_OF_WEEK)
             if (weekday != Calendar.SATURDAY && weekday != Calendar.SUNDAY) {
-                val overtime = overtimes[i++]
+                val unclosed = overtimes[i] < 0
+                val overtime = overtimes[i++].coerceAtLeast(0)
                 val stacco = (day.clone() as Calendar).apply {
                     set(Calendar.HOUR_OF_DAY, 18)
                     set(Calendar.MINUTE, 0)
@@ -407,7 +409,8 @@ class HistoryActivity : AppCompatActivity() {
                     endHour = 18,
                     endMinute = 0,
                     overtimeMinutes = overtime,
-                    level = (overtime / 10 + if (overtime > 5) 1 else 0).coerceAtMost(6)
+                    level = if (unclosed) 6 else (overtime / 10 + if (overtime > 5) 1 else 0).coerceAtMost(6),
+                    unclosed = unclosed
                 )
             }
             day.add(Calendar.DAY_OF_YEAR, -1)

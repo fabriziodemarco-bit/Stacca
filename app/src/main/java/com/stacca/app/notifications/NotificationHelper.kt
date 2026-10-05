@@ -244,6 +244,29 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
+    /** Stacca si arrende per la sera (3 ore senza risposta): avviso silenzioso, senza allarme. */
+    fun showGiveUp() {
+        val openApp = PendingIntent.getActivity(
+            context, 4, Intent(context, MainActivity::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val text = context.getString(R.string.notif_giveup_text)
+        val notification = NotificationCompat.Builder(context, CHANNEL_NORMAL)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setContentTitle(context.getString(R.string.notif_giveup_title))
+            .setContentText(text)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
+            .setSilent(true)
+            .setAutoCancel(true)
+            .setContentIntent(openApp)
+            .build()
+        try {
+            NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
+    }
+
     /**
      * Cancella tutte le notifiche.
      */

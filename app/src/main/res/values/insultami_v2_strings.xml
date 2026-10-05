@@ -6,4 +6,6 @@
     <string name="notif_reward_title_ontime">Libero! ✌️ Zero minuti regalati.</string>
     <string name="notif_reward_title_late">Libero, finalmente. ✌️</string>
     <string name="notif_reward_text">Domani alle %s si riparte.</string>
+    <string name="notif_giveup_title">Stasera hai vinto tu.</string>
+    <string name="notif_giveup_text">Il giorno resta non chiuso nello storico. Domani ci riproviamo.</string>
 </resources>

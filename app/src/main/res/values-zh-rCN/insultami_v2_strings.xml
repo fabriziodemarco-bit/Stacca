@@ -5,4 +5,6 @@
     <string name="notif_reward_title_ontime">自由了！✌️ 零分钟送给公司。</string>
     <string name="notif_reward_title_late">终于自由了。✌️</string>
     <string name="notif_reward_text">明天%s继续。</string>
+    <string name="notif_giveup_title">今晚你赢了。</string>
+    <string name="notif_giveup_text">这一天在历史中记为未结束。明天再试。</string>
 </resources>

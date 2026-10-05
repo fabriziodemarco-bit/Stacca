@@ -5,4 +5,6 @@
     <string name="notif_reward_title_ontime">Free! ✌️ Zero minutes gifted.</string>
     <string name="notif_reward_title_late">Free, finally. ✌️</string>
     <string name="notif_reward_text">Back at it tomorrow at %s.</string>
+    <string name="notif_giveup_title">You win tonight.</string>
+    <string name="notif_giveup_text">This day stays “not closed” in your history. We\'ll try again tomorrow.</string>
 </resources>

@@ -16,8 +16,9 @@
     </plurals>
 
     <string name="history_week_chart">最近7天</string>
-    <string name="history_list_label">最近几天</string>
+    <string name="history_list_label">最近7个工作日</string>
     <string name="history_row_ontime">准时 ✓</string>
+    <string name="history_row_unclosed">未结束 ✗</string>
     <string name="history_row_late">+%1$d分钟 · 第%2$d级</string>
     <string name="history_row_end">下班时间 %s</string>
 
@@ -29,6 +30,6 @@
     <string name="history_month_same">与%s持平</string>
 
     <string name="history_premium_title">高级版查看完整历史</string>
-    <string name="history_premium_desc">记录、逐月进步、每周图表和最近两周，而不仅是最近7天。</string>
+    <string name="history_premium_desc">记录、逐月进步和每周图表。</string>
     <string name="history_premium_cta">解锁高级版</string>
 </resources>

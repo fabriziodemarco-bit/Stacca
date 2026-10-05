@@ -10,6 +10,7 @@ import android.os.PowerManager
 import android.util.Log
 import com.stacca.app.data.NotificationMessages
 import com.stacca.app.data.PreferencesManager
+import com.stacca.app.data.StaccoManager
 import com.stacca.app.notifications.AlarmSoundManager
 import com.stacca.app.notifications.NotificationHelper
 import com.stacca.app.ui.FullScreenAlertActivity
@@ -113,10 +114,12 @@ class AlarmReceiver : BroadcastReceiver() {
             val prefs = PreferencesManager(context)
             if (!prefs.isAlarmActive) return
 
+            // Turno finito da più di 3 ore e mai chiuso: giorno "non chiuso" e si riparte da domani
+            if (StaccoManager.closeAbandonedShift(context, notify = true)) return
+
             val now = System.currentTimeMillis()
             val shiftEnd = prefs.nextShiftEndMillis
-            val maxOvertimeMillis = 6 * 60 * 60 * 1000L
-            if (shiftEnd in 1 until now && now - shiftEnd < maxOvertimeMillis) {
+            if (shiftEnd in 1 until now) {
                 // In straordinario: manda subito la prossima notifica, che riprogramma le successive
                 context.sendBroadcast(Intent(context, AlarmReceiver::class.java))
             } else {
@@ -143,6 +146,9 @@ class AlarmReceiver : BroadcastReceiver() {
         val prefs = PreferencesManager(context)
 
         if (!prefs.isAlarmActive) return
+
+        // Dopo 3 ore senza risposta Stacca si arrende per la sera (niente allarmi tutta la notte)
+        if (StaccoManager.closeAbandonedShift(context, notify = true)) return
 
         // Calcola i minuti di straordinario (per visualizzazione, NON per determinare il livello)
         val now = Calendar.getInstance()
