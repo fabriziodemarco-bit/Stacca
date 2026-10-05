@@ -114,13 +114,19 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    /** Sette colonne (ultimi 7 giorni, oggi a destra): più alta = più ritardo; arancione se in ritardo, grigia se in orario. */
+    /**
+     * Sette colonne (ultimi 7 giorni, oggi a destra), alte in proporzione ai minuti regalati:
+     * un'ora (o il giorno peggiore della settimana, se più lungo) riempie tutta l'altezza.
+     * Verde se in orario, arancio se in ritardo (con i minuti sopra), grigia se non registrato.
+     * Giorno non chiuso: arancio tenue a metà altezza, con una ✗ sopra.
+     */
     private fun renderWeekBars(entries: List<HistoryStore.Entry>) {
         val container = findViewById<LinearLayout>(R.id.weekBars)
         container.removeAllViews()
         val density = resources.displayMetrics.density
-        val maxBarPx = (80 * density).toInt()
-        val minBarPx = (6 * density).toInt()
+        val maxBarPx = (120 * density).toInt()
+        val minBarPx = (12 * density).toInt()
+        val emptyBarPx = (6 * density).toInt()
 
         // Si parte da 6 giorni fa, a mezzanotte
         val day = Calendar.getInstance().apply {
@@ -138,7 +144,7 @@ class HistoryActivity : AppCompatActivity() {
             val dayEntries = entries.filter { e -> e.timestampMillis >= start && e.timestampMillis < day.timeInMillis }
             Triple(label, dayEntries.sumOf { e -> e.overtimeMinutes }, dayEntries)
         }
-        val maxMinutes = maxOf(30, days.maxOf { it.second })
+        val maxMinutes = maxOf(60, days.maxOf { it.second })
 
         days.forEach { (label, minutes, dayEntries) ->
             val column = LinearLayout(this).apply {
@@ -146,18 +152,40 @@ class HistoryActivity : AppCompatActivity() {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
                 layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
             }
+            val unclosed = dayEntries.isNotEmpty() && dayEntries.all { it.unclosed }
             val late = dayEntries.any { !it.isOnTime }
             val color = when {
                 dayEntries.isEmpty() -> R.color.home_border
                 late -> R.color.home_accent
                 else -> R.color.home_success
             }
-            val height = if (dayEntries.isEmpty() || !late) minBarPx
-            else maxOf(minBarPx, maxBarPx * minutes / maxMinutes)
+            val height = when {
+                dayEntries.isEmpty() -> emptyBarPx
+                unclosed -> maxBarPx / 2
+                else -> minBarPx + (maxBarPx - minBarPx) * minutes.coerceAtMost(maxMinutes) / maxMinutes
+            }
+
+            // Sopra la colonna: i minuti regalati (ritardo) o la ✗ (non chiuso)
+            val topText = when {
+                unclosed -> "✗"
+                late && minutes > 0 -> "+$minutes"
+                else -> null
+            }
+            if (topText != null) {
+                column.addView(TextView(this).apply {
+                    text = topText
+                    textSize = 11f
+                    setTypeface(typeface, android.graphics.Typeface.BOLD)
+                    setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
+                    gravity = Gravity.CENTER
+                    setPadding(0, 0, 0, (4 * density).toInt())
+                })
+            }
             val bar = View(this).apply {
-                layoutParams = LinearLayout.LayoutParams((14 * density).toInt(), height)
+                layoutParams = LinearLayout.LayoutParams((26 * density).toInt(), height)
                 setBackgroundResource(R.drawable.bg_segment)
                 background.mutate().setTint(ContextCompat.getColor(this@HistoryActivity, color))
+                if (unclosed) alpha = 0.45f
             }
             val tvLabel = TextView(this).apply {
                 text = label
