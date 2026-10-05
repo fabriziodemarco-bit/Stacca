@@ -278,7 +278,6 @@ class MainActivity : AppCompatActivity() {
                 HeroState.STRAORDINARIO -> handleHoStaccato()
             }
         }
-        tvSnooze.setOnClickListener { handleSnooze() }
 
         // "Modifica orario" nella scheda, quando l'orario si può cambiare
         findViewById<View>(R.id.tvEditTime).setOnClickListener {
@@ -420,7 +419,7 @@ class MainActivity : AppCompatActivity() {
 
         // Valori di base, sovrascritti caso per caso
         segments.visibility = View.GONE
-        tvSnooze.visibility = View.GONE
+        tvSnooze.visibility = View.GONE // il rimando sta solo nella notifica e nello schermo rosso
         findViewById<View>(R.id.tvDeactivate).visibility = View.GONE
         btnSecondary.visibility = View.VISIBLE
         tvCardFootRight.text = ""
@@ -482,9 +481,6 @@ class MainActivity : AppCompatActivity() {
                 tvExplain.setText(R.string.home_explain_overtime)
                 btnPrimary.setText(R.string.btn_insultami_home)
                 btnSecondary.setText(R.string.btn_ho_staccato_home)
-                // "Ancora un po'" solo mentre l'allarme sta suonando: è lì che serve zittirlo
-                tvSnooze.setText(R.string.btn_snooze)
-                tvSnooze.visibility = if (notificationHelper.isAlarmShowing()) View.VISIBLE else View.GONE
             }
 
             HeroState.STACCATO -> {
@@ -563,17 +559,6 @@ class MainActivity : AppCompatActivity() {
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }.timeInMillis
-    }
-
-    /**
-     * "Ancora un po'" dall'app: zittisce l'allarme, l'escalation continua
-     * (la prossima notifica è già programmata e arriverà al livello successivo).
-     */
-    private fun handleSnooze() {
-        AlarmSoundManager.stop()
-        notificationHelper.cancelAll()
-        Toast.makeText(this, R.string.snooze_toast, Toast.LENGTH_LONG).show()
-        moveTaskToBack(true)
     }
 
     /**

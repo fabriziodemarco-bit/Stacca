@@ -243,14 +243,6 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
-    /** true se in questo momento c'è una notifica dell'allarme (o lo schermo rosso) aperta. */
-    fun isAlarmShowing(): Boolean {
-        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        return manager.activeNotifications.any {
-            it.id == NOTIFICATION_ID || it.id == FULLSCREEN_NOTIFICATION_ID
-        }
-    }
-
     /** Stacca si arrende per la sera (3 ore senza risposta): avviso silenzioso, senza allarme. */
     fun showGiveUp() {
         val openApp = PendingIntent.getActivity(
