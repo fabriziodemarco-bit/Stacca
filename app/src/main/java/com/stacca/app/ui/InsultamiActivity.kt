@@ -18,6 +18,7 @@ import android.os.VibratorManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.animation.OvershootInterpolator
@@ -323,7 +324,6 @@ class InsultamiActivity : AppCompatActivity() {
             return
         }
 
-        val d = resources.displayMetrics.density
         val scream = index == 4
         val fill = ContextCompat.getColor(
             this,
@@ -337,10 +337,10 @@ class InsultamiActivity : AppCompatActivity() {
             ?: (ContextCompat.getDrawable(this, R.drawable.bg_insult_bubble) as GradientDrawable)
         background.mutate()
         background.setColor(fill)
-        background.setStroke(((if (scream) 5 else 3) * d).toInt(), 0xFF000000.toInt())
         tvInsult.background = background
         tvInsult.setTextColor(0xFF000000.toInt())
         tvInsult.textSize = if (scream) 30f else 24f
+        tvInsult.typeface = Typeface.create("sans-serif-black", Typeface.NORMAL)
         tvInsult.text = line.uppercase(Locale.getDefault())
         tail.visibility = View.VISIBLE
         tailFill.imageTintList = ColorStateList.valueOf(fill)
@@ -369,6 +369,8 @@ class InsultamiActivity : AppCompatActivity() {
         tail.visibility = View.GONE
         tvInsult.setTextColor(ContextCompat.getColor(this, colorRes))
         tvInsult.textSize = 19f
+        // Corsivo con grazie: è "gelido", e la I maiuscola di "Io" non si confonde con la l
+        tvInsult.typeface = Typeface.create(Typeface.SERIF, Typeface.BOLD_ITALIC)
         tvInsult.text = text
     }
 

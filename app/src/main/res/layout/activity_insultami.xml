@@ -86,14 +86,14 @@
                     android:lineSpacingMultiplier="1.05"
                     android:textColor="#000000" />
 
-                <!-- Beccuccio: riempimento colorato + bordo nero -->
+                <!-- Beccuccio, dello stesso colore della nuvoletta (si sovrappone di poco) -->
                 <FrameLayout
                     android:id="@+id/insultTail"
                     android:layout_width="26dp"
                     android:layout_height="22dp"
                     android:layout_gravity="start"
                     android:layout_marginStart="34dp"
-                    android:layout_marginTop="-3dp">
+                    android:layout_marginTop="-4dp">
 
                     <ImageView
                         android:id="@+id/ivInsultTailFill"
@@ -101,12 +101,6 @@
                         android:layout_height="match_parent"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_bubble_tail_fill" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/ic_bubble_tail_stroke" />
                 </FrameLayout>
             </LinearLayout>
         </FrameLayout>
