@@ -18,7 +18,6 @@ import android.os.VibratorManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.animation.OvershootInterpolator
@@ -50,7 +49,8 @@ class InsultamiActivity : AppCompatActivity() {
         private const val TOTAL_SECONDS = 60
         private const val SECONDS_PER_LINE = 10
         private const val SECONDS_PER_PHASE = 20
-        private const val SHAKE_HARD_FROM = 10 // ultimi secondi: il numero trema di più
+        private const val SHAKE_HARD_FROM = 20 // fase della furia: il numero trema di più
+        private const val FREEZE_FROM = 10     // ultimi secondi: arriva il gelo e tutto si ferma
 
         // Si parte appena voce e suoni sono pronti; se tardano, si parte comunque
         private const val READY_TIMEOUT_MS = 2500L
@@ -93,6 +93,7 @@ class InsultamiActivity : AppCompatActivity() {
     private lateinit var bubble: View
     private lateinit var tail: View
     private lateinit var tailFill: ImageView
+    private lateinit var icicles: View
     private lateinit var tvTimer: TextView
 
     private var version = 0
@@ -134,6 +135,7 @@ class InsultamiActivity : AppCompatActivity() {
         bubble = findViewById(R.id.insultBubble)
         tail = findViewById(R.id.insultTail)
         tailFill = findViewById(R.id.ivInsultTailFill)
+        icicles = findViewById(R.id.ivInsultIcicles)
         bubble.visibility = View.INVISIBLE // compare con la prima battuta
         tvTimer = findViewById(R.id.tvInsultTimer)
 
@@ -279,7 +281,8 @@ class InsultamiActivity : AppCompatActivity() {
                 return
             }
             showTimer(left)
-            if (elapsedSeconds % SECONDS_PER_PHASE == 0) enterPhase(currentPhase())
+            if (left == FREEZE_FROM) enterFreeze()
+            else if (elapsedSeconds % SECONDS_PER_PHASE == 0) enterPhase(currentPhase())
             if (elapsedSeconds % SECONDS_PER_LINE == 0) showLine(elapsedSeconds / SECONDS_PER_LINE)
 
             handler.postAtTime(this, startAt + (elapsedSeconds + 1) * 1000L)
@@ -298,6 +301,15 @@ class InsultamiActivity : AppCompatActivity() {
         )
     }
 
+    /** Gelo: la scritta in alto cambia, il countdown si ferma e diventa ghiaccio, il flash si spegne. */
+    private fun enterFreeze() {
+        tvPhase.setText(R.string.insult_phase_4)
+        tvPhase.setTextColor(ContextCompat.getColor(this, R.color.insult_ice))
+        setTorch(false)
+    }
+
+    private fun isFrozen(): Boolean = TOTAL_SECONDS - elapsedSeconds <= FREEZE_FROM
+
     /** Battuta n. [index] (0-5): testo, voce e vibrazione partono insieme. */
     private fun showLine(index: Int) {
         if (index !in lines.indices) return
@@ -312,66 +324,56 @@ class InsultamiActivity : AppCompatActivity() {
 
     /**
      * Battute 1-2 bianche, 3-4 gialle, 5 (urlo) arancio grande che trema.
-     * La 6 (gelo) è senza nuvoletta: piccola, grigio azzurro, minuscola e immobile.
+     * La 6 (gelo) è azzurro ghiaccio con i ghiaccioli: dritta, immobile, compare piano.
      */
     private fun showBubble(line: String, index: Int) {
+        when {
+            index >= 5 -> paintBubble(line, R.color.insult_ice, R.color.insult_ice_text, 21f, icicles = true)
+            index == 4 -> paintBubble(line, R.color.insult_bubble_scream, null, 30f)
+            index >= 2 -> paintBubble(line, R.color.insult_bubble_yellow, null, 24f)
+            else -> paintBubble(line, R.color.insult_bubble_white, null, 24f)
+        }
+        if (index >= 5) frostIn() else popIn()
+        if (index == 4) handler.postDelayed(bubbleShake, 300)
+    }
+
+    /** Colora la nuvoletta (e il beccuccio o i ghiaccioli) e ci scrive il testo in stampatello. */
+    private fun paintBubble(text: String, fillRes: Int, textRes: Int?, sizeSp: Float, icicles: Boolean = false) {
         handler.removeCallbacks(bubbleShake)
+        bubble.animate().cancel()
         bubble.visibility = View.VISIBLE
         bubble.translationX = 0f
+        bubble.alpha = 1f
 
-        if (index >= 5) {
-            showPlainText(line, R.color.insult_cold)
-            return
-        }
-
-        val scream = index == 4
-        val fill = ContextCompat.getColor(
-            this,
-            when {
-                scream -> R.color.insult_bubble_scream
-                index >= 2 -> R.color.insult_bubble_yellow
-                else -> R.color.insult_bubble_white
-            }
-        )
-        val background = tvInsult.background as? GradientDrawable
-            ?: (ContextCompat.getDrawable(this, R.drawable.bg_insult_bubble) as GradientDrawable)
-        background.mutate()
+        val fill = ContextCompat.getColor(this, fillRes)
+        val background = (ContextCompat.getDrawable(this, R.drawable.bg_insult_bubble) as GradientDrawable).mutate() as GradientDrawable
         background.setColor(fill)
         tvInsult.background = background
-        tvInsult.setTextColor(0xFF000000.toInt())
-        tvInsult.textSize = if (scream) 30f else 24f
-        tvInsult.typeface = Typeface.create("sans-serif-black", Typeface.NORMAL)
-        tvInsult.text = line.uppercase(Locale.getDefault())
-        tail.visibility = View.VISIBLE
+        tvInsult.setTextColor(if (textRes != null) ContextCompat.getColor(this, textRes) else 0xFF000000.toInt())
+        tvInsult.textSize = sizeSp
+        tvInsult.text = text.uppercase(Locale.getDefault())
+        tail.visibility = if (icicles) View.GONE else View.VISIBLE
         tailFill.imageTintList = ColorStateList.valueOf(fill)
+        this.icicles.visibility = if (icicles) View.VISIBLE else View.GONE
+    }
 
-        // "Pop": salta fuori con un rimbalzo, ogni volta storta in modo diverso
+    /** "Pop": salta fuori con un rimbalzo, ogni volta storta in modo diverso. */
+    private fun popIn() {
         val tilt = (2f + Random.nextFloat() * 3f) * (if (Random.nextBoolean()) 1 else -1)
         bubble.rotation = tilt
         bubble.scaleX = 0.6f
         bubble.scaleY = 0.6f
         bubble.animate().scaleX(1f).scaleY(1f)
             .setDuration(280).setInterpolator(OvershootInterpolator(3f)).start()
-
-        if (scream) handler.postDelayed(bubbleShake, 300)
     }
 
-    /** Testo semplice, senza nuvoletta: per il gelo e per i due finali. */
-    private fun showPlainText(text: String, colorRes: Int) {
-        handler.removeCallbacks(bubbleShake)
-        bubble.animate().cancel()
-        bubble.visibility = View.VISIBLE
+    /** Il gelo non salta: dritto, fermo, compare piano come la brina. */
+    private fun frostIn() {
         bubble.rotation = 0f
         bubble.scaleX = 1f
         bubble.scaleY = 1f
-        bubble.translationX = 0f
-        tvInsult.background = null
-        tail.visibility = View.GONE
-        tvInsult.setTextColor(ContextCompat.getColor(this, colorRes))
-        tvInsult.textSize = 19f
-        // Corsivo con grazie: è "gelido", e la I maiuscola di "Io" non si confonde con la l
-        tvInsult.typeface = Typeface.create(Typeface.SERIF, Typeface.BOLD_ITALIC)
-        tvInsult.text = text
+        bubble.alpha = 0f
+        bubble.animate().alpha(1f).setDuration(900).start()
     }
 
     // L'urlo trema finché non arriva la battuta successiva
@@ -395,10 +397,18 @@ class InsultamiActivity : AppCompatActivity() {
         engine.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "insult")
     }
 
-    // --- Countdown: numero gigante che trema, con un'ombra rossa sfasata ---
+    // --- Countdown: numero gigante che trema, con un'ombra rossa sfasata. Nel gelo si ferma ---
     private fun showTimer(left: Int) {
         tvTimer.text = left.toString()
         val d = resources.displayMetrics.density
+        if (left <= FREEZE_FROM) {
+            tvTimer.translationX = 0f
+            tvTimer.translationY = 0f
+            tvTimer.rotation = 0f
+            tvTimer.setTextColor(ContextCompat.getColor(this, R.color.insult_ice))
+            tvTimer.setShadowLayer(0.01f, 4 * d, 4 * d, 0x99FFFFFF.toInt())
+            return
+        }
         val hard = left <= SHAKE_HARD_FROM
         val move = (if (hard) 10f else 4f) * d
         val tilt = if (hard) 7f else 3f
@@ -436,7 +446,7 @@ class InsultamiActivity : AppCompatActivity() {
     // --- Flash: lampi sempre più frequenti, al massimo ~3 al secondo ---
     private val strobe = object : Runnable {
         override fun run() {
-            if (finished) return
+            if (finished || isFrozen()) return
             val (period, onTime) = when (currentPhase()) {
                 0 -> 1000L to 120L
                 1 -> 600L to 100L
@@ -516,7 +526,8 @@ class InsultamiActivity : AppCompatActivity() {
         tvPhase.visibility = View.INVISIBLE
         resetTimerLook()
         tvTimer.text = "✌️"
-        showPlainText(getString(R.string.insult_win), R.color.home_text)
+        paintBubble(getString(R.string.insult_win), R.color.home_success, null, 22f)
+        popIn()
         speak(getString(R.string.insult_win_voice), 0.7f, 0.8f)
 
         // Battiti sempre più lenti e piano: il sollievo si sente
@@ -549,7 +560,8 @@ class InsultamiActivity : AppCompatActivity() {
         resetTimerLook()
         tvTimer.text = "💥"
         pulse(tvTimer)
-        showPlainText(getString(R.string.insult_lose), R.color.home_text)
+        paintBubble(getString(R.string.insult_lose), R.color.insult_bubble_white, null, 20f)
+        popIn()
     }
 
     /**

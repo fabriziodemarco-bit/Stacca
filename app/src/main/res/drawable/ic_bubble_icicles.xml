@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ghiaccioli che pendono dalla nuvoletta del gelo (si allargano con la nuvoletta) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="18dp"
+    android:viewportWidth="100"
+    android:viewportHeight="18">
+    <path
+        android:fillColor="@color/insult_ice"
+        android:pathData="M0,0 H100 V3 H97 L94.5,8 L92,3 H86 L82,16 L78,3 H66 L63,10 L60,3 H50 L45,18 L40,3 H28 L25,9 L22,3 H16 L12,14 L8,3 H0 Z" />
+</vector>

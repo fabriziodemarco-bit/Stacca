@@ -67,7 +67,8 @@
     <color name="insult_bubble_white">#FFFFFF</color>
     <color name="insult_bubble_yellow">#FFE14D</color>
     <color name="insult_bubble_scream">#FF5A1F</color>
-    <color name="insult_cold">#A9C4D6</color>
+    <color name="insult_ice">#CFE8F5</color>
+    <color name="insult_ice_text">#0E2A3A</color>
     <color name="home_on_accent">#20110B</color>
 
     <!-- Schermo rosso ("bollettino d'emergenza"): lo sfondo "respira" tra i due toni -->
