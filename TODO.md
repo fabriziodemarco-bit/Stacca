@@ -13,7 +13,7 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [ ] 4. Modulo "Sicurezza dei dati" su Play.
 - [ ] 5. Questionario di classificazione dei contenuti (gli insulti di Insultami).
 - [ ] 6. Scheda Play: testi e screenshot nuovi (Storico nuovo compreso).
-- [ ] 7. Prova finale sul telefono con la versione di release: Storico, permessi, allarme, Insultami, Premium.
+- [ ] 7. Prova finale sul telefono con la versione di release: Storico, permessi, allarme, Insultami, Premium, accesso e "Elimina account" nelle Impostazioni (deve aprire la pagina web).
 - [ ] 8. Pacchetto firmato (`.aab`) e caricamento su Play.
 
 ## Prezzo e paywall (dopo la release, se avanza tempo oggi; altrimenti mer 07/10, poi call Andrea ven 09/10)

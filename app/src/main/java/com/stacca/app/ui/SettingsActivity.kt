@@ -1,6 +1,7 @@
 package com.stacca.app.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -25,6 +26,11 @@ import com.stacca.app.util.SystemBarsHelper
  * e gestire account e premium.
  */
 class SettingsActivity : AppCompatActivity() {
+
+    companion object {
+        // Pagina per chiedere l'eliminazione dell'account (la stessa indicata su Google Play)
+        private const val DELETE_ACCOUNT_URL = "https://fabriziodemarco-bit.github.io/Stacca/delete_account.html"
+    }
 
     private lateinit var prefs: PreferencesManager
     private lateinit var authManager: AuthManager
@@ -127,9 +133,16 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupAccountSection() {
         val tvAccountStatus = findViewById<TextView>(R.id.tvAccountStatus)
         val btnAccountAction = findViewById<MaterialButton>(R.id.btnAccountAction)
+        val tvDeleteAccount = findViewById<TextView>(R.id.tvDeleteAccount)
 
         if (prefs.isLoggedIn) {
             tvAccountStatus.text = getString(R.string.settings_logged_as, prefs.userEmail)
+
+            // Richiesto da Google Play: chi ha un account deve poterne chiedere l'eliminazione anche dall'app
+            tvDeleteAccount.visibility = View.VISIBLE
+            tvDeleteAccount.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(DELETE_ACCOUNT_URL)))
+            }
 
             btnAccountAction.text = getString(R.string.settings_logout)
             btnAccountAction.setOnClickListener {
@@ -144,6 +157,7 @@ class SettingsActivity : AppCompatActivity() {
             }
         } else {
             tvAccountStatus.text = getString(R.string.settings_not_logged)
+            tvDeleteAccount.visibility = View.GONE
 
             btnAccountAction.text = getString(R.string.settings_login)
             btnAccountAction.setOnClickListener {

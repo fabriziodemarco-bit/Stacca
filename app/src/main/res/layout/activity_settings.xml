@@ -218,6 +218,21 @@
                         app:strokeColor="@color/home_border"
                         app:strokeWidth="1dp"
                         app:cornerRadius="14dp" />
+
+                    <!-- Elimina account: solo per chi ha fatto l'accesso, apre la pagina web di richiesta -->
+                    <TextView
+                        android:id="@+id/tvDeleteAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/settings_delete_account"
+                        android:textSize="13sp"
+                        android:textColor="@color/home_text_secondary"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

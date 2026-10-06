@@ -58,6 +58,7 @@
     <string name="settings_escalation_speed_desc">How often should we come looking for you?</string>
     <string name="settings_version">Unplug! v%1$s — Made with ❤️ and spite</string>
     <string name="settings_logout">Logout</string>
+    <string name="settings_delete_account">Delete account</string>
     <string name="settings_logout_confirm">Are you sure you want to logout?</string>
     <string name="settings_logged_as">Logged in as %s</string>
     <string name="settings_not_logged">You are not logged in</string>

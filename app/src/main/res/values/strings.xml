@@ -62,6 +62,7 @@
     <string name="settings_escalation_speed_desc">Ogni quanti minuti ti veniamo a cercare?</string>
     <string name="settings_version">Stacca! v%1$s — Fatto con ❤️ e cattiveria</string>
     <string name="settings_logout">Esci</string>
+    <string name="settings_delete_account">Elimina account</string>
     <string name="settings_logout_confirm">Sicuro di voler uscire?</string>
     <string name="settings_logged_as">Collegato come %s</string>
     <string name="settings_not_logged">Non hai effettuato l\'accesso</string>
