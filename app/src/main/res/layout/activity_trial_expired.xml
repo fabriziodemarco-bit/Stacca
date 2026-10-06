@@ -47,6 +47,28 @@
             android:lineSpacingMultiplier="1.15"
             android:textColor="@color/home_text_secondary" />
 
+        <!-- Riepilogo della prova (2.3.1): visibile solo se c'è almeno uno stacco nei 7 giorni -->
+        <TextView
+            android:id="@+id/tvTrialRecapOnTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:lineSpacingMultiplier="1.15"
+            android:textColor="@color/home_accent"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvTrialRecapPremium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="14sp"
+            android:lineSpacingMultiplier="1.15"
+            android:textColor="@color/home_text"
+            android:visibility="gone" />
+
         <!-- Gratis per sempre: una riga sola -->
         <TextView
             android:layout_width="match_parent"
@@ -91,6 +113,15 @@
                     <LinearLayout style="@style/Stacca.Settings.RowTexts">
                         <TextView style="@style/Stacca.Settings.RowTitle.Accent" android:text="@string/paywall_f3_title" />
                         <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/paywall_f3_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/Stacca.Settings.Divider" />
+
+                <LinearLayout style="@style/Stacca.Settings.Row">
+                    <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                        <TextView style="@style/Stacca.Settings.RowTitle.Accent" android:text="@string/paywall_f4_title" />
+                        <TextView style="@style/Stacca.Settings.RowDesc" android:text="@string/paywall_f4_desc" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

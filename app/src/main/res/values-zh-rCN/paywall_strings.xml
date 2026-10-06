@@ -16,4 +16,8 @@
 
     <string name="paywall_unlock_v2">解锁高级版</string>
     <string name="paywall_unlock_price_v2">解锁高级版 · %s</string>
+
+    <!-- 2.3.1 -->
+    <string name="paywall_f4_title">完整记录</string>
+    <string name="paywall_f4_desc">最高纪录、每周图表、逐月进展和你的习惯。</string>
 </resources>

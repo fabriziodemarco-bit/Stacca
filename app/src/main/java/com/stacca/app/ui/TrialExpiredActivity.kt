@@ -2,9 +2,12 @@ package com.stacca.app.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.stacca.app.R
+import com.stacca.app.data.HistoryStore
 import com.stacca.app.data.PreferencesManager
 import com.stacca.app.util.PreviewMode
 import com.stacca.app.util.SystemBarsHelper
@@ -36,6 +39,8 @@ class TrialExpiredActivity : AppCompatActivity() {
             prefs.trialEndShown = true
         }
 
+        showRecap(prefs)
+
         // Bottone principale: vai al paywall
         findViewById<MaterialButton>(R.id.btnTrialRegister).setOnClickListener {
             startActivity(Intent(this, PaywallActivity::class.java))
@@ -64,6 +69,38 @@ class TrialExpiredActivity : AppCompatActivity() {
         val prefs = PreferencesManager(this)
         if (prefs.isPremium && !PreviewMode.isOn(intent)) {
             navigateToMain()
+        }
+    }
+
+    /**
+     * Riepilogo personale della settimana di prova: quante volte hai staccato in orario
+     * e quante volte sono serviti i livelli Premium (4-6). Senza stacchi resta nascosto.
+     * In anteprima mostra numeri di esempio.
+     */
+    private fun showRecap(prefs: PreferencesManager) {
+        val total: Int
+        val onTime: Int
+        val premiumNeeded: Int
+        if (PreviewMode.isOn(intent)) {
+            total = 5; onTime = 3; premiumNeeded = 2
+        } else {
+            val trialEntries = HistoryStore(this).all().filter { it.timestampMillis < prefs.trialEndMillis }
+            total = trialEntries.size
+            onTime = trialEntries.count { it.isOnTime }
+            // Entry.level = avvisi inviati: dal 4° in poi sono i livelli Premium
+            premiumNeeded = trialEntries.count { it.level >= 4 }
+        }
+        if (total == 0) return
+
+        findViewById<TextView>(R.id.tvTrialRecapOnTime).apply {
+            text = resources.getQuantityString(R.plurals.trial_recap_ontime, onTime, onTime, total)
+            visibility = View.VISIBLE
+        }
+        if (premiumNeeded > 0) {
+            findViewById<TextView>(R.id.tvTrialRecapPremium).apply {
+                text = resources.getQuantityString(R.plurals.trial_recap_premium, premiumNeeded, premiumNeeded)
+                visibility = View.VISIBLE
+            }
         }
     }
 

@@ -17,4 +17,8 @@
 
     <string name="paywall_unlock_v2">Sblocca Premium</string>
     <string name="paywall_unlock_price_v2">Sblocca Premium · %s</string>
+
+    <!-- 2.3.1: quarta voce Premium (storico completo) -->
+    <string name="paywall_f4_title">Storico completo</string>
+    <string name="paywall_f4_desc">Record, grafico della settimana, mese per mese e le tue abitudini.</string>
 </resources>

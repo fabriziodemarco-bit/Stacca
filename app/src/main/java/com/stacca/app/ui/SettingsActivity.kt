@@ -77,14 +77,14 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setupFullScreenSwitch() {
         val switch = findViewById<MaterialSwitch>(R.id.switchFullScreen)
-        if (!prefs.isPremium) {
+        if (!prefs.hasFullAccess) {
             switch.isChecked = false
         } else {
             switch.isChecked = prefs.fullScreenEnabled
         }
 
         switch.setOnCheckedChangeListener { view, checked ->
-            if (!prefs.isPremium) {
+            if (!prefs.hasFullAccess) {
                 if (checked) {
                     view.isChecked = false
                     showPremiumUpsell()
@@ -108,7 +108,7 @@ class SettingsActivity : AppCompatActivity() {
         val speedLabels = resources.getStringArray(R.array.escalation_speeds)
         val tvSpeedLabel = findViewById<TextView>(R.id.tvSpeedLabel)
 
-        if (!prefs.isPremium) {
+        if (!prefs.hasFullAccess) {
             slider.value = 1f // Normale
             tvSpeedLabel.text = speedLabels[1]
         } else {
@@ -117,7 +117,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         slider.addOnChangeListener { _, value, fromUser ->
-            if (!prefs.isPremium) {
+            if (!prefs.hasFullAccess) {
                 if (fromUser) {
                     slider.value = 1f
                     showPremiumUpsell()

@@ -15,4 +15,17 @@
     <plurals name="streak_days">
         <item quantity="other">%d 天</item>
     </plurals>
+
+    <!-- 2.3.1 -->
+    <plurals name="premium_badge_trial">
+        <item quantity="other">试用 · 剩 %d 天</item>
+    </plurals>
+
+    <plurals name="trial_recap_ontime">
+        <item quantity="other">试用期间，你有 %1$d 次准时下班（共 %2$d 次）。</item>
+    </plurals>
+
+    <plurals name="trial_recap_premium">
+        <item quantity="other">有 %d 次我得用高级级别才把你拽出来。从明天起，我最多只到第3级。</item>
+    </plurals>
 </resources>

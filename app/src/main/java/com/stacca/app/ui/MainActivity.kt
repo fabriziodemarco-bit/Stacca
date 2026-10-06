@@ -758,7 +758,13 @@ class MainActivity : AppCompatActivity() {
             tvPremiumBadge.setOnClickListener(null)
         } else {
             tvPremiumBadge.visibility = View.VISIBLE
-            tvPremiumBadge.setText(R.string.premium_badge_upgrade)
+            // Durante la prova il badge dice quanti giorni restano, poi torna "PASSA A PREMIUM"
+            val giorni = prefs.trialDaysLeft
+            if (giorni > 0) {
+                tvPremiumBadge.text = resources.getQuantityString(R.plurals.premium_badge_trial, giorni, giorni)
+            } else {
+                tvPremiumBadge.setText(R.string.premium_badge_upgrade)
+            }
             tvPremiumBadge.isClickable = true
             tvPremiumBadge.setOnClickListener {
                 startActivity(Intent(this, PaywallActivity::class.java))

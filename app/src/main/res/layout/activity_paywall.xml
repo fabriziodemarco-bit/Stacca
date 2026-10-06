@@ -120,6 +120,19 @@
                             android:text="@string/paywall_f3_desc" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <View style="@style/Stacca.Settings.Divider" />
+
+                <LinearLayout style="@style/Stacca.Settings.Row">
+                    <LinearLayout style="@style/Stacca.Settings.RowTexts">
+                        <TextView
+                            style="@style/Stacca.Settings.RowTitle.Accent"
+                            android:text="@string/paywall_f4_title" />
+                        <TextView
+                            style="@style/Stacca.Settings.RowDesc"
+                            android:text="@string/paywall_f4_desc" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

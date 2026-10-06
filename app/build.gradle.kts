@@ -28,8 +28,8 @@ android {
         applicationId = "com.stacca.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 21
-        versionName = "2.3.0"
+        versionCode = 22
+        versionName = "2.3.1"
 
         buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"]}\"")
         buildConfigField("String", "SUPABASE_ANON_KEY", "\"${localProps["SUPABASE_ANON_KEY"]}\"")

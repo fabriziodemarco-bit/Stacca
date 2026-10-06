@@ -440,6 +440,10 @@ class PreferencesManager(context: Context) {
             return rimasti.coerceAtLeast(0L).toInt()
         }
 
+    /** Fine della prova (primo avvio + 7 giorni): serve al riepilogo di fine prova. */
+    val trialEndMillis: Long
+        get() = firstUseDateMillis + TimeUnit.DAYS.toMillis(TRIAL_DURATION_DAYS)
+
     /**
      * Il trial è ancora attivo se l'utente è premium OPPURE ha giorni rimasti.
      * Sostituisce il vecchio flag trialExpired (ora derivato, non scritto).

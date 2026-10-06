@@ -230,7 +230,8 @@ class AlarmReceiver : BroadcastReceiver() {
         prefs.currentEscalationStep = currentStep + 1
 
         // Programma il prossimo allarme (intervallo basato su impostazione Frequenza)
-        scheduleNextAlarm(context, prefs.escalationSpeed)
+        // Finita la prova senza Premium, la frequenza torna "Normale" (indice 1)
+        scheduleNextAlarm(context, if (prefs.hasFullAccess) prefs.escalationSpeed else 1)
     }
 
     /**
