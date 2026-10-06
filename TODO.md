@@ -2,7 +2,7 @@
 Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci sono solo le cose da fare.
 
 ## Da sistemare
-- **Supabase in pausa**: il piano gratuito mette in pausa il progetto dopo 7 giorni senza richieste (trovato in pausa il 06/10). Intanto il login non funziona. Soluzione gratuita: un "ping" automatico ogni pochi giorni con GitHub Actions; in alternativa piano Pro (25 $/mese).
+- ~~**Supabase in pausa**~~ RISOLTO il 06/10: sveglia automatica ogni 3 giorni (GitHub Actions "Supabase sveglia" legge la tabella `keepalive`). Se GitHub manda una mail perché il repository è fermo da 60 giorni, riattivarla dalla scheda Actions.
 - **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
 
 ## Release 2.3.0 (mar 06/10): si pubblica solo quando i punti 1-7 sono tutti fatti
