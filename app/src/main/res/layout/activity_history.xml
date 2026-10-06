@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Storico, nello stile "editoriale" della home:
-    titolo con la settimana, 3 numeri, "Lo sapevi?", grafico della settimana e mese per mese (Premium).
+    titolo con la settimana, 3 numeri, grafico della settimana (Premium), "Lo sapevi?", mese per mese (Premium).
     I contenuti dinamici (barre e righe) li costruisce HistoryActivity.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -91,26 +91,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Lo sapevi? Tre abitudini ricavate dallo storico (la prima per tutti, le altre Premium) -->
-            <LinearLayout
-                android:id="@+id/sectionInsights"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Stacca.Settings.SectionLabel"
-                    android:text="@string/history_insights_label" />
-
-                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
-                    <LinearLayout
-                        android:id="@+id/insightsList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
             <!-- Grafico della settimana (Premium) -->
             <LinearLayout
                 android:id="@+id/sectionChart"
@@ -135,16 +115,57 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Mese per mese (Premium): un riassunto per mese e il confronto con il mese prima -->
+            <!-- Lo sapevi? Tre abitudini ricavate dallo storico (la prima per tutti, le altre Premium) -->
             <LinearLayout
-                android:id="@+id/sectionMonths"
+                android:id="@+id/sectionInsights"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     style="@style/Stacca.Settings.SectionLabel"
-                    android:text="@string/history_months_label" />
+                    android:text="@string/history_insights_label" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/insightsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Mese per mese (Premium): un mese alla volta, con le frecce per sfogliare gli altri -->
+            <LinearLayout
+                android:id="@+id/sectionMonths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Stacca.Settings.SectionLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/history_months_label" />
+
+                    <TextView
+                        android:id="@+id/btnMonthPrev"
+                        style="@style/Stacca.History.MonthArrow"
+                        android:contentDescription="@string/history_month_prev"
+                        android:text="‹" />
+
+                    <TextView
+                        android:id="@+id/btnMonthNext"
+                        style="@style/Stacca.History.MonthArrow"
+                        android:contentDescription="@string/history_month_next"
+                        android:text="›" />
+                </LinearLayout>
 
                 <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
                     <LinearLayout

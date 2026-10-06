@@ -38,6 +38,10 @@ class HistoryActivity : AppCompatActivity() {
 
     private lateinit var prefs: PreferencesManager
 
+    // Mese per mese: (mese, stacchi) dal più recente, e quale si sta guardando (0 = il più recente)
+    private var months: List<Pair<Int, List<HistoryStore.Entry>>> = emptyList()
+    private var monthIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -48,6 +52,14 @@ class HistoryActivity : AppCompatActivity() {
         findViewById<MaterialToolbar>(R.id.toolbar).setNavigationOnClickListener { finish() }
         findViewById<View>(R.id.cardPremiumTeaser).setOnClickListener {
             startActivity(Intent(this, PaywallActivity::class.java))
+        }
+        findViewById<View>(R.id.btnMonthPrev).setOnClickListener {
+            monthIndex++
+            showMonth()
+        }
+        findViewById<View>(R.id.btnMonthNext).setOnClickListener {
+            monthIndex--
+            showMonth()
         }
     }
 
@@ -204,33 +216,42 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     /**
-     * Una riga per mese (il più recente in alto): nome, quanti in orario, una barretta verde/arancio
-     * e il tempo regalato. Sul mese più recente, il confronto con il mese prima.
-     * Il confronto è sulla media al giorno, così un mese appena iniziato non vince "per forza".
+     * Mese per mese, uno alla volta: si parte dal più recente e con le frecce si sfogliano gli altri
+     * (al massimo [MAX_MONTHS], cioè tutto lo storico che l'app conserva).
      */
     private fun renderMonths(entries: List<HistoryStore.Entry>) {
-        val list = findViewById<LinearLayout>(R.id.monthsList)
-        list.removeAllViews()
-        val density = resources.displayMetrics.density
-
-        val months = entries.groupBy { monthKey(it.timestampMillis) }
+        months = entries.groupBy { monthKey(it.timestampMillis) }
             .toList()
             .sortedByDescending { it.first }
             .take(MAX_MONTHS)
+        showMonth()
+    }
 
-        months.forEachIndexed { index, (key, monthEntries) ->
-            if (index > 0) {
-                list.addView(View(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1).apply {
-                        marginStart = (20 * density).toInt()
-                    }
-                    setBackgroundColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_border))
-                })
-            }
-            // Confronto solo se il mese prima c'è ed è proprio quello precedente
-            val previous = months.getOrNull(index + 1)?.takeIf { index == 0 && it.first == key - 1 }
-            list.addView(buildMonthRow(key, monthEntries, previous, density))
-        }
+    /**
+     * Il mese scelto: nome, quanti in orario, una barretta verde/arancio, il tempo regalato
+     * e il confronto con il mese prima (sulla media al giorno, così un mese appena iniziato non vince "per forza").
+     */
+    private fun showMonth() {
+        val list = findViewById<LinearLayout>(R.id.monthsList)
+        list.removeAllViews()
+        if (months.isEmpty()) return
+        monthIndex = monthIndex.coerceIn(0, months.size - 1)
+
+        val (key, monthEntries) = months[monthIndex]
+        // Confronto solo se il mese prima c'è ed è proprio quello precedente
+        val previous = months.getOrNull(monthIndex + 1)?.takeIf { it.first == key - 1 }
+        list.addView(buildMonthRow(key, monthEntries, previous, resources.displayMetrics.density))
+
+        // Frecce: nascoste se c'è un mese solo, spente quando non c'è altro da quella parte
+        val prev = findViewById<View>(R.id.btnMonthPrev)
+        val next = findViewById<View>(R.id.btnMonthNext)
+        val arrows = if (months.size > 1) View.VISIBLE else View.GONE
+        prev.visibility = arrows
+        next.visibility = arrows
+        prev.isEnabled = monthIndex < months.size - 1
+        next.isEnabled = monthIndex > 0
+        prev.alpha = if (prev.isEnabled) 1f else 0.3f
+        next.alpha = if (next.isEnabled) 1f else 0.3f
     }
 
     private fun buildMonthRow(
@@ -286,7 +307,7 @@ class HistoryActivity : AppCompatActivity() {
             setPadding(0, (8 * density).toInt(), 0, 0)
         })
 
-        // Riga 4 (solo mese più recente): confronto con il mese prima, media al giorno
+        // Riga 4: confronto con il mese prima, media al giorno
         if (previous != null) {
             val avgNow = gifted / monthEntries.size
             val avgBefore = previous.second.sumOf { it.overtimeMinutes } / previous.second.size
@@ -454,7 +475,7 @@ class HistoryActivity : AppCompatActivity() {
                 textSize = 11f
                 letterSpacing = 0.12f
                 setTypeface(typeface, android.graphics.Typeface.BOLD)
-                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
             })
         }
         val tvValue = TextView(this).apply {

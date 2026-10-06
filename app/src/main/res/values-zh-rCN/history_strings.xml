@@ -54,6 +54,8 @@
     <string name="history_month_better">▼ 比%2$s每天少%1$s</string>
     <string name="history_month_worse">▲ 比%2$s每天多%1$s</string>
     <string name="history_month_same">与%s持平</string>
+    <string name="history_month_prev">上个月</string>
+    <string name="history_month_next">下个月</string>
 
     <string name="history_premium_title">高级版查看完整历史</string>
     <string name="history_premium_desc">记录、你的习惯、逐月进步和每周图表。</string>

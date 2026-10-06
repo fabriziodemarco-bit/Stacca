@@ -60,6 +60,8 @@
     <string name="history_month_better">▼ %1$s a day less than %2$s</string>
     <string name="history_month_worse">▲ %1$s a day more than %2$s</string>
     <string name="history_month_same">Same as %s</string>
+    <string name="history_month_prev">Previous month</string>
+    <string name="history_month_next">Next month</string>
 
     <string name="history_premium_title">Full history with Premium</string>
     <string name="history_premium_desc">Record, your habits, your progress month by month and the weekly chart.</string>

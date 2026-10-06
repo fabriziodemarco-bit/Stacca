@@ -62,6 +62,8 @@
     <string name="history_month_better">▼ %1$s al giorno in meno di %2$s</string>
     <string name="history_month_worse">▲ %1$s al giorno in più di %2$s</string>
     <string name="history_month_same">Come %s</string>
+    <string name="history_month_prev">Mese precedente</string>
+    <string name="history_month_next">Mese successivo</string>
 
     <string name="history_premium_title">Tutto lo storico con Premium</string>
     <string name="history_premium_desc">Record, le tue abitudini, i progressi mese per mese e il grafico della settimana.</string>
