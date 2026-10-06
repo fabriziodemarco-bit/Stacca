@@ -11,7 +11,7 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [x] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
 - [x] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
 - [x] 4. Modulo "Sicurezza dei dati" su Play (salvato, parte in revisione con la release).
-- [ ] 5. Questionario di classificazione dei contenuti (gli insulti di Insultami).
+- [x] 5. Questionario di classificazione dei contenuti: 3+ ovunque (insulti scherzosi, nessuna parolaccia vera).
 - [ ] 6. Scheda Play: testi e screenshot nuovi (Storico nuovo compreso).
 - [ ] 7. Prova finale sul telefono con la versione di release: Storico, permessi, allarme, Insultami, Premium, accesso e "Elimina account" nelle Impostazioni (deve aprire la pagina web).
 - [ ] 8. Pacchetto firmato (`.aab`) e caricamento su Play nel canale PRODUZIONE (risolve anche l'avviso "target API 36" entro il 1 nov).
