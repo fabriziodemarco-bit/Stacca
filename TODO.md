@@ -8,7 +8,7 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 ## Release 2.3.0 (mar 06/10): si pubblica solo quando i punti 1-7 sono tutti fatti
 Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok, chiavi Supabase da `local.properties`.
 - [x] 1. Versione 2.3.0 (versionCode 21) e via il permesso `FOREGROUND_SERVICE` (non usato).
-- [ ] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
+- [x] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
 - [x] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
 - [ ] 4. Modulo "Sicurezza dei dati" su Play.
 - [ ] 5. Questionario di classificazione dei contenuti (gli insulti di Insultami).
