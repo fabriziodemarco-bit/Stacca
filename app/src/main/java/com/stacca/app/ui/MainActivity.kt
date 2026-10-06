@@ -674,7 +674,7 @@ class MainActivity : AppCompatActivity() {
                     permissionsCelebrating = false
                     cardPermissions.visibility = View.GONE
                     homeContent.visibility = View.VISIBLE
-                }, 1600)
+                }, 2800) // abbastanza da vederla anche mentre si chiude la finestra di sistema
             } else if (!permissionsCelebrating) {
                 cardPermissions.visibility = View.GONE
                 homeContent.visibility = View.VISIBLE
