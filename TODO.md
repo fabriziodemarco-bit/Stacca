@@ -5,16 +5,16 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 - ~~**Supabase in pausa**~~ RISOLTO il 06/10: sveglia automatica ogni 3 giorni (GitHub Actions "Supabase sveglia" legge la tabella `keepalive`). Se GitHub manda una mail perché il repository è fermo da 60 giorni, riattivarla dalla scheda Actions.
 - **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
 
-## Release 2.3.0 (mar 06/10): si pubblica solo quando i punti 1-7 sono tutti fatti
+## Release 2.3.0 (mar 06/10): INVIATA IN REVISIONE, in attesa di Google
 Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok, chiavi Supabase da `local.properties`.
 - [x] 1. Versione 2.3.0 (versionCode 21) e via il permesso `FOREGROUND_SERVICE` (non usato).
 - [x] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
 - [x] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
 - [x] 4. Modulo "Sicurezza dei dati" su Play (salvato, parte in revisione con la release).
 - [x] 5. Questionario di classificazione dei contenuti: 3+ ovunque (insulti scherzosi, nessuna parolaccia vera).
-- [ ] 6. Scheda Play: testi nuovi (scheda_play.md), 5 screenshot, icona 512 e immagine in primo piano nuove (cartella screenshot_play). Da caricare e salvare su Play Console.
+- [x] 6. Scheda Play: testi nuovi (scheda_play.md), 5 screenshot, icona 512 e immagine in primo piano nuove. Inviata in revisione con la release.
 - [x] 7. Prova finale sulla release (06/10): permessi e festa, allarme e livello 2, Ho staccato, Storico, Insultami, accesso Google, Elimina account, Premium ripristinato da solo. Tutto ok.
-- [ ] 8. Pacchetto firmato (`.aab`) e caricamento su Play nel canale PRODUZIONE (risolve anche l'avviso "target API 36" entro il 1 nov).
+- [x] 8. Release 21 (2.3.0) caricata in PRODUZIONE e inviata in revisione il 06/10 sera (risolve anche l'avviso "target API 36").
 
 ## Prezzo e paywall (dopo la release, se avanza tempo oggi; altrimenti mer 07/10, poi call Andrea ven 09/10)
 - Prezzo: oggi 1,19 € una tantum, proposta 2,99 €. Si cambia dalla Play Console, senza nuova versione dell'app.
