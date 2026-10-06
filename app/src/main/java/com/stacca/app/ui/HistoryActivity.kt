@@ -42,6 +42,11 @@ class HistoryActivity : AppCompatActivity() {
     private var months: List<Pair<Int, List<HistoryStore.Entry>>> = emptyList()
     private var monthIndex = 0
 
+    // Lo sapevi?: (titolo, frase) e quale si sta guardando. Titolo null = il messaggio "ancora X stacchi"
+    private var insights: List<Pair<String?, String>> = emptyList()
+    private var insightIndex = 0
+    private var insightsPremium = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -60,6 +65,14 @@ class HistoryActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnMonthNext).setOnClickListener {
             monthIndex--
             showMonth()
+        }
+        findViewById<View>(R.id.btnInsightPrev).setOnClickListener {
+            insightIndex--
+            showInsight()
+        }
+        findViewById<View>(R.id.btnInsightNext).setOnClickListener {
+            insightIndex++
+            showInsight()
         }
     }
 
@@ -242,16 +255,8 @@ class HistoryActivity : AppCompatActivity() {
         val previous = months.getOrNull(monthIndex + 1)?.takeIf { it.first == key - 1 }
         list.addView(buildMonthRow(key, monthEntries, previous, resources.displayMetrics.density))
 
-        // Frecce: nascoste se c'è un mese solo, spente quando non c'è altro da quella parte
-        val prev = findViewById<View>(R.id.btnMonthPrev)
-        val next = findViewById<View>(R.id.btnMonthNext)
-        val arrows = if (months.size > 1) View.VISIBLE else View.GONE
-        prev.visibility = arrows
-        next.visibility = arrows
-        prev.isEnabled = monthIndex < months.size - 1
-        next.isEnabled = monthIndex > 0
-        prev.alpha = if (prev.isEnabled) 1f else 0.3f
-        next.alpha = if (next.isEnabled) 1f else 0.3f
+        // ‹ va indietro nel tempo (mesi più vecchi), › torna verso il più recente
+        setArrows(R.id.btnMonthPrev, R.id.btnMonthNext, months.size, monthIndex < months.size - 1, monthIndex > 0)
     }
 
     private fun buildMonthRow(
@@ -377,32 +382,46 @@ class HistoryActivity : AppCompatActivity() {
             return
         }
         section.visibility = View.VISIBLE
-        val density = resources.displayMetrics.density
 
         val closed = entries.filter { !it.unclosed }
         if (closed.size < MIN_INSIGHT_ENTRIES) {
             val missing = MIN_INSIGHT_ENTRIES - closed.size
-            val waiting = resources.getQuantityString(R.plurals.history_insights_waiting, missing, missing)
-            list.addView(buildInsightRow(null, waiting, false, density))
-            return
+            insights = listOf(null to resources.getQuantityString(R.plurals.history_insights_waiting, missing, missing))
+        } else {
+            insights = listOf(
+                getString(R.string.history_insight_time_label) to insightTime(closed),
+                getString(R.string.history_insight_day_label) to insightBlackDay(closed),
+                getString(R.string.history_insight_gift_label) to insightGifted(entries, now)
+            )
         }
+        insightsPremium = premium
+        showInsight()
+    }
 
-        val rows = listOf(
-            R.string.history_insight_time_label to insightTime(closed),
-            R.string.history_insight_day_label to insightBlackDay(closed),
-            R.string.history_insight_gift_label to insightGifted(entries, now)
-        )
-        rows.forEachIndexed { index, (label, value) ->
-            if (index > 0) {
-                list.addView(View(this).apply {
-                    layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1).apply {
-                        marginStart = (20 * density).toInt()
-                    }
-                    setBackgroundColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_border))
-                })
-            }
-            list.addView(buildInsightRow(getString(label), value, !premium && index > 0, density))
-        }
+    /** La curiosità scelta. Senza Premium, dalla seconda in poi: sfocata con il lucchetto. */
+    private fun showInsight() {
+        val list = findViewById<LinearLayout>(R.id.insightsList)
+        list.removeAllViews()
+        if (insights.isEmpty()) return
+        insightIndex = insightIndex.coerceIn(0, insights.size - 1)
+
+        val (label, value) = insights[insightIndex]
+        val locked = !insightsPremium && insightIndex > 0
+        list.addView(buildInsightRow(label, value, locked, resources.displayMetrics.density))
+        setArrows(R.id.btnInsightPrev, R.id.btnInsightNext, insights.size, insightIndex > 0, insightIndex < insights.size - 1)
+    }
+
+    /** Frecce di un carosello: nascoste se c'è un elemento solo, sbiadite quando da quella parte non c'è altro. */
+    private fun setArrows(prevId: Int, nextId: Int, count: Int, prevEnabled: Boolean, nextEnabled: Boolean) {
+        val prev = findViewById<View>(prevId)
+        val next = findViewById<View>(nextId)
+        val visibility = if (count > 1) View.VISIBLE else View.GONE
+        prev.visibility = visibility
+        next.visibility = visibility
+        prev.isEnabled = prevEnabled
+        next.isEnabled = nextEnabled
+        prev.alpha = if (prevEnabled) 1f else 0.3f
+        next.alpha = if (nextEnabled) 1f else 0.3f
     }
 
     /** "Il turno finisce alle 18:00, tu stacchi in media alle 18:14": fine turno media + ritardo medio. */

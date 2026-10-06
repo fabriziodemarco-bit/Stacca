@@ -23,6 +23,8 @@
         <item quantity="one">%d more unplug to discover your habits.</item>
         <item quantity="other">%d more unplugs to discover your habits.</item>
     </plurals>
+    <string name="history_insight_prev">Previous insight</string>
+    <string name="history_insight_next">Next insight</string>
     <string name="history_insight_locked">🔒 Find out with Premium</string>
 
     <string name="history_insight_time_label">WHEN YOU REALLY UNPLUG</string>

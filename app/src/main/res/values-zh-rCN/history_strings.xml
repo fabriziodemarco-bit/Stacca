@@ -21,6 +21,8 @@
     <plurals name="history_insights_waiting">
         <item quantity="other">再下班%d次，就能看到你的习惯。</item>
     </plurals>
+    <string name="history_insight_prev">上一条</string>
+    <string name="history_insight_next">下一条</string>
     <string name="history_insight_locked">🔒 高级版解锁</string>
 
     <string name="history_insight_time_label">你真正下班的时间</string>

@@ -25,6 +25,8 @@
         <item quantity="one">Ancora %d stacco e scopri le tue abitudini.</item>
         <item quantity="other">Ancora %d stacchi e scopri le tue abitudini.</item>
     </plurals>
+    <string name="history_insight_prev">Curiosità precedente</string>
+    <string name="history_insight_next">Curiosità successiva</string>
     <string name="history_insight_locked">🔒 Scoprilo con Premium</string>
 
     <string name="history_insight_time_label">A CHE ORA STACCHI DAVVERO</string>

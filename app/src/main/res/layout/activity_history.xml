@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Storico, nello stile "editoriale" della home:
-    titolo con la settimana, 3 numeri, grafico della settimana (Premium), "Lo sapevi?", mese per mese (Premium).
+    titolo con la settimana, 3 numeri, grafico della settimana e mese per mese (Premium), "Lo sapevi?".
     I contenuti dinamici (barre e righe) li costruisce HistoryActivity.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -115,26 +115,6 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Lo sapevi? Tre abitudini ricavate dallo storico (la prima per tutti, le altre Premium) -->
-            <LinearLayout
-                android:id="@+id/sectionInsights"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Stacca.Settings.SectionLabel"
-                    android:text="@string/history_insights_label" />
-
-                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
-                    <LinearLayout
-                        android:id="@+id/insightsList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
             <!-- Mese per mese (Premium): un mese alla volta, con le frecce per sfogliare gli altri -->
             <LinearLayout
                 android:id="@+id/sectionMonths"
@@ -170,6 +150,47 @@
                 <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
                     <LinearLayout
                         android:id="@+id/monthsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Lo sapevi? Tre abitudini, una alla volta con le frecce (la prima per tutti, le altre Premium) -->
+            <LinearLayout
+                android:id="@+id/sectionInsights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/Stacca.Settings.SectionLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/history_insights_label" />
+
+                    <TextView
+                        android:id="@+id/btnInsightPrev"
+                        style="@style/Stacca.History.MonthArrow"
+                        android:contentDescription="@string/history_insight_prev"
+                        android:text="‹" />
+
+                    <TextView
+                        android:id="@+id/btnInsightNext"
+                        style="@style/Stacca.History.MonthArrow"
+                        android:contentDescription="@string/history_insight_next"
+                        android:text="›" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/insightsList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical" />
