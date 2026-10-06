@@ -18,7 +18,7 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 
 ## Prezzo e paywall (06/10 sera)
 - Decisione: 7 giorni di prova completa e visibile, poi gratis per sempre (livelli 1-3 + Insultami), Premium 2,99 € una tantum. Niente abbonamento per ora.
-- [ ] Prezzo 2,99 € in Play Console (Fabrizio). Screenshot paywall con 2,99 €: `screenshot_play/play/05_paywall_2-99.png` (3 voci; dopo la 2.3.1 rifarlo con 4 voci).
+- [ ] Prezzo 2,99 € in Play Console (Fabrizio). Screenshot paywall con 4 voci e 2,99 €: `screenshot_play/play/05_paywall_2-99.png` (da caricare sulla scheda Play al posto del vecchio).
 - [ ] Release 22 (2.3.1) caricata in produzione: prova visibile in home, Impostazioni sbloccate in prova, riepilogo a fine prova, Storico completo tra le voci Premium, titolo home che non va più a capo. Testata sul Samsung il 06/10.
 - [ ] Da verificare: dopo il terzo permesso la festa "Ci siamo." non si è vista (06/10).
 ## Da rivedere dopo la release 2.3.0
