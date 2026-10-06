@@ -16,10 +16,11 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [x] 7. Prova finale sulla release (06/10): permessi e festa, allarme e livello 2, Ho staccato, Storico, Insultami, accesso Google, Elimina account, Premium ripristinato da solo. Tutto ok.
 - [x] 8. Release 21 (2.3.0) caricata in PRODUZIONE e inviata in revisione il 06/10 sera (risolve anche l'avviso "target API 36").
 
-## Prezzo e paywall (dopo la release, se avanza tempo oggi; altrimenti mer 07/10, poi call Andrea ven 09/10)
-- Prezzo: oggi 1,19 € una tantum, proposta 2,99 €. Si cambia dalla Play Console, senza nuova versione dell'app.
-- Paywall: ripassare dove compare oggi (badge "Passa a Premium", riquadro nello storico, riga nella notifica del livello 3, fine prova gratuita) e se aggiungerne altri. Le modifiche ai punti di ingresso richiedono una nuova versione: dopo la call con Andrea.
-
+## Prezzo e paywall (06/10 sera)
+- Decisione: 7 giorni di prova completa e visibile, poi gratis per sempre (livelli 1-3 + Insultami), Premium 2,99 € una tantum. Niente abbonamento per ora.
+- [ ] Prezzo 2,99 € in Play Console (Fabrizio). Screenshot paywall con 2,99 €: `screenshot_play/play/05_paywall_2-99.png` (3 voci; dopo la 2.3.1 rifarlo con 4 voci).
+- [ ] Release 22 (2.3.1) caricata in produzione: prova visibile in home, Impostazioni sbloccate in prova, riepilogo a fine prova, Storico completo tra le voci Premium, titolo home che non va più a capo. Testata sul Samsung il 06/10.
+- [ ] Da verificare: dopo il terzo permesso la festa "Ci siamo." non si è vista (06/10).
 ## Da rivedere dopo la release 2.3.0
 - **Contatore "promemoria inviati"**: nel test del 06/10 segnava 3/6 dopo 9 minuti con avvisi ogni 10 min. Probabilmente colpa delle chiusure forzate e reinstallazioni durante il test: verificare con un turno pulito, contando le notifiche.
 - **Schermo rosso**: ridisegnarlo nello stile maturo dell'app (proposta "Bollettino d'emergenza": sfondo bordeaux che "respira", cronometro grande, segmenti dei livelli, niente emoji che saltano).
