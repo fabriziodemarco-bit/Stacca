@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    Icona "Stacca la spina" (B1): il simbolo di spegnimento in crema,
-    con il trattino che diventa un punto esclamativo arancio.
-    Tutto sta nella zona sicura centrale (raggio 28 su 108), così nessuna forma di Android lo taglia.
--->
+<!-- Icona a tema (Android 13+): stesse forme, un colore solo. Il sistema la colora come le altre icone. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
@@ -11,21 +7,18 @@
     android:viewportHeight="108">
     <!-- Un po' rimpicciolito al centro: su Samsung la forma taglia più vicino ai bordi -->
     <group android:pivotX="54" android:pivotY="54" android:scaleX="0.86" android:scaleY="0.86">
-    <!-- Anello aperto in alto -->
     <path
         android:pathData="M40.6,38.2 A24,24 0 1,0 67.4,38.2"
-        android:strokeColor="#F8F5F0"
+        android:strokeColor="#FFFFFFFF"
         android:strokeWidth="8"
         android:strokeLineCap="round" />
-    <!-- Asta del punto esclamativo -->
     <path
         android:pathData="M54,30.5 L54,49.5"
-        android:strokeColor="#FF875F"
+        android:strokeColor="#FFFFFFFF"
         android:strokeWidth="9"
         android:strokeLineCap="round" />
-    <!-- Punto del punto esclamativo -->
     <path
-        android:fillColor="#FF875F"
+        android:fillColor="#FFFFFFFF"
         android:pathData="M49,64 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
     </group>
 </vector>
