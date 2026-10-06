@@ -10,7 +10,6 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- USE_FULL_SCREEN_INTENT rimosso — Google Play policy: permesso riservato ad app sveglia/telefono -->
     <!-- SYSTEM_ALERT_WINDOW rimosso — non necessario -->

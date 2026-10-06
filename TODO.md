@@ -4,11 +4,18 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 ## Da sistemare
 - **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
 
-## Prima della release 2.3.0 (mar 06/10)
-- **Check di sicurezza**: nessun segreto nel codice o su GitHub, permessi del manifest (solo quelli usati), componenti esportati, chiavi Supabase e regole di accesso ai dati.
-- **Privacy e burocrazia**: informativa privacy aggiornata alle funzioni nuove (storico salvato sul telefono, voce, flash, vibrazione), modulo "Sicurezza dei dati" su Play, questionario di classificazione dei contenuti (gli insulti), scheda Play (testi e screenshot nuovi).
+## Release 2.3.0 (mar 06/10): si pubblica solo quando i punti 1-7 sono tutti fatti
+Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok, chiavi Supabase da `local.properties`.
+- [x] 1. Versione 2.3.0 (versionCode 21) e via il permesso `FOREGROUND_SERVICE` (non usato).
+- [ ] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
+- [ ] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
+- [ ] 4. Modulo "Sicurezza dei dati" su Play.
+- [ ] 5. Questionario di classificazione dei contenuti (gli insulti di Insultami).
+- [ ] 6. Scheda Play: testi e screenshot nuovi (Storico nuovo compreso).
+- [ ] 7. Prova finale sul telefono con la versione di release: Storico, permessi, allarme, Insultami, Premium.
+- [ ] 8. Pacchetto firmato (`.aab`) e caricamento su Play.
 
-## Prezzo e paywall (da valutare insieme mer 07/10)
+## Prezzo e paywall (dopo la release, se avanza tempo oggi; altrimenti mer 07/10, poi call Andrea ven 09/10)
 - Prezzo: oggi 1,19 € una tantum, proposta 2,99 €. Si cambia dalla Play Console, senza nuova versione dell'app.
 - Paywall: ripassare dove compare oggi (badge "Passa a Premium", riquadro nello storico, riga nella notifica del livello 3, fine prova gratuita) e se aggiungerne altri. Le modifiche ai punti di ingresso richiedono una nuova versione: dopo la call con Andrea.
 
