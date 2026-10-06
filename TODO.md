@@ -2,13 +2,14 @@
 Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci sono solo le cose da fare.
 
 ## Da sistemare
+- **Supabase in pausa**: il piano gratuito mette in pausa il progetto dopo 7 giorni senza richieste (trovato in pausa il 06/10). Intanto il login non funziona. Soluzione gratuita: un "ping" automatico ogni pochi giorni con GitHub Actions; in alternativa piano Pro (25 $/mese).
 - **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
 
 ## Release 2.3.0 (mar 06/10): si pubblica solo quando i punti 1-7 sono tutti fatti
 Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok, chiavi Supabase da `local.properties`.
 - [x] 1. Versione 2.3.0 (versionCode 21) e via il permesso `FOREGROUND_SERVICE` (non usato).
 - [ ] 2. RLS su Supabase: nessuna tabella "RLS disabled" o "Unrestricted" (controllo manuale di Fabrizio).
-- [ ] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
+- [x] 3. Informativa privacy aggiornata: storico salvato sul telefono (e nel backup Google), voce, flash, vibrazione.
 - [ ] 4. Modulo "Sicurezza dei dati" su Play.
 - [ ] 5. Questionario di classificazione dei contenuti (gli insulti di Insultami).
 - [ ] 6. Scheda Play: testi e screenshot nuovi (Storico nuovo compreso).
