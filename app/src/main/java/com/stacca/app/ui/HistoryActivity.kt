@@ -144,17 +144,17 @@ class HistoryActivity : AppCompatActivity() {
 
     /**
      * Sette colonne (ultimi 7 giorni, oggi a destra), alte in proporzione ai minuti regalati:
-     * un'ora (o il giorno peggiore della settimana, se più lungo) riempie tutta l'altezza.
+     * mezz'ora (o il giorno peggiore della settimana, se più lungo) riempie tutta l'altezza.
      * Verde se in orario, arancio se in ritardo (con i minuti sopra), grigia se non registrato.
-     * Giorno non chiuso: arancio tenue a metà altezza, con una ✗ sopra.
+     * Giorno non chiuso: arancio tenue a tutta altezza, con una ✗ sopra.
      */
     private fun renderWeekBars(entries: List<HistoryStore.Entry>) {
         val container = findViewById<LinearLayout>(R.id.weekBars)
         container.removeAllViews()
         val density = resources.displayMetrics.density
-        val maxBarPx = (54 * density).toInt()
-        val minBarPx = (6 * density).toInt()
-        val emptyBarPx = (4 * density).toInt()
+        val maxBarPx = (44 * density).toInt()
+        val minBarPx = (12 * density).toInt()
+        val emptyBarPx = (8 * density).toInt()
 
         // Si parte da 6 giorni fa, a mezzanotte
         val day = Calendar.getInstance().apply {
@@ -172,7 +172,7 @@ class HistoryActivity : AppCompatActivity() {
             val dayEntries = entries.filter { e -> e.timestampMillis >= start && e.timestampMillis < day.timeInMillis }
             Triple(label, dayEntries.sumOf { e -> e.overtimeMinutes }, dayEntries)
         }
-        val maxMinutes = maxOf(60, days.maxOf { it.second })
+        val maxMinutes = maxOf(30, days.maxOf { it.second })
 
         days.forEach { (label, minutes, dayEntries) ->
             val column = LinearLayout(this).apply {
@@ -189,7 +189,7 @@ class HistoryActivity : AppCompatActivity() {
             }
             val height = when {
                 dayEntries.isEmpty() -> emptyBarPx
-                unclosed -> maxBarPx / 2
+                unclosed -> maxBarPx
                 else -> minBarPx + (maxBarPx - minBarPx) * minutes.coerceAtMost(maxMinutes) / maxMinutes
             }
 
