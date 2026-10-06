@@ -11,7 +11,7 @@ Se cambi i testi su Play, aggiornali anche qui.
 Stacca!
 ```
 
-**Descrizione breve** (67/80)
+**Descrizione breve** (71/80)
 ```
 Il turno è finito. Stacca! te lo ricorda, ogni volta meno gentilmente.
 ```
@@ -55,7 +55,7 @@ Stacca!
 Unplug!
 ```
 
-**Short description** (70/80)
+**Short description** (72/80)
 ```
 Your shift is over. Unplug! reminds you, each time a little less nicely.
 ```
