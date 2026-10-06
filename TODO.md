@@ -13,7 +13,7 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [x] 4. Modulo "Sicurezza dei dati" su Play (salvato, parte in revisione con la release).
 - [x] 5. Questionario di classificazione dei contenuti: 3+ ovunque (insulti scherzosi, nessuna parolaccia vera).
 - [ ] 6. Scheda Play: testi nuovi (scheda_play.md), 5 screenshot, icona 512 e immagine in primo piano nuove (cartella screenshot_play). Da caricare e salvare su Play Console.
-- [ ] 7. Prova finale sul telefono con la versione di release: Storico, permessi, allarme, Insultami, Premium, accesso e "Elimina account" nelle Impostazioni (deve aprire la pagina web).
+- [x] 7. Prova finale sulla release (06/10): permessi e festa, allarme e livello 2, Ho staccato, Storico, Insultami, accesso Google, Elimina account, Premium ripristinato da solo. Tutto ok.
 - [ ] 8. Pacchetto firmato (`.aab`) e caricamento su Play nel canale PRODUZIONE (risolve anche l'avviso "target API 36" entro il 1 nov).
 
 ## Prezzo e paywall (dopo la release, se avanza tempo oggi; altrimenti mer 07/10, poi call Andrea ven 09/10)
@@ -21,6 +21,7 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - Paywall: ripassare dove compare oggi (badge "Passa a Premium", riquadro nello storico, riga nella notifica del livello 3, fine prova gratuita) e se aggiungerne altri. Le modifiche ai punti di ingresso richiedono una nuova versione: dopo la call con Andrea.
 
 ## Da rivedere dopo la release 2.3.0
+- **Contatore "promemoria inviati"**: nel test del 06/10 segnava 3/6 dopo 9 minuti con avvisi ogni 10 min. Probabilmente colpa delle chiusure forzate e reinstallazioni durante il test: verificare con un turno pulito, contando le notifiche.
 - **Schermo rosso**: ridisegnarlo nello stile maturo dell'app (proposta "Bollettino d'emergenza": sfondo bordeaux che "respira", cronometro grande, segmenti dei livelli, niente emoji che saltano).
 - **Insultami free o premium?** Domanda di marketing (da fare anche ad Andrea): Insultami completo (60 s) gratis per tutti, oppure anteprima breve (20-30 s) gratis e versione completa solo con Premium?
 - **Riquadro permessi senza uscita**: chi rifiuta anche un solo permesso non vede mai la home. Valutare un'uscita guardando i primi utenti.
