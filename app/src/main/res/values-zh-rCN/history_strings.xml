@@ -16,11 +16,37 @@
     </plurals>
 
     <string name="history_week_chart">最近7天</string>
-    <string name="history_list_label">最近7个工作日</string>
-    <string name="history_row_ontime">准时 ✓</string>
-    <string name="history_row_unclosed">未结束 ✗</string>
-    <string name="history_row_late">+%1$d分钟 · 第%2$d级</string>
-    <string name="history_row_end">下班时间 %s</string>
+
+    <string name="history_insights_label">你知道吗？</string>
+    <plurals name="history_insights_waiting">
+        <item quantity="other">再下班%d次，就能看到你的习惯。</item>
+    </plurals>
+    <string name="history_insight_locked">🔒 高级版解锁</string>
+
+    <string name="history_insight_time_label">你真正下班的时间</string>
+    <string name="history_insight_time">下班时间是%1$s，\n你平均%2$s才走。</string>
+    <string name="history_insight_time_punctual">下班时间是%s，你准点就走。像瑞士火车一样准时。</string>
+
+    <string name="history_insight_day_label">你的黑色日</string>
+    <string name="history_insight_day">%1$s你走得最晚：平均+%2$s。</string>
+    <string name="history_insight_day_none">没有黑色日：你整周都准时下班。</string>
+
+    <string name="history_insight_gift_label">今年你白送了</string>
+    <string name="history_insight_gift">%1$s给工作。\n相当于%2$s。</string>
+    <string name="history_insight_gift_zero">一分钟都没有。传奇。</string>
+    <string name="history_insight_gift_little">只有%s。工作可以等，你知道的。</string>
+    <plurals name="history_gift_flights">
+        <item quantity="other">%d次罗马–纽约航班</item>
+    </plurals>
+    <plurals name="history_gift_films">
+        <item quantity="other">%d部完整电影</item>
+    </plurals>
+    <plurals name="history_gift_episodes">
+        <item quantity="other">%d集电视剧</item>
+    </plurals>
+    <plurals name="history_gift_coffees">
+        <item quantity="other">%d杯悠闲的咖啡</item>
+    </plurals>
 
     <string name="history_months_label">逐月</string>
     <string name="history_month_ontime">%2$d次中%1$d次准时</string>
@@ -30,6 +56,6 @@
     <string name="history_month_same">与%s持平</string>
 
     <string name="history_premium_title">高级版查看完整历史</string>
-    <string name="history_premium_desc">记录、逐月进步和每周图表。</string>
+    <string name="history_premium_desc">记录、你的习惯、逐月进步和每周图表。</string>
     <string name="history_premium_cta">解锁高级版</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Storico, nello stile "editoriale" della home:
-    titolo con la settimana, 3 numeri, grafico della settimana (Premium), elenco dei giorni.
+    titolo con la settimana, 3 numeri, "Lo sapevi?", grafico della settimana e mese per mese (Premium).
     I contenuti dinamici (barre e righe) li costruisce HistoryActivity.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -91,6 +91,26 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Lo sapevi? Tre abitudini ricavate dallo storico (la prima per tutti, le altre Premium) -->
+            <LinearLayout
+                android:id="@+id/sectionInsights"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Stacca.Settings.SectionLabel"
+                    android:text="@string/history_insights_label" />
+
+                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
+                    <LinearLayout
+                        android:id="@+id/insightsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
             <!-- Grafico della settimana (Premium) -->
             <LinearLayout
                 android:id="@+id/sectionChart"
@@ -173,26 +193,6 @@
                         android:textColor="@color/home_on_accent" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- Elenco dei giorni -->
-            <LinearLayout
-                android:id="@+id/sectionList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Stacca.Settings.SectionLabel"
-                    android:text="@string/history_list_label" />
-
-                <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
-                    <LinearLayout
-                        android:id="@+id/historyList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

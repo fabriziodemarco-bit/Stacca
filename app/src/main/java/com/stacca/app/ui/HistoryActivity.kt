@@ -1,6 +1,9 @@
 package com.stacca.app.ui
 
 import android.content.Intent
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -21,14 +24,14 @@ import java.util.Locale
 
 /**
  * Storico degli stacchi.
- * Gratis: serie attuale e ultimi 7 giorni.
- * Premium (o prova gratuita): anche record, tempo non vissuto del mese, grafico della settimana
- * e tutto l'elenco.
+ * Gratis: serie attuale e, nel "Lo sapevi?", a che ora stacchi davvero.
+ * Premium (o prova gratuita): anche record, tempo non vissuto del mese, giorno nero,
+ * regalato dell'anno tradotto in vita, grafico della settimana e mese per mese.
  */
 class HistoryActivity : AppCompatActivity() {
 
     companion object {
-        private const val LIST_WORKDAYS = 7   // elenco: le ultime 7 giornate registrate, per tutti
+        private const val MIN_INSIGHT_ENTRIES = 5   // sotto questa soglia le medie non dicono niente
         private const val MAX_MONTHS = 12
         private const val DAY_MILLIS = 24 * 60 * 60 * 1000L
     }
@@ -73,7 +76,7 @@ class HistoryActivity : AppCompatActivity() {
             renderMonths(entries)
         }
 
-        renderList(entries.take(LIST_WORKDAYS))
+        renderInsights(entries, premium, now)
     }
 
     // ------------------------------------------------------------------
@@ -339,19 +342,36 @@ class HistoryActivity : AppCompatActivity() {
         return if (inSentence && Locale.getDefault().language == "it") name.lowercase(Locale.ITALIAN) else name
     }
 
-    private fun renderList(entries: List<HistoryStore.Entry>) {
-        val section = findViewById<View>(R.id.sectionList)
-        val list = findViewById<LinearLayout>(R.id.historyList)
+    /**
+     * "Lo sapevi?": tre abitudini ricavate dallo storico (le medie solo dai giorni chiusi davvero).
+     * Gratis si vede "a che ora stacchi davvero"; giorno nero e regalato dell'anno restano sfocati,
+     * con il lucchetto, e portano alla paywall. Sotto i [MIN_INSIGHT_ENTRIES] stacchi: quanti ne mancano.
+     */
+    private fun renderInsights(entries: List<HistoryStore.Entry>, premium: Boolean, now: Long) {
+        val section = findViewById<View>(R.id.sectionInsights)
+        val list = findViewById<LinearLayout>(R.id.insightsList)
         list.removeAllViews()
         if (entries.isEmpty()) {
             section.visibility = View.GONE
             return
         }
         section.visibility = View.VISIBLE
-
         val density = resources.displayMetrics.density
-        val dateFormat = SimpleDateFormat("EEE d MMM", Locale.getDefault())
-        entries.forEachIndexed { index, entry ->
+
+        val closed = entries.filter { !it.unclosed }
+        if (closed.size < MIN_INSIGHT_ENTRIES) {
+            val missing = MIN_INSIGHT_ENTRIES - closed.size
+            val waiting = resources.getQuantityString(R.plurals.history_insights_waiting, missing, missing)
+            list.addView(buildInsightRow(null, waiting, false, density))
+            return
+        }
+
+        val rows = listOf(
+            R.string.history_insight_time_label to insightTime(closed),
+            R.string.history_insight_day_label to insightBlackDay(closed),
+            R.string.history_insight_gift_label to insightGifted(entries, now)
+        )
+        rows.forEachIndexed { index, (label, value) ->
             if (index > 0) {
                 list.addView(View(this).apply {
                     layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1).apply {
@@ -360,52 +380,118 @@ class HistoryActivity : AppCompatActivity() {
                     setBackgroundColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_border))
                 })
             }
-            list.addView(buildRow(entry, dateFormat, density))
+            list.addView(buildInsightRow(getString(label), value, !premium && index > 0, density))
         }
     }
 
-    private fun buildRow(entry: HistoryStore.Entry, dateFormat: SimpleDateFormat, density: Float): View {
+    /** "Il turno finisce alle 18:00, tu stacchi in media alle 18:14": fine turno media + ritardo medio. */
+    private fun insightTime(closed: List<HistoryStore.Entry>): String {
+        val avgEnd = closed.sumOf { it.endHour * 60 + it.endMinute } / closed.size
+        val avgOvertime = closed.sumOf { it.overtimeMinutes.coerceAtLeast(0) } / closed.size
+        return if (avgOvertime < 1) {
+            getString(R.string.history_insight_time_punctual, clock(avgEnd))
+        } else {
+            getString(R.string.history_insight_time, clock(avgEnd), clock(avgEnd + avgOvertime))
+        }
+    }
+
+    /**
+     * Il giorno della settimana con il ritardo medio più alto.
+     * Contano i giorni con almeno 2 stacchi (se nessuno ne ha 2, tutti): un solo giovedì storto non fa una regola.
+     */
+    private fun insightBlackDay(closed: List<HistoryStore.Entry>): String {
+        val byDay = closed.groupBy { entry ->
+            // Il giorno del turno, non dello stacco: chi stacca dopo mezzanotte resta sul giorno giusto
+            Calendar.getInstance().apply {
+                timeInMillis = entry.timestampMillis - entry.overtimeMinutes.coerceAtLeast(0) * 60_000L
+            }.get(Calendar.DAY_OF_WEEK)
+        }
+        val worst = byDay.filter { it.value.size >= 2 }.ifEmpty { byDay }
+            .mapValues { (_, list) -> list.sumOf { it.overtimeMinutes.coerceAtLeast(0) } / list.size }
+            .maxByOrNull { it.value }
+        if (worst == null || worst.value <= PreferencesManager.ON_TIME_THRESHOLD_MINUTES) {
+            return getString(R.string.history_insight_day_none)
+        }
+        val day = Calendar.getInstance().apply { set(Calendar.DAY_OF_WEEK, worst.key) }
+        var dayName = SimpleDateFormat("EEEE", Locale.getDefault()).format(day.time)
+        if (Locale.getDefault().language == "it") dayName = dayName.lowercase(Locale.ITALIAN)
+        return getString(R.string.history_insight_day, dayName, formatMinutes(worst.value))
+    }
+
+    /** Il regalato dall'inizio dell'anno, tradotto in qualcosa di vivo: voli, film, episodi o caffè. */
+    private fun insightGifted(entries: List<HistoryStore.Entry>, now: Long): String {
+        val year = monthKey(now) / 12
+        val minutes = entries
+            .filter { monthKey(it.timestampMillis) / 12 == year }
+            .sumOf { it.overtimeMinutes.coerceAtLeast(0) }
+        if (minutes == 0) return getString(R.string.history_insight_gift_zero)
+        if (minutes < 30) return getString(R.string.history_insight_gift_little, formatMinutes(minutes))
+
+        // L'unità più grande che ci sta almeno 2 volte (volo Roma–New York ≈ 9 ore)
+        val (plural, unitMinutes) = listOf(
+            R.plurals.history_gift_flights to 540,
+            R.plurals.history_gift_films to 120,
+            R.plurals.history_gift_episodes to 45
+        ).firstOrNull { minutes / it.second >= 2 } ?: (R.plurals.history_gift_coffees to 15)
+        val count = minutes / unitMinutes
+        return getString(
+            R.string.history_insight_gift,
+            formatMinutes(minutes),
+            resources.getQuantityString(plural, count, count)
+        )
+    }
+
+    /** Una riga del "Lo sapevi?": etichetta piccola e frase. Se bloccata: frase sfocata, lucchetto e paywall. */
+    private fun buildInsightRow(label: String?, value: String, locked: Boolean, density: Float): View {
         val pad = (20 * density).toInt()
         val row = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-            gravity = Gravity.CENTER_VERTICAL
-            setPadding(pad, (12 * density).toInt(), (16 * density).toInt(), (12 * density).toInt())
-        }
-        val texts = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+            setPadding(pad, (14 * density).toInt(), pad, (14 * density).toInt())
         }
-        texts.addView(TextView(this).apply {
-            text = dateFormat.format(entry.timestampMillis).replaceFirstChar { it.uppercase() }
+        if (label != null) {
+            row.addView(TextView(this).apply {
+                text = label
+                textSize = 11f
+                letterSpacing = 0.12f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
+            })
+        }
+        val tvValue = TextView(this).apply {
+            text = value
             textSize = 16f
+            setLineSpacing(0f, 1.1f)
             setTypeface(typeface, android.graphics.Typeface.BOLD)
             setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text))
-        })
-        texts.addView(TextView(this).apply {
-            text = getString(
-                R.string.history_row_end,
-                String.format("%02d:%02d", entry.endHour, entry.endMinute)
-            )
-            textSize = 13f
-            setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_text_secondary))
-        })
-        val status = TextView(this).apply {
-            textSize = 14f
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
-            if (entry.unclosed) {
-                setText(R.string.history_row_unclosed)
-                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
-            } else if (entry.isOnTime) {
-                setText(R.string.history_row_ontime)
-                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_success))
-            } else {
-                text = getString(R.string.history_row_late, entry.overtimeMinutes, entry.level)
-                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
-            }
+            if (label != null) setPadding(0, (6 * density).toInt(), 0, 0)
         }
-        row.addView(texts)
-        row.addView(status)
+        row.addView(tvValue)
+
+        if (locked) {
+            // La sfocatura c'è da Android 12: prima la frase non si mostra proprio
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val radius = 10 * density
+                tvValue.setRenderEffect(RenderEffect.createBlurEffect(radius, radius, Shader.TileMode.DECAL))
+                tvValue.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            } else {
+                tvValue.visibility = View.GONE
+            }
+            row.addView(TextView(this).apply {
+                setText(R.string.history_insight_locked)
+                textSize = 13f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setTextColor(ContextCompat.getColor(this@HistoryActivity, R.color.home_accent))
+                setPadding(0, (6 * density).toInt(), 0, 0)
+            })
+            row.setOnClickListener { startActivity(Intent(this, PaywallActivity::class.java)) }
+        }
         return row
+    }
+
+    /** Minuti dall'inizio del giorno → "18:14". */
+    private fun clock(minutes: Int): String {
+        val m = ((minutes % 1440) + 1440) % 1440
+        return String.format(Locale.getDefault(), "%02d:%02d", m / 60, m % 60)
     }
 
     // ------------------------------------------------------------------
