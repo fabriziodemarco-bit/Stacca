@@ -152,9 +152,9 @@ class HistoryActivity : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.weekBars)
         container.removeAllViews()
         val density = resources.displayMetrics.density
-        val maxBarPx = (120 * density).toInt()
-        val minBarPx = (12 * density).toInt()
-        val emptyBarPx = (6 * density).toInt()
+        val maxBarPx = (54 * density).toInt()
+        val minBarPx = (6 * density).toInt()
+        val emptyBarPx = (4 * density).toInt()
 
         // Si parte da 6 giorni fa, a mezzanotte
         val day = Calendar.getInstance().apply {
@@ -268,7 +268,7 @@ class HistoryActivity : AppCompatActivity() {
         val pad = (20 * density).toInt()
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(pad, (14 * density).toInt(), pad, (14 * density).toInt())
+            setPadding(pad, (12 * density).toInt(), pad, (12 * density).toInt())
         }
         val onTime = monthEntries.count { it.isOnTime }
         val gifted = monthEntries.sumOf { it.overtimeMinutes }
@@ -486,7 +486,7 @@ class HistoryActivity : AppCompatActivity() {
         val pad = (20 * density).toInt()
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(pad, (14 * density).toInt(), pad, (14 * density).toInt())
+            setPadding(pad, (12 * density).toInt(), pad, (12 * density).toInt())
         }
         if (label != null) {
             row.addView(TextView(this).apply {

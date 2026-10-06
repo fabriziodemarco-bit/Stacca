@@ -66,13 +66,13 @@
             <!-- Tre numeri: serie, record, tempo non vissuto -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/Stacca.Settings.Card"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="18dp">
+                    android:padding="14dp">
 
                     <LinearLayout style="@style/Stacca.History.Stat">
                         <TextView style="@style/Stacca.History.StatLabel" android:text="@string/history_streak" />
@@ -100,18 +100,20 @@
 
                 <TextView
                     style="@style/Stacca.Settings.SectionLabel"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/history_week_chart" />
 
                 <com.google.android.material.card.MaterialCardView style="@style/Stacca.Settings.Card">
                     <LinearLayout
                         android:id="@+id/weekBars"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="104dp"
                         android:orientation="horizontal"
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="12dp" />
+                        android:paddingTop="10dp"
+                        android:paddingBottom="6dp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
@@ -130,6 +132,8 @@
 
                     <TextView
                         style="@style/Stacca.Settings.SectionLabel"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:text="@string/history_months_label" />
@@ -171,6 +175,8 @@
 
                     <TextView
                         style="@style/Stacca.Settings.SectionLabel"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:text="@string/history_insights_label" />
