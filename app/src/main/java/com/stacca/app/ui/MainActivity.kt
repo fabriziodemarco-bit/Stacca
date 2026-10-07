@@ -390,6 +390,9 @@ class MainActivity : AppCompatActivity() {
             .setTitle(R.string.dialog_deactivate_title)
             .setMessage(R.string.dialog_deactivate_message)
             .setPositiveButton(R.string.dialog_deactivate_yes) { _, _ ->
+                // Si registra solo se siamo davvero in straordinario (allarme scattato, non ancora staccato).
+                // Dopo "Ho staccato" il turno di riferimento è quello di domani: niente doppio conteggio.
+                val inStraordinario = currentHeroState() == HeroState.STRAORDINARIO
                 prefs.isAlarmActive = false
                 prefs.resetEscalation()
                 AlarmSoundManager.stop()
@@ -403,7 +406,7 @@ class MainActivity : AppCompatActivity() {
                     set(java.util.Calendar.SECOND, 0)
                 }
                 val overtimeMillis = now.timeInMillis - endTime.timeInMillis
-                if (overtimeMillis > 0) {
+                if (overtimeMillis > 0 && inStraordinario) {
                     val overtimeMinutes = (overtimeMillis / 60_000).toInt()
                     prefs.registraStaccato(overtimeMinutes)
                 }
