@@ -94,6 +94,13 @@
     <string name="login_error_password_required">Inserisci la password</string>
     <string name="login_error_password_short">La password deve avere almeno 6 caratteri</string>
     <string name="login_error_generic">Errore: %s</string>
+    <string name="login_error_timeout">Il server ci sta mettendo troppo. Riprova tra un minuto, oppure usa Accedi con Google.</string>
+    <string name="login_error_network">Nessuna connessione. Controlla internet e riprova.</string>
+    <string name="login_error_credentials">Email o password sbagliate.</string>
+    <string name="login_error_not_confirmed">Prima conferma l\'email: apri il link che ti abbiamo mandato (guarda anche nello spam).</string>
+    <string name="login_error_exists">Esiste già un account con questa email. Prova ad accedere.</string>
+    <string name="login_error_rate">Troppi tentativi in poco tempo. Riprova tra qualche minuto, oppure usa Accedi con Google.</string>
+    <string name="login_error_unknown">Qualcosa è andato storto. Riprova tra un minuto, oppure usa Accedi con Google.</string>
 
     <!-- Premium -->
     <string name="premium_title">Stacca! Premium</string>

@@ -4,6 +4,7 @@ import com.stacca.app.BuildConfig
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Configurazione del client Supabase.
@@ -26,6 +27,8 @@ object SupabaseConfig {
         supabaseUrl = SUPABASE_URL,
         supabaseKey = SUPABASE_ANON_KEY
     ) {
+        // La registrazione aspetta l'invio della mail di conferma: 10 secondi (il default) a volte non bastano
+        requestTimeout = 30.seconds
         install(Auth) {
             scheme = "stacca"
             host = "login-callback"

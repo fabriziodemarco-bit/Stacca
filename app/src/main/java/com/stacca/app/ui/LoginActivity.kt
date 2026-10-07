@@ -387,7 +387,7 @@ class LoginActivity : AppCompatActivity() {
                     getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                 goToMain()
             }.onFailure { error ->
-                showError(getString(R.string.login_error_generic, error.localizedMessage ?: ""))
+                showError(friendlyError(error))
             }
         }
     }
@@ -408,7 +408,7 @@ class LoginActivity : AppCompatActivity() {
                 // Mostra un dialogo chiaro che spiega di controllare la mail
                 showEmailConfirmationDialog(email)
             }.onFailure { error ->
-                showError(getString(R.string.login_error_generic, error.localizedMessage ?: ""))
+                showError(friendlyError(error))
             }
         }
     }
@@ -441,7 +441,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity,
                     getString(R.string.login_reset_sent), Toast.LENGTH_LONG).show()
             }.onFailure { error ->
-                showError(getString(R.string.login_error_generic, error.localizedMessage ?: ""))
+                showError(friendlyError(error))
             }
         }
     }
@@ -452,6 +452,26 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.alpha = if (loading) 0.5f else 1f
         btnGoogleSignIn.isEnabled = !loading
         btnGoogleSignIn.alpha = if (loading) 0.5f else 1f
+    }
+
+    /**
+     * Trasforma l'errore tecnico di Supabase in una frase comprensibile.
+     * Il testo originale finisce solo nel log, mai sullo schermo.
+     */
+    private fun friendlyError(error: Throwable): String {
+        Log.e(TAG, "Errore account", error)
+        val msg = (error.message ?: "").lowercase()
+        val res = when {
+            "timeout" in msg -> R.string.login_error_timeout
+            error is java.io.IOException || "unable to resolve host" in msg ||
+                "failed to connect" in msg -> R.string.login_error_network
+            "invalid login credentials" in msg -> R.string.login_error_credentials
+            "email not confirmed" in msg -> R.string.login_error_not_confirmed
+            "already registered" in msg || "already exists" in msg -> R.string.login_error_exists
+            "rate limit" in msg || "too many" in msg -> R.string.login_error_rate
+            else -> R.string.login_error_unknown
+        }
+        return getString(res)
     }
 
     private fun showError(message: String) {

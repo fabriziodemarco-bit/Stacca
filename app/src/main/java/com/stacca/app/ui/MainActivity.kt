@@ -670,11 +670,20 @@ class MainActivity : AppCompatActivity() {
                 showPermissionRow(R.id.rowPermNotification, R.id.ivPermNotification, tvPermNotification, true, false) {}
                 showPermissionRow(R.id.rowPermExactAlarm, R.id.ivPermExactAlarm, tvPermExactAlarm, true, false) {}
                 showPermissionRow(R.id.rowPermBattery, R.id.ivPermBattery, tvPermBattery, true, false) {}
-                cardPermissions.postDelayed({
-                    permissionsCelebrating = false
-                    cardPermissions.visibility = View.GONE
-                    homeContent.visibility = View.VISIBLE
-                }, 2800) // abbastanza da vederla anche mentre si chiude la finestra di sistema
+                val endCelebration = Runnable {
+                    if (permissionsCelebrating) {
+                        permissionsCelebrating = false
+                        cardPermissions.setOnClickListener(null)
+                        cardPermissions.visibility = View.GONE
+                        homeContent.visibility = View.VISIBLE
+                    }
+                }
+                // Un tocco sul riquadro la salta
+                cardPermissions.setOnClickListener {
+                    cardPermissions.removeCallbacks(endCelebration)
+                    endCelebration.run()
+                }
+                cardPermissions.postDelayed(endCelebration, 4000) // abbastanza da leggerla anche mentre si chiude la finestra di sistema
             } else if (!permissionsCelebrating) {
                 cardPermissions.visibility = View.GONE
                 homeContent.visibility = View.VISIBLE
