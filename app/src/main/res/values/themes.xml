@@ -126,6 +126,7 @@
         <item name="android:paddingTop">2dp</item>
         <item name="android:paddingBottom">2dp</item>
         <item name="android:background">@drawable/bg_badge_accent</item>
+        <item name="android:maxLines">1</item>
         <item name="android:text">@string/premium_badge</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
