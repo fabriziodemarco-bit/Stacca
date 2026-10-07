@@ -86,7 +86,8 @@ class HistoryActivity : AppCompatActivity() {
         // In anteprima (solo versione di prova): 15 giorni inventati, lo storico vero non si tocca
         val preview = PreviewMode.isOn(intent)
         val entries = if (preview) sampleEntries() else HistoryStore(this).all()
-        val premium = preview || prefs.hasFullAccess
+        // Con un piano simulato l'anteprima rispetta quel piano, altrimenti si vede tutto
+        val premium = (preview && PreferencesManager.simulatedPlan == null) || prefs.hasFullAccess
         val now = System.currentTimeMillis()
 
         renderTitle(entries)
