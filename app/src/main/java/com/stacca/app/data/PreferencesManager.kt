@@ -26,6 +26,14 @@ class PreferencesManager(context: Context) {
         context.getSharedPreferences("stacca_license", Context.MODE_PRIVATE)
 
     companion object {
+        /**
+         * Solo versione di prova (debug): simula un piano senza toccare i dati salvati.
+         * "premium", "trial" (5 giorni rimasti), "free" oppure null = stato vero.
+         * Vive solo in memoria: si azzera chiudendo l'app.
+         */
+        var simulatedPlan: String? = null
+            get() = if (com.stacca.app.BuildConfig.DEBUG) field else null
+
         // --- Chiavi preferenze normali ---
         private const val KEY_END_HOUR = "end_hour"
         private const val KEY_END_MINUTE = "end_minute"
@@ -412,7 +420,7 @@ class PreferencesManager(context: Context) {
      * continuano a usare prefs.isPremium come sempre (stesso nome proprietà).
      */
     var isPremium: Boolean
-        get() = licensePrefs.getBoolean(KEY_IS_PREMIUM, false)
+        get() = simulatedPlan?.let { it == "premium" } ?: licensePrefs.getBoolean(KEY_IS_PREMIUM, false)
         set(value) = licensePrefs.edit().putBoolean(KEY_IS_PREMIUM, value).apply()
 
     /**
@@ -433,6 +441,10 @@ class PreferencesManager(context: Context) {
      */
     val trialDaysLeft: Int
         get() {
+            when (simulatedPlan) {
+                "trial" -> return 5
+                "free" -> return 0
+            }
             val primoAvvio = firstUseDateMillis
             if (primoAvvio == 0L) return TRIAL_DURATION_DAYS.toInt()
             val passati = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - primoAvvio)

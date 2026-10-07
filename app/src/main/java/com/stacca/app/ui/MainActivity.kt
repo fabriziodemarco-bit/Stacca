@@ -256,6 +256,18 @@ class MainActivity : AppCompatActivity() {
                         4 -> open(InsultamiActivity::class.java)
                         5 -> open(LoginActivity::class.java)
                         6 -> open(HistoryActivity::class.java)
+                        7 -> {
+                            // Giro: stato vero → Premium → In prova → Gratis → stato vero
+                            val next = when (PreferencesManager.simulatedPlan) {
+                                null -> "premium"
+                                "premium" -> "trial"
+                                "trial" -> "free"
+                                else -> null
+                            }
+                            PreferencesManager.simulatedPlan = next
+                            updateTrialBanner()
+                            Toast.makeText(this, "Piano simulato: ${next ?: "stato vero"}", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
                 .show()
@@ -762,7 +774,9 @@ class MainActivity : AppCompatActivity() {
      */
     private fun updateTrialBanner() {
         if (prefs.isPremium) {
-            tvPremiumBadge.visibility = View.GONE
+            // Chi ha pagato vede una conferma discreta, non cliccabile
+            tvPremiumBadge.visibility = View.VISIBLE
+            tvPremiumBadge.setText(R.string.premium_badge)
             tvPremiumBadge.isClickable = false
             tvPremiumBadge.setOnClickListener(null)
         } else {
