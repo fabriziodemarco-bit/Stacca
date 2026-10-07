@@ -3,7 +3,7 @@ Backlog del progetto. Le regole che valgono sempre stanno in `CLAUDE.md`, qui ci
 
 ## Da sistemare
 - ~~**Supabase in pausa**~~ RISOLTO il 06/10: sveglia automatica ogni 3 giorni (GitHub Actions "Supabase sveglia" legge la tabella `keepalive`). Se GitHub manda una mail perché il repository è fermo da 60 giorni, riattivarla dalla scheda Actions.
-- **Email di Supabase**: il mailer integrato è solo per sviluppo (limiti stretti, mittente non nostro). Da risolvere con un SMTP personalizzato, oppure rivedendo il login via email.
+- ~~**Email di Supabase**~~ RISOLTO il 07/10: SMTP personalizzato con Gmail (mittente staccalapp@gmail.com, nome "Stacca!", password per le app salvata solo in Supabase). Registrazione via email provata: la mail arriva. Da fare: testo della mail di conferma in italiano nello stile di Stacca.
 
 ## Release 2.3.0 (mar 06/10): INVIATA IN REVISIONE, in attesa di Google
 Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok, chiavi Supabase da `local.properties`.
@@ -23,7 +23,8 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [ ] Fabrizio reinstalla Stacca dallo Store sul Samsung (oggi c'è la build firmata dal PC, che non riceve aggiornamenti). In corso il 07/10.
 - [x] Release 22 (2.3.1) APPROVATA e online (07/10): prova visibile in home, Impostazioni sbloccate in prova, riepilogo a fine prova, Storico completo tra le voci Premium, titolo home che non va più a capo. Testata sul Samsung il 06/10.
 - [ ] Dopo l'approvazione: controllare insieme la scheda Play in tutte le lingue (immagini in primo piano IT/EN/ZH, screenshot nelle schede EN e ZH ancora in italiano), poi caricare lo screenshot del paywall nuovo.
-- [ ] Da verificare: dopo il terzo permesso la festa "Ci siamo." non si è vista (06/10).
+- [x] Festa "Ci siamo.": si vedeva solo un attimo; ora dura 4 secondi e un tocco la salta (07/10, da provare sul telefono).
+- [x] Errori di accesso e registrazione: messaggi comprensibili IT/EN/ZH al posto del testo tecnico, attesa 30 s (07/10, da provare sul telefono).
 ## Da rivedere dopo la release 2.3.0
 - **Contatore "promemoria inviati"**: nel test del 06/10 segnava 3/6 dopo 9 minuti con avvisi ogni 10 min. Probabilmente colpa delle chiusure forzate e reinstallazioni durante il test: verificare con un turno pulito, contando le notifiche.
 - **Schermo rosso**: ridisegnarlo nello stile maturo dell'app (proposta "Bollettino d'emergenza": sfondo bordeaux che "respira", cronometro grande, segmenti dei livelli, niente emoji che saltano).
