@@ -29,6 +29,10 @@ Check di sicurezza già fatto: nessun segreto su GitHub, componenti esportati ok
 - [x] **Bug serie doppia** (07/10, corretto e provato sul Samsung): dopo "Ho staccato", se si disattiva l'allarme la stessa sera lo stacco viene registrato una seconda volta (serie 1 → 2 giorni, "Nuovo record!" falso). Da correggere: in disattivazione registrare solo se oggi non si è già staccato.
 - [x] Immagini Store EN/IT/ZH fatte (07/10): `screenshot_play/play_en`, `play_it`, `play_zh` (8 screenshot + immagine in primo piano ciascuna). Da caricare su Play come bozza.
 
+## Consigli di Play Console (07/10, non bloccanti, per la 2.5)
+- Edge-to-edge: l'app usa API deprecate per la visualizzazione a tutto schermo (Android 15+). Aggiornare con `enableEdgeToEdge()` e verificare tutte le schermate.
+- Ottimizzazione R8 (minify): app più leggera e veloce, ma va testata a fondo (pagamenti, login Google, Supabase).
+
 ## Da rivedere dopo la release 2.3.0
 - **Contatore "promemoria inviati"**: nel test del 06/10 segnava 3/6 dopo 9 minuti con avvisi ogni 10 min. Probabilmente colpa delle chiusure forzate e reinstallazioni durante il test: verificare con un turno pulito, contando le notifiche.
 - **Schermo rosso**: ridisegnarlo nello stile maturo dell'app (proposta "Bollettino d'emergenza": sfondo bordeaux che "respira", cronometro grande, segmenti dei livelli, niente emoji che saltano).
