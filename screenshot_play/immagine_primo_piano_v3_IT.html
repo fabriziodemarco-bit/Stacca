@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: M; src: url("file:///C:/Windows/Fonts/Montserrat-Black.ttf"); font-weight: 900; }
+@font-face { font-family: M; src: url("file:///C:/Windows/Fonts/Montserrat-Bold.ttf"); font-weight: 700; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1024px; height: 500px; overflow: hidden; }
+body {
+  font-family: M, sans-serif; color: #F8F5F0; position: relative;
+  background:
+    radial-gradient(520px 420px at 76% 58%, rgba(255,135,95,.55), rgba(196,74,140,.28) 50%, transparent 75%),
+    #101019;
+}
+.left { position: absolute; left: 128px; top: 0; bottom: 0; width: 440px; display: flex; flex-direction: column; justify-content: center; }
+.brand { display: flex; align-items: center; gap: 16px; margin-bottom: 34px; }
+.brand .logo { width: 60px; height: 60px; border-radius: 16px; box-shadow: 0 0 0 1px rgba(255,255,255,.14); }
+.brand span { font-weight: 900; font-size: 38px; color: #FF875F; letter-spacing: -1px; }
+h1 { font-weight: 900; font-size: 44px; line-height: 1.06; letter-spacing: -1.5px; }
+h1 em { font-style: normal; color: #FF875F; }
+.sub { margin-top: 22px; font-weight: 700; font-size: 17px; letter-spacing: 3px; color: #A9A6B4; text-transform: uppercase; }
+.phone { position: absolute; width: 190px; border-radius: 30px; padding: 8px; background: #26242F;
+  box-shadow: 0 30px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08) inset; }
+.phone img { display: block; width: 100%; border-radius: 23px; }
+.p1 { left: 562px; top: 100px; transform: rotate(-7deg); }
+.p2 { left: 706px; top: 52px; transform: rotate(6deg); }
+</style></head>
+<body>
+  <div class="left">
+    <div class="brand"><svg class="logo" viewBox="12.15 12.15 83.7 83.7"><rect width="108" height="108" fill="#101019"/><path d="M40.6 38.2 A24 24 0 1 0 67.4 38.2" fill="none" stroke="#F8F5F0" stroke-width="8" stroke-linecap="round"/><line x1="54" y1="30.5" x2="54" y2="49.5" stroke="#FF875F" stroke-width="9" stroke-linecap="round"/><circle cx="54" cy="64" r="5" fill="#FF875F"/></svg><span>Stacca!</span></div>
+    <h1>Il lavoro può aspettare.<br><em>La tua serata no.</em></h1>
+    <div class="sub">La sveglia di fine turno</div>
+  </div>
+  <div class="phone p1"><img src="file:///C:/Users/user/prova/Stacca/screenshot_play/play_it/raw/01_countdown.png"></div>
+  <div class="phone p2"><img src="file:///C:/Users/user/prova/Stacca/screenshot_play/play_it/raw/03_red_screen.png"></div>
+</body></html>
