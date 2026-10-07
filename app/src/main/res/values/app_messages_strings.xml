@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Messaggi che prima erano scritti direttamente nel codice (solo in italiano) -->
+<resources>
+    <string name="msg_notif_permission_needed">Without notification permission the app can\'t work! 😢</string>
+    <string name="toast_alarm_activated">⚡ Alarm set for %s!</string>
+    <string name="toast_alarm_updated">⏰ Alarm updated!</string>
+    <string name="toast_alarm_deactivated">Alarm turned off 😴</string>
+    <string name="dialog_deactivate_title">Turn off the alarm?</string>
+    <string name="dialog_deactivate_message">Are you sure? Without the alarm you might work forever! 😱</string>
+    <string name="dialog_deactivate_yes">Yes, turn it off</string>
+    <string name="dialog_deactivate_no">No, keep it on</string>
+    <string name="toast_logout">Signed out</string>
+    <string name="login_link_expired">The link has expired. Sign up again to get a new one. ⏰</string>
+    <string name="login_google_failed">Google sign-in didn\'t work. Please try again, or use email and password.</string>
+    <string name="billing_unavailable">Google Play billing isn\'t available. Make sure you installed the app from the Play Store.</string>
+</resources>

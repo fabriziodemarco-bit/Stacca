@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Fine prova gratuita e riquadro permessi (stile "editoriale" della home) -->
 <resources>
-    <!-- Fine prova -->
-    <string name="trial_v2_label">PROVA GRATUITA FINITA</string>
-    <string name="trial_v2_title">Prova finita.\nL\'app no.</string>
-    <string name="trial_v2_sub">Puoi continuare gratis con i livelli base, o passare a Premium per la versione che fa davvero paura.</string>
-    <string name="trial_v2_free_line">Gratis per sempre: livelli 1-3 e Insultami.</string>
-    <string name="trial_v2_premium_label">Con Premium</string>
-    <string name="trial_v2_btn_premium">Passa a Premium</string>
-    <string name="trial_v2_btn_free">Continua gratis</string>
+    <string name="trial_v2_label">FREE TRIAL OVER</string>
+    <string name="trial_v2_title">Trial\'s over.\nThe app isn\'t.</string>
+    <string name="trial_v2_sub">You can keep going for free with the basic levels, or go Premium for the version that\'s actually scary.</string>
+    <string name="trial_v2_free_line">Free forever: levels 1-3 and Insult me.</string>
+    <string name="trial_v2_premium_label">With Premium</string>
+    <string name="trial_v2_btn_premium">Go Premium</string>
+    <string name="trial_v2_btn_free">Continue for free</string>
 
-    <!-- Riquadro permessi nella home -->
-    <string name="perm_v2_label">PRIMA DI INIZIARE</string>
-    <string name="perm_v2_title">Dammi tre sì.\nAl resto penso io.</string>
-    <string name="perm_v2_sub">Senza questi non posso venirti a cercare.</string>
-    <string name="perm_v2_progress">%1$d di 3</string>
-    <string name="perm_v2_notif_title">Notifiche</string>
-    <string name="perm_v2_notif_desc">Per avvisarti. Poi per insistere.</string>
-    <string name="perm_v2_exact_title">Allarmi puntuali</string>
-    <string name="perm_v2_exact_desc">Per essere puntuale. Almeno io.</string>
-    <string name="perm_v2_battery_title">Batteria senza limiti</string>
-    <string name="perm_v2_battery_desc">Così Android non mi addormenta mentre tu lavori.</string>
-    <string name="perm_v2_enable">Attiva</string>
-    <string name="perm_v2_done">✓ Fatto</string>
-    <string name="perm_v2_ready_title">Ci siamo.</string>
-    <string name="perm_v2_ready_sub">Ora decidi quando si stacca.</string>
+    <string name="perm_v2_label">BEFORE WE START</string>
+    <string name="perm_v2_title">Give me three yeses.\nI\'ll handle the rest.</string>
+    <string name="perm_v2_sub">Without these I can\'t come and get you.</string>
+    <string name="perm_v2_progress">%1$d of 3</string>
+    <string name="perm_v2_notif_title">Notifications</string>
+    <string name="perm_v2_notif_desc">To let you know. Then to insist.</string>
+    <string name="perm_v2_exact_title">On-time alarms</string>
+    <string name="perm_v2_exact_desc">So I\'m on time. At least one of us is.</string>
+    <string name="perm_v2_battery_title">Unrestricted battery</string>
+    <string name="perm_v2_battery_desc">So Android doesn\'t put me to sleep while you work.</string>
+    <string name="perm_v2_enable">Enable</string>
+    <string name="perm_v2_done">✓ Done</string>
+    <string name="perm_v2_ready_title">We\'re set.</string>
+    <string name="perm_v2_ready_sub">Now decide when to unplug.</string>
 </resources>

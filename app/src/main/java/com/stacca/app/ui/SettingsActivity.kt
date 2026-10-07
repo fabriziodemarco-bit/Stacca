@@ -170,7 +170,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun performLogout() {
         lifecycleScope.launch {
             authManager.signOut()
-            Toast.makeText(this@SettingsActivity, "Logout effettuato",
+            Toast.makeText(this@SettingsActivity, R.string.toast_logout,
                 Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@SettingsActivity, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

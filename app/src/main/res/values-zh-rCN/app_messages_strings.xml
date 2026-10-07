@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msg_notif_permission_needed">没有通知权限，应用无法工作！😢</string>
+    <string name="toast_alarm_activated">⚡ 闹钟已设为 %s！</string>
+    <string name="toast_alarm_updated">⏰ 闹钟已更新！</string>
+    <string name="toast_alarm_deactivated">闹钟已关闭 😴</string>
+    <string name="dialog_deactivate_title">关闭闹钟？</string>
+    <string name="dialog_deactivate_message">确定吗？没有闹钟，你可能会一直工作下去！😱</string>
+    <string name="dialog_deactivate_yes">是的，关闭</string>
+    <string name="dialog_deactivate_no">不，保持开启</string>
+    <string name="toast_logout">已退出登录</string>
+    <string name="login_link_expired">链接已过期。请重新注册以获取新链接。⏰</string>
+    <string name="login_google_failed">Google 登录失败。请重试，或使用邮箱和密码。</string>
+    <string name="billing_unavailable">Google Play 结算不可用。请确认应用是从 Play 商店安装的。</string>
+</resources>

@@ -119,9 +119,9 @@ class LoginActivity : AppCompatActivity() {
             Log.d(TAG, "Errore da Supabase: $errorDesc")
 
             if (params["error_code"] == "otp_expired") {
-                showError("Il link è scaduto. Registrati di nuovo per ricevere un nuovo link. ⏰")
+                showError(getString(R.string.login_link_expired))
             } else {
-                showError("Errore: $errorDesc")
+                showError(getString(R.string.login_error_unknown))
             }
             return
         }
@@ -297,7 +297,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: GetCredentialException) {
                 setLoading(false)
                 Log.e(TAG, "Google Sign-In failed", e)
-                showError(getString(R.string.login_google_error, e.message ?: "Errore sconosciuto"))
+                showError(getString(R.string.login_google_failed))
             }
         }
     }
@@ -326,23 +326,22 @@ class LoginActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT).show()
                                 goToMain()
                             }.onFailure { error ->
-                                showError(getString(R.string.login_google_error,
-                                    error.localizedMessage ?: "Errore sconosciuto"))
+                                showError(friendlyError(error))
                             }
                         }
                     } catch (e: GoogleIdTokenParsingException) {
                         setLoading(false)
                         Log.e(TAG, "Invalid Google ID token", e)
-                        showError(getString(R.string.login_google_error, "Token non valido"))
+                        showError(getString(R.string.login_google_failed))
                     }
                 } else {
                     setLoading(false)
-                    showError(getString(R.string.login_google_error, "Tipo credenziale non supportato"))
+                    showError(getString(R.string.login_google_failed))
                 }
             }
             else -> {
                 setLoading(false)
-                showError(getString(R.string.login_google_error, "Credenziale non riconosciuta"))
+                showError(getString(R.string.login_google_failed))
             }
         }
     }

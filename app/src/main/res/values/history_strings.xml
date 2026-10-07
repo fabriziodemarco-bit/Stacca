@@ -1,73 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Testi dello Storico -->
 <resources>
-    <string name="history_screen_title">Storico</string>
-    <string name="history_label">IL TUO STORICO</string>
-    <string name="history_week_title">Ultimi 7 giorni:\n%1$d su %2$d in orario.</string>
-    <string name="history_week_none">Negli ultimi 7 giorni\nnessuno stacco.</string>
-    <string name="history_empty_title">Il tuo storico\ninizia oggi.</string>
-    <string name="history_empty_sub">Stacca in orario e guarda la serie crescere.</string>
-    <string name="history_sub">In orario = entro %d minuti dalla fine del turno.\nRegalato = straordinario di questo mese.</string>
+    <string name="history_screen_title">History</string>
+    <string name="history_label">YOUR HISTORY</string>
+    <string name="history_week_title">Last 7 days:\n%1$d of %2$d on time.</string>
+    <string name="history_week_none">No unplugging\nin the last 7 days.</string>
+    <string name="history_empty_title">Your history\nstarts today.</string>
+    <string name="history_empty_sub">Unplug on time and watch your streak grow.</string>
+    <string name="history_sub">On time = within %d minutes of your shift end.\nGifted = overtime this month.</string>
 
-    <string name="history_streak">SERIE</string>
+    <string name="history_streak">STREAK</string>
     <string name="history_record">RECORD</string>
-    <string name="history_lost">REGALATO</string>
+    <string name="history_lost">GIFTED</string>
     <plurals name="history_days">
-        <item quantity="one">%d giorno</item>
-        <item quantity="other">%d giorni</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
 
-    <string name="history_week_chart">ULTIMI 7 GIORNI</string>
+    <string name="history_week_chart">LAST 7 DAYS</string>
 
-    <!-- Lo sapevi? -->
-    <string name="history_insights_label">LO SAPEVI?</string>
+    <string name="history_insights_label">DID YOU KNOW?</string>
     <plurals name="history_insights_waiting">
-        <item quantity="one">Ancora %d stacco e scopri le tue abitudini.</item>
-        <item quantity="other">Ancora %d stacchi e scopri le tue abitudini.</item>
+        <item quantity="one">%d more unplug to discover your habits.</item>
+        <item quantity="other">%d more unplugs to discover your habits.</item>
     </plurals>
-    <string name="history_insight_prev">Curiosità precedente</string>
-    <string name="history_insight_next">Curiosità successiva</string>
-    <string name="history_insight_locked">🔒 Scoprilo con Premium</string>
+    <string name="history_insight_prev">Previous insight</string>
+    <string name="history_insight_next">Next insight</string>
+    <string name="history_insight_locked">🔒 Find out with Premium</string>
 
-    <string name="history_insight_time_label">A CHE ORA STACCHI DAVVERO</string>
-    <string name="history_insight_time">Il turno finisce alle %1$s,\ntu stacchi in media alle %2$s.</string>
-    <string name="history_insight_time_punctual">Il turno finisce alle %s e tu stacchi proprio allora. Puntuale come un treno svizzero.</string>
+    <string name="history_insight_time_label">WHEN YOU REALLY UNPLUG</string>
+    <string name="history_insight_time">Your shift ends at %1$s,\nyou unplug at %2$s on average.</string>
+    <string name="history_insight_time_punctual">Your shift ends at %s and that\'s exactly when you leave. Swiss-train punctual.</string>
 
-    <string name="history_insight_day_label">IL TUO GIORNO NERO</string>
-    <string name="history_insight_day">Di %1$s fai più tardi: +%2$s di media.</string>
-    <string name="history_insight_day_none">Nessun giorno nero: stacchi in orario tutta la settimana.</string>
+    <string name="history_insight_day_label">YOUR WORST DAY</string>
+    <string name="history_insight_day">%1$s is when you stay longest: +%2$s on average.</string>
+    <string name="history_insight_day_none">No worst day: you\'re on time all week long.</string>
 
-    <string name="history_insight_gift_label">QUEST\'ANNO HAI REGALATO</string>
-    <string name="history_insight_gift">%1$s al lavoro.\nSono %2$s.</string>
-    <string name="history_insight_gift_zero">Neanche un minuto. Leggenda.</string>
-    <string name="history_insight_gift_little">Solo %s. Il lavoro può aspettare, e tu lo sai.</string>
+    <string name="history_insight_gift_label">GIFTED THIS YEAR</string>
+    <string name="history_insight_gift">%1$s to work.\nThat\'s %2$s.</string>
+    <string name="history_insight_gift_zero">Not a single minute. Legend.</string>
+    <string name="history_insight_gift_little">Only %s. Work can wait, and you know it.</string>
     <plurals name="history_gift_flights">
-        <item quantity="one">%d volo Roma–New York</item>
-        <item quantity="other">%d voli Roma–New York</item>
+        <item quantity="one">%d Rome–New York flight</item>
+        <item quantity="other">%d Rome–New York flights</item>
     </plurals>
     <plurals name="history_gift_films">
-        <item quantity="one">%d film intero</item>
-        <item quantity="other">%d film interi</item>
+        <item quantity="one">%d full movie</item>
+        <item quantity="other">%d full movies</item>
     </plurals>
     <plurals name="history_gift_episodes">
-        <item quantity="one">%d episodio di una serie</item>
-        <item quantity="other">%d episodi di una serie</item>
+        <item quantity="one">%d TV episode</item>
+        <item quantity="other">%d TV episodes</item>
     </plurals>
     <plurals name="history_gift_coffees">
-        <item quantity="one">%d caffè con calma</item>
-        <item quantity="other">%d caffè con calma</item>
+        <item quantity="one">%d unhurried coffee</item>
+        <item quantity="other">%d unhurried coffees</item>
     </plurals>
 
-    <string name="history_months_label">MESE PER MESE</string>
-    <string name="history_month_ontime">%1$d su %2$d in orario</string>
-    <string name="history_month_gifted">%s regalati</string>
-    <string name="history_month_better">▼ %1$s al giorno in meno di %2$s</string>
-    <string name="history_month_worse">▲ %1$s al giorno in più di %2$s</string>
-    <string name="history_month_same">Come %s</string>
-    <string name="history_month_prev">Mese precedente</string>
-    <string name="history_month_next">Mese successivo</string>
+    <string name="history_months_label">MONTH BY MONTH</string>
+    <string name="history_month_ontime">%1$d of %2$d on time</string>
+    <string name="history_month_gifted">%s gifted</string>
+    <string name="history_month_better">▼ %1$s a day less than %2$s</string>
+    <string name="history_month_worse">▲ %1$s a day more than %2$s</string>
+    <string name="history_month_same">Same as %s</string>
+    <string name="history_month_prev">Previous month</string>
+    <string name="history_month_next">Next month</string>
 
-    <string name="history_premium_title">Tutto lo storico con Premium</string>
-    <string name="history_premium_desc">Record, le tue abitudini, i progressi mese per mese e il grafico della settimana.</string>
-    <string name="history_premium_cta">Sblocca Premium</string>
+    <string name="history_premium_title">Full history with Premium</string>
+    <string name="history_premium_desc">Record, your habits, your progress month by month and the weekly chart.</string>
+    <string name="history_premium_cta">Unlock Premium</string>
 </resources>

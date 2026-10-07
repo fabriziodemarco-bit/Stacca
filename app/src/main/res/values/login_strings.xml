@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Testi della pagina di accesso (stile "editoriale" della home) -->
 <resources>
-    <string name="login_label">ACCOUNT · FACOLTATIVO</string>
-    <string name="login_title">Accedi o\ncrea un account.</string>
-    <string name="login_sub">N.B.: Stacca funziona benissimo anche senza.</string>
-    <string name="login_switch_to_register">Non hai un account? Registrati</string>
-    <string name="login_switch_to_login">Hai già un account? Accedi</string>
+    <string name="login_label">ACCOUNT · OPTIONAL</string>
+    <string name="login_title">Log in or\ncreate an account.</string>
+    <string name="login_sub">Note: Unplug works just fine without it.</string>
+    <string name="login_switch_to_register">No account? Sign up</string>
+    <string name="login_switch_to_login">Already have an account? Log in</string>
 </resources>

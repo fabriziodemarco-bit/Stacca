@@ -1,169 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Ogni titolo va in coppia con il messaggio nella stessa posizione:
-         i due array di un livello devono avere lo stesso numero di voci.
-         Niente minuti scritti nei testi: l'intervallo cambia (5/10/15 min). -->
 
-    <!-- LIVELLO 1 · Gentile -->
+    <!-- LEVEL 1 · Gentle -->
     <string-array name="notif_gentle_titles">
-        <item>Per oggi basta</item>
-        <item>È ora di staccare</item>
-        <item>Il resto può aspettare</item>
-        <item>Si chiude</item>
-        <item>Tempo per te</item>
-        <item>Fine lavoro</item>
-        <item>Hai già dato</item>
+        <item>Done for today</item>
+        <item>Time to unplug</item>
+        <item>The rest can wait</item>
+        <item>Closing time</item>
+        <item>Time for you</item>
+        <item>Work\'s over</item>
+        <item>You\'ve given enough</item>
     </string-array>
     <string-array name="notif_gentle_messages">
-        <item>Salva il lavoro e chiudi. Adesso il tempo è tuo.</item>
-        <item>Il tuo orario è finito. Anche tu puoi fermarti.</item>
-        <item>Puoi lasciare qualcosa da fare alla prossima giornata.</item>
-        <item>Chiudi il portatile. Il resto lo riprendi con calma.</item>
-        <item>Hai un appuntamento con tutto il resto. Stacca.</item>
-        <item>È il momento di alzarti e cambiare panorama.</item>
-        <item>Per oggi puoi mettere il punto. Anche senza finire tutto.</item>
+        <item>Save your work and close. Your time starts now.</item>
+        <item>Your shift is over. You\'re allowed to stop too.</item>
+        <item>You can leave something for tomorrow.</item>
+        <item>Shut the laptop. Pick up the rest calmly later.</item>
+        <item>You have an appointment with everything else. Unplug.</item>
+        <item>Time to stand up and change the view.</item>
+        <item>You can call it a day. Even without finishing everything.</item>
     </string-array>
 
-    <!-- LIVELLO 2 · Amichevole -->
+    <!-- LEVEL 2 · Friendly -->
     <string-array name="notif_friendly_titles">
-        <item>Ti vedo</item>
-        <item>Ancora qui?</item>
-        <item>Il lavoro sa aspettare</item>
-        <item>Fuori dallo schermo</item>
-        <item>Ci sarebbe anche il resto</item>
-        <item>Dai, chiudi</item>
-        <item>Una proposta migliore</item>
-        <item>Anche domani esiste</item>
-        <item>L\'ultima mail?</item>
+        <item>I see you</item>
+        <item>Still here?</item>
+        <item>Work can wait</item>
+        <item>Away from the screen</item>
+        <item>There\'s more to life</item>
+        <item>Come on, close it</item>
+        <item>A better offer</item>
+        <item>Tomorrow exists too</item>
+        <item>The last email?</item>
     </string-array>
     <string-array name="notif_friendly_messages">
-        <item>Quella non sembra una schermata di spegnimento.</item>
-        <item>“Finisco questa e chiudo.” Ci siamo già sentiti, vero?</item>
-        <item>La lista delle cose da fare non scappa. Purtroppo.</item>
-        <item>Prova a chiudere il portatile. Si apre il resto della giornata.</item>
-        <item>Anche non fare niente è un programma rispettabile.</item>
-        <item>Il mouse può stare da solo. È grande.</item>
-        <item>Il divano non richiede aggiornamenti. Valuta il cambio.</item>
-        <item>Hai già dato attenzione al lavoro. Adesso cambia destinatario.</item>
-        <item>Ha una sorella. Non conoscere tutta la famiglia.</item>
+        <item>That doesn\'t look like a shutdown screen.</item>
+        <item>“I\'ll finish this and close.” We\'ve heard that one before, right?</item>
+        <item>Your to-do list isn\'t going anywhere. Sadly.</item>
+        <item>Try closing the laptop. The rest of your day opens up.</item>
+        <item>Doing nothing is a perfectly respectable plan.</item>
+        <item>The mouse can stay home alone. It\'s a big mouse now.</item>
+        <item>The couch needs no updates. Consider switching.</item>
+        <item>Work has had your attention. Now give it to someone else.</item>
+        <item>It has a sister. Don\'t meet the whole family.</item>
     </string-array>
 
-    <!-- LIVELLO 3 · Insistente (per chi non ha Premium si ripete tutta la sera) -->
+    <!-- LEVEL 3 · Insistent -->
     <string-array name="notif_insistent_titles">
-        <item>Basta trattative</item>
-        <item>Non un\'altra cosa</item>
-        <item>Nessun bis</item>
-        <item>Facciamo sul serio</item>
-        <item>Ti richiamo alla realtà</item>
-        <item>Adesso, però</item>
-        <item>Quella può aspettare</item>
-        <item>Salva e chiudi</item>
-        <item>Il momento è questo</item>
-        <item>Ultima chiamata</item>
-        <item>Non è un\'emergenza</item>
-        <item>Chiudi una cosa</item>
+        <item>No more bargaining</item>
+        <item>Not another thing</item>
+        <item>No encore</item>
+        <item>We mean it</item>
+        <item>Reality check</item>
+        <item>Now, though</item>
+        <item>That can wait</item>
+        <item>Save and close</item>
+        <item>This is the moment</item>
+        <item>Last call</item>
+        <item>Not an emergency</item>
+        <item>Close one thing</item>
     </string-array>
     <string-array name="notif_insistent_messages">
-        <item>“Ancora una cosa” non è un orario di uscita.</item>
-        <item>Salva il file. Non aprirne un altro per festeggiare.</item>
-        <item>Il lavoro si sta prendendo il bis. Tu chiudi il sipario.</item>
-        <item>Non serve finire la lista per finire la giornata.</item>
-        <item>Stai allungando il lavoro e accorciando tutto il resto.</item>
-        <item>Anche il caricabatterie sa staccare. Prendi appunti.</item>
-        <item>Quella virgola può aspettare. Tu puoi alzarti.</item>
-        <item>Il tasto “chiudi” funziona anche con cose ancora da fare.</item>
-        <item>Il promemoria è questo. Il prossimo passo fallo tu.</item>
-        <item>Il volo per la tua serata sta chiudendo l\'imbarco.</item>
-        <item>Se lo fosse, non arriverebbe per mail.</item>
-        <item>Non tutto. Una sola: il portatile.</item>
+        <item>“Just one more thing” is not a clock-out time.</item>
+        <item>Save the file. Don\'t open another one to celebrate.</item>
+        <item>Work is asking for an encore. You bring down the curtain.</item>
+        <item>You don\'t need to finish the list to finish the day.</item>
+        <item>You\'re stretching work and shrinking everything else.</item>
+        <item>Even the charger knows when to unplug. Take notes.</item>
+        <item>That comma can wait. You can get up.</item>
+        <item>The close button works even with things left to do.</item>
+        <item>This is the reminder. The next step is yours.</item>
+        <item>Boarding for your evening is about to close.</item>
+        <item>If it were, it wouldn\'t come by email.</item>
+        <item>Not everything. Just one: the laptop.</item>
     </string-array>
 
-    <!-- LIVELLO 4 · Aggressivo (Premium) -->
+    <!-- LEVEL 4 · Aggressive (Premium) -->
     <string-array name="notif_aggressive_titles">
-        <item>Non sei in dotazione</item>
-        <item>Non fare il sequel</item>
-        <item>Colla sulla sedia?</item>
-        <item>L\'abbiamo tirata lunga</item>
-        <item>Serve lo scollante?</item>
-        <item>Hai perso l\'uscita?</item>
-        <item>Basta fare arredamento</item>
-        <item>Fine della trattativa</item>
-        <item>È una scrivania</item>
-        <item>Ci alziamo?</item>
+        <item>You\'re not included</item>
+        <item>No more sequels</item>
+        <item>Glued to the chair?</item>
+        <item>That dragged on</item>
+        <item>Need a solvent?</item>
+        <item>Missed the exit?</item>
+        <item>Enough interior design</item>
+        <item>End of negotiations</item>
+        <item>It\'s a desk</item>
+        <item>Shall we get up?</item>
     </string-array>
     <string-array name="notif_aggressive_messages">
-        <item>Puoi separarti dalla scrivania. Non siete venduti insieme.</item>
-        <item>La tua ultima mail ha avuto più sequel di un film.</item>
-        <item>Il portatile non ti ama. Chiudilo.</item>
-        <item>Hai trasformato “finisco subito” in un progetto a lungo termine.</item>
-        <item>La sedia non ti adotta. Alzati.</item>
-        <item>Non devi presidiare il file. Non evade.</item>
-        <item>Stai lavorando o aspetti che la scrivania metta le ruote?</item>
-        <item>Per chiudere tutto non serve convocare una riunione.</item>
-        <item>Il lavoro da casa non prevede di abitare nella tastiera.</item>
-        <item>Hai già salutato. Adesso fai seguire i fatti.</item>
+        <item>You can leave the desk. You weren\'t sold as a set.</item>
+        <item>Your last email has had more sequels than a movie franchise.</item>
+        <item>The laptop doesn\'t love you. Close it.</item>
+        <item>You turned “almost done” into a long-term project.</item>
+        <item>The chair is not adopting you. Get up.</item>
+        <item>You don\'t need to guard the file. It won\'t escape.</item>
+        <item>Are you working, or waiting for the desk to grow wheels?</item>
+        <item>You don\'t need to call a meeting to close everything.</item>
+        <item>Working from home doesn\'t mean living in the keyboard.</item>
+        <item>You already said goodbye. Now follow through.</item>
     </string-array>
 
-    <!-- LIVELLO 5 · Nucleare (Premium) -->
+    <!-- LEVEL 5 · Nuclear (Premium) -->
     <string-array name="notif_nuclear_titles">
-        <item>Dipendente del millennio</item>
-        <item>Talento sprecato</item>
-        <item>Premio ostinazione</item>
-        <item>Modalità soprammobile</item>
-        <item>Altro che flessibilità</item>
-        <item>Il lavoro ringrazia</item>
-        <item>Ti manca la targhetta</item>
-        <item>Bella furbata</item>
-        <item>Campione del bis</item>
-        <item>Basta straordinari mentali</item>
-        <item>Libertà vigilata</item>
+        <item>Employee of the millennium</item>
+        <item>Wasted talent</item>
+        <item>Stubbornness award</item>
+        <item>Ornament mode</item>
+        <item>So much for flexibility</item>
+        <item>Work says thanks</item>
+        <item>Missing your tag</item>
+        <item>Clever move</item>
+        <item>Encore champion</item>
+        <item>Enough mental overtime</item>
+        <item>House arrest</item>
     </string-array>
     <string-array name="notif_nuclear_messages">
-        <item>Hai vinto altro lavoro. Il premio si ritira chiudendo tutto.</item>
-        <item>Il tuo superpotere? Trasformare il tempo libero in arretrati.</item>
-        <item>Hai più difficoltà a chiudere tu che un programma bloccato.</item>
-        <item>Stai diventando un accessorio della scrivania. Senza nemmeno la garanzia.</item>
-        <item>Hai reso flessibile tutto, tranne l\'ora di smettere.</item>
-        <item>Il lavoro non finisce mai. Tu potresti dare il buon esempio.</item>
-        <item>Ti manca solo il codice inventario. Alzati prima che te lo assegnino.</item>
-        <item>Hai appena aggiunto “staccare” alle cose che rimandi.</item>
-        <item>Quel file si chiama “definitivo”. Vorrei il tuo stesso ottimismo.</item>
-        <item>Se pagassero le scuse per restare, potresti già smettere.</item>
-        <item>Sei in smart working o agli arresti? Prova ad allontanarti.</item>
+        <item>You\'ve won more work. Claim your prize by closing everything.</item>
+        <item>Your superpower? Turning free time into backlog.</item>
+        <item>You\'re harder to close than a frozen program.</item>
+        <item>You\'re becoming a desk accessory. Without even a warranty.</item>
+        <item>You\'ve made everything flexible, except quitting time.</item>
+        <item>Work never ends. You could set a good example.</item>
+        <item>All you need now is an inventory number. Get up before they assign one.</item>
+        <item>You just added “unplugging” to the things you put off.</item>
+        <item>That file is called “final”. I wish I had your optimism.</item>
+        <item>If excuses to stay paid, you could retire by now.</item>
+        <item>Remote working or house arrest? Try stepping away.</item>
     </string-array>
 
-    <!-- LIVELLO 6 · Apocalisse (Premium, si ripete finché non stacchi) -->
+    <!-- LEVEL 6 · Apocalypse (Premium) -->
     <string-array name="notif_apocalypse_titles">
-        <item>Reparto fermacarte</item>
-        <item>Basta, campione</item>
-        <item>Hai dato spettacolo</item>
-        <item>Fenomeno, stacca</item>
-        <item>Qualcuno aspetta te</item>
-        <item>La sedia ha vinto</item>
-        <item>Premio ultima mail</item>
-        <item>La tua vita ha chiamato</item>
-        <item>Organizzazione perfetta</item>
-        <item>In onda il tramonto</item>
-        <item>Serve una gru?</item>
-        <item>Il frigo è perplesso</item>
-        <item>Il circo chiude</item>
-        <item>Nobel degli straordinari</item>
+        <item>Paperweight department</item>
+        <item>Enough, champ</item>
+        <item>Quite a show</item>
+        <item>Hey hotshot, unplug</item>
+        <item>Someone\'s waiting for you</item>
+        <item>The chair won</item>
+        <item>Last-email award</item>
+        <item>Your life called</item>
+        <item>Perfect planning</item>
+        <item>Sunset, live</item>
+        <item>Need a crane?</item>
+        <item>The fridge is puzzled</item>
+        <item>The circus is closing</item>
+        <item>Overtime Nobel Prize</item>
     </string-array>
     <string-array name="notif_apocalypse_messages">
-        <item>Sei il fermacarte più costoso dell\'ufficio. Puoi anche andare.</item>
-        <item>Il criceto almeno ha una ruota. Tu Excel.</item>
-        <item>Ti sta facendo la predica un\'app. E tu resti per il seguito.</item>
-        <item>Il tasto “spegni” non è decorativo.</item>
-        <item>Il lavoro aspetta chiunque. Loro aspettano proprio te.</item>
-        <item>Anche oggi ha vinto lei. Domani almeno fai partita.</item>
-        <item>La tua “ultima cosa” ha ormai una propria lista di cose.</item>
-        <item>Ha lasciato un messaggio: «Esisto anche fuori orario.»</item>
-        <item>Hai pianificato tutto, tranne la tua uscita.</item>
-        <item>Va in diretta una volta sola. Niente repliche.</item>
-        <item>Per smuoverti serve una scadenza o direttamente un trasloco?</item>
-        <item>Ti aspetta da ore con una sola domanda: «Cosa mangiamo?»</item>
-        <item>Stai aspettando i titoli di coda di un foglio di calcolo.</item>
-        <item>Chiudi tutto. Il discorso di ringraziamento puoi risparmiarcelo.</item>
+        <item>You\'re the most expensive paperweight in the office. You can go.</item>
+        <item>At least the hamster has a wheel. You have Excel.</item>
+        <item>An app is lecturing you. And you\'re staying for the sequel.</item>
+        <item>The “off” button is not decorative.</item>
+        <item>Work waits for anyone. They\'re waiting for you.</item>
+        <item>It won again today. Tomorrow, at least put up a fight.</item>
+        <item>Your “one last thing” now has its own to-do list.</item>
+        <item>It left a message: “I exist outside office hours too.”</item>
+        <item>You planned everything except your exit.</item>
+        <item>It airs live just once. No reruns.</item>
+        <item>What will it take to move you: a deadline or a removal van?</item>
+        <item>It\'s been waiting for hours with one question: “What\'s for dinner?”</item>
+        <item>You\'re waiting for the end credits of a spreadsheet.</item>
+        <item>Close everything. You can skip the acceptance speech.</item>
     </string-array>
 
 </resources>

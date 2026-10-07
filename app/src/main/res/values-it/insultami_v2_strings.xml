@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Insultami v2 (countdown, voce, flash) e interruttore Flash nelle Impostazioni -->
+<resources>
+    <string name="settings_flash">Flash</string>
+    <string name="settings_flash_desc">Lampeggia durante Insultami</string>
+    <string name="notif_reward_title_ontime">Libero! ✌️ Zero minuti regalati.</string>
+    <string name="notif_reward_title_late">Libero, finalmente. ✌️</string>
+    <string name="notif_reward_text">Domani alle %s si riparte.</string>
+    <string name="notif_giveup_title">Stasera hai vinto tu.</string>
+    <string name="notif_giveup_text">Il giorno resta non chiuso nello storico. Domani ci riproviamo.</string>
+</resources>

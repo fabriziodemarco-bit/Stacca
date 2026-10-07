@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 activateAlarm()
             } else {
                 Toast.makeText(this,
-                    "Senza permesso notifiche l'app non può funzionare! 😢",
+                    getString(R.string.msg_notif_permission_needed),
                     Toast.LENGTH_LONG).show()
             }
         }
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (!granted) {
                 Toast.makeText(this,
-                    "Senza permesso notifiche l'app non può funzionare! 😢",
+                    getString(R.string.msg_notif_permission_needed),
                     Toast.LENGTH_LONG).show()
             }
             updatePermissionsCard()
@@ -332,7 +332,7 @@ class MainActivity : AppCompatActivity() {
             if (prefs.isAlarmActive) {
                 AlarmReceiver.cancelAlarm(this)
                 AlarmReceiver.scheduleAlarm(this, picker.hour, picker.minute)
-                Toast.makeText(this, "⏰ Allarme aggiornato!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toast_alarm_updated, Toast.LENGTH_SHORT).show()
             }
             updateUI()
         }
@@ -347,7 +347,7 @@ class MainActivity : AppCompatActivity() {
                 MaterialAlertDialogBuilder(this)
                     .setTitle(getString(R.string.permission_notification_title))
                     .setMessage(getString(R.string.permission_notification_message))
-                    .setPositiveButton("OK") { _, _ ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         notificationPermissionLauncher.launch(
                             Manifest.permission.POST_NOTIFICATIONS
                         )
@@ -381,15 +381,15 @@ class MainActivity : AppCompatActivity() {
         AlarmReceiver.scheduleAlarm(this, prefs.endHour, prefs.endMinute)
         updateUI()
         Toast.makeText(this,
-            "⚡ Allarme attivato per le ${String.format("%02d:%02d", prefs.endHour, prefs.endMinute)}!",
+            getString(R.string.toast_alarm_activated, String.format("%02d:%02d", prefs.endHour, prefs.endMinute)),
             Toast.LENGTH_SHORT).show()
     }
 
     private fun deactivateAlarm() {
         MaterialAlertDialogBuilder(this)
-            .setTitle("Disattivare l'allarme?")
-            .setMessage("Sei sicuro? Senza allarme potresti lavorare per sempre! 😱")
-            .setPositiveButton("Sì, disattiva") { _, _ ->
+            .setTitle(R.string.dialog_deactivate_title)
+            .setMessage(R.string.dialog_deactivate_message)
+            .setPositiveButton(R.string.dialog_deactivate_yes) { _, _ ->
                 prefs.isAlarmActive = false
                 prefs.resetEscalation()
                 AlarmSoundManager.stop()
@@ -409,9 +409,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 updateUI()
-                Toast.makeText(this, "Allarme disattivato 😴", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.toast_alarm_deactivated, Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton("No, tienilo attivo", null)
+            .setNegativeButton(R.string.dialog_deactivate_no, null)
             .show()
     }
 

@@ -6,8 +6,8 @@
         %d = numero di giorni rimasti.
     -->
     <plurals name="trial_days_left_banner">
-        <item quantity="one">⏳ Ti resta 1 giorno di prova gratuita</item>
-        <item quantity="other">⏳ Ti restano %d giorni di prova gratuita</item>
+        <item quantity="one">⏳ You have 1 day of free trial left</item>
+        <item quantity="other">⏳ You have %d days of free trial left</item>
     </plurals>
 
     <!--
@@ -15,25 +15,25 @@
         %d = numero di giorni di streak.
     -->
     <plurals name="streak_days">
-        <item quantity="one">1 giorno</item>
-        <item quantity="other">%d giorni</item>
+        <item quantity="one">1 day</item>
+        <item quantity="other">%d days</item>
     </plurals>
 
-    <!-- 2.3.1: badge in home durante la prova gratuita -->
+    <!-- 2.3.1: home badge during the free trial -->
     <plurals name="premium_badge_trial">
-        <item quantity="one">PROVA · 1 GIORNO</item>
-        <item quantity="other">PROVA · %d GIORNI</item>
+        <item quantity="one">TRIAL · 1 DAY</item>
+        <item quantity="other">TRIAL · %d DAYS</item>
     </plurals>
 
-    <!-- 2.3.1: riepilogo a fine prova. %1$d = stacchi in orario, %2$d = stacchi totali -->
+    <!-- 2.3.1: end-of-trial recap. %1$d = on-time stops, %2$d = total stops -->
     <plurals name="trial_recap_ontime">
-        <item quantity="one">Nella prova hai staccato in orario 1 volta su %2$d.</item>
-        <item quantity="other">Nella prova hai staccato in orario %1$d volte su %2$d.</item>
+        <item quantity="one">During the trial you left on time once out of %2$d.</item>
+        <item quantity="other">During the trial you left on time %1$d times out of %2$d.</item>
     </plurals>
 
-    <!-- 2.3.1: %d = volte in cui sono serviti i livelli 4-6 -->
+    <!-- 2.3.1: %d = times levels 4-6 were needed -->
     <plurals name="trial_recap_premium">
-        <item quantity="one">1 volta ti ho dovuto tirare fuori con i livelli Premium. Da domani mi fermo al 3.</item>
-        <item quantity="other">%d volte ti ho dovuto tirare fuori con i livelli Premium. Da domani mi fermo al 3.</item>
+        <item quantity="one">Once I had to drag you out with the Premium levels. From tomorrow I stop at level 3.</item>
+        <item quantity="other">%d times I had to drag you out with the Premium levels. From tomorrow I stop at level 3.</item>
     </plurals>
 </resources>

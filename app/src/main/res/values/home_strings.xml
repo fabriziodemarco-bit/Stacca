@@ -1,68 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Testi della home (restyling "editoriale") -->
 <resources>
 
-    <string name="home_settings">Impostazioni</string>
+    <string name="home_settings">Settings</string>
     <string name="premium_badge">PREMIUM</string>
-    <string name="premium_badge_upgrade">SBLOCCA TUTTO</string>
-    <string name="btn_insultami_home">Insultami · 60 s</string>
-    <string name="btn_try_insultami">Prova Insultami · 60 s</string>
-    <string name="btn_deactivate_small">Disattiva allarme</string>
-    <string name="btn_ho_staccato_home">Ho staccato</string>
-    <string name="home_explain_overtime">Caso disperato confermato:</string>
-    <string name="home_explain_default">Per i casi disperati:</string>
-    <string name="home_edit_time">Modifica orario</string>
+    <string name="premium_badge_upgrade">GO PREMIUM</string>
+    <string name="btn_insultami_home">Insult me · 60 s</string>
+    <string name="btn_try_insultami">Try Insult me · 60 s</string>
+    <string name="btn_deactivate_small">Turn off alarm</string>
+    <string name="btn_ho_staccato_home">I\'ve unplugged</string>
+    <string name="home_explain_overtime">Hopeless case confirmed:</string>
+    <string name="home_explain_default">For hopeless cases:</string>
+    <string name="home_edit_time">Change time</string>
 
-    <!-- Allarme spento -->
-    <string name="home_off_label">ALLARME SPENTO</string>
-    <string name="home_off_title">Decidi quando\nsi stacca.</string>
-    <string name="home_off_sub">Imposta l\'orario e attiva l\'allarme.</string>
-    <string name="home_card_end_time">FINE TURNO</string>
-    <string name="home_off_foot">Allarme spento</string>
+    <string name="home_off_label">ALARM OFF</string>
+    <string name="home_off_title">Decide when\nyou unplug.</string>
+    <string name="home_off_sub">Set the time and turn on the alarm.</string>
+    <string name="home_card_end_time">END OF SHIFT</string>
+    <string name="home_off_foot">Alarm off</string>
 
-    <!-- Prima dell'orario -->
-    <string name="home_cd_label_today">OGGI SI STACCA</string>
-    <string name="home_cd_label_tomorrow">DOMANI SI STACCA</string>
-    <string name="home_cd_title">Ancora un po\'\ne poi basta.</string>
-    <string name="home_cd_title_far">Lavora in pace.\nAl resto penso io.</string>
-    <string name="home_cd_title_tomorrow">Per oggi\nè finita.</string>
-    <string name="home_cd_sub_today">Stacchi alle %s.</string>
-    <string name="home_cd_sub_tomorrow">Stacchi domani alle %s.</string>
-    <string name="home_card_remaining">MANCANO</string>
-    <string name="home_cd_foot">Fine turno %s</string>
+    <string name="home_cd_label_today">UNPLUGGING TODAY</string>
+    <string name="home_cd_label_tomorrow">UNPLUGGING TOMORROW</string>
+    <string name="home_cd_title">A little longer,\nthen that\'s it.</string>
+    <string name="home_cd_title_far">Work in peace.\nI\'ll handle the rest.</string>
+    <string name="home_cd_title_tomorrow">Done\nfor today.</string>
+    <string name="home_cd_sub_today">You unplug at %s.</string>
+    <string name="home_cd_sub_tomorrow">You unplug tomorrow at %s.</string>
+    <string name="home_card_remaining">TIME LEFT</string>
+    <string name="home_cd_foot">Shift ends at %s</string>
 
-    <!-- Oltre l'orario -->
-    <string name="home_ot_label">IL TUO LAVORO È FINITO.</string>
-    <string name="home_ot_title">Il resto non può\npiù aspettare.</string>
-    <string name="home_ot_sub">Dovevi staccare alle %s.</string>
-    <string name="home_card_still_here">SEI ANCORA QUI DA</string>
+    <string name="home_ot_label">YOUR WORK IS DONE.</string>
+    <string name="home_ot_title">Everything else\ncan\'t wait anymore.</string>
+    <string name="home_ot_sub">You were supposed to unplug at %s.</string>
+    <string name="home_card_still_here">YOU\'VE BEEN HERE FOR</string>
     <string name="home_reminders_total">%d / 6</string>
     <plurals name="home_reminders_sent">
-        <item quantity="one">%d promemoria inviato</item>
-        <item quantity="other">%d promemoria inviati</item>
+        <item quantity="one">%d reminder sent</item>
+        <item quantity="other">%d reminders sent</item>
     </plurals>
 
-    <!-- Dopo lo stacco -->
-    <string name="home_done_label_ontime">HAI STACCATO IN ORARIO</string>
-    <string name="home_done_label_late">HAI STACCATO</string>
-    <string name="home_done_title_ontime">Libero.\nCosì si fa.</string>
-    <string name="home_done_title_late">Libero,\nfinalmente.</string>
-    <string name="home_done_sub_ontime">Zero minuti regalati all\'azienda.</string>
-    <string name="home_done_sub_late">Con un po\' di ritardo. Ti perdoniamo.</string>
-    <string name="home_done_card_streak">SERIE IN ORARIO</string>
-    <string name="home_done_card_gifted">REGALATI</string>
-    <string name="home_done_record">Nuovo record! 🏆</string>
-    <string name="home_done_foot">Domani alle %s si riparte</string>
-    <string name="home_done_foot_late">Domani alle %s si riparte da zero</string>
-    <string name="btn_good_evening">Buona serata 👋</string>
-    <string name="btn_open_history">Vedi lo storico</string>
+    <string name="home_done_label_ontime">UNPLUGGED ON TIME</string>
+    <string name="home_done_label_late">UNPLUGGED</string>
+    <string name="home_done_title_ontime">Free.\nThat\'s how it\'s done.</string>
+    <string name="home_done_title_late">Free,\nfinally.</string>
+    <string name="home_done_sub_ontime">Zero minutes gifted to the company.</string>
+    <string name="home_done_sub_late">A bit late. We forgive you.</string>
+    <string name="home_done_card_streak">ON-TIME STREAK</string>
+    <string name="home_done_card_gifted">GIFTED</string>
+    <string name="home_done_record">New record! 🏆</string>
+    <string name="home_done_foot">Back at it tomorrow at %s</string>
+    <string name="home_done_foot_late">Back at %s tomorrow, from zero</string>
+    <string name="btn_good_evening">Have a good evening 👋</string>
+    <string name="btn_open_history">See your history</string>
 
-    <!-- Durate -->
     <plurals name="home_minutes">
-        <item quantity="one">%d minuto</item>
-        <item quantity="other">%d minuti</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
     <string name="home_hours_minutes">%1$d h %2$02d min</string>
-    <string name="home_less_than_minute">meno di 1 min</string>
+    <string name="home_less_than_minute">less than 1 min</string>
 
 </resources>

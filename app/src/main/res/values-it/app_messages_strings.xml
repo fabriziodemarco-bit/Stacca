@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="msg_notif_permission_needed">Senza permesso notifiche l\'app non può funzionare! 😢</string>
+    <string name="toast_alarm_activated">⚡ Allarme attivato per le %s!</string>
+    <string name="toast_alarm_updated">⏰ Allarme aggiornato!</string>
+    <string name="toast_alarm_deactivated">Allarme disattivato 😴</string>
+    <string name="dialog_deactivate_title">Disattivare l\'allarme?</string>
+    <string name="dialog_deactivate_message">Sei sicuro? Senza allarme potresti lavorare per sempre! 😱</string>
+    <string name="dialog_deactivate_yes">Sì, disattiva</string>
+    <string name="dialog_deactivate_no">No, tienilo attivo</string>
+    <string name="toast_logout">Logout effettuato</string>
+    <string name="login_link_expired">Il link è scaduto. Registrati di nuovo per ricevere un nuovo link. ⏰</string>
+    <string name="login_google_failed">Accesso con Google non riuscito. Riprova, oppure usa email e password.</string>
+    <string name="billing_unavailable">Fatturazione Google Play non disponibile. Assicurati di aver installato l\'app dal Play Store.</string>
+</resources>

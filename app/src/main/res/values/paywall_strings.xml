@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Testi della paywall (stile "editoriale" della home). Il prezzo arriva sempre da Google Play. -->
 <resources>
-    <string name="paywall_label">STACCA! PREMIUM</string>
-    <string name="paywall_title_v2">Vuoi che smetta\ndi fare il carino?</string>
-    <string name="paywall_sub_v2">Quando gentile non basta. Passa a Premium:</string>
+    <string name="paywall_label">UNPLUG! PREMIUM</string>
+    <string name="paywall_title_v2">Want me to stop\nbeing nice?</string>
+    <string name="paywall_sub_v2">When gentle isn\'t enough. Go Premium:</string>
     <string name="paywall_highlight">Premium</string>
 
-    <string name="paywall_f1_title">Livelli 4, 5 e 6</string>
-    <string name="paywall_f1_desc">Aggressivo, Nucleare, Apocalisse: la sveglia suona finché non molli.</string>
-    <string name="paywall_f2_title">Schermo rosso</string>
-    <string name="paywall_f2_desc">Ai livelli più alti: impossibile da ignorare.</string>
-    <string name="paywall_f3_title">Frequenza a scelta</string>
-    <string name="paywall_f3_desc">Ti veniamo a cercare ogni 5, 10 o 15 minuti.</string>
+    <string name="paywall_f1_title">Levels 4, 5 and 6</string>
+    <string name="paywall_f1_desc">Aggressive, Nuclear, Apocalypse: the alarm rings until you give up.</string>
+    <string name="paywall_f2_title">Red screen</string>
+    <string name="paywall_f2_desc">At the highest levels: impossible to ignore.</string>
+    <string name="paywall_f3_title">Choose the frequency</string>
+    <string name="paywall_f3_desc">We come looking for you every 5, 10 or 15 minutes.</string>
 
-    <string name="paywall_once">Pagamento unico. Niente abbonamenti.</string>
+    <string name="paywall_once">One payment. No subscriptions.</string>
 
-    <string name="paywall_unlock_v2">Sblocca Premium</string>
-    <string name="paywall_unlock_price_v2">Sblocca Premium · %s</string>
+    <string name="paywall_unlock_v2">Unlock Premium</string>
+    <string name="paywall_unlock_price_v2">Unlock Premium · %s</string>
 
-    <!-- 2.3.1: quarta voce Premium (storico completo) -->
-    <string name="paywall_f4_title">Storico completo</string>
-    <string name="paywall_f4_desc">Record, grafico della settimana, mese per mese e le tue abitudini.</string>
+    <!-- 2.3.1: fourth Premium item (full history) -->
+    <string name="paywall_f4_title">Full history</string>
+    <string name="paywall_f4_desc">Records, weekly chart, month by month and your habits.</string>
 </resources>

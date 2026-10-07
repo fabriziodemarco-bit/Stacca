@@ -1,5 +1,7 @@
 package com.stacca.app.billing
 
+import com.stacca.app.R
+
 import android.app.Activity
 import android.content.Context
 import android.util.Log
@@ -74,11 +76,7 @@ class BillingManager(
                     isConnected = false
                     Log.e(TAG, "Billing setup failed: ${result.debugMessage}")
                     if (result.responseCode == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE) {
-                        onBillingError?.invoke(
-                            "Fatturazione Google Play non disponibile. " +
-                            "Assicurati di aver installato l'app dal Play Store " +
-                            "o di usare un account tester autorizzato."
-                        )
+                        onBillingError?.invoke(context.getString(R.string.billing_unavailable))
                     }
                 }
             }

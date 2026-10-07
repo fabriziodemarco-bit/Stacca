@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Insultami: un minuto, sei battute (a 0, 10, 20, 30, 40, 50 secondi).
+    Tre versioni complete: se ne sceglie una a caso, mai la stessa due volte di fila.
+    Ogni versione ha sempre 6 battute, nello stesso ordine della curva:
+    sarcasmo, richiamo, impazienza, sfottò, urlo, gelo.
+-->
+<resources>
+
+    <string name="btn_insultami">💀\nINSULTAMI</string>
+    <string name="insult_btn_ok">✋ OK, STACCO!</string>
+    <string name="insult_phase_1">FASE 1 · SFOTTÒ</string>
+    <string name="insult_phase_2">FASE 2 · CATTIVERIA</string>
+    <string name="insult_phase_3">FASE 3 · FURIA</string>
+    <string name="insult_phase_4">FASE 4 · GELO ❄️</string>
+    <string name="insult_win">Battito regolare.\nSerata salvata.</string>
+    <string name="insult_win_voice">Finalmente.</string>
+    <string name="insult_lose">Ok. Ci rinuncio. Io.\nL\'app no: ci rivediamo alla prossima notifica.</string>
+
+    <string-array name="insults_version_a">
+        <item>Davvero ancora lì??</item>
+        <item>Alzati, soprammobile!</item>
+        <item>Esci da quello schermo!</item>
+        <item>Zerbino con la password!</item>
+        <item>Salva! Spegni! Sparisci!</item>
+        <item>Io ho finito. E tu?</item>
+    </string-array>
+
+    <string-array name="insults_version_b">
+        <item>Ti hanno incollato lì?</item>
+        <item>Muoviti, fermacarte!</item>
+        <item>Molla quella tastiera!</item>
+        <item>Graffettatrice con lo stipendio!</item>
+        <item>Chiudi! Stacca! Cammina!</item>
+        <item>La sedia resta. Tu vai.</item>
+    </string-array>
+
+    <string-array name="insults_version_c">
+        <item>Ancora un\'ultima cosa? Certo.</item>
+        <item>Sveglia, criceto da ufficio!</item>
+        <item>Molla quel maledetto mouse!</item>
+        <item>Stakanov col salvaschermo!</item>
+        <item>Basta! Chiudi! Fuori!</item>
+        <item>È finita. Fattene una ragione.</item>
+    </string-array>
+
+    <string-array name="insults_version_d">
+        <item>Ah, sei ancora qui? Che sorpresa.</item>
+        <item>In piedi, ficus da scrivania!</item>
+        <item>Stacca quelle dita dai tasti!</item>
+        <item>Post-it con le gambe!</item>
+        <item>Spegni! Alzati! Esci!</item>
+        <item>Io stacco. Tu fai come vuoi.</item>
+    </string-array>
+
+    <string-array name="insults_version_e">
+        <item>Solo un attimo, vero? Come ieri.</item>
+        <item>Forza, appendiabiti!</item>
+        <item>Basta cliccare, adesso!</item>
+        <item>Stampante inceppata con le scarpe!</item>
+        <item>Mollalo! Chiudilo! Vattene!</item>
+        <item>Lo schermo si spegne da solo. Tu no.</item>
+    </string-array>
+
+</resources>
