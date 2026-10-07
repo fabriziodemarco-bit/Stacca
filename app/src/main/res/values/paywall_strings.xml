@@ -3,7 +3,7 @@
 <resources>
     <string name="paywall_label">STACCA! PREMIUM</string>
     <string name="paywall_title_v2">Vuoi che smetta\ndi fare il carino?</string>
-    <string name="paywall_sub_v2">Hai ignorato 3 avvisi gentili. Passa a Premium:</string>
+    <string name="paywall_sub_v2">Quando gentile non basta. Passa a Premium:</string>
     <string name="paywall_highlight">Premium</string>
 
     <string name="paywall_f1_title">Livelli 4, 5 e 6</string>

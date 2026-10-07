@@ -130,16 +130,34 @@ class HistoryActivity : AppCompatActivity() {
         val streak = if (preview) entries.takeWhile { it.isOnTime }.size else prefs.streakCount
         val record = if (preview) 6 else prefs.bestStreak
         findViewById<TextView>(R.id.tvStreak).text = days(streak)
-        findViewById<TextView>(R.id.tvRecord).text = if (premium) days(record) else "🔒"
-        findViewById<TextView>(R.id.tvLost).text = if (premium) {
+        val tvRecord = findViewById<TextView>(R.id.tvRecord)
+        val tvLost = findViewById<TextView>(R.id.tvLost)
+        if (premium) {
+            showLock(tvRecord, false)
+            showLock(tvLost, false)
+            tvRecord.text = days(record)
             // Regalato di questo mese (dal giorno 1): coincide con la prima riga del "mese per mese"
             val thisMonth = monthKey(now)
             val minutes = entries
                 .filter { monthKey(it.timestampMillis) == thisMonth }
                 .sumOf { it.overtimeMinutes }
-            formatMinutes(minutes)
+            tvLost.text = formatMinutes(minutes)
         } else {
-            "🔒"
+            showLock(tvRecord, true)
+            showLock(tvLost, true)
+        }
+    }
+
+    /** Valore bloccato: lucchetto grigio a linee al posto del numero; toccandolo si apre il paywall. */
+    private fun showLock(tv: TextView, locked: Boolean) {
+        if (locked) {
+            tv.text = ""
+            tv.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_lock, 0, 0, 0)
+            tv.setOnClickListener { startActivity(Intent(this, PaywallActivity::class.java)) }
+        } else {
+            tv.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            tv.setOnClickListener(null)
+            tv.isClickable = false
         }
     }
 

@@ -769,30 +769,39 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Aggiorna il badge in alto a destra nella home.
-     * - Premium: "PREMIUM", non cliccabile.
-     * - Piano gratuito: "PASSA A PREMIUM", apre la schermata di acquisto.
+     * - Premium: "PREMIUM", grigio, non cliccabile.
+     * - In prova: "PROVA · N GIORNI", grigio; arancione negli ultimi 2 giorni. Apre il paywall.
+     * - Piano gratuito: "SBLOCCA TUTTO", arancione perché è un pulsante. Apre il paywall.
      */
     private fun updateTrialBanner() {
+        tvPremiumBadge.visibility = View.VISIBLE
         if (prefs.isPremium) {
             // Chi ha pagato vede una conferma discreta, non cliccabile
-            tvPremiumBadge.visibility = View.VISIBLE
             tvPremiumBadge.setText(R.string.premium_badge)
+            setBadgeStyle(highlighted = false)
             tvPremiumBadge.isClickable = false
             tvPremiumBadge.setOnClickListener(null)
         } else {
-            tvPremiumBadge.visibility = View.VISIBLE
-            // Durante la prova il badge dice quanti giorni restano, poi torna "PASSA A PREMIUM"
             val giorni = prefs.trialDaysLeft
             if (giorni > 0) {
                 tvPremiumBadge.text = resources.getQuantityString(R.plurals.premium_badge_trial, giorni, giorni)
+                setBadgeStyle(highlighted = giorni <= 2)
             } else {
                 tvPremiumBadge.setText(R.string.premium_badge_upgrade)
+                setBadgeStyle(highlighted = true)
             }
             tvPremiumBadge.isClickable = true
             tvPremiumBadge.setOnClickListener {
                 startActivity(Intent(this, PaywallActivity::class.java))
             }
         }
+    }
+
+    /** Badge grigio (informazione) oppure arancione (invito a passare a Premium). */
+    private fun setBadgeStyle(highlighted: Boolean) {
+        tvPremiumBadge.setBackgroundResource(if (highlighted) R.drawable.bg_badge_cta else R.drawable.bg_badge)
+        tvPremiumBadge.setTextColor(ContextCompat.getColor(this,
+            if (highlighted) R.color.home_accent else R.color.home_text_secondary))
     }
 
     override fun onDestroy() {

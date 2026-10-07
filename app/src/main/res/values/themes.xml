@@ -116,6 +116,24 @@
         <item name="android:textColor">@color/home_text</item>
     </style>
 
+    <!-- Etichetta "PREMIUM" accanto alle voci bloccate nel piano gratuito (nascosta di default) -->
+    <style name="Stacca.Settings.PremiumTag">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:paddingStart">7dp</item>
+        <item name="android:paddingEnd">7dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:background">@drawable/bg_badge_accent</item>
+        <item name="android:text">@string/premium_badge</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textColor">@color/home_accent</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
     <!-- Titolo riga in arancione (cosa sblocca Premium) -->
     <style name="Stacca.Settings.RowTitle.Accent">
         <item name="android:textColor">@color/home_accent</item>

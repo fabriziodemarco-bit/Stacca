@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sezione "Piano" nelle Impostazioni: dice a ognuno a che punto è (Premium, prova, gratis) -->
+<resources>
+    <string name="settings_section_plan">Piano</string>
+    <string name="plan_premium_title">Premium attivo</string>
+    <string name="plan_premium_desc">Hai sbloccato tutto. Grazie del supporto!</string>
+    <plurals name="plan_trial_title">
+        <item quantity="one">Prova gratuita: 1 giorno rimasto</item>
+        <item quantity="other">Prova gratuita: %d giorni rimasti</item>
+    </plurals>
+    <string name="plan_trial_desc">Fino ad allora hai tutto sbloccato. Poi restano gratis i livelli 1-3 e Insultami.</string>
+    <string name="plan_free_title">Piano gratuito</string>
+    <string name="plan_free_desc">Livelli 1-3 e Insultami, per sempre.</string>
+    <string name="plan_unlock">Sblocca tutto</string>
+    <string name="premium_restored">Premium ripristinato!</string>
+</resources>

@@ -61,6 +61,7 @@
     <color name="home_text_secondary">#B6B1BF</color>
     <color name="home_border">#383643</color>
     <color name="home_accent">#FF875F</color>
+    <color name="home_accent_soft">#26FF875F</color>
     <color name="home_success">#7FD1A0</color>
 
     <!-- Insultami: colori delle nuvolette del fumetto -->

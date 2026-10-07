@@ -2,7 +2,7 @@
 <resources>
     <string name="paywall_label">UNPLUG! PREMIUM</string>
     <string name="paywall_title_v2">Want me to stop\nbeing nice?</string>
-    <string name="paywall_sub_v2">You ignored 3 gentle reminders. Go Premium:</string>
+    <string name="paywall_sub_v2">When gentle isn\'t enough. Go Premium:</string>
     <string name="paywall_highlight">Premium</string>
 
     <string name="paywall_f1_title">Levels 4, 5 and 6</string>

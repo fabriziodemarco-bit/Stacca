@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_plan">方案</string>
+    <string name="plan_premium_title">高级版已激活</string>
+    <string name="plan_premium_desc">全部功能已解锁。感谢你的支持！</string>
+    <plurals name="plan_trial_title">
+        <item quantity="other">免费试用：还剩 %d 天</item>
+    </plurals>
+    <string name="plan_trial_desc">在此之前全部功能已解锁。之后，1-3 级和“骂我”依然免费。</string>
+    <string name="plan_free_title">免费版</string>
+    <string name="plan_free_desc">1-3 级和“骂我”，永久免费。</string>
+    <string name="plan_unlock">解锁全部</string>
+    <string name="premium_restored">高级版已恢复！</string>
+</resources>

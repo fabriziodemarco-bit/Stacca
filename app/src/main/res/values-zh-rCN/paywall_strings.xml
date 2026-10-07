@@ -2,7 +2,7 @@
 <resources>
     <string name="paywall_label">下班！高级版</string>
     <string name="paywall_title_v2">想让我\n别再客气了吗？</string>
-    <string name="paywall_sub_v2">你已经无视了3次温和的提醒。升级高级版：</string>
+    <string name="paywall_sub_v2">温柔不管用的时候。升级高级版：</string>
     <string name="paywall_highlight">高级版</string>
 
     <string name="paywall_f1_title">第4、5、6级</string>

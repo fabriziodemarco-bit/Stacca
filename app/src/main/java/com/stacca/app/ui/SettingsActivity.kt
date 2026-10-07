@@ -16,6 +16,7 @@ import com.google.android.material.slider.Slider
 import com.stacca.app.BuildConfig
 import com.stacca.app.R
 import com.stacca.app.auth.AuthManager
+import com.stacca.app.billing.BillingManager
 import com.stacca.app.data.PreferencesManager
 import kotlinx.coroutines.launch
 import com.stacca.app.util.SystemBarsHelper
@@ -179,14 +180,69 @@ class SettingsActivity : AppCompatActivity() {
     }
 
 
+    /** Voce Premium toccata da chi è nel piano gratuito: si va dritti al paywall. */
     private fun showPremiumUpsell() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(getString(R.string.premium_required))
-            .setMessage(getString(R.string.premium_required_message))
-            .setPositiveButton(getString(R.string.premium_unlock)) { _, _ ->
-                startActivity(Intent(this, PaywallActivity::class.java))
-            }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
-            .show()
+        startActivity(Intent(this, PaywallActivity::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Aggiornati a ogni ritorno: dopo un acquisto dal paywall cambiano subito
+        updatePlanSection()
+        updatePremiumTags()
+    }
+
+    /** Etichette PREMIUM accanto alle voci bloccate: solo nel piano gratuito. */
+    private fun updatePremiumTags() {
+        val visibility = if (prefs.hasFullAccess) View.GONE else View.VISIBLE
+        findViewById<View>(R.id.tagFullScreenPremium).visibility = visibility
+        findViewById<View>(R.id.tagSpeedPremium).visibility = visibility
+    }
+
+    /** Sezione Piano: Premium attivo, giorni di prova rimasti, oppure piano gratuito. */
+    private fun updatePlanSection() {
+        val tvTitle = findViewById<TextView>(R.id.tvPlanTitle)
+        val tvDesc = findViewById<TextView>(R.id.tvPlanDesc)
+        val btnUnlock = findViewById<MaterialButton>(R.id.btnPlanUnlock)
+        val tvRestore = findViewById<TextView>(R.id.tvPlanRestore)
+
+        if (prefs.isPremium) {
+            tvTitle.setText(R.string.plan_premium_title)
+            tvDesc.setText(R.string.plan_premium_desc)
+            btnUnlock.visibility = View.GONE
+            tvRestore.visibility = View.GONE
+            return
+        }
+        val giorni = prefs.trialDaysLeft
+        if (giorni > 0) {
+            tvTitle.text = resources.getQuantityString(R.plurals.plan_trial_title, giorni, giorni)
+            tvDesc.setText(R.string.plan_trial_desc)
+        } else {
+            tvTitle.setText(R.string.plan_free_title)
+            tvDesc.setText(R.string.plan_free_desc)
+        }
+        btnUnlock.visibility = View.VISIBLE
+        btnUnlock.setOnClickListener { startActivity(Intent(this, PaywallActivity::class.java)) }
+        tvRestore.visibility = View.VISIBLE
+        tvRestore.setOnClickListener { restorePurchases() }
+    }
+
+    private var billingManager: BillingManager? = null
+
+    /** Ripristina acquisti: chiede a Google Play se questo account ha già comprato Premium. */
+    private fun restorePurchases() {
+        Toast.makeText(this, R.string.premium_restoring, Toast.LENGTH_SHORT).show()
+        val manager = billingManager ?: BillingManager(this) {}.also { billingManager = it }
+        manager.onPremiumRestored = {
+            Toast.makeText(this, R.string.premium_restored, Toast.LENGTH_LONG).show()
+            updatePlanSection()
+            updatePremiumTags()
+        }
+        manager.connect()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billingManager?.destroy()
     }
 }

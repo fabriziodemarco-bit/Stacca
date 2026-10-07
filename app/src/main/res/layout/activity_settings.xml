@@ -88,9 +88,19 @@
                     <!-- Schermo intero -->
                     <LinearLayout style="@style/Stacca.Settings.Row">
                         <LinearLayout style="@style/Stacca.Settings.RowTexts">
-                            <TextView
-                                style="@style/Stacca.Settings.RowTitle"
-                                android:text="@string/settings_fullscreen" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    style="@style/Stacca.Settings.RowTitle"
+                                    android:text="@string/settings_fullscreen" />
+                                <!-- Etichetta PREMIUM: solo per chi è nel piano gratuito -->
+                                <TextView
+                                    android:id="@+id/tagFullScreenPremium"
+                                    style="@style/Stacca.Settings.PremiumTag" />
+                            </LinearLayout>
                             <TextView
                                 style="@style/Stacca.Settings.RowDesc"
                                 android:text="@string/settings_fullscreen_desc" />
@@ -151,6 +161,11 @@
                             android:text="@string/settings_escalation_speed" />
 
                         <TextView
+                            android:id="@+id/tagSpeedPremium"
+                            style="@style/Stacca.Settings.PremiumTag"
+                            android:layout_marginEnd="10dp" />
+
+                        <TextView
                             android:id="@+id/tvSpeedLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -178,6 +193,59 @@
                         app:tickColorActive="@color/home_on_accent"
                         app:tickColorInactive="@color/home_text_secondary"
                         app:labelBehavior="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sezione Piano: Premium, prova o gratis -->
+            <TextView
+                style="@style/Stacca.Settings.SectionLabel"
+                android:text="@string/settings_section_plan" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Stacca.Settings.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:id="@+id/tvPlanTitle"
+                        style="@style/Stacca.Settings.RowTitle" />
+
+                    <TextView
+                        android:id="@+id/tvPlanDesc"
+                        style="@style/Stacca.Settings.RowDesc" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPlanUnlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="14dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/plan_unlock"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:letterSpacing="0"
+                        android:textColor="@color/home_on_accent"
+                        app:backgroundTint="@color/home_accent"
+                        app:cornerRadius="14dp" />
+
+                    <TextView
+                        android:id="@+id/tvPlanRestore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:text="@string/premium_restore"
+                        android:textSize="13sp"
+                        android:textColor="@color/home_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
